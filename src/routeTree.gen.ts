@@ -9,10 +9,16 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AcademyIndexRouteImport } from './routes/academy.index'
 import { Route as AcademyAnalyseFondamentaleRouteImport } from './routes/academy.analyse-fondamentale'
 
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -32,36 +38,56 @@ const AcademyAnalyseFondamentaleRoute =
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/academy/analyse-fondamentale': typeof AcademyAnalyseFondamentaleRoute
   '/academy/': typeof AcademyIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/academy/analyse-fondamentale': typeof AcademyAnalyseFondamentaleRoute
   '/academy': typeof AcademyIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/academy/analyse-fondamentale': typeof AcademyAnalyseFondamentaleRoute
   '/academy/': typeof AcademyIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/academy/analyse-fondamentale' | '/academy/'
+  fullPaths:
+    | '/'
+    | '/sitemap.xml'
+    | '/academy/analyse-fondamentale'
+    | '/academy/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/academy/analyse-fondamentale' | '/academy'
-  id: '__root__' | '/' | '/academy/analyse-fondamentale' | '/academy/'
+  to: '/' | '/sitemap.xml' | '/academy/analyse-fondamentale' | '/academy'
+  id:
+    | '__root__'
+    | '/'
+    | '/sitemap.xml'
+    | '/academy/analyse-fondamentale'
+    | '/academy/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   AcademyAnalyseFondamentaleRoute: typeof AcademyAnalyseFondamentaleRoute
   AcademyIndexRoute: typeof AcademyIndexRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -88,6 +114,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
   AcademyAnalyseFondamentaleRoute: AcademyAnalyseFondamentaleRoute,
   AcademyIndexRoute: AcademyIndexRoute,
 }
