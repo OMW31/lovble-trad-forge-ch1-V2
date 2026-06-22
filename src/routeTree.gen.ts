@@ -10,33 +10,44 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AcademyAnalyseFondamentaleRouteImport } from './routes/academy.analyse-fondamentale'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AcademyAnalyseFondamentaleRoute =
+  AcademyAnalyseFondamentaleRouteImport.update({
+    id: '/academy/analyse-fondamentale',
+    path: '/academy/analyse-fondamentale',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/academy/analyse-fondamentale': typeof AcademyAnalyseFondamentaleRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/academy/analyse-fondamentale': typeof AcademyAnalyseFondamentaleRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/academy/analyse-fondamentale': typeof AcademyAnalyseFondamentaleRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/academy/analyse-fondamentale'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/academy/analyse-fondamentale'
+  id: '__root__' | '/' | '/academy/analyse-fondamentale'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AcademyAnalyseFondamentaleRoute: typeof AcademyAnalyseFondamentaleRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +59,19 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/academy/analyse-fondamentale': {
+      id: '/academy/analyse-fondamentale'
+      path: '/academy/analyse-fondamentale'
+      fullPath: '/academy/analyse-fondamentale'
+      preLoaderRoute: typeof AcademyAnalyseFondamentaleRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AcademyAnalyseFondamentaleRoute: AcademyAnalyseFondamentaleRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
