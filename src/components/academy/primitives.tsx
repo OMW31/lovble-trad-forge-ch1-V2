@@ -109,7 +109,7 @@ export function KpiTile({
   label: string;
   value: string;
   hint?: string;
-  tone?: "neutral" | "bull" | "bear" | "forge";
+  tone?: "neutral" | "bull" | "bear" | "forge" | "data";
 }) {
   return (
     <div className="rounded-lg border bg-surface p-4">
