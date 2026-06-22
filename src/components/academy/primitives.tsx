@@ -120,6 +120,7 @@ export function KpiTile({
           tone === "bull" && "text-bull",
           tone === "bear" && "text-bear",
           tone === "forge" && "text-forge",
+          tone === "data" && "text-data",
           tone === "neutral" && "text-foreground",
         )}
       >
