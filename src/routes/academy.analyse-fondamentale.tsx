@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Scale, TrendingUp, BarChart3, Calculator, LineChart, History, CheckCircle2, Award } from "lucide-react";
-import { LESSONS } from "@/lib/academy/chapter1";
+import { CHAPTER, LESSONS } from "@/lib/academy/chapter1";
 import { CASE_STUDIES } from "@/lib/academy/market-data";
 import { ChapterShell } from "@/components/academy/ChapterShell";
 import { ChapterHero } from "@/components/academy/ChapterHero";
@@ -17,6 +17,8 @@ import { ValuationLab } from "@/components/academy/ValuationLab";
 import { PeerComparisonMatrix } from "@/components/academy/PeerComparisonMatrix";
 import { EarningsImpactEngine } from "@/components/academy/EarningsImpactEngine";
 import { ForecastScenarioPlanner } from "@/components/academy/ForecastScenarioPlanner";
+import { AssessmentModal } from "@/components/academy/AssessmentModal";
+import { supabase } from "@/integrations/supabase/client";
 
 export const Route = createFileRoute("/academy/analyse-fondamentale")({
   head: () => ({
@@ -50,6 +52,21 @@ function SubHead({ icon: Icon, children }: { icon: React.ElementType; children: 
 function Chapter1Page() {
   const [completed, setCompleted] = useState<Set<string>>(new Set());
   const [cases, setCases] = useState<Set<string>>(new Set());
+  const [signedIn, setSignedIn] = useState(false);
+
+  useEffect(() => {
+    let mounted = true;
+    supabase.auth.getUser().then(({ data }) => {
+      if (mounted) setSignedIn(Boolean(data.user));
+    });
+    const { data } = supabase.auth.onAuthStateChange((_event, session) => {
+      setSignedIn(Boolean(session?.user));
+    });
+    return () => {
+      mounted = false;
+      data.subscription.unsubscribe();
+    };
+  }, []);
 
   const markSection = useCallback((id: string) => {
     setCompleted((prev) => {
@@ -73,10 +90,14 @@ function Chapter1Page() {
   const meta = (id: string) => LESSONS.find((l) => l.id === id)!;
 
   return (
-    <ChapterShell completedSections={completed}>
+    <ChapterShell
+      completedSections={completed}
+      headerActions={<AssessmentModal chapterId={CHAPTER.id} signedIn={signedIn} progressPercent={Math.round((completed.size / LESSONS.length) * 100)} />}
+    >
       <Reveal>
         <ChapterHero />
       </Reveal>
+
 
       {/* 1.1 — Introduction & Définition */}
       <LessonSection {...meta("intro")}>

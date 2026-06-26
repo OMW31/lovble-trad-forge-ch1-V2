@@ -3,6 +3,7 @@ import { Link } from "@tanstack/react-router";
 import { ArrowLeft, Check, Flame, Lock } from "lucide-react";
 import { LESSONS, CHAPTER } from "@/lib/academy/chapter1";
 import { cn } from "@/lib/utils";
+import { MobileLessonBreadcrumb } from "./MobileLessonBreadcrumb";
 
 function useScrollSpy(ids: string[]) {
   const [active, setActive] = useState(ids[0]);
@@ -41,9 +42,11 @@ function useScrollSpy(ids: string[]) {
 export function ChapterShell({
   children,
   completedSections,
+  headerActions,
 }: {
   children: ReactNode;
   completedSections: Set<string>;
+  headerActions?: ReactNode;
 }) {
   const ids = LESSONS.map((l) => l.id);
   const active = useScrollSpy(ids);
@@ -51,7 +54,6 @@ export function ChapterShell({
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Top bar */}
       <header className="sticky top-0 z-40 border-b border-border/70 bg-background/80 backdrop-blur-xl">
         <div className="mx-auto flex h-14 max-w-[1400px] items-center justify-between gap-4 px-4 sm:px-6">
           <div className="flex items-center gap-3">
@@ -72,12 +74,12 @@ export function ChapterShell({
               </div>
               <span className="font-mono text-xs tabular-nums text-muted-foreground">{progress}%</span>
             </div>
+            {headerActions}
           </div>
         </div>
       </header>
 
       <div className="mx-auto flex max-w-[1400px] gap-8 px-4 sm:px-6">
-        {/* Sidebar */}
         <aside className="sticky top-14 hidden h-[calc(100vh-3.5rem)] w-64 shrink-0 overflow-y-auto py-8 lg:block">
           <div className="mb-4 font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
             {CHAPTER.num}
@@ -130,9 +132,11 @@ export function ChapterShell({
           </div>
         </aside>
 
-        {/* Main content */}
-        <main className="min-w-0 flex-1 py-8 lg:py-12">{children}</main>
+        <main className="min-w-0 flex-1 py-8 pb-28 lg:py-12 lg:pb-12">{children}</main>
       </div>
+
+      <MobileLessonBreadcrumb lessons={LESSONS} activeId={active} />
     </div>
   );
 }
+
