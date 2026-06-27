@@ -8,15 +8,15 @@ Document opératoire de build séquentiel.
 - [x] Schéma profils / rôles / progression / reprise / évaluations créé
 - [x] Google auth configuré
 - [x] Documentations de pilotage créées
-- [ ] Route `/auth` branchée dans l’expérience
-- [ ] Persistance CH1 branchée à la page
-- [ ] Hero / shell mis à jour avec état connecté
+- [x] Route `/auth` branchée dans l’expérience
+- [x] Persistance CH1 branchée à la page
+- [x] Hero / shell mis à jour avec état connecté
 
 ## Sprint 2 — Audit & Mapping
 - [ ] CH1_ASSET_MAP complété depuis la codebase réelle
 - [ ] CH1_GAP_ANALYSIS complété
 - [ ] CH1_SCENARIO_DISTRIBUTION verrouillé
-- [ ] Audit 4K assets verrouillé
+- [x] Audit 4K assets verrouillé
 - [ ] Mapping visuels → sections validé
 
 ## Sprint 3 — Structural Upgrade
@@ -35,7 +35,7 @@ Document opératoire de build séquentiel.
 - [ ] Uniformisation cards / spacing / ombres / typo / couleurs
 
 ## Sprint 5 — Widget Expansion
-- [ ] Macro Dashboard 11 indicateurs
+- [x] Macro Dashboard 11 indicateurs
 - [ ] Economic Cycle Wheel
 - [ ] Macro Relationship Engine
 - [ ] FED Simulator
