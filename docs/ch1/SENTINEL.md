@@ -22,6 +22,7 @@ Registre anti-régression du Chapitre 1. Toute implémentation future doit relir
 ### Widgets existants
 - [x] MarketDriverVisualizer
 - [x] MacroIndicatorLab
+- [x] MacroDashboard (11 indicateurs + filtres + modal détail)
 - [x] CompanyHealthScore
 - [x] BalanceSheetExplorer
 - [x] ValuationLab
@@ -36,6 +37,8 @@ Registre anti-régression du Chapitre 1. Toute implémentation future doit relir
 - [x] Resume state exact backend
 - [x] Tentatives d’évaluation backend
 - [x] Auth page `/auth`
+- [x] CTA compte dans le header CH1
+- [x] Indicateur de synchronisation utilisateur dans le shell
 - [x] Modal d’évaluation indépendante
 - [x] Mobile breadcrumb inférieur
 

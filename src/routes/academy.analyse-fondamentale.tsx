@@ -1,5 +1,4 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useCallback, useEffect, useState } from "react";
 import { Scale, TrendingUp, BarChart3, Calculator, LineChart, History, CheckCircle2, Award } from "lucide-react";
 import { CHAPTER, LESSONS } from "@/lib/academy/chapter1";
 import { CASE_STUDIES } from "@/lib/academy/market-data";
@@ -11,6 +10,7 @@ import { Scenario } from "@/components/academy/Scenario";
 import { CandleReplay } from "@/components/academy/CandleReplay";
 import { MarketDriverVisualizer } from "@/components/academy/MarketDriverVisualizer";
 import { MacroIndicatorLab } from "@/components/academy/MacroIndicatorLab";
+import { MacroDashboard } from "@/components/academy/MacroDashboard";
 import { CompanyHealthScore } from "@/components/academy/CompanyHealthScore";
 import { BalanceSheetExplorer } from "@/components/academy/BalanceSheetExplorer";
 import { ValuationLab } from "@/components/academy/ValuationLab";
@@ -18,7 +18,7 @@ import { PeerComparisonMatrix } from "@/components/academy/PeerComparisonMatrix"
 import { EarningsImpactEngine } from "@/components/academy/EarningsImpactEngine";
 import { ForecastScenarioPlanner } from "@/components/academy/ForecastScenarioPlanner";
 import { AssessmentModal } from "@/components/academy/AssessmentModal";
-import { supabase } from "@/integrations/supabase/client";
+import { useChapterProgress } from "@/lib/academy/useChapterProgress";
 
 export const Route = createFileRoute("/academy/analyse-fondamentale")({
   head: () => ({
@@ -50,50 +50,26 @@ function SubHead({ icon: Icon, children }: { icon: React.ElementType; children: 
 }
 
 function Chapter1Page() {
-  const [completed, setCompleted] = useState<Set<string>>(new Set());
-  const [cases, setCases] = useState<Set<string>>(new Set());
-  const [signedIn, setSignedIn] = useState(false);
-
-  useEffect(() => {
-    let mounted = true;
-    supabase.auth.getUser().then(({ data }) => {
-      if (mounted) setSignedIn(Boolean(data.user));
-    });
-    const { data } = supabase.auth.onAuthStateChange((_event, session) => {
-      setSignedIn(Boolean(session?.user));
-    });
-    return () => {
-      mounted = false;
-      data.subscription.unsubscribe();
-    };
-  }, []);
-
-  const markSection = useCallback((id: string) => {
-    setCompleted((prev) => {
-      const next = new Set(prev);
-      next.add(id);
-      return next;
-    });
-  }, []);
-
-  const markCase = useCallback((id: string) => {
-    setCases((prev) => {
-      const next = new Set(prev);
-      next.add(id);
-      if (next.size >= 3) {
-        setCompleted((c) => new Set(c).add("cas-pratiques"));
-      }
-      return next;
-    });
-  }, []);
+  const {
+    signedIn,
+    profile,
+    completed,
+    cases,
+    progressPercent,
+    markSection,
+    markCase,
+  } = useChapterProgress(CHAPTER.id, CASE_STUDIES.length);
 
   const meta = (id: string) => LESSONS.find((l) => l.id === id)!;
 
   return (
     <ChapterShell
       completedSections={completed}
-      headerActions={<AssessmentModal chapterId={CHAPTER.id} signedIn={signedIn} progressPercent={Math.round((completed.size / LESSONS.length) * 100)} />}
+      signedIn={signedIn}
+      profile={profile}
+      headerActions={<AssessmentModal chapterId={CHAPTER.id} signedIn={signedIn} progressPercent={progressPercent} />}
     >
+
       <Reveal>
         <ChapterHero />
       </Reveal>
@@ -186,7 +162,14 @@ function Chapter1Page() {
         </div>
 
         <Reveal>
-          <SubHead icon={BarChart3}>Laboratoire interactif</SubHead>
+          <SubHead icon={BarChart3}>Command center — 11 indicateurs clés</SubHead>
+        </Reveal>
+        <Reveal>
+          <MacroDashboard />
+        </Reveal>
+
+        <Reveal>
+          <SubHead icon={BarChart3}>Laboratoire interactif — simulez une surprise</SubHead>
         </Reveal>
         <Reveal>
           <MacroIndicatorLab />

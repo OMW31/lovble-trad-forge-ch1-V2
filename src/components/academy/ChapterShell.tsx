@@ -1,9 +1,11 @@
 import { useEffect, useState, type ReactNode } from "react";
 import { Link } from "@tanstack/react-router";
-import { ArrowLeft, Check, Flame, Lock } from "lucide-react";
+import { ArrowLeft, Check, CloudCheck, Flame, Lock } from "lucide-react";
 import { LESSONS, CHAPTER } from "@/lib/academy/chapter1";
 import { cn } from "@/lib/utils";
 import { MobileLessonBreadcrumb } from "./MobileLessonBreadcrumb";
+import { AcademyAccountButton } from "./AcademyAccountButton";
+import type { ChapterProfile } from "@/lib/academy/useChapterProgress";
 
 function useScrollSpy(ids: string[]) {
   const [active, setActive] = useState(ids[0]);
@@ -43,10 +45,14 @@ export function ChapterShell({
   children,
   completedSections,
   headerActions,
+  signedIn = false,
+  profile = null,
 }: {
   children: ReactNode;
   completedSections: Set<string>;
   headerActions?: ReactNode;
+  signedIn?: boolean;
+  profile?: ChapterProfile | null;
 }) {
   const ids = LESSONS.map((l) => l.id);
   const active = useScrollSpy(ids);
@@ -73,8 +79,15 @@ export function ChapterShell({
                 <div className="h-full rounded-full bg-gradient-forge transition-all duration-500" style={{ width: `${progress}%` }} />
               </div>
               <span className="font-mono text-xs tabular-nums text-muted-foreground">{progress}%</span>
+              {signedIn && (
+                <span className="hidden items-center gap-1 font-mono text-[10px] uppercase tracking-wider text-bull md:inline-flex" title="Progression synchronisée">
+                  <CloudCheck className="h-3.5 w-3.5" />
+                  Sync
+                </span>
+              )}
             </div>
             {headerActions}
+            <AcademyAccountButton signedIn={signedIn} profile={profile} />
           </div>
         </div>
       </header>
