@@ -1,5 +1,4 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useCallback, useEffect, useState } from "react";
 import { Scale, TrendingUp, BarChart3, Calculator, LineChart, History, CheckCircle2, Award } from "lucide-react";
 import { CHAPTER, LESSONS } from "@/lib/academy/chapter1";
 import { CASE_STUDIES } from "@/lib/academy/market-data";
@@ -11,6 +10,7 @@ import { Scenario } from "@/components/academy/Scenario";
 import { CandleReplay } from "@/components/academy/CandleReplay";
 import { MarketDriverVisualizer } from "@/components/academy/MarketDriverVisualizer";
 import { MacroIndicatorLab } from "@/components/academy/MacroIndicatorLab";
+import { MacroDashboard } from "@/components/academy/MacroDashboard";
 import { CompanyHealthScore } from "@/components/academy/CompanyHealthScore";
 import { BalanceSheetExplorer } from "@/components/academy/BalanceSheetExplorer";
 import { ValuationLab } from "@/components/academy/ValuationLab";
@@ -18,7 +18,7 @@ import { PeerComparisonMatrix } from "@/components/academy/PeerComparisonMatrix"
 import { EarningsImpactEngine } from "@/components/academy/EarningsImpactEngine";
 import { ForecastScenarioPlanner } from "@/components/academy/ForecastScenarioPlanner";
 import { AssessmentModal } from "@/components/academy/AssessmentModal";
-import { supabase } from "@/integrations/supabase/client";
+import { useChapterProgress } from "@/lib/academy/useChapterProgress";
 
 export const Route = createFileRoute("/academy/analyse-fondamentale")({
   head: () => ({
