@@ -45,10 +45,14 @@ export function ChapterShell({
   children,
   completedSections,
   headerActions,
+  signedIn = false,
+  profile = null,
 }: {
   children: ReactNode;
   completedSections: Set<string>;
   headerActions?: ReactNode;
+  signedIn?: boolean;
+  profile?: ChapterProfile | null;
 }) {
   const ids = LESSONS.map((l) => l.id);
   const active = useScrollSpy(ids);
