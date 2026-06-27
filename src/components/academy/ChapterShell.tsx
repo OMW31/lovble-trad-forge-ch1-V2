@@ -79,8 +79,15 @@ export function ChapterShell({
                 <div className="h-full rounded-full bg-gradient-forge transition-all duration-500" style={{ width: `${progress}%` }} />
               </div>
               <span className="font-mono text-xs tabular-nums text-muted-foreground">{progress}%</span>
+              {signedIn && (
+                <span className="hidden items-center gap-1 font-mono text-[10px] uppercase tracking-wider text-bull md:inline-flex" title="Progression synchronisée">
+                  <CloudCheck className="h-3.5 w-3.5" />
+                  Sync
+                </span>
+              )}
             </div>
             {headerActions}
+            <AcademyAccountButton signedIn={signedIn} profile={profile} />
           </div>
         </div>
       </header>
