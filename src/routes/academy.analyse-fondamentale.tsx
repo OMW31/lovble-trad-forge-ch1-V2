@@ -50,50 +50,26 @@ function SubHead({ icon: Icon, children }: { icon: React.ElementType; children: 
 }
 
 function Chapter1Page() {
-  const [completed, setCompleted] = useState<Set<string>>(new Set());
-  const [cases, setCases] = useState<Set<string>>(new Set());
-  const [signedIn, setSignedIn] = useState(false);
-
-  useEffect(() => {
-    let mounted = true;
-    supabase.auth.getUser().then(({ data }) => {
-      if (mounted) setSignedIn(Boolean(data.user));
-    });
-    const { data } = supabase.auth.onAuthStateChange((_event, session) => {
-      setSignedIn(Boolean(session?.user));
-    });
-    return () => {
-      mounted = false;
-      data.subscription.unsubscribe();
-    };
-  }, []);
-
-  const markSection = useCallback((id: string) => {
-    setCompleted((prev) => {
-      const next = new Set(prev);
-      next.add(id);
-      return next;
-    });
-  }, []);
-
-  const markCase = useCallback((id: string) => {
-    setCases((prev) => {
-      const next = new Set(prev);
-      next.add(id);
-      if (next.size >= 3) {
-        setCompleted((c) => new Set(c).add("cas-pratiques"));
-      }
-      return next;
-    });
-  }, []);
+  const {
+    signedIn,
+    profile,
+    completed,
+    cases,
+    progressPercent,
+    markSection,
+    markCase,
+  } = useChapterProgress(CHAPTER.id, CASE_STUDIES.length);
 
   const meta = (id: string) => LESSONS.find((l) => l.id === id)!;
 
   return (
     <ChapterShell
       completedSections={completed}
-      headerActions={<AssessmentModal chapterId={CHAPTER.id} signedIn={signedIn} progressPercent={Math.round((completed.size / LESSONS.length) * 100)} />}
+      signedIn={signedIn}
+      profile={profile}
+      headerActions={<AssessmentModal chapterId={CHAPTER.id} signedIn={signedIn} progressPercent={progressPercent} />}
     >
+
       <Reveal>
         <ChapterHero />
       </Reveal>
