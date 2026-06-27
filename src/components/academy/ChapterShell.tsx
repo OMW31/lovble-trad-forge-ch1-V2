@@ -1,9 +1,11 @@
 import { useEffect, useState, type ReactNode } from "react";
 import { Link } from "@tanstack/react-router";
-import { ArrowLeft, Check, Flame, Lock } from "lucide-react";
+import { ArrowLeft, Check, CloudCheck, Flame, Lock } from "lucide-react";
 import { LESSONS, CHAPTER } from "@/lib/academy/chapter1";
 import { cn } from "@/lib/utils";
 import { MobileLessonBreadcrumb } from "./MobileLessonBreadcrumb";
+import { AcademyAccountButton } from "./AcademyAccountButton";
+import type { ChapterProfile } from "@/lib/academy/useChapterProgress";
 
 function useScrollSpy(ids: string[]) {
   const [active, setActive] = useState(ids[0]);
