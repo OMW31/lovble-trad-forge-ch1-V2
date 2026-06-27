@@ -162,7 +162,14 @@ function Chapter1Page() {
         </div>
 
         <Reveal>
-          <SubHead icon={BarChart3}>Laboratoire interactif</SubHead>
+          <SubHead icon={BarChart3}>Command center — 11 indicateurs clés</SubHead>
+        </Reveal>
+        <Reveal>
+          <MacroDashboard />
+        </Reveal>
+
+        <Reveal>
+          <SubHead icon={BarChart3}>Laboratoire interactif — simulez une surprise</SubHead>
         </Reveal>
         <Reveal>
           <MacroIndicatorLab />
