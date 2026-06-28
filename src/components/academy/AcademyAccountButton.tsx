@@ -29,6 +29,7 @@ export function AcademyAccountButton({
   return (
     <Link
       to="/auth"
+      search={{ redirect: "/academy/analyse-fondamentale" }}
       className="inline-flex items-center gap-2 rounded-lg border border-border bg-surface px-2.5 py-1.5 text-sm font-medium text-foreground transition-colors hover:border-data/50 hover:bg-surface-2"
       title={label}
     >

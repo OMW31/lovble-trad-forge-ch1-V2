@@ -14,15 +14,14 @@ const TICKERS = [
 
 const STATS = [
   { icon: Layers, label: "Leçons", value: "6" },
-  { icon: Activity, label: "Widgets interactifs", value: "8" },
-  { icon: Target, label: "Scénarios & cas", value: "15" },
+  { icon: Activity, label: "Widgets interactifs", value: "20+" },
+  { icon: Target, label: "Cas redistribués", value: "10" },
 ];
 
 export function ChapterHero() {
   return (
     <section className="relative overflow-hidden rounded-3xl border bg-gradient-hero">
       <div className="absolute inset-0 grid-bg opacity-60" aria-hidden />
-      <div className="absolute -right-24 -top-24 h-72 w-72 rounded-full bg-forge/10 blur-3xl" aria-hidden />
 
       <div className="relative px-6 py-10 sm:px-10 sm:py-14">
         <div className="flex items-center justify-between gap-4">

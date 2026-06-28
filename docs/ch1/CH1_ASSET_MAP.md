@@ -15,14 +15,27 @@
 ## Widgets / modules existants
 - `MarketDriverVisualizer.tsx`
 - `MacroIndicatorLab.tsx`
+- `MacroDashboard.tsx`
+- `EconomicCycleWheel.tsx`
+- `MacroRelationshipEngine.tsx`
+- `FedSimulator.tsx`
+- `NfpInterpreter.tsx`
+- `GdpCpiInterpreters.tsx`
+- `YieldCurveVisualizer.tsx`
+- `IntermarketCorrelationMap.tsx`
 - `CompanyHealthScore.tsx`
 - `BalanceSheetExplorer.tsx`
+- `CompanyDashboard.tsx`
+- `FinancialRatios.tsx`
 - `ValuationLab.tsx`
+- `DcfSimulator.tsx`
 - `PeerComparisonMatrix.tsx`
 - `EarningsImpactEngine.tsx`
 - `ForecastScenarioPlanner.tsx`
+- `ScenarioBuilder.tsx`
 - `CandleReplay.tsx`
 - `Scenario.tsx`
+- `StrategicBriefing.tsx`
 
 ## Data engine
 - `src/lib/academy/chapter1.ts`
@@ -30,8 +43,25 @@
 
 ## Nouvelles fondations
 - `src/lib/academy/progress.functions.ts`
+- `src/lib/academy/evaluation-bank.ts`
 - `src/components/academy/AssessmentModal.tsx`
 - `src/components/academy/MobileLessonBreadcrumb.tsx`
+
+## Visuels hybrides WebP
+- `public/academy/ch1/visuals/a4.webp`
+- `public/academy/ch1/visuals/a5.webp`
+- `public/academy/ch1/visuals/a6.webp`
+- `public/academy/ch1/visuals/a7.webp`
+- `public/academy/ch1/visuals/a8.webp`
+- `public/academy/ch1/visuals/a9.webp`
+- `public/academy/ch1/visuals/a10.webp`
+- `public/academy/ch1/visuals/a11.webp`
+- `public/academy/ch1/visuals/a12.webp`
+- `public/academy/ch1/visuals/a13.webp`
+- `public/academy/ch1/visuals/a14.webp`
+- `public/academy/ch1/visuals/a15.webp`
+- `public/academy/ch1/visuals/a16.webp`
+- `public/academy/ch1/visuals/a17.webp`
 
 ## Backend entities
 - profiles
