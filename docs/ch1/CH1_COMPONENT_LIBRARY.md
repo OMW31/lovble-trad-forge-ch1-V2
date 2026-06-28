@@ -5,6 +5,9 @@
 - ChapterHero
 - LessonSection
 - MobileLessonBreadcrumb
+- MissionBriefing
+- SkillUnlockPreview
+- VisualHybridLayer
 
 ## Pédagogie
 - Scenario
@@ -13,15 +16,27 @@
 
 ## Widgets macro
 - MacroIndicatorLab
+- MacroDashboard
 - MarketDriverVisualizer
+- EconomicCycleWheel
+- MacroRelationshipEngine
+- FedSimulator
+- NfpInterpreter
+- GdpCpiInterpreters
+- YieldCurveVisualizer
+- IntermarketCorrelationMap
 
 ## Widgets micro / valo
 - CompanyHealthScore
 - BalanceSheetExplorer
+- CompanyDashboard
+- FinancialRatios
 - ValuationLab
+- DcfSimulator
 - PeerComparisonMatrix
 - EarningsImpactEngine
 - ForecastScenarioPlanner
+- ScenarioBuilder
 
 ## Primitives
 - Reveal
@@ -33,11 +48,8 @@
 
 ## Backend-linked
 - progress.functions.ts
+- evaluation-bank.ts
 
 ## Évolution prévue
-- Macro dashboard premium
-- NFP calculator
-- Financial ratios suite
-- DCF simulator
-- Economic cycle wheel
-- Scenario builder
+- Maintenir la parité visuelle et fonctionnelle de cette bibliothèque dans les chapitres suivants
+- Ajouter les futurs visuels audit/analyse/reporting après réception et audit hybride

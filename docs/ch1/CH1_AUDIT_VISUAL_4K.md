@@ -7,6 +7,8 @@ Mode hybride uniquement.
 - Les compositions sont fortes.
 - Une partie du texte intégré est corrompue / bruitée / non exploitable.
 - Les schémas pédagogiques doivent donc être reconstruits nativement.
+- Pipeline WebP appliqué aux assets `A4` → `A17` fournis.
+- Intégration V2: les WebP servent de références immersives; les explications pédagogiques restent natives.
 
 ## Cadre
 ### Conserver
@@ -21,3 +23,9 @@ Mode hybride uniquement.
 
 ### Supprimer du flux principal
 - visuels trop bruités si leur texte est indispensable à la compréhension
+
+## Assets intégrés — 2026-06-28
+- Source: `A4.png` → `A17.png`
+- Destination: `public/academy/ch1/visuals/a4.webp` → `a17.webp`
+- Usage initial: `VisualHybridLayer` dans le haut du chapitre
+- Règle: ne jamais utiliser le texte incrusté dans ces images comme source pédagogique primaire

@@ -18,6 +18,18 @@ import { PeerComparisonMatrix } from "@/components/academy/PeerComparisonMatrix"
 import { EarningsImpactEngine } from "@/components/academy/EarningsImpactEngine";
 import { ForecastScenarioPlanner } from "@/components/academy/ForecastScenarioPlanner";
 import { AssessmentModal } from "@/components/academy/AssessmentModal";
+import { MissionBriefing, SkillUnlockPreview, VisualHybridLayer } from "@/components/academy/StrategicBriefing";
+import { EconomicCycleWheel } from "@/components/academy/EconomicCycleWheel";
+import { MacroRelationshipEngine } from "@/components/academy/MacroRelationshipEngine";
+import { FedSimulator } from "@/components/academy/FedSimulator";
+import { NfpInterpreter } from "@/components/academy/NfpInterpreter";
+import { GdpCpiInterpreters } from "@/components/academy/GdpCpiInterpreters";
+import { YieldCurveVisualizer } from "@/components/academy/YieldCurveVisualizer";
+import { IntermarketCorrelationMap } from "@/components/academy/IntermarketCorrelationMap";
+import { CompanyDashboard } from "@/components/academy/CompanyDashboard";
+import { FinancialRatios } from "@/components/academy/FinancialRatios";
+import { DcfSimulator } from "@/components/academy/DcfSimulator";
+import { ScenarioBuilder } from "@/components/academy/ScenarioBuilder";
 import { useChapterProgress } from "@/lib/academy/useChapterProgress";
 
 export const Route = createFileRoute("/academy/analyse-fondamentale")({
@@ -61,6 +73,34 @@ function Chapter1Page() {
   } = useChapterProgress(CHAPTER.id, CASE_STUDIES.length);
 
   const meta = (id: string) => LESSONS.find((l) => l.id === id)!;
+  const renderCase = (caseIndex: number, sectionId: string) => {
+    const cs = CASE_STUDIES[caseIndex];
+    return (
+      <Scenario
+        title={`Cas ${cs.index} — ${cs.title}`}
+        level={cs.level}
+        context={
+          <>
+            <span className="mb-2 inline-block rounded-full border border-data/30 bg-data/10 px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider text-data">
+              {cs.driver}
+            </span>
+            <br />
+            {cs.context}
+          </>
+        }
+        visual={<CandleReplay caseStudy={cs} />}
+        prompt={cs.decision.prompt}
+        choices={cs.decision.choices}
+        correctId={cs.decision.correctId}
+        explanation={cs.decision.explanation}
+        outcome={cs.outcome}
+        onComplete={() => {
+          markCase(cs.id);
+          markSection(sectionId);
+        }}
+      />
+    );
+  };
 
   return (
     <ChapterShell
@@ -72,6 +112,18 @@ function Chapter1Page() {
 
       <Reveal>
         <ChapterHero />
+      </Reveal>
+
+      <Reveal delay={80}>
+        <MissionBriefing />
+      </Reveal>
+
+      <Reveal delay={120}>
+        <SkillUnlockPreview completed={completed} />
+      </Reveal>
+
+      <Reveal delay={160}>
+        <VisualHybridLayer />
       </Reveal>
 
 
@@ -168,6 +220,25 @@ function Chapter1Page() {
           <MacroDashboard />
         </Reveal>
 
+        <div className="grid gap-6 xl:grid-cols-2">
+          <Reveal><EconomicCycleWheel /></Reveal>
+          <Reveal delay={80}><MacroRelationshipEngine /></Reveal>
+        </div>
+
+        <div className="grid gap-6 xl:grid-cols-2">
+          <Reveal><FedSimulator /></Reveal>
+          <Reveal delay={80}><NfpInterpreter /></Reveal>
+        </div>
+
+        <div className="grid gap-6 xl:grid-cols-2">
+          <Reveal><GdpCpiInterpreters /></Reveal>
+          <Reveal delay={80}><YieldCurveVisualizer /></Reveal>
+        </div>
+
+        <Reveal>
+          <IntermarketCorrelationMap />
+        </Reveal>
+
         <Reveal>
           <SubHead icon={BarChart3}>Laboratoire interactif — simulez une surprise</SubHead>
         </Reveal>
@@ -176,18 +247,13 @@ function Chapter1Page() {
         </Reveal>
 
         <Reveal>
-          <Scenario
-            title={CASE_STUDIES[0].title}
-            level={2}
-            context={CASE_STUDIES[0].context}
-            visual={<CandleReplay caseStudy={CASE_STUDIES[0]} />}
-            prompt={CASE_STUDIES[0].decision.prompt}
-            choices={CASE_STUDIES[0].decision.choices}
-            correctId={CASE_STUDIES[0].decision.correctId}
-            explanation={CASE_STUDIES[0].decision.explanation}
-            outcome={CASE_STUDIES[0].outcome}
-            onComplete={() => markSection("macro")}
-          />
+          {renderCase(0, "macro")}
+        </Reveal>
+        <Reveal delay={80}>
+          {renderCase(1, "macro")}
+        </Reveal>
+        <Reveal delay={120}>
+          {renderCase(2, "macro")}
         </Reveal>
       </LessonSection>
 
@@ -212,28 +278,15 @@ function Chapter1Page() {
           <Reveal><CompanyHealthScore /></Reveal>
           <Reveal delay={80}><BalanceSheetExplorer /></Reveal>
         </div>
+        <Reveal>
+          <CompanyDashboard />
+        </Reveal>
 
         <Reveal>
-          <Scenario
-            title="Scénario #3 — Lire la qualité d'une entreprise"
-            level={3}
-            context={
-              <>
-                Une société affiche une <strong className="text-foreground">forte croissance des ventes (+30 %)</strong>,
-                mais sa marge nette devient négative, son ratio dette/capitaux passe à{" "}
-                <strong className="text-foreground">2,8x</strong> et son free cash-flow est négatif depuis deux ans.
-              </>
-            }
-            prompt="Quel diagnostic fondamental est le plus rigoureux ?"
-            choices={[
-              { id: "a", label: "Croissance forte = entreprise saine, rien à signaler" },
-              { id: "b", label: "Qualité fragile : croissance non rentable financée par la dette, FCF négatif" },
-              { id: "c", label: "Seule la croissance compte, la dette est neutre" },
-            ]}
-            correctId="b"
-            explanation="La croissance ne vaut que si elle est rentable et financée sainement. Marge négative + endettement élevé + FCF négatif = profil à risque, malgré la croissance affichée."
-            onComplete={() => markSection("micro")}
-          />
+          {renderCase(3, "micro")}
+        </Reveal>
+        <Reveal delay={80}>
+          {renderCase(4, "micro")}
         </Reveal>
       </LessonSection>
 
@@ -259,29 +312,20 @@ function Chapter1Page() {
           <Reveal><ValuationLab /></Reveal>
           <Reveal delay={80}><PeerComparisonMatrix /></Reveal>
         </div>
+        <div className="grid gap-6 xl:grid-cols-2">
+          <Reveal><FinancialRatios /></Reveal>
+          <Reveal delay={80}><DcfSimulator /></Reveal>
+        </div>
         <Reveal><EarningsImpactEngine /></Reveal>
 
         <Reveal>
-          <Scenario
-            title="Scénario #4 — Multiple élevé, est-ce cher ?"
-            level={4}
-            context={
-              <>
-                Une entreprise se paie <strong className="text-foreground">P/E 58x</strong>, bien au-dessus du marché
-                (~20x). Mais sa croissance des ventes est de <strong className="text-foreground">+120 %</strong> avec une
-                marge nette de 49 % et un ROE de 91 %.
-              </>
-            }
-            prompt="Comment interpréter ce P/E élevé avec rigueur ?"
-            choices={[
-              { id: "a", label: "P/E 58x = trop cher, à éviter automatiquement" },
-              { id: "b", label: "Un P/E élevé peut être justifié par une croissance et une rentabilité exceptionnelles (PEG)" },
-              { id: "c", label: "Le P/E ne dépend jamais de la croissance" },
-            ]}
-            correctId="b"
-            explanation="Un multiple se lit relativement à la croissance (logique du PEG) et à la qualité. Une croissance et une rentabilité hors normes peuvent justifier un P/E élevé — sans jamais l'évaluer isolément."
-            onComplete={() => markSection("outils")}
-          />
+          {renderCase(5, "outils")}
+        </Reveal>
+        <Reveal delay={80}>
+          {renderCase(6, "outils")}
+        </Reveal>
+        <Reveal delay={120}>
+          {renderCase(7, "outils")}
         </Reveal>
       </LessonSection>
 
@@ -304,26 +348,14 @@ function Chapter1Page() {
         <Reveal><ForecastScenarioPlanner /></Reveal>
 
         <Reveal>
-          <Scenario
-            title="Scénario #5 — Le piège de la guidance"
-            level={5}
-            context={
-              <>
-                Une entreprise publie un <strong className="text-foreground">BPA supérieur</strong> aux attentes (+8 %).
-                Pourtant, la direction <strong className="text-foreground">abaisse fortement sa guidance</strong> pour
-                les trimestres à venir, invoquant un ralentissement de la demande.
-              </>
-            }
-            prompt="Quelle réaction du cours est la plus probable, et pourquoi ?"
-            choices={[
-              { id: "a", label: "Le cours monte : le résultat publié est meilleur que prévu" },
-              { id: "b", label: "Le cours baisse : le marché valorise l'avenir, et la guidance abaissée prime" },
-              { id: "c", label: "Aucune réaction : seul le passé compte" },
-            ]}
-            correctId="b"
-            explanation="Le marché est tourné vers l'avenir. Une bonne surprise sur le passé ne compense pas une guidance dégradée : les anticipations de bénéfices futurs sont revues à la baisse, et le cours suit."
-            onComplete={() => markSection("previsions")}
-          />
+          <ScenarioBuilder />
+        </Reveal>
+
+        <Reveal>
+          {renderCase(8, "previsions")}
+        </Reveal>
+        <Reveal delay={80}>
+          {renderCase(9, "previsions")}
         </Reveal>
       </LessonSection>
 
@@ -341,30 +373,13 @@ function Chapter1Page() {
           </p>
         </Reveal>
 
-        <div className="space-y-6">
-          {CASE_STUDIES.map((cs, i) => (
-            <Reveal key={cs.id} delay={i % 2 === 0 ? 0 : 60}>
-              <Scenario
-                title={`Cas ${cs.index} — ${cs.title}`}
-                level={cs.level}
-                context={
-                  <>
-                    <span className="mb-2 inline-block rounded-full border border-data/30 bg-data/10 px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider text-data">
-                      {cs.driver}
-                    </span>
-                    <br />
-                    {cs.context}
-                  </>
-                }
-                visual={<CandleReplay caseStudy={cs} />}
-                prompt={cs.decision.prompt}
-                choices={cs.decision.choices}
-                correctId={cs.decision.correctId}
-                explanation={cs.decision.explanation}
-                outcome={cs.outcome}
-                onComplete={() => markCase(cs.id)}
-              />
-            </Reveal>
+        <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-5">
+          {CASE_STUDIES.map((cs) => (
+            <a key={cs.id} href={`#${cs.index <= 3 ? "macro" : cs.index <= 5 ? "micro" : cs.index <= 8 ? "outils" : "previsions"}`} className="premium-hover rounded-xl border bg-surface p-4">
+              <div className="font-mono text-[10px] uppercase tracking-wider text-data">Cas {cs.index}</div>
+              <div className="mt-2 text-sm font-semibold leading-tight text-foreground">{cs.title}</div>
+              <div className="mt-2 text-xs text-muted-foreground">{cs.instrument} · {cs.period}</div>
+            </a>
           ))}
         </div>
       </LessonSection>

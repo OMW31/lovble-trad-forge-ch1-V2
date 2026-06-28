@@ -11,26 +11,22 @@
 - Auth route initiale
 - Modal d’évaluation indépendante (base)
 - Breadcrumb mobile inférieur (base)
+- Mission Briefing + Macro Radar
+- Skill Unlock Preview
+- Redistribution intégrale des 10 cas dans les leçons 1.2 → 1.5
+- Macro widget suite complète: cycle, relationship engine, Fed, NFP, GDP/CPI, curve, intermarket
+- Micro/value widget suite complète: company dashboard, ratios, DCF, scenario builder
+- Evaluation V2 complète: banques, scoring, parties A/B/C, replay scénarisé
+- Pipeline visuels WebP et couche hybride native
 
 ## Partially Implemented
-- Hero premium: présent mais pas encore Mission Briefing + Macro Radar complet
-- Progress tracking: local présent, persistance backend créée mais pas encore branchée partout
-- Evaluation system: modal et backend présents, contenu/score engine incomplets
-- Mobile UX: breadcrumb ajouté, système mobile global encore incomplet
-- Motion: reveal de base présent, bidirectionnel non complet
-- TradingView DNA: perceptible mais non systématisé
+- Mobile UX: breadcrumb présent, audits de rupture à poursuivre à chaque ajout futur
+- Motion: reveal + hover premium + reduced-motion présents, à enrichir sans effet gadget
+- TradingView DNA: harmonisé sur replays/widgets, à maintenir lors des futurs chapitres
 
 ## Missing
-- Redistribution complète des 10 scénarios dans 1.1 → 1.5
-- Macro Dashboard 11 indicateurs
-- NFP Calculator / DCF Simulator / Financial Ratios dédiés
-- Economic Cycle Wheel avancée
-- Scenario Builder complet
-- Scroll UX up/down complet
-- Interaction system premium global
-- Audit visuel 4K verrouillé
-- Pipeline asset WebP formalisé et appliqué
-- QA Lighthouse / perf / a11y de fin de chaîne
+- Audit continu post-ajout massif sur vrais appareils et Lighthouse final de publication
+- Intégration des futurs visuels audit/analyse/reporting non encore fournis
 
 ## Deprecated / à réduire
 - Concentration excessive du bloc final “cas pratiques”

@@ -32,8 +32,9 @@ export function ForecastScenarioPlanner() {
   const max = Math.max(...allVals);
   const min = Math.min(...allVals);
 
-  const x = (y: number) => PAD + (y / YEARS) * (W - PAD * 2);
-  const yScale = (v: number) => PAD + (1 - (v - min) / (max - min)) * (HGT - PAD * 2);
+  const roundCoord = (v: number) => Math.round(v * 1000) / 1000;
+  const x = (y: number) => roundCoord(PAD + (y / YEARS) * (W - PAD * 2));
+  const yScale = (v: number) => roundCoord(PAD + (1 - (v - min) / (max - min)) * (HGT - PAD * 2));
 
   const path = (vals: number[]) => vals.map((v, i) => `${i === 0 ? "M" : "L"} ${x(i)} ${yScale(v)}`).join(" ");
 
