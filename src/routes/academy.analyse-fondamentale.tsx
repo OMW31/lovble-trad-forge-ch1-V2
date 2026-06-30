@@ -211,67 +211,84 @@ function Chapter1Page() {
       {/* 1.2 — Macroéconomie */}
       <LessonSection {...meta("macro")}>
         <Reveal>
-          <SubHead icon={BarChart3}>Concept</SubHead>
-          <p className="mt-3 max-w-3xl text-base leading-relaxed text-muted-foreground">
-            Les indicateurs macroéconomiques reflètent la santé d'une économie et guident les flux de capitaux. On les
-            classe par <strong className="text-foreground">nature</strong> (croissance, inflation, politique monétaire)
-            et par <strong className="text-foreground">temporalité</strong> (avancés, coïncidents, retardés). Lire la{" "}
-            <strong className="text-foreground">surprise</strong> par rapport au consensus est souvent plus important
-            que la donnée brute.
-          </p>
+          <LessonMiniHero lesson={meta("macro")} />
         </Reveal>
 
-        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
-          <Reveal delay={0}><KpiTile label="PIB" value="croissance" hint="activité globale" tone="bull" /></Reveal>
-          <Reveal delay={40}><KpiTile label="IPC" value="inflation" hint="prix & taux" tone="forge" /></Reveal>
-          <Reveal delay={80}><KpiTile label="Taux" value="directeurs" hint="coût du capital" tone="data" /></Reveal>
-          <Reveal delay={120}><KpiTile label="NFP" value="emploi" hint="marché du travail" tone="bull" /></Reveal>
-          <Reveal delay={160}><KpiTile label="Balance" value="commerce" hint="export − import" /></Reveal>
-          <Reveal delay={200}><KpiTile label="PMI" value="confiance" hint="indicateur avancé" tone="data" /></Reveal>
+        <div id="macro-concept" className="scroll-mt-24 space-y-6">
+          <Reveal>
+            <SubHead icon={BarChart3}>Concept</SubHead>
+            <p className="mt-3 max-w-3xl text-base leading-relaxed text-muted-foreground">
+              Les indicateurs macroéconomiques reflètent la santé d'une économie et guident les flux de capitaux. On les
+              classe par <strong className="text-foreground">nature</strong> (croissance, inflation, politique monétaire)
+              et par <strong className="text-foreground">temporalité</strong> (avancés, coïncidents, retardés). Lire la{" "}
+              <strong className="text-foreground">surprise</strong> par rapport au consensus est souvent plus important
+              que la donnée brute.
+            </p>
+          </Reveal>
+
+          <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
+            <Reveal delay={0}><KpiTile label="PIB" value="croissance" hint="activité globale" tone="bull" /></Reveal>
+            <Reveal delay={40}><KpiTile label="IPC" value="inflation" hint="prix & taux" tone="forge" /></Reveal>
+            <Reveal delay={80}><KpiTile label="Taux" value="directeurs" hint="coût du capital" tone="data" /></Reveal>
+            <Reveal delay={120}><KpiTile label="NFP" value="emploi" hint="marché du travail" tone="bull" /></Reveal>
+            <Reveal delay={160}><KpiTile label="Balance" value="commerce" hint="export − import" /></Reveal>
+            <Reveal delay={200}><KpiTile label="PMI" value="confiance" hint="indicateur avancé" tone="data" /></Reveal>
+          </div>
         </div>
 
-        <Reveal>
-          <SubHead icon={BarChart3}>Command center — 11 indicateurs clés</SubHead>
-        </Reveal>
-        <Reveal>
-          <MacroDashboard />
-        </Reveal>
-
-        <div className="grid gap-6 xl:grid-cols-2">
-          <Reveal><EconomicCycleWheel /></Reveal>
-          <Reveal delay={80}><MacroRelationshipEngine /></Reveal>
+        <div id="macro-dashboard" className="scroll-mt-24 space-y-6">
+          <Reveal>
+            <SubHead icon={BarChart3}>Command center — 11 indicateurs clés</SubHead>
+          </Reveal>
+          <Reveal>
+            <MacroDashboard />
+          </Reveal>
         </div>
 
-        <div className="grid gap-6 xl:grid-cols-2">
-          <Reveal><FedSimulator /></Reveal>
-          <Reveal delay={80}><NfpInterpreter /></Reveal>
+        <div id="macro-widgets" className="relative scroll-mt-24 space-y-6 overflow-hidden rounded-3xl">
+          <VisualLayer src="/academy/ch1/visuals/a4.webp" alt="" variant="background" opacity={0.14} position="center top" />
+          <div className="relative space-y-6 p-px">
+            <div className="grid gap-6 xl:grid-cols-2">
+              <Reveal><EconomicCycleWheel /></Reveal>
+              <Reveal delay={80}><MacroRelationshipEngine /></Reveal>
+            </div>
+
+            <div className="grid gap-6 xl:grid-cols-2">
+              <Reveal><FedSimulator /></Reveal>
+              <Reveal delay={80}><NfpInterpreter /></Reveal>
+            </div>
+
+            <div className="grid gap-6 xl:grid-cols-2">
+              <Reveal><GdpCpiInterpreters /></Reveal>
+              <Reveal delay={80}><YieldCurveVisualizer /></Reveal>
+            </div>
+
+            <Reveal>
+              <IntermarketCorrelationMap />
+            </Reveal>
+          </div>
         </div>
 
-        <div className="grid gap-6 xl:grid-cols-2">
-          <Reveal><GdpCpiInterpreters /></Reveal>
-          <Reveal delay={80}><YieldCurveVisualizer /></Reveal>
+        <div id="macro-lab" className="scroll-mt-24 space-y-6">
+          <Reveal>
+            <SubHead icon={BarChart3}>Laboratoire interactif — simulez une surprise</SubHead>
+          </Reveal>
+          <Reveal>
+            <MacroIndicatorLab />
+          </Reveal>
         </div>
 
-        <Reveal>
-          <IntermarketCorrelationMap />
-        </Reveal>
-
-        <Reveal>
-          <SubHead icon={BarChart3}>Laboratoire interactif — simulez une surprise</SubHead>
-        </Reveal>
-        <Reveal>
-          <MacroIndicatorLab />
-        </Reveal>
-
-        <Reveal>
-          {renderCase(0, "macro")}
-        </Reveal>
-        <Reveal delay={80}>
-          {renderCase(1, "macro")}
-        </Reveal>
-        <Reveal delay={120}>
-          {renderCase(2, "macro")}
-        </Reveal>
+        <div id="macro-cas" className="scroll-mt-24 space-y-6">
+          <Reveal>
+            {renderCase(0, "macro")}
+          </Reveal>
+          <Reveal delay={80}>
+            {renderCase(1, "macro")}
+          </Reveal>
+          <Reveal delay={120}>
+            {renderCase(2, "macro")}
+          </Reveal>
+        </div>
       </LessonSection>
 
       {/* 1.3 — Microéconomie */}
