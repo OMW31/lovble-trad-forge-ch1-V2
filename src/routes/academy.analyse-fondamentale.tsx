@@ -294,34 +294,44 @@ function Chapter1Page() {
       {/* 1.3 — Microéconomie */}
       <LessonSection {...meta("micro")}>
         <Reveal>
-          <SubHead icon={BarChart3}>Concept</SubHead>
-          <p className="mt-3 max-w-3xl text-base leading-relaxed text-muted-foreground">
-            Au niveau de l'entreprise, l'analyse repose sur les{" "}
-            <strong className="text-foreground">états financiers</strong> : compte de résultat (revenus, marges,
-            bénéfice), bilan (actif = passif + capitaux propres) et tableau des flux de trésorerie. On y mesure la{" "}
-            <strong className="text-foreground">croissance</strong>, la <strong className="text-foreground">rentabilité</strong>{" "}
-            (ROE, ROA, marges), l'<strong className="text-foreground">endettement</strong> (D/E) et la génération de{" "}
-            <strong className="text-foreground">cash-flow</strong>.
-          </p>
+          <LessonMiniHero lesson={meta("micro")} />
         </Reveal>
 
-        <Reveal>
-          <SubHead icon={Calculator}>Widgets — pilotez les fondamentaux</SubHead>
-        </Reveal>
-        <div className="grid gap-6 xl:grid-cols-2">
-          <Reveal><CompanyHealthScore /></Reveal>
-          <Reveal delay={80}><BalanceSheetExplorer /></Reveal>
+        <div id="micro-concept" className="scroll-mt-24">
+          <Reveal>
+            <SubHead icon={BarChart3}>Concept</SubHead>
+            <p className="mt-3 max-w-3xl text-base leading-relaxed text-muted-foreground">
+              Au niveau de l'entreprise, l'analyse repose sur les{" "}
+              <strong className="text-foreground">états financiers</strong> : compte de résultat (revenus, marges,
+              bénéfice), bilan (actif = passif + capitaux propres) et tableau des flux de trésorerie. On y mesure la{" "}
+              <strong className="text-foreground">croissance</strong>, la <strong className="text-foreground">rentabilité</strong>{" "}
+              (ROE, ROA, marges), l'<strong className="text-foreground">endettement</strong> (D/E) et la génération de{" "}
+              <strong className="text-foreground">cash-flow</strong>.
+            </p>
+          </Reveal>
         </div>
-        <Reveal>
-          <CompanyDashboard />
-        </Reveal>
 
-        <Reveal>
-          {renderCase(3, "micro")}
-        </Reveal>
-        <Reveal delay={80}>
-          {renderCase(4, "micro")}
-        </Reveal>
+        <div id="micro-widgets" className="scroll-mt-24 space-y-6">
+          <Reveal>
+            <SubHead icon={Calculator}>Widgets — pilotez les fondamentaux</SubHead>
+          </Reveal>
+          <div className="grid gap-6 xl:grid-cols-2">
+            <Reveal><CompanyHealthScore /></Reveal>
+            <Reveal delay={80}><BalanceSheetExplorer /></Reveal>
+          </div>
+          <Reveal>
+            <CompanyDashboard />
+          </Reveal>
+        </div>
+
+        <div id="micro-cas" className="scroll-mt-24 space-y-6">
+          <Reveal>
+            {renderCase(3, "micro")}
+          </Reveal>
+          <Reveal delay={80}>
+            {renderCase(4, "micro")}
+          </Reveal>
+        </div>
       </LessonSection>
 
       {/* 1.4 — Outils d'analyse */}
