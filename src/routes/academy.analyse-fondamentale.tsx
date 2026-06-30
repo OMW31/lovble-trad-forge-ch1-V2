@@ -5,7 +5,7 @@ import { CASE_STUDIES } from "@/lib/academy/market-data";
 import { ChapterShell } from "@/components/academy/ChapterShell";
 import { ChapterHero } from "@/components/academy/ChapterHero";
 import { LessonSection } from "@/components/academy/LessonSection";
-import { ConceptCard, KpiTile, Reveal, Eyebrow } from "@/components/academy/primitives";
+import { ConceptCard, KpiTile, Reveal, Eyebrow, VisualLayer } from "@/components/academy/primitives";
 import { Scenario } from "@/components/academy/Scenario";
 import { CandleReplay } from "@/components/academy/CandleReplay";
 import { MarketDriverVisualizer } from "@/components/academy/MarketDriverVisualizer";
@@ -30,6 +30,9 @@ import { CompanyDashboard } from "@/components/academy/CompanyDashboard";
 import { FinancialRatios } from "@/components/academy/FinancialRatios";
 import { DcfSimulator } from "@/components/academy/DcfSimulator";
 import { ScenarioBuilder } from "@/components/academy/ScenarioBuilder";
+import { ScenarioBuilder } from "@/components/academy/ScenarioBuilder";
+import { MacroRegimeRadar } from "@/components/academy/MacroRegimeRadar";
+import { LessonMiniHero } from "@/components/academy/LessonMiniHero";
 import { useChapterProgress } from "@/lib/academy/useChapterProgress";
 
 export const Route = createFileRoute("/academy/analyse-fondamentale")({
