@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Scale, TrendingUp, BarChart3, Calculator, LineChart, History, CheckCircle2, Award } from "lucide-react";
+import { Scale, TrendingUp, BarChart3, Calculator, LineChart, History, CheckCircle2, Award, Activity } from "lucide-react";
 import { CHAPTER, LESSONS } from "@/lib/academy/chapter1";
 import { CASE_STUDIES } from "@/lib/academy/market-data";
 import { ChapterShell } from "@/components/academy/ChapterShell";
