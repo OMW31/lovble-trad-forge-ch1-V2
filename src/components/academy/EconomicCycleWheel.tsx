@@ -26,8 +26,8 @@ export function EconomicCycleWheel() {
 
   return (
     <WidgetFrame title="Economic Cycle Wheel" subtitle="Positionnez le cycle et lisez le régime d’actifs cohérent." badge="Cycle macro">
-      <div className="grid gap-5 lg:grid-cols-[220px_1fr]">
-        <div className="relative mx-auto h-52 w-52">
+      <div className="grid gap-5 lg:grid-cols-[minmax(0,200px)_1fr]">
+        <div className="relative mx-auto aspect-square w-full max-w-[200px]">
           <svg viewBox="0 0 180 180" className="h-full w-full">
             <circle cx="90" cy="90" r="72" fill="var(--surface)" stroke="var(--border)" />
             <path d="M90 18 A72 72 0 0 1 162 90" fill="none" stroke="var(--bull)" strokeWidth="14" opacity="0.45" />
@@ -39,18 +39,21 @@ export function EconomicCycleWheel() {
             <text x="90" y="104" textAnchor="middle" className="font-mono" fontSize="13" fontWeight="700" fill="var(--foreground)">{phase}</text>
           </svg>
         </div>
-        <div>
+        <div className="min-w-0">
           <div className="grid grid-cols-2 gap-2">
             {order.map((item) => (
               <button
                 key={item}
                 onClick={() => setPhase(item)}
                 className={cn(
-                  "rounded-lg border p-3 text-left transition-all premium-hover",
+                  "rounded-lg border p-2.5 text-left transition-all premium-hover sm:p-3",
                   phase === item ? "border-forge bg-forge/10" : "border-border bg-surface hover:border-forge/40",
                 )}
               >
-                <div className="flex items-center gap-2 text-sm font-semibold text-foreground"><RotateCw className="h-3.5 w-3.5 text-forge" />{item}</div>
+                <div className="flex items-center gap-1.5 text-xs font-semibold text-foreground sm:gap-2 sm:text-sm">
+                  <RotateCw className="h-3.5 w-3.5 shrink-0 text-forge" />
+                  <span className="truncate">{item}</span>
+                </div>
               </button>
             ))}
           </div>
