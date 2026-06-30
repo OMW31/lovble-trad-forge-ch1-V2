@@ -337,70 +337,89 @@ function Chapter1Page() {
       {/* 1.4 — Outils d'analyse */}
       <LessonSection {...meta("outils")}>
         <Reveal>
-          <SubHead icon={Calculator}>Concept</SubHead>
-          <p className="mt-3 max-w-3xl text-base leading-relaxed text-muted-foreground">
-            Pour transformer les données en décision, on s'appuie sur des outils : les{" "}
-            <strong className="text-foreground">ratios</strong> (P/E, P/B, D/E, ROE), le modèle{" "}
-            <strong className="text-foreground">DCF</strong> (actualisation des flux), l'analyse{" "}
-            <strong className="text-foreground">sectorielle</strong>, la comparaison entre pairs (
-            <strong className="text-foreground">peer comparison</strong>) et l'analyse{" "}
-            <strong className="text-foreground">SWOT</strong>. Aucun multiple ne se lit seul : il se compare à la
-            croissance, au secteur et à l'historique.
-          </p>
+          <LessonMiniHero lesson={meta("outils")} />
         </Reveal>
 
-        <Reveal>
-          <SubHead icon={Calculator}>Boîte à outils interactive</SubHead>
-        </Reveal>
-        <div className="grid gap-6 xl:grid-cols-2">
-          <Reveal><ValuationLab /></Reveal>
-          <Reveal delay={80}><PeerComparisonMatrix /></Reveal>
+        <div id="outils-concept" className="scroll-mt-24">
+          <Reveal>
+            <SubHead icon={Calculator}>Concept</SubHead>
+            <p className="mt-3 max-w-3xl text-base leading-relaxed text-muted-foreground">
+              Pour transformer les données en décision, on s'appuie sur des outils : les{" "}
+              <strong className="text-foreground">ratios</strong> (P/E, P/B, D/E, ROE), le modèle{" "}
+              <strong className="text-foreground">DCF</strong> (actualisation des flux), l'analyse{" "}
+              <strong className="text-foreground">sectorielle</strong>, la comparaison entre pairs (
+              <strong className="text-foreground">peer comparison</strong>) et l'analyse{" "}
+              <strong className="text-foreground">SWOT</strong>. Aucun multiple ne se lit seul : il se compare à la
+              croissance, au secteur et à l'historique.
+            </p>
+          </Reveal>
         </div>
-        <div className="grid gap-6 xl:grid-cols-2">
-          <Reveal><FinancialRatios /></Reveal>
-          <Reveal delay={80}><DcfSimulator /></Reveal>
-        </div>
-        <Reveal><EarningsImpactEngine /></Reveal>
 
-        <Reveal>
-          {renderCase(5, "outils")}
-        </Reveal>
-        <Reveal delay={80}>
-          {renderCase(6, "outils")}
-        </Reveal>
-        <Reveal delay={120}>
-          {renderCase(7, "outils")}
-        </Reveal>
+        <div id="outils-widgets" className="scroll-mt-24 space-y-6">
+          <Reveal>
+            <SubHead icon={Calculator}>Boîte à outils interactive</SubHead>
+          </Reveal>
+          <div className="grid gap-6 xl:grid-cols-2">
+            <Reveal><ValuationLab /></Reveal>
+            <Reveal delay={80}><PeerComparisonMatrix /></Reveal>
+          </div>
+          <div className="grid gap-6 xl:grid-cols-2">
+            <Reveal><FinancialRatios /></Reveal>
+            <Reveal delay={80}><DcfSimulator /></Reveal>
+          </div>
+          <Reveal><EarningsImpactEngine /></Reveal>
+        </div>
+
+        <div id="outils-cas" className="scroll-mt-24 space-y-6">
+          <Reveal>
+            {renderCase(5, "outils")}
+          </Reveal>
+          <Reveal delay={80}>
+            {renderCase(6, "outils")}
+          </Reveal>
+          <Reveal delay={120}>
+            {renderCase(7, "outils")}
+          </Reveal>
+        </div>
       </LessonSection>
 
       {/* 1.5 — Prévisions */}
       <LessonSection {...meta("previsions")}>
         <Reveal>
-          <SubHead icon={LineChart}>Concept</SubHead>
-          <p className="mt-3 max-w-3xl text-base leading-relaxed text-muted-foreground">
-            Prévoir consiste à projeter l'avenir à partir des{" "}
-            <strong className="text-foreground">tendances historiques</strong>, de{" "}
-            <strong className="text-foreground">scénarios</strong> (optimiste, neutre, pessimiste) et de la{" "}
-            <strong className="text-foreground">guidance</strong> communiquée par les entreprises. La guidance pèse
-            souvent plus que le dernier résultat publié : elle oriente les anticipations du marché.
-          </p>
+          <LessonMiniHero lesson={meta("previsions")} />
         </Reveal>
 
-        <Reveal>
-          <SubHead icon={LineChart}>Planificateur de scénarios</SubHead>
-        </Reveal>
-        <Reveal><ForecastScenarioPlanner /></Reveal>
+        <div id="previsions-concept" className="scroll-mt-24">
+          <Reveal>
+            <SubHead icon={LineChart}>Concept</SubHead>
+            <p className="mt-3 max-w-3xl text-base leading-relaxed text-muted-foreground">
+              Prévoir consiste à projeter l'avenir à partir des{" "}
+              <strong className="text-foreground">tendances historiques</strong>, de{" "}
+              <strong className="text-foreground">scénarios</strong> (optimiste, neutre, pessimiste) et de la{" "}
+              <strong className="text-foreground">guidance</strong> communiquée par les entreprises. La guidance pèse
+              souvent plus que le dernier résultat publié : elle oriente les anticipations du marché.
+            </p>
+          </Reveal>
+        </div>
 
-        <Reveal>
-          <ScenarioBuilder />
-        </Reveal>
+        <div id="previsions-planner" className="scroll-mt-24 space-y-6">
+          <Reveal>
+            <SubHead icon={LineChart}>Planificateur de scénarios</SubHead>
+          </Reveal>
+          <Reveal><ForecastScenarioPlanner /></Reveal>
+          <Reveal>
+            <ScenarioBuilder />
+          </Reveal>
+        </div>
 
-        <Reveal>
-          {renderCase(8, "previsions")}
-        </Reveal>
-        <Reveal delay={80}>
-          {renderCase(9, "previsions")}
-        </Reveal>
+        <div id="previsions-cas" className="scroll-mt-24 space-y-6">
+          <Reveal>
+            {renderCase(8, "previsions")}
+          </Reveal>
+          <Reveal delay={80}>
+            {renderCase(9, "previsions")}
+          </Reveal>
+        </div>
       </LessonSection>
 
       {/* 1.6 — Cas pratiques */}
