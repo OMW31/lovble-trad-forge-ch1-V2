@@ -131,66 +131,81 @@ function Chapter1Page() {
 
       {/* 1.1 — Introduction & Définition */}
       <LessonSection {...meta("intro")}>
-        <Reveal>
-          <SubHead icon={Scale}>Concept</SubHead>
-          <p className="mt-3 max-w-3xl text-base leading-relaxed text-muted-foreground">
-            L'analyse fondamentale est la pierre angulaire de l'évaluation des actifs financiers. Elle consiste à
-            déterminer la <strong className="text-foreground">valeur intrinsèque</strong> — la « juste valeur » — d'un
-            actif en examinant l'ensemble des facteurs économiques, financiers et qualitatifs qui l'influencent.
-            Contrairement à l'analyse technique, centrée sur les prix et volumes, elle s'intéresse aux{" "}
-            <strong className="text-foreground">causes sous-jacentes</strong> des mouvements de marché.
-          </p>
-        </Reveal>
-
-        <div className="grid gap-4 md:grid-cols-3">
-          <Reveal delay={0}>
-            <ConceptCard title="Valeur intrinsèque vs prix" accent>
-              Le prix de marché peut différer de la valeur réelle. L'objectif est d'exploiter ces{" "}
-              <strong>divergences</strong>.
-            </ConceptCard>
+        <div id="intro-regimes" className="scroll-mt-24">
+          <Reveal>
+            <SubHead icon={Activity}>Les 4 régimes macro — Vue radar</SubHead>
           </Reveal>
-          <Reveal delay={80}>
-            <ConceptCard title="Efficience imparfaite">
-              Les marchés ne sont pas toujours efficients : des opportunités existent quand les prix n'intègrent pas
-              toute l'information.
-            </ConceptCard>
-          </Reveal>
-          <Reveal delay={160}>
-            <ConceptCard title="Retour à la moyenne">
-              À long terme, le prix tend à <strong>converger</strong> vers la valeur intrinsèque de l'actif.
-            </ConceptCard>
+          <Reveal>
+            <MacroRegimeRadar />
           </Reveal>
         </div>
 
-        <Reveal>
-          <SubHead icon={TrendingUp}>Illustration interactive</SubHead>
-        </Reveal>
-        <Reveal>
-          <MarketDriverVisualizer />
-        </Reveal>
+        <div id="intro-concept" className="scroll-mt-24 space-y-6">
+          <Reveal>
+            <SubHead icon={Scale}>Concept</SubHead>
+            <p className="mt-3 max-w-3xl text-base leading-relaxed text-muted-foreground">
+              L'analyse fondamentale est la pierre angulaire de l'évaluation des actifs financiers. Elle consiste à
+              déterminer la <strong className="text-foreground">valeur intrinsèque</strong> — la « juste valeur » — d'un
+              actif en examinant l'ensemble des facteurs économiques, financiers et qualitatifs qui l'influencent.
+              Contrairement à l'analyse technique, centrée sur les prix et volumes, elle s'intéresse aux{" "}
+              <strong className="text-foreground">causes sous-jacentes</strong> des mouvements de marché.
+            </p>
+          </Reveal>
 
-        <Reveal>
-          <Scenario
-            title="Scénario #1 — Pourquoi le prix bouge"
-            level={1}
-            context={
-              <>
-                Une devise se négocie nettement <strong className="text-foreground">sous</strong> ce que ses
-                fondamentaux justifient : croissance solide, comptes publics sains, taux attractifs. Le marché reste
-                pessimiste à court terme à cause d'un titre de presse anxiogène.
-              </>
-            }
-            prompt="Selon le principe de retour à la moyenne, quelle est l'hypothèse de travail la plus cohérente ?"
-            choices={[
-              { id: "a", label: "Le prix devrait tendre à se rapprocher de la valeur intrinsèque dans le temps" },
-              { id: "b", label: "Le prix s'éloignera toujours davantage de sa valeur" },
-              { id: "c", label: "La valeur intrinsèque n'a aucune importance" },
-            ]}
-            correctId="a"
-            explanation="L'analyse fondamentale parie qu'à long terme le prix converge vers la valeur intrinsèque. Une sous-évaluation soutenue par des fondamentaux solides est une opportunité potentielle."
-            onComplete={() => markSection("intro")}
-          />
-        </Reveal>
+          <div className="grid gap-4 md:grid-cols-3">
+            <Reveal delay={0}>
+              <ConceptCard title="Valeur intrinsèque vs prix" accent>
+                Le prix de marché peut différer de la valeur réelle. L'objectif est d'exploiter ces{" "}
+                <strong>divergences</strong>.
+              </ConceptCard>
+            </Reveal>
+            <Reveal delay={80}>
+              <ConceptCard title="Efficience imparfaite">
+                Les marchés ne sont pas toujours efficients : des opportunités existent quand les prix n'intègrent pas
+                toute l'information.
+              </ConceptCard>
+            </Reveal>
+            <Reveal delay={160}>
+              <ConceptCard title="Retour à la moyenne">
+                À long terme, le prix tend à <strong>converger</strong> vers la valeur intrinsèque de l'actif.
+              </ConceptCard>
+            </Reveal>
+          </div>
+        </div>
+
+        <div id="intro-illustration" className="scroll-mt-24 space-y-6">
+          <Reveal>
+            <SubHead icon={TrendingUp}>Illustration interactive</SubHead>
+          </Reveal>
+          <Reveal>
+            <MarketDriverVisualizer />
+          </Reveal>
+        </div>
+
+        <div id="intro-scenario" className="scroll-mt-24">
+          <Reveal>
+            <Scenario
+              title="Scénario #1 — Pourquoi le prix bouge"
+              level={1}
+              context={
+                <>
+                  Une devise se négocie nettement <strong className="text-foreground">sous</strong> ce que ses
+                  fondamentaux justifient : croissance solide, comptes publics sains, taux attractifs. Le marché reste
+                  pessimiste à court terme à cause d'un titre de presse anxiogène.
+                </>
+              }
+              prompt="Selon le principe de retour à la moyenne, quelle est l'hypothèse de travail la plus cohérente ?"
+              choices={[
+                { id: "a", label: "Le prix devrait tendre à se rapprocher de la valeur intrinsèque dans le temps" },
+                { id: "b", label: "Le prix s'éloignera toujours davantage de sa valeur" },
+                { id: "c", label: "La valeur intrinsèque n'a aucune importance" },
+              ]}
+              correctId="a"
+              explanation="L'analyse fondamentale parie qu'à long terme le prix converge vers la valeur intrinsèque. Une sous-évaluation soutenue par des fondamentaux solides est une opportunité potentielle."
+              onComplete={() => markSection("intro")}
+            />
+          </Reveal>
+        </div>
       </LessonSection>
 
       {/* 1.2 — Macroéconomie */}
