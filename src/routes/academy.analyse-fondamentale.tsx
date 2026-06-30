@@ -436,7 +436,7 @@ function Chapter1Page() {
           </p>
         </Reveal>
 
-        <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-5">
+        <div id="cas-pratiques-index" className="scroll-mt-24 grid gap-3 md:grid-cols-2 xl:grid-cols-5">
           {CASE_STUDIES.map((cs) => (
             <a key={cs.id} href={`#${cs.index <= 3 ? "macro" : cs.index <= 5 ? "micro" : cs.index <= 8 ? "outils" : "previsions"}`} className="premium-hover rounded-xl border bg-surface p-4">
               <div className="font-mono text-[10px] uppercase tracking-wider text-data">Cas {cs.index}</div>
