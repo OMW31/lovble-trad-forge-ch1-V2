@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ArrowRight, Network } from "lucide-react";
+import { ArrowDown, ArrowRight, Network } from "lucide-react";
 import { WidgetFrame } from "./primitives";
 import { cn } from "@/lib/utils";
 
@@ -40,19 +40,41 @@ export function MacroRelationshipEngine() {
           </button>
         ))}
       </div>
-      <div className="overflow-x-auto rounded-xl border bg-gradient-surface p-4">
-        <div className="flex min-w-[680px] items-center gap-2">
+
+      {/* Mobile: vertical transmission chain (no horizontal overflow) */}
+      <div className="grid gap-2 rounded-xl border bg-gradient-surface p-4 sm:hidden">
+        {shock.nodes.map((node, index) => (
+          <div key={node} className="contents">
+            <div className="premium-hover flex items-center gap-3 rounded-xl border bg-card p-3">
+              <Network className="h-4 w-4 shrink-0 text-forge" />
+              <span className="font-mono text-sm font-semibold text-foreground">{node}</span>
+            </div>
+            {index < shock.nodes.length - 1 && <ArrowDown className="mx-auto h-4 w-4 text-muted-foreground" />}
+          </div>
+        ))}
+      </div>
+
+      {/* Tablet/desktop: horizontal chain, scrollable with fade mask */}
+      <div
+        className="hidden overflow-x-auto rounded-xl border bg-gradient-surface p-4 sm:block [scrollbar-width:thin]"
+        style={{
+          maskImage: "linear-gradient(90deg, transparent, #000 3%, #000 97%, transparent)",
+          WebkitMaskImage: "linear-gradient(90deg, transparent, #000 3%, #000 97%, transparent)",
+        }}
+      >
+        <div className="flex min-w-[640px] items-stretch gap-2">
           {shock.nodes.map((node, index) => (
             <div key={node} className="contents">
               <div className="premium-hover flex min-h-20 flex-1 flex-col justify-center rounded-xl border bg-card p-3 text-center">
                 <Network className="mx-auto mb-2 h-4 w-4 text-forge" />
                 <span className="font-mono text-xs font-semibold text-foreground">{node}</span>
               </div>
-              {index < shock.nodes.length - 1 && <ArrowRight className="h-4 w-4 shrink-0 text-muted-foreground" />}
+              {index < shock.nodes.length - 1 && <ArrowRight className="my-auto h-4 w-4 shrink-0 text-muted-foreground" />}
             </div>
           ))}
         </div>
       </div>
+
       <p className="mt-4 rounded-lg border border-data/30 bg-data/5 p-3 text-sm leading-relaxed text-muted-foreground">{shock.thesis}</p>
     </WidgetFrame>
   );
