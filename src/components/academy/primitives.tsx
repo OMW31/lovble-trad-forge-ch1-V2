@@ -1,7 +1,11 @@
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import { type ReactNode } from "react";
+import { motion, useReducedMotion } from "framer-motion";
 import { cn } from "@/lib/utils";
 
-/** Fade/rise on scroll into view. */
+/**
+ * Fade/rise on scroll — bidirectional (plays on the way down AND back up).
+ * Honors prefers-reduced-motion by rendering static content.
+ */
 export function Reveal({
   children,
   className,
@@ -11,35 +15,101 @@ export function Reveal({
   className?: string;
   delay?: number;
 }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const [shown, setShown] = useState(false);
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const obs = new IntersectionObserver(
-      (e) => {
-        if (e[0]?.isIntersecting) {
-          setShown(true);
-          obs.disconnect();
-        }
-      },
-      { threshold: 0.15 },
-    );
-    obs.observe(el);
-    return () => obs.disconnect();
-  }, []);
+  const reduce = useReducedMotion();
+
+  if (reduce) {
+    return <div className={className}>{children}</div>;
+  }
+
   return (
-    <div
-      ref={ref}
-      className={cn(
-        "transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]",
-        shown ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0",
-        className,
-      )}
-      style={{ transitionDelay: `${delay}ms` }}
+    <motion.div
+      className={className}
+      initial={{ opacity: 0, y: 24 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: 24 }}
+      viewport={{ once: false, amount: 0.18, margin: "-8% 0px -8% 0px" }}
+      transition={{ duration: 0.6, delay: delay / 1000, ease: [0.22, 1, 0.36, 1] }}
     >
       {children}
-    </div>
+    </motion.div>
+  );
+}
+
+type VisualVariant = "background" | "figure" | "band";
+
+/**
+ * Premium visual integration layer. No visual is ever "posé" (raw <img>):
+ * every asset gets opacity, fade (mask), gradient overlay and an entrance
+ * animation. `background` blends behind content; `figure` is a contextual
+ * inline illustration; `band` is a wide atmospheric strip.
+ */
+export function VisualLayer({
+  src,
+  alt,
+  variant = "background",
+  className,
+  opacity = 0.5,
+  position = "center",
+}: {
+  src: string;
+  alt: string;
+  variant?: VisualVariant;
+  className?: string;
+  opacity?: number;
+  position?: string;
+}) {
+  const reduce = useReducedMotion();
+
+  if (variant === "figure") {
+    return (
+      <motion.figure
+        className={cn("group relative overflow-hidden rounded-xl border bg-surface", className)}
+        initial={reduce ? false : { opacity: 0, scale: 0.97 }}
+        whileInView={reduce ? undefined : { opacity: 1, scale: 1 }}
+        viewport={{ once: false, amount: 0.25 }}
+        transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+      >
+        <img
+          src={src}
+          alt={alt}
+          loading="lazy"
+          className="aspect-[16/9] w-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"
+        />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-background/85 via-background/10 to-transparent" />
+      </motion.figure>
+    );
+  }
+
+  const isBand = variant === "band";
+
+  return (
+    <motion.div
+      aria-hidden
+      className={cn("pointer-events-none absolute inset-0 overflow-hidden", className)}
+      initial={reduce ? false : { opacity: 0 }}
+      whileInView={reduce ? undefined : { opacity: 1 }}
+      viewport={{ once: false, amount: 0.1 }}
+      transition={{ duration: 1.1, ease: "easeOut" }}
+    >
+      <img
+        src={src}
+        alt=""
+        role="presentation"
+        loading="lazy"
+        className="h-full w-full object-cover"
+        style={{
+          opacity,
+          objectPosition: position,
+          maskImage: isBand
+            ? "linear-gradient(90deg, transparent, #000 18%, #000 82%, transparent)"
+            : "radial-gradient(120% 120% at 50% 30%, #000 35%, transparent 78%)",
+          WebkitMaskImage: isBand
+            ? "linear-gradient(90deg, transparent, #000 18%, #000 82%, transparent)"
+            : "radial-gradient(120% 120% at 50% 30%, #000 35%, transparent 78%)",
+        }}
+      />
+      <div className="absolute inset-0 bg-gradient-to-b from-background/40 via-background/55 to-background/85" />
+    </motion.div>
   );
 }
 

@@ -80,3 +80,25 @@ Ordre demandé appliqué: Sprint 3 → Sprint 6 → Sprint 5 → Sprint 2 → Sp
 
 ## Règle d’exécution
 Toujours mettre à jour `CHANGELOG.md` et `SENTINEL.md` après chaque incrément significatif.
+
+## Versioning — 2026-06-30 · Round A (Corrections) livré
+- [x] Bug navigation inférieure corrigé (logique déterministe, design conservé)
+- [x] Responsive `EconomicCycleWheel` + `MacroRelationshipEngine`
+- [x] Macro Radar polygone (régimes + implications) en section 1.1
+- [x] Mini-heroes leçons 1.2 → 1.5
+- [x] Sidebar desktop : sous-sections + tracking précis
+- [x] Scroll bidirectionnel (Framer Motion) + reduced-motion
+- [x] `VisualLayer` + 1re passe d'intégration des visuels (a4/a8/a12/a17)
+- [x] Stack animation installée (framer-motion, gsap, @gsap/react)
+- [x] Documentation globale produite (visual specs + 6 docs d'architecture)
+
+## Backlog — Round B (Upscaling) à exécuter
+- [ ] Learning Navigation Engine : flèche + Sidebar Overlay (mobile/tablette uniquement)
+- [ ] Progression V7 : 5 leçons × 20 %, créditées sur évaluation ≥ 70 %
+- [ ] Évaluation par leçon (Partie A QCM/ouvertes + Partie B widgets) branchée à la progression
+- [ ] Certification finale gatée à 100 % (3 niveaux × 10 scénarios)
+- [ ] Moteur de scénarios unique (Learning + Evaluation avec pause pédagogique)
+- [ ] Scenario Library + Scenario Engine + Difficulty Engine + Random Selection
+- [ ] Fiches widget individuelles (Widget-Interaction-Guide)
+- [ ] Intégration des 3 visuels manquants + extension des fonds (a5/a6/a7/a9/a10/a11/a13/a14/a15/a16)
+- [ ] Migration backend tracking sous-section + évaluations par leçon (RLS + GRANT)

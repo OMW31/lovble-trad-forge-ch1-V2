@@ -1,11 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Scale, TrendingUp, BarChart3, Calculator, LineChart, History, CheckCircle2, Award } from "lucide-react";
+import { Scale, TrendingUp, BarChart3, Calculator, LineChart, History, CheckCircle2, Award, Activity } from "lucide-react";
 import { CHAPTER, LESSONS } from "@/lib/academy/chapter1";
 import { CASE_STUDIES } from "@/lib/academy/market-data";
 import { ChapterShell } from "@/components/academy/ChapterShell";
 import { ChapterHero } from "@/components/academy/ChapterHero";
 import { LessonSection } from "@/components/academy/LessonSection";
-import { ConceptCard, KpiTile, Reveal, Eyebrow } from "@/components/academy/primitives";
+import { ConceptCard, KpiTile, Reveal, Eyebrow, VisualLayer } from "@/components/academy/primitives";
 import { Scenario } from "@/components/academy/Scenario";
 import { CandleReplay } from "@/components/academy/CandleReplay";
 import { MarketDriverVisualizer } from "@/components/academy/MarketDriverVisualizer";
@@ -30,6 +30,8 @@ import { CompanyDashboard } from "@/components/academy/CompanyDashboard";
 import { FinancialRatios } from "@/components/academy/FinancialRatios";
 import { DcfSimulator } from "@/components/academy/DcfSimulator";
 import { ScenarioBuilder } from "@/components/academy/ScenarioBuilder";
+import { MacroRegimeRadar } from "@/components/academy/MacroRegimeRadar";
+import { LessonMiniHero } from "@/components/academy/LessonMiniHero";
 import { useChapterProgress } from "@/lib/academy/useChapterProgress";
 
 export const Route = createFileRoute("/academy/analyse-fondamentale")({
@@ -129,234 +131,301 @@ function Chapter1Page() {
 
       {/* 1.1 — Introduction & Définition */}
       <LessonSection {...meta("intro")}>
-        <Reveal>
-          <SubHead icon={Scale}>Concept</SubHead>
-          <p className="mt-3 max-w-3xl text-base leading-relaxed text-muted-foreground">
-            L'analyse fondamentale est la pierre angulaire de l'évaluation des actifs financiers. Elle consiste à
-            déterminer la <strong className="text-foreground">valeur intrinsèque</strong> — la « juste valeur » — d'un
-            actif en examinant l'ensemble des facteurs économiques, financiers et qualitatifs qui l'influencent.
-            Contrairement à l'analyse technique, centrée sur les prix et volumes, elle s'intéresse aux{" "}
-            <strong className="text-foreground">causes sous-jacentes</strong> des mouvements de marché.
-          </p>
-        </Reveal>
-
-        <div className="grid gap-4 md:grid-cols-3">
-          <Reveal delay={0}>
-            <ConceptCard title="Valeur intrinsèque vs prix" accent>
-              Le prix de marché peut différer de la valeur réelle. L'objectif est d'exploiter ces{" "}
-              <strong>divergences</strong>.
-            </ConceptCard>
+        <div id="intro-regimes" className="scroll-mt-24">
+          <Reveal>
+            <SubHead icon={Activity}>Les 4 régimes macro — Vue radar</SubHead>
           </Reveal>
-          <Reveal delay={80}>
-            <ConceptCard title="Efficience imparfaite">
-              Les marchés ne sont pas toujours efficients : des opportunités existent quand les prix n'intègrent pas
-              toute l'information.
-            </ConceptCard>
-          </Reveal>
-          <Reveal delay={160}>
-            <ConceptCard title="Retour à la moyenne">
-              À long terme, le prix tend à <strong>converger</strong> vers la valeur intrinsèque de l'actif.
-            </ConceptCard>
+          <Reveal>
+            <MacroRegimeRadar />
           </Reveal>
         </div>
 
-        <Reveal>
-          <SubHead icon={TrendingUp}>Illustration interactive</SubHead>
-        </Reveal>
-        <Reveal>
-          <MarketDriverVisualizer />
-        </Reveal>
+        <div id="intro-concept" className="scroll-mt-24 space-y-6">
+          <Reveal>
+            <SubHead icon={Scale}>Concept</SubHead>
+            <p className="mt-3 max-w-3xl text-base leading-relaxed text-muted-foreground">
+              L'analyse fondamentale est la pierre angulaire de l'évaluation des actifs financiers. Elle consiste à
+              déterminer la <strong className="text-foreground">valeur intrinsèque</strong> — la « juste valeur » — d'un
+              actif en examinant l'ensemble des facteurs économiques, financiers et qualitatifs qui l'influencent.
+              Contrairement à l'analyse technique, centrée sur les prix et volumes, elle s'intéresse aux{" "}
+              <strong className="text-foreground">causes sous-jacentes</strong> des mouvements de marché.
+            </p>
+          </Reveal>
 
-        <Reveal>
-          <Scenario
-            title="Scénario #1 — Pourquoi le prix bouge"
-            level={1}
-            context={
-              <>
-                Une devise se négocie nettement <strong className="text-foreground">sous</strong> ce que ses
-                fondamentaux justifient : croissance solide, comptes publics sains, taux attractifs. Le marché reste
-                pessimiste à court terme à cause d'un titre de presse anxiogène.
-              </>
-            }
-            prompt="Selon le principe de retour à la moyenne, quelle est l'hypothèse de travail la plus cohérente ?"
-            choices={[
-              { id: "a", label: "Le prix devrait tendre à se rapprocher de la valeur intrinsèque dans le temps" },
-              { id: "b", label: "Le prix s'éloignera toujours davantage de sa valeur" },
-              { id: "c", label: "La valeur intrinsèque n'a aucune importance" },
-            ]}
-            correctId="a"
-            explanation="L'analyse fondamentale parie qu'à long terme le prix converge vers la valeur intrinsèque. Une sous-évaluation soutenue par des fondamentaux solides est une opportunité potentielle."
-            onComplete={() => markSection("intro")}
-          />
-        </Reveal>
+          <div className="grid gap-4 md:grid-cols-3">
+            <Reveal delay={0}>
+              <ConceptCard title="Valeur intrinsèque vs prix" accent>
+                Le prix de marché peut différer de la valeur réelle. L'objectif est d'exploiter ces{" "}
+                <strong>divergences</strong>.
+              </ConceptCard>
+            </Reveal>
+            <Reveal delay={80}>
+              <ConceptCard title="Efficience imparfaite">
+                Les marchés ne sont pas toujours efficients : des opportunités existent quand les prix n'intègrent pas
+                toute l'information.
+              </ConceptCard>
+            </Reveal>
+            <Reveal delay={160}>
+              <ConceptCard title="Retour à la moyenne">
+                À long terme, le prix tend à <strong>converger</strong> vers la valeur intrinsèque de l'actif.
+              </ConceptCard>
+            </Reveal>
+          </div>
+        </div>
+
+        <div id="intro-illustration" className="scroll-mt-24 space-y-6">
+          <Reveal>
+            <SubHead icon={TrendingUp}>Illustration interactive</SubHead>
+          </Reveal>
+          <Reveal>
+            <MarketDriverVisualizer />
+          </Reveal>
+        </div>
+
+        <div id="intro-scenario" className="scroll-mt-24">
+          <Reveal>
+            <Scenario
+              title="Scénario #1 — Pourquoi le prix bouge"
+              level={1}
+              context={
+                <>
+                  Une devise se négocie nettement <strong className="text-foreground">sous</strong> ce que ses
+                  fondamentaux justifient : croissance solide, comptes publics sains, taux attractifs. Le marché reste
+                  pessimiste à court terme à cause d'un titre de presse anxiogène.
+                </>
+              }
+              prompt="Selon le principe de retour à la moyenne, quelle est l'hypothèse de travail la plus cohérente ?"
+              choices={[
+                { id: "a", label: "Le prix devrait tendre à se rapprocher de la valeur intrinsèque dans le temps" },
+                { id: "b", label: "Le prix s'éloignera toujours davantage de sa valeur" },
+                { id: "c", label: "La valeur intrinsèque n'a aucune importance" },
+              ]}
+              correctId="a"
+              explanation="L'analyse fondamentale parie qu'à long terme le prix converge vers la valeur intrinsèque. Une sous-évaluation soutenue par des fondamentaux solides est une opportunité potentielle."
+              onComplete={() => markSection("intro")}
+            />
+          </Reveal>
+        </div>
       </LessonSection>
 
       {/* 1.2 — Macroéconomie */}
       <LessonSection {...meta("macro")}>
         <Reveal>
-          <SubHead icon={BarChart3}>Concept</SubHead>
-          <p className="mt-3 max-w-3xl text-base leading-relaxed text-muted-foreground">
-            Les indicateurs macroéconomiques reflètent la santé d'une économie et guident les flux de capitaux. On les
-            classe par <strong className="text-foreground">nature</strong> (croissance, inflation, politique monétaire)
-            et par <strong className="text-foreground">temporalité</strong> (avancés, coïncidents, retardés). Lire la{" "}
-            <strong className="text-foreground">surprise</strong> par rapport au consensus est souvent plus important
-            que la donnée brute.
-          </p>
+          <LessonMiniHero lesson={meta("macro")} />
         </Reveal>
 
-        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
-          <Reveal delay={0}><KpiTile label="PIB" value="croissance" hint="activité globale" tone="bull" /></Reveal>
-          <Reveal delay={40}><KpiTile label="IPC" value="inflation" hint="prix & taux" tone="forge" /></Reveal>
-          <Reveal delay={80}><KpiTile label="Taux" value="directeurs" hint="coût du capital" tone="data" /></Reveal>
-          <Reveal delay={120}><KpiTile label="NFP" value="emploi" hint="marché du travail" tone="bull" /></Reveal>
-          <Reveal delay={160}><KpiTile label="Balance" value="commerce" hint="export − import" /></Reveal>
-          <Reveal delay={200}><KpiTile label="PMI" value="confiance" hint="indicateur avancé" tone="data" /></Reveal>
+        <div id="macro-concept" className="scroll-mt-24 space-y-6">
+          <Reveal>
+            <SubHead icon={BarChart3}>Concept</SubHead>
+            <p className="mt-3 max-w-3xl text-base leading-relaxed text-muted-foreground">
+              Les indicateurs macroéconomiques reflètent la santé d'une économie et guident les flux de capitaux. On les
+              classe par <strong className="text-foreground">nature</strong> (croissance, inflation, politique monétaire)
+              et par <strong className="text-foreground">temporalité</strong> (avancés, coïncidents, retardés). Lire la{" "}
+              <strong className="text-foreground">surprise</strong> par rapport au consensus est souvent plus important
+              que la donnée brute.
+            </p>
+          </Reveal>
+
+          <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
+            <Reveal delay={0}><KpiTile label="PIB" value="croissance" hint="activité globale" tone="bull" /></Reveal>
+            <Reveal delay={40}><KpiTile label="IPC" value="inflation" hint="prix & taux" tone="forge" /></Reveal>
+            <Reveal delay={80}><KpiTile label="Taux" value="directeurs" hint="coût du capital" tone="data" /></Reveal>
+            <Reveal delay={120}><KpiTile label="NFP" value="emploi" hint="marché du travail" tone="bull" /></Reveal>
+            <Reveal delay={160}><KpiTile label="Balance" value="commerce" hint="export − import" /></Reveal>
+            <Reveal delay={200}><KpiTile label="PMI" value="confiance" hint="indicateur avancé" tone="data" /></Reveal>
+          </div>
         </div>
 
-        <Reveal>
-          <SubHead icon={BarChart3}>Command center — 11 indicateurs clés</SubHead>
-        </Reveal>
-        <Reveal>
-          <MacroDashboard />
-        </Reveal>
-
-        <div className="grid gap-6 xl:grid-cols-2">
-          <Reveal><EconomicCycleWheel /></Reveal>
-          <Reveal delay={80}><MacroRelationshipEngine /></Reveal>
+        <div id="macro-dashboard" className="scroll-mt-24 space-y-6">
+          <Reveal>
+            <SubHead icon={BarChart3}>Command center — 11 indicateurs clés</SubHead>
+          </Reveal>
+          <Reveal>
+            <MacroDashboard />
+          </Reveal>
         </div>
 
-        <div className="grid gap-6 xl:grid-cols-2">
-          <Reveal><FedSimulator /></Reveal>
-          <Reveal delay={80}><NfpInterpreter /></Reveal>
+        <div id="macro-widgets" className="relative scroll-mt-24 space-y-6 overflow-hidden rounded-3xl">
+          <VisualLayer src="/academy/ch1/visuals/a4.webp" alt="" variant="background" opacity={0.14} position="center top" />
+          <div className="relative space-y-6 p-px">
+            <div className="grid gap-6 xl:grid-cols-2">
+              <Reveal><EconomicCycleWheel /></Reveal>
+              <Reveal delay={80}><MacroRelationshipEngine /></Reveal>
+            </div>
+
+            <div className="grid gap-6 xl:grid-cols-2">
+              <Reveal><FedSimulator /></Reveal>
+              <Reveal delay={80}><NfpInterpreter /></Reveal>
+            </div>
+
+            <div className="grid gap-6 xl:grid-cols-2">
+              <Reveal><GdpCpiInterpreters /></Reveal>
+              <Reveal delay={80}><YieldCurveVisualizer /></Reveal>
+            </div>
+
+            <Reveal>
+              <IntermarketCorrelationMap />
+            </Reveal>
+          </div>
         </div>
 
-        <div className="grid gap-6 xl:grid-cols-2">
-          <Reveal><GdpCpiInterpreters /></Reveal>
-          <Reveal delay={80}><YieldCurveVisualizer /></Reveal>
+        <div id="macro-lab" className="scroll-mt-24 space-y-6">
+          <Reveal>
+            <SubHead icon={BarChart3}>Laboratoire interactif — simulez une surprise</SubHead>
+          </Reveal>
+          <Reveal>
+            <MacroIndicatorLab />
+          </Reveal>
         </div>
 
-        <Reveal>
-          <IntermarketCorrelationMap />
-        </Reveal>
-
-        <Reveal>
-          <SubHead icon={BarChart3}>Laboratoire interactif — simulez une surprise</SubHead>
-        </Reveal>
-        <Reveal>
-          <MacroIndicatorLab />
-        </Reveal>
-
-        <Reveal>
-          {renderCase(0, "macro")}
-        </Reveal>
-        <Reveal delay={80}>
-          {renderCase(1, "macro")}
-        </Reveal>
-        <Reveal delay={120}>
-          {renderCase(2, "macro")}
-        </Reveal>
+        <div id="macro-cas" className="scroll-mt-24 space-y-6">
+          <Reveal>
+            {renderCase(0, "macro")}
+          </Reveal>
+          <Reveal delay={80}>
+            {renderCase(1, "macro")}
+          </Reveal>
+          <Reveal delay={120}>
+            {renderCase(2, "macro")}
+          </Reveal>
+        </div>
       </LessonSection>
 
       {/* 1.3 — Microéconomie */}
       <LessonSection {...meta("micro")}>
         <Reveal>
-          <SubHead icon={BarChart3}>Concept</SubHead>
-          <p className="mt-3 max-w-3xl text-base leading-relaxed text-muted-foreground">
-            Au niveau de l'entreprise, l'analyse repose sur les{" "}
-            <strong className="text-foreground">états financiers</strong> : compte de résultat (revenus, marges,
-            bénéfice), bilan (actif = passif + capitaux propres) et tableau des flux de trésorerie. On y mesure la{" "}
-            <strong className="text-foreground">croissance</strong>, la <strong className="text-foreground">rentabilité</strong>{" "}
-            (ROE, ROA, marges), l'<strong className="text-foreground">endettement</strong> (D/E) et la génération de{" "}
-            <strong className="text-foreground">cash-flow</strong>.
-          </p>
+          <LessonMiniHero lesson={meta("micro")} />
         </Reveal>
 
-        <Reveal>
-          <SubHead icon={Calculator}>Widgets — pilotez les fondamentaux</SubHead>
-        </Reveal>
-        <div className="grid gap-6 xl:grid-cols-2">
-          <Reveal><CompanyHealthScore /></Reveal>
-          <Reveal delay={80}><BalanceSheetExplorer /></Reveal>
+        <div id="micro-concept" className="scroll-mt-24">
+          <Reveal>
+            <SubHead icon={BarChart3}>Concept</SubHead>
+            <p className="mt-3 max-w-3xl text-base leading-relaxed text-muted-foreground">
+              Au niveau de l'entreprise, l'analyse repose sur les{" "}
+              <strong className="text-foreground">états financiers</strong> : compte de résultat (revenus, marges,
+              bénéfice), bilan (actif = passif + capitaux propres) et tableau des flux de trésorerie. On y mesure la{" "}
+              <strong className="text-foreground">croissance</strong>, la <strong className="text-foreground">rentabilité</strong>{" "}
+              (ROE, ROA, marges), l'<strong className="text-foreground">endettement</strong> (D/E) et la génération de{" "}
+              <strong className="text-foreground">cash-flow</strong>.
+            </p>
+          </Reveal>
         </div>
-        <Reveal>
-          <CompanyDashboard />
-        </Reveal>
 
-        <Reveal>
-          {renderCase(3, "micro")}
-        </Reveal>
-        <Reveal delay={80}>
-          {renderCase(4, "micro")}
-        </Reveal>
+        <div id="micro-widgets" className="relative scroll-mt-24 overflow-hidden rounded-3xl">
+          <VisualLayer src="/academy/ch1/visuals/a8.webp" alt="" variant="background" opacity={0.12} position="center" />
+          <div className="relative space-y-6 p-px">
+            <Reveal>
+              <SubHead icon={Calculator}>Widgets — pilotez les fondamentaux</SubHead>
+            </Reveal>
+            <div className="grid gap-6 xl:grid-cols-2">
+              <Reveal><CompanyHealthScore /></Reveal>
+              <Reveal delay={80}><BalanceSheetExplorer /></Reveal>
+            </div>
+            <Reveal>
+              <CompanyDashboard />
+            </Reveal>
+          </div>
+        </div>
+
+        <div id="micro-cas" className="scroll-mt-24 space-y-6">
+          <Reveal>
+            {renderCase(3, "micro")}
+          </Reveal>
+          <Reveal delay={80}>
+            {renderCase(4, "micro")}
+          </Reveal>
+        </div>
       </LessonSection>
 
       {/* 1.4 — Outils d'analyse */}
       <LessonSection {...meta("outils")}>
         <Reveal>
-          <SubHead icon={Calculator}>Concept</SubHead>
-          <p className="mt-3 max-w-3xl text-base leading-relaxed text-muted-foreground">
-            Pour transformer les données en décision, on s'appuie sur des outils : les{" "}
-            <strong className="text-foreground">ratios</strong> (P/E, P/B, D/E, ROE), le modèle{" "}
-            <strong className="text-foreground">DCF</strong> (actualisation des flux), l'analyse{" "}
-            <strong className="text-foreground">sectorielle</strong>, la comparaison entre pairs (
-            <strong className="text-foreground">peer comparison</strong>) et l'analyse{" "}
-            <strong className="text-foreground">SWOT</strong>. Aucun multiple ne se lit seul : il se compare à la
-            croissance, au secteur et à l'historique.
-          </p>
+          <LessonMiniHero lesson={meta("outils")} />
         </Reveal>
 
-        <Reveal>
-          <SubHead icon={Calculator}>Boîte à outils interactive</SubHead>
-        </Reveal>
-        <div className="grid gap-6 xl:grid-cols-2">
-          <Reveal><ValuationLab /></Reveal>
-          <Reveal delay={80}><PeerComparisonMatrix /></Reveal>
+        <div id="outils-concept" className="scroll-mt-24">
+          <Reveal>
+            <SubHead icon={Calculator}>Concept</SubHead>
+            <p className="mt-3 max-w-3xl text-base leading-relaxed text-muted-foreground">
+              Pour transformer les données en décision, on s'appuie sur des outils : les{" "}
+              <strong className="text-foreground">ratios</strong> (P/E, P/B, D/E, ROE), le modèle{" "}
+              <strong className="text-foreground">DCF</strong> (actualisation des flux), l'analyse{" "}
+              <strong className="text-foreground">sectorielle</strong>, la comparaison entre pairs (
+              <strong className="text-foreground">peer comparison</strong>) et l'analyse{" "}
+              <strong className="text-foreground">SWOT</strong>. Aucun multiple ne se lit seul : il se compare à la
+              croissance, au secteur et à l'historique.
+            </p>
+          </Reveal>
         </div>
-        <div className="grid gap-6 xl:grid-cols-2">
-          <Reveal><FinancialRatios /></Reveal>
-          <Reveal delay={80}><DcfSimulator /></Reveal>
-        </div>
-        <Reveal><EarningsImpactEngine /></Reveal>
 
-        <Reveal>
-          {renderCase(5, "outils")}
-        </Reveal>
-        <Reveal delay={80}>
-          {renderCase(6, "outils")}
-        </Reveal>
-        <Reveal delay={120}>
-          {renderCase(7, "outils")}
-        </Reveal>
+        <div id="outils-widgets" className="relative scroll-mt-24 overflow-hidden rounded-3xl">
+          <VisualLayer src="/academy/ch1/visuals/a12.webp" alt="" variant="background" opacity={0.12} position="center" />
+          <div className="relative space-y-6 p-px">
+            <Reveal>
+              <SubHead icon={Calculator}>Boîte à outils interactive</SubHead>
+            </Reveal>
+            <div className="grid gap-6 xl:grid-cols-2">
+              <Reveal><ValuationLab /></Reveal>
+              <Reveal delay={80}><PeerComparisonMatrix /></Reveal>
+            </div>
+            <div className="grid gap-6 xl:grid-cols-2">
+              <Reveal><FinancialRatios /></Reveal>
+              <Reveal delay={80}><DcfSimulator /></Reveal>
+            </div>
+            <Reveal><EarningsImpactEngine /></Reveal>
+          </div>
+        </div>
+
+        <div id="outils-cas" className="scroll-mt-24 space-y-6">
+          <Reveal>
+            {renderCase(5, "outils")}
+          </Reveal>
+          <Reveal delay={80}>
+            {renderCase(6, "outils")}
+          </Reveal>
+          <Reveal delay={120}>
+            {renderCase(7, "outils")}
+          </Reveal>
+        </div>
       </LessonSection>
 
       {/* 1.5 — Prévisions */}
       <LessonSection {...meta("previsions")}>
         <Reveal>
-          <SubHead icon={LineChart}>Concept</SubHead>
-          <p className="mt-3 max-w-3xl text-base leading-relaxed text-muted-foreground">
-            Prévoir consiste à projeter l'avenir à partir des{" "}
-            <strong className="text-foreground">tendances historiques</strong>, de{" "}
-            <strong className="text-foreground">scénarios</strong> (optimiste, neutre, pessimiste) et de la{" "}
-            <strong className="text-foreground">guidance</strong> communiquée par les entreprises. La guidance pèse
-            souvent plus que le dernier résultat publié : elle oriente les anticipations du marché.
-          </p>
+          <LessonMiniHero lesson={meta("previsions")} />
         </Reveal>
 
-        <Reveal>
-          <SubHead icon={LineChart}>Planificateur de scénarios</SubHead>
-        </Reveal>
-        <Reveal><ForecastScenarioPlanner /></Reveal>
+        <div id="previsions-concept" className="scroll-mt-24">
+          <Reveal>
+            <SubHead icon={LineChart}>Concept</SubHead>
+            <p className="mt-3 max-w-3xl text-base leading-relaxed text-muted-foreground">
+              Prévoir consiste à projeter l'avenir à partir des{" "}
+              <strong className="text-foreground">tendances historiques</strong>, de{" "}
+              <strong className="text-foreground">scénarios</strong> (optimiste, neutre, pessimiste) et de la{" "}
+              <strong className="text-foreground">guidance</strong> communiquée par les entreprises. La guidance pèse
+              souvent plus que le dernier résultat publié : elle oriente les anticipations du marché.
+            </p>
+          </Reveal>
+        </div>
 
-        <Reveal>
-          <ScenarioBuilder />
-        </Reveal>
+        <div id="previsions-planner" className="scroll-mt-24 space-y-6">
+          <Reveal>
+            <SubHead icon={LineChart}>Planificateur de scénarios</SubHead>
+          </Reveal>
+          <Reveal><ForecastScenarioPlanner /></Reveal>
+          <Reveal>
+            <ScenarioBuilder />
+          </Reveal>
+        </div>
 
-        <Reveal>
-          {renderCase(8, "previsions")}
-        </Reveal>
-        <Reveal delay={80}>
-          {renderCase(9, "previsions")}
-        </Reveal>
+        <div id="previsions-cas" className="scroll-mt-24 space-y-6">
+          <Reveal>
+            {renderCase(8, "previsions")}
+          </Reveal>
+          <Reveal delay={80}>
+            {renderCase(9, "previsions")}
+          </Reveal>
+        </div>
       </LessonSection>
 
       {/* 1.6 — Cas pratiques */}
@@ -373,7 +442,7 @@ function Chapter1Page() {
           </p>
         </Reveal>
 
-        <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-5">
+        <div id="cas-pratiques-index" className="scroll-mt-24 grid gap-3 md:grid-cols-2 xl:grid-cols-5">
           {CASE_STUDIES.map((cs) => (
             <a key={cs.id} href={`#${cs.index <= 3 ? "macro" : cs.index <= 5 ? "micro" : cs.index <= 8 ? "outils" : "previsions"}`} className="premium-hover rounded-xl border bg-surface p-4">
               <div className="font-mono text-[10px] uppercase tracking-wider text-data">Cas {cs.index}</div>

@@ -1,306 +1,86 @@
-# Plan d’implémentation — TradForge Academy CH1 World-Class V2
+# Plan World-Class — Chapitre 1 (corrections + upscaling)
 
-## Objectif
-Passer du prototype actuel à une version world-class de Chapitre 1, sans casser l’architecture pédagogique existante, en procédant dans cet ordre:
+Approche chirurgicale : on ne reconstruit rien, on corrige, on remet en place ce qui était documenté mais absent, puis on industrialise. SENTINEL.md relu avant et après chaque incrément. Aucune feature réussie supprimée (déplacer / factoriser / standardiser). Tous les docs sont versionnés (jamais effacés).
 
-```text
-Documentation de pilotage
-→ Audit & cartographie
-→ Fondations Cloud/progression
-→ Refactor structurel CH1
-→ Système visuel hybride
-→ Widgets & dashboards premium
-→ Évaluation 3 niveaux
-→ Motion / mobile / QA
-```
+Décisions verrouillées avec toi :
+- Specs des 14 visuels conçues par moi (effet/position/animation/opacité/fondu/gradient), 1 markdown par visuel, emplacements réservés documentés pour les 3 manquants.
+- Flèche + Sidebar Overlay = uniquement écrans sans sticky (mobile/tablette). Desktop garde sa sticky, mais on lui AJOUTE les sous-sections + tracking de progression précis.
+- Macro Radar polygone (4 régimes Goldilocks/Stagflation/Récession/Expansion + implications) = nouvelle section dédiée pleine largeur dans 1.1. L'aside briefing actuel reste.
+- Livraison en 2 rounds d'implémentation : Round A = corrections, Round B = upscaling. Ce plan couvre les deux + la doc globale.
 
-## Principes non négociables
-- Ne pas reconstruire le chapitre from scratch.
-- Ne pas supprimer de contenu pédagogique validé.
-- Ne pas créer de nouvelles sections de cours.
-- Déplacer, enrichir, densifier, illustrer, animer.
-- Toute nouvelle feature doit être documentée et ajoutée au registre anti-régression.
-- Les visuels 4K seront intégrés en mode hybride: image-support pour ambiance/composition, reconstruction native HTML/SVG pour tout contenu pédagogique où le texte doit être net, responsive et interactif.
+---
 
-## Ce qui sera livré
-### 1. Couche documentation / pilotage
-Je crée et maintiens les documents de référence suivants avant et pendant l’implémentation:
-- `PRD_CH1_WORLD_CLASS.md`
-- `TASKS_CH1_IMPLEMENTATION.md`
-- `CHANGELOG.md`
-- `SENTINEL.md`
-- `CH1_ASSET_MAP.md`
-- `CH1_GAP_ANALYSIS.md`
-- `CH1_SCENARIO_DISTRIBUTION.md`
-- `CH1_VISUAL_DNA.md`
-- `CH1_ANIMATION_SYSTEM.md`
-- `CH1_INTERACTION_SYSTEM.md`
-- `CH1_COMPONENT_LIBRARY.md`
+## PHASE 1 — Corrections (Round A)
 
-### 2. Couche backend / persistance
-Comme tu veux progression + reprise exacte + profils complets, j’active Lovable Cloud et je mets en place:
-- Authentification
-- Table `profiles`
-- Table de rôles séparée `user_roles`
-- Table de progression CH1
-- Table d’état de reprise exacte (section, widget, niveau d’évaluation, scénario, etc.)
-- Table de tentatives / scores d’évaluation
-- Server functions sécurisées pour lecture/écriture de progression
-- Reprise automatique de session d’apprentissage
+### 1. Bug navigation inférieure (1 fois sur 2)
+Cause : `MobileLessonBreadcrumb` calcule prev/next à partir du `activeId` issu du scroll-spy asynchrone (IntersectionObserver + rootMargin) et navigue par `#hash` brut → course entre l'état observé et le clic.
+Fix (logique seulement, design conservé) :
+- Découpler la cible de navigation du scroll-spy : maintenir un index courant déterministe dans un état dédié, mis à jour au clic immédiatement, réconcilié ensuite par le scroll-spy.
+- Remplacer le `href="#id"` brut par un scroll programmatique fiable (`scrollIntoView` + offset header) qui fonctionne même si le hash est identique.
+- Garantir l'idempotence (re-tap sur même cible re-scrolle).
 
-### 3. Couche expérience CH1
-Implémentation séquentielle jusqu’au dernier bloc demandé:
-- Hero V2 avec Mission Briefing
-- Hero Macro Radar animé
-- Progress tracking avancé
-- Persistence utilisateur + reprise exacte
-- Redistribution des scénarios dans les bonnes sections
-- Macro Dashboard institutionnel
-- NFP Calculator
-- DCF Simulator
-- Financial Ratios
-- Economic Scenarios
-- Scenario Builder
-- Mobile breadcrumb inférieur
-- Scroll UX bidirectionnel
-- Animation system
-- Interaction system
-- Nouveau système d’évaluation indépendant en modal, avec niveaux Standard / High / Premium
+### 2. Responsive des 2 widgets récents (sélectionnés)
+- `EconomicCycleWheel` : la roue SVG `h-52 w-52` + grille `lg:grid-cols-[220px_1fr]` déborde sur mobile/tablette. Fix : conteneur SVG fluide (`max-w` + `aspect-square`), grille `grid-cols-1` jusqu'à `lg`, paddings/typo responsives.
+- `MacroRelationshipEngine` : `min-w-[680px]` force un scroll-x qui casse le premium. Fix : layout adaptatif (chaîne verticale empilée < `md`, horizontale scrollable ≥ `md` avec masque de fondu), suppression du débordement.
+- Audit Playwright mobile (390), tablette (834), desktop (1280) avant/après.
 
-## Séquence d’implémentation
+### 3. Macro Radar — section dédiée 1.1
+- Nouveau composant `MacroRegimeRadar` : radar SVG polygone (axes Croissance, Emploi, Inflation, Banques C., Liquidité, Sentiment) + toggles 4 régimes + panneau implications (Long/Short) comme Ba1.png.
+- Inséré en section pleine largeur dans 1.1, l'aside barres du `MissionBriefing` conservé.
 
-## Phase 0 — Documentation & contrôle
-Créer la couche de pilotage avant code massif.
+### 4. Mini-heroes (dès 1.2)
+- Nouveau composant `LessonMiniHero` (réf image-5) : badge n°, « LEÇON 1.x », durée, titre, sous-titre, fil d'étapes (Concept→…→Feedback), bloc Mission Briefing (Objectifs + Question clé).
+- Intégré au début des leçons 1.2 → 1.5 (1.1 = intro, exclue). Données portées dans `chapter1.ts`.
 
-### Livrables
-- PRD consolidé CH1
-- backlog exécutable priorisé
-- changelog décisionnel
-- sentinel anti-régression
-- matrice d’audit existant vs cible
+### 5. Intégration des 14 visuels (aucun visuel « posé »)
+- Couche `VisualLayer` réutilisable : chaque visuel reçoit position, animation d'entrée, opacité, fondu (mask-image), gradient overlay, intégration background.
+- Répartition des `a4`→`a17` dans les sections selon le Visual DNA (backgrounds atmosphériques + figures contextuelles), jamais en simple `<img>` brut.
+- Emplacements réservés documentés pour les 3 visuels manquants.
 
-### Résultat attendu
-Une base documentaire qui permet de tracer tout ce qui existe, ce qui manque, ce qui est modifié et ce qui ne doit jamais être cassé.
+### 6. Sidebar desktop — sous-sections + tracking précis
+- Étendre la sticky desktop : accordéon des sous-sections par leçon, état (✓ / en cours / à faire) par sous-section, section, leçon, chapitre.
+- Tracking hiérarchique : sous-section → section → leçon (20%) → chapitre (100%).
 
-## Phase 1 — Audit réel du Chapter 1 actuel
-Cartographier précisément l’existant déjà codé.
+### 7. Scroll up/down bidirectionnel
+- `Reveal` actuel ne se joue qu'une fois (montée). Ajouter variante bidirectionnelle (entrée + sortie douce) via Framer Motion, avec fallback `prefers-reduced-motion`.
 
-### Audit à produire
-- Hero
-- Sidebar
-- Progress tracker
-- Lessons 1.1 → 1.6
-- Scenarios existants
-- Widgets existants
-- Replay / TradingView-like views
-- Animations / reveals
-- Composants de shell
-- Données `market-data.ts`
-- Design tokens / styles
+### 8. Animation stack
+- `bun add framer-motion gsap` (+ `@gsap/react`). Standardiser : Framer Motion pour overlays/reveal/interactions, GSAP pour séquences scroll premium. Espaces de respiration documentés entre leçons.
 
-### Résultat attendu
-- `CH1_ASSET_MAP.md`
-- `CH1_GAP_ANALYSIS.md`
-- classification: Implemented / Partial / Missing / Deprecated
+---
 
-## Phase 2 — Audit visuel 4K hybride
-Traiter les visuels fournis comme matière première, pas comme vérité finale.
+## PHASE 2 — Upscaling (Round B)
 
-### Travail
-- audit complet de tous les visuels fournis
-- vérification cohérence pédagogique
-- vérification cohérence graphique
-- vérification des textes intégrés
-- classification: Conserver / Modifier / Régénérer / Supprimer
-- mapping section → visuel
+### 9. Learning Navigation Engine (composant réutilisable)
+- Flèche discrète haut-gauche → Sidebar Overlay (mobile/tablette uniquement) : 5 leçons, accordéon sous-sections, états, progression globale, validées/restantes, sauvegarde auto. Fermeture clic extérieur / flèche.
+- Nav inférieure conservée (déjà corrigée en Phase 1).
 
-### Décision d’intégration
-- Les visuels à texte corrompu ne seront pas injectés tels quels dans le contenu pédagogique principal.
-- Ils serviront soit de références de composition, soit de fonds d’ambiance.
-- Les schémas-clés seront reconstruits en composants natifs premium.
+### 10. Modèle de progression V7 (5 × 20%)
+- Réaligner sur la spec : 5 leçons, progression officielle créditée seulement si évaluation de leçon ≥70%. Navigation libre maintenue.
+- Évaluation par leçon (Partie A QCM/ouvertes + Partie B widgets/interprétation, 7–15 questions). 1.6 devient l'index/capstone.
+- Certification finale déverrouillée à 100% (5 leçons validées), 3 niveaux × 10 scénarios.
+- Persistance étendue (sous-section/section/leçon) dans le backend existant.
 
-### Pipeline assets
-- format final standardisé
-- pipeline PNG → WebP
-- convention de nommage
-- tailles desktop/tablet/mobile
-- règles de lazy loading
+### 11. Moteur de scénarios unique (2 modes)
+- Une seule base : Mode Learning (narration continue) + Mode Evaluation (pause pédagogique → publication → question → 4 réponses → feedback → reprise → débrief).
+- Réutilise `CandleReplay`/`Scenario` existants (non supprimés, factorisés).
 
-## Phase 3 — Fondations Cloud
-Activer Lovable Cloud puis poser la base data/auth.
+### 12. Scenario Library Engine
+- Scénario = description par composants (contexte, macro, technique, géopolitique, intermarket, banques centrales, volatilité, difficulté, paramètres). Difficulty Engine révèle plus/moins de couches selon Standard/High/Premium. Random Selection Engine pour non-répétition.
 
-### Backend prévu
-- auth utilisateur
-- profils complets
-- rôles séparés
-- progression chapitres
-- reprise exacte d’état
-- scoring / certifications
+---
 
-### Règles de sécurité
-- RLS partout
-- rôles dans table séparée
-- server functions sécurisées
-- aucune logique de progression fiable côté client seul
+## Documentation à produire (versionnée, jamais effacée)
+Nouveaux : `TradingView-Scenarisee-World-Class.md`, `Widget-Interaction-Guide.md`, `Learning-Navigation-Engine.md`, `Evaluation-System-Architecture.md`, `Scenario-Library-Architecture.md`, `Difficulty-Scaling-Engine.md`, `CH1_VISUAL_SPECS/` (1 .md par visuel).
+Mises à jour : `PRD_CH1_WORLD_CLASS.md`, `TASKS_CH1_IMPLEMENTATION.md`, `CHANGELOG.md`, `SENTINEL.md`, `IMPLEMENTATION_ROADMAP.md` (ajout des deux rounds, sans suppression).
 
-## Phase 4 — Refactor structurel CH1
-Réorganiser le chapitre sans casser sa logique pédagogique.
-
-### Travail
-- Hero Rebuild
-- Mission Briefing
-- Macro Radar
-- Progress Tracker avancé
-- Skill Unlock Preview
-- redistribution des 10 scénarios dans 1.1 → 1.5
-- suppression du poids du bloc final trop concentré
-- nettoyage de sections / hiérarchies / densité
-
-### Résultat attendu
-Architecture V2, plus lisible, plus fluide, plus premium.
-
-## Phase 5 — Visual system premium
-Construire un langage visuel homogène “institutionnel immersif”.
-
-### Travail
-- intégrer l’ADN TradingView/Bloomberg/terminal de manière cohérente
-- remplacer les zones trop simples par des surfaces premium denses
-- créer la couche illustration/infographie native
-- uniformiser spacing, ombres, cards, couleurs, typographie
-- supprimer les éléments qui cassent le niveau perçu
-
-### Reconstruction native prioritaire
-- Inflation transmission mechanism
-- Macro engine / economic cycle wheel
-- Central bank decision logic
-- Corporate value creation engine
-- Energy crisis cascade
-
-## Phase 6 — Dashboard & widget system
-Passer d’une suite de widgets à un vrai système d’analyse institutionnel.
-
-### Bloc macro
-- Macro Dashboard (étendu jusqu’au format cible 11 indicateurs)
-- CPI Interpreter
-- NFP Interpreter / Calculator
-- GDP Interpreter
-- Macro Relationship Engine
-- FED / central bank reaction engine
-- Yield Curve Visualizer
-- Intermarket Correlation Map
-- Economic Scenarios
-
-### Bloc micro / valorisation
-- Company Dashboard
-- Company Health Score
-- Balance Sheet Explorer
-- Earnings Impact Simulator
-- PE / valuation explorer
-- Financial Ratios
-- DCF Simulator
-
-### Bloc prévision
-- Scenario Builder
-- Probability Engine
-- Regime Detector
-- Decision Lab
-
-## Phase 7 — Nouveau système d’évaluation
-Créer une couche indépendante de la page leçon.
-
-### Format
-Modal indépendante, non imbriquée directement dans le flux de lecture.
-
-### 3 niveaux
-- Standard
-- High
-- Premium
-
-### Pour chaque niveau
-- Partie A: QCM
-- Partie B: widgets / indicateurs / dashboards
-- Partie C: TradingView scénarisé
-
-### Système associé
-- score engine
-- unlock logic
-- persistance des tentatives
-- reprise exacte du niveau en cours
-
-## Phase 8 — Motion, interaction, scroll UX
-Ajouter la sensation “living experience”.
-
-### Travail
-- scroll down reveals
-- scroll up behavior symétrique
-- animation system cohérent
-- hover system premium
-- micro-interactions de feedback
-- animation spécifique des scénarios
-- hero radar animé
-- interactions contextualisées sur dashboards
-
-## Phase 9 — Mobile & responsive system
-Rendre le chapitre premium sur mobile sans compromis.
-
-### Travail
-- mobile breadcrumb inférieur
-- comportement sticky intelligent
-- densité adaptée petit écran
-- relecture des headers complexes avec patterns robustes
-- validation tablet / desktop / mobile
-
-## Phase 10 — QA & Sentinel loop
-Boucle de contrôle qualité à chaque incrément.
-
-### Contrôle systématique après chaque implémentation
-- vérifier les features listées dans `SENTINEL.md`
-- mettre à jour `CHANGELOG.md`
-- mettre à jour `SENTINEL.md` si nouvelle feature
-- vérifier non-régression visuelle et fonctionnelle
-
-### QA finale
-- mobile audit
-- tablet audit
-- desktop audit
-- performance audit
-- accessibility audit
-- consistency audit
-- Lighthouse target > 90 sur les critères critiques
+---
 
 ## Détails techniques
-- Frontend: TanStack Start + React 19 + Tailwind v4
-- Persistance: Lovable Cloud
-- Auth: comptes utilisateurs avec profils complets
-- Sécurité: RLS + `user_roles` séparée + server functions sécurisées
-- Assets: pipeline WebP + lazy loading + intégration hybride
-- Composants pédagogiques à texte dense: HTML/SVG natif, pas image brute
-- Évaluation: système modal piloté par données persistées
-- Progression: stockage section + sous-état + scores + dernier point exact
+- Stack : TanStack Start + Tailwind v4 (tokens `src/styles.css`) + shadcn/ui. Ajout `framer-motion`, `gsap`, `@gsap/react`.
+- Fichiers Phase 1 : `MobileLessonBreadcrumb.tsx`, `EconomicCycleWheel.tsx`, `MacroRelationshipEngine.tsx`, `primitives.tsx` (Reveal bidirectionnel + `VisualLayer`), `ChapterShell.tsx` (sous-sections sticky), `chapter1.ts` (sous-sections + métadonnées mini-hero), nouveaux `MacroRegimeRadar.tsx`, `LessonMiniHero.tsx`, route `academy.analyse-fondamentale.tsx`.
+- Fichiers Phase 2 : nouveaux `LearningNavigationEngine.tsx`, `LessonAssessment.tsx`, `scenario-engine.ts`, `scenario-library.ts`, `difficulty-engine.ts` ; extension `useChapterProgress.ts` + `progress.functions.ts` + migration backend pour le tracking sous-section et évaluations par leçon (GRANT + RLS scoping `auth.uid()`).
+- Qualité : aucune couleur en dur (tokens uniquement), `prefers-reduced-motion`, audits Playwright multi-breakpoints, relecture SENTINEL après chaque incrément.
+- Anti-régression : routes publiques, leçons 1.1→1.6, widgets listés, sidebar/scroll-spy, modal d'évaluation, accès public, persistance invité — tous re-vérifiés.
 
-## Ordre de build recommandé
-```text
-1. Documentation de pilotage
-2. Audit + gap analysis + sentinel initial
-3. Cloud + auth + profils + progression
-4. Refactor shell + hero + tracking + reprise
-5. Redistribution scénarios
-6. Audit visuel + pipeline assets
-7. Dashboards macro/micro/prévision
-8. Evaluation engine modal 3 niveaux
-9. Motion + scroll + mobile breadcrumb
-10. QA + sentinel final + polish
-```
-
-## Premier incrément que j’exécuterai après validation du plan
-```text
-Sprint 1
-- Activer Lovable Cloud
-- Créer les docs de pilotage
-- Produire Asset Map / Gap Analysis / Scenario Distribution
-- Créer Sentinel.md
-- Poser le schéma profils + rôles + progression + reprise
-```
-
-## Critère de succès
-Le prototype suivant doit être non seulement plus beau, mais surtout mieux piloté, persisté, auditable, extensible, et impossible à faire régresser silencieusement.
+Après approbation, j'exécute le Round A (corrections) intégralement, je mets à jour la doc + SENTINEL, puis j'enchaîne le Round B (upscaling).

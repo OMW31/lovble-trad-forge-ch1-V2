@@ -85,3 +85,33 @@ Registre anti-régression du Chapitre 1. Toute implémentation future doit relir
 - Widgets historiques conservés + nouveaux widgets Sprint 5 ajoutés.
 - Modal évaluation indépendante enrichie, non intégrée directement dans le flux leçon.
 - Accès public au chapitre conservé; persistance seulement si utilisateur connecté.
+
+## Features ajoutées — Round A (2026-06-30)
+### Composants nouveaux (ne jamais casser)
+- [x] `MacroRegimeRadar` — radar polygone 4 régimes + implications (section 1.1 `#intro-regimes`)
+- [x] `LessonMiniHero` — mini hero leçons 1.2 → 1.5 (Objectifs + Question clé)
+- [x] `VisualLayer` (primitives) — intégration visuelle non « posée » (background / band / figure)
+- [x] `Reveal` bidirectionnel (Framer Motion) — entrée + sortie, `prefers-reduced-motion`
+- [x] Sidebar desktop : accordéon sous-sections + tracking (`useSubsectionSpy`)
+
+### Ancres de sous-sections (utilisées par le tracking + nav) — ne pas renommer sans MAJ `chapter1.ts`
+- 1.1 : `intro-regimes`, `intro-concept`, `intro-illustration`, `intro-scenario`
+- 1.2 : `macro-concept`, `macro-dashboard`, `macro-widgets`, `macro-lab`, `macro-cas`
+- 1.3 : `micro-concept`, `micro-widgets`, `micro-cas`
+- 1.4 : `outils-concept`, `outils-widgets`, `outils-cas`
+- 1.5 : `previsions-concept`, `previsions-planner`, `previsions-cas`
+- 1.6 : `cas-pratiques-index`
+
+### Garanties vérifiées (Round A)
+- [x] 0 overflow horizontal sur 390 / 834 / 1280 (Playwright)
+- [x] Nav inférieure : avance à chaque tap (bug « 1/2 » corrigé), design conservé
+- [x] Sidebar sticky desktop conservée + enrichie (non supprimée)
+- [x] Aucune leçon / widget supprimé ; tous les widgets historiques présents
+- [x] Aucune erreur console au chargement
+
+## Check-out 2026-06-30
+- Routes publiques OK, structure CH1 conservée.
+- Leçons 1.1 → 1.6 maintenues ; mini-heroes ajoutés 1.2 → 1.5.
+- Widgets historiques + `MacroRegimeRadar` présents.
+- Visuels a4/a8/a12/a17 intégrés via `VisualLayer` (aucun visuel posé).
+- À FAIRE Round B : flèche + Sidebar Overlay (mobile/tablette), progression 5×20 % gatée par évaluation de leçon, certification finale à 100 %, moteur de scénarios unique (pause pédagogique), Scenario Library + Difficulty Engine, fiches par widget, intégration des 3 visuels manquants.
