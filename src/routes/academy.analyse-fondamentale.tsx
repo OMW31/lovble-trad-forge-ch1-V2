@@ -311,17 +311,20 @@ function Chapter1Page() {
           </Reveal>
         </div>
 
-        <div id="micro-widgets" className="scroll-mt-24 space-y-6">
-          <Reveal>
-            <SubHead icon={Calculator}>Widgets — pilotez les fondamentaux</SubHead>
-          </Reveal>
-          <div className="grid gap-6 xl:grid-cols-2">
-            <Reveal><CompanyHealthScore /></Reveal>
-            <Reveal delay={80}><BalanceSheetExplorer /></Reveal>
+        <div id="micro-widgets" className="relative scroll-mt-24 overflow-hidden rounded-3xl">
+          <VisualLayer src="/academy/ch1/visuals/a8.webp" alt="" variant="background" opacity={0.12} position="center" />
+          <div className="relative space-y-6 p-px">
+            <Reveal>
+              <SubHead icon={Calculator}>Widgets — pilotez les fondamentaux</SubHead>
+            </Reveal>
+            <div className="grid gap-6 xl:grid-cols-2">
+              <Reveal><CompanyHealthScore /></Reveal>
+              <Reveal delay={80}><BalanceSheetExplorer /></Reveal>
+            </div>
+            <Reveal>
+              <CompanyDashboard />
+            </Reveal>
           </div>
-          <Reveal>
-            <CompanyDashboard />
-          </Reveal>
         </div>
 
         <div id="micro-cas" className="scroll-mt-24 space-y-6">
