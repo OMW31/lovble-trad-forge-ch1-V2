@@ -51,3 +51,27 @@
 - La redistribution des scénarios évite l’effet annexe final et force l’application immédiate après chaque bloc pédagogique.
 - Les visuels 4K restent exploités sans injecter de texte corrompu: image en référence immersive, contenu pédagogique en HTML/SVG natif.
 - Le système d’évaluation devient un produit autonome et persistant, au lieu d’un simple bouton placeholder.
+
+## 2026-06-30
+### Round A — Corrections world-class (chirurgical, aucune feature supprimée)
+- **Bug navigation inférieure corrigé** (`MobileLessonBreadcrumb`) : la cible de navigation est désormais déterministe (état `targetId`) et découplée du scroll-spy asynchrone ; scroll programmatique idempotent. Fin du « fonctionne 1 fois sur 2 ». Design conservé.
+- **Responsive corrigé** sur les 2 widgets récents :
+  - `EconomicCycleWheel` : roue SVG fluide (`aspect-square` + `max-w`), grille `grid-cols-1` jusqu'à `lg`, typo/paddings responsives.
+  - `MacroRelationshipEngine` : chaîne verticale empilée < `sm`, horizontale scrollable avec masque de fondu ≥ `sm` ; suppression du débordement `min-w-[680px]`.
+  - Audit Playwright : 0 overflow horizontal sur 390 / 834 / 1280.
+- **Macro Radar polygone** (`MacroRegimeRadar`) ajouté en section dédiée 1.1 : 4 régimes (Goldilocks/Stagflation/Récession/Expansion) + implications Long/Short, radar SVG 6 axes. L'aside barres du Mission Briefing est conservé.
+- **Mini-heroes** (`LessonMiniHero`) ajoutés en tête des leçons 1.2 → 1.5 (1.1 introductive exclue) : badge, tier, durée, fil d'étapes, Mission Briefing (Objectifs + Question clé).
+- **Sidebar desktop enrichie** : accordéon des sous-sections + tracking précis (visité / actif / à faire) par sous-section, leçon et chapitre (`useSubsectionSpy`). Sticky desktop conservée.
+- **Scroll bidirectionnel** : `Reveal` migré sur Framer Motion (entrée + sortie douce, `prefers-reduced-motion` respecté).
+- **Intégration visuels (1re passe)** : nouvelle couche `VisualLayer` (opacité, fondu mask, gradient, animation) ; a4/a8/a12 intégrés en fond de groupes widgets, a17 en figure (hybrid layer). Aucun visuel « posé ».
+- **Stack animation** : `framer-motion`, `gsap`, `@gsap/react` installés.
+
+### Documentation produite
+- `CH1_VISUAL_SPECS/` : 1 markdown par visuel (a4 → a17) + INDEX + 3 emplacements réservés documentés.
+- Nouveaux docs d'architecture : `TradingView-Scenarisee-World-Class.md`, `Widget-Interaction-Guide.md`, `Learning-Navigation-Engine.md`, `Evaluation-System-Architecture.md`, `Scenario-Library-Architecture.md`, `Difficulty-Scaling-Engine.md`.
+
+### Rationale
+- Restaurer le niveau premium de responsive altéré par les 2 derniers widgets.
+- Fiabiliser la navigation mobile/tablette sans toucher au design.
+- Remettre en place les éléments documentés mais absents (mini-heroes, radar régimes, sous-sections sidebar, scroll bidirectionnel).
+- Préparer le Round B (upscaling) avec une documentation globale opérable.
