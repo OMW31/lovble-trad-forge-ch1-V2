@@ -358,19 +358,22 @@ function Chapter1Page() {
           </Reveal>
         </div>
 
-        <div id="outils-widgets" className="scroll-mt-24 space-y-6">
-          <Reveal>
-            <SubHead icon={Calculator}>Boîte à outils interactive</SubHead>
-          </Reveal>
-          <div className="grid gap-6 xl:grid-cols-2">
-            <Reveal><ValuationLab /></Reveal>
-            <Reveal delay={80}><PeerComparisonMatrix /></Reveal>
+        <div id="outils-widgets" className="relative scroll-mt-24 overflow-hidden rounded-3xl">
+          <VisualLayer src="/academy/ch1/visuals/a12.webp" alt="" variant="background" opacity={0.12} position="center" />
+          <div className="relative space-y-6 p-px">
+            <Reveal>
+              <SubHead icon={Calculator}>Boîte à outils interactive</SubHead>
+            </Reveal>
+            <div className="grid gap-6 xl:grid-cols-2">
+              <Reveal><ValuationLab /></Reveal>
+              <Reveal delay={80}><PeerComparisonMatrix /></Reveal>
+            </div>
+            <div className="grid gap-6 xl:grid-cols-2">
+              <Reveal><FinancialRatios /></Reveal>
+              <Reveal delay={80}><DcfSimulator /></Reveal>
+            </div>
+            <Reveal><EarningsImpactEngine /></Reveal>
           </div>
-          <div className="grid gap-6 xl:grid-cols-2">
-            <Reveal><FinancialRatios /></Reveal>
-            <Reveal delay={80}><DcfSimulator /></Reveal>
-          </div>
-          <Reveal><EarningsImpactEngine /></Reveal>
         </div>
 
         <div id="outils-cas" className="scroll-mt-24 space-y-6">
