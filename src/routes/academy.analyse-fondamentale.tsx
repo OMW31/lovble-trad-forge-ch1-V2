@@ -110,6 +110,21 @@ function Chapter1Page() {
     );
   };
 
+  const renderGate = (lessonId: string) => (
+    <Reveal>
+      <LessonEvaluationGate
+        chapterId={CHAPTER.id}
+        lesson={meta(lessonId)}
+        signedIn={signedIn}
+        progressPercent={progressPercent}
+        passed={lessonPasses.has(lessonId)}
+        onPassed={markLessonPassed}
+      />
+    </Reveal>
+  );
+
+
+
   return (
     <ChapterShell
       completedSections={completed}
