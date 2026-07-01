@@ -229,6 +229,8 @@ function Chapter1Page() {
             />
           </Reveal>
         </div>
+
+        {renderGate("intro")}
       </LessonSection>
 
       {/* 1.2 — Macroéconomie */}
