@@ -29,6 +29,9 @@ function computeUnlockedLevels(progressPercent: number): EvaluationLevel[] {
  * - Signed-in users: state hydrates from Lovable Cloud on mount and is
  *   persisted (debounced) on every change, so the chapter resumes exactly.
  */
+/** The 5 core lessons (excludes the 1.6 capstone index) — V7: 5 × 20 %. */
+export const CORE_LESSON_IDS = ["intro", "macro", "micro", "outils", "previsions"] as const;
+
 export function useChapterProgress(chapterId: string, totalCases: number) {
   const [signedIn, setSignedIn] = useState(false);
   const [authReady, setAuthReady] = useState(false);
@@ -36,6 +39,8 @@ export function useChapterProgress(chapterId: string, totalCases: number) {
   const [cases, setCases] = useState<Set<string>>(new Set());
   const [profile, setProfile] = useState<ChapterProfile | null>(null);
   const [hydrated, setHydrated] = useState(false);
+  // V7: a lesson is officially credited (20 %) only once its evaluation passes (≥70 %).
+  const [lessonPasses, setLessonPasses] = useState<Set<string>>(new Set());
 
   const loadSnapshot = useServerFn(getChapterSnapshot);
   const saveSnapshot = useServerFn(upsertChapterSnapshot);
