@@ -73,7 +73,7 @@ export function useChapterProgress(chapterId: string, totalCases: number) {
 
   useEffect(() => {
     if (!snapshotQuery.data || hydrated) return;
-    const { profile: p, progress } = snapshotQuery.data;
+    const { profile: p, progress, attempts } = snapshotQuery.data;
     if (p) {
       setProfile({
         id: p.id,
@@ -87,6 +87,13 @@ export function useChapterProgress(chapterId: string, totalCases: number) {
       setCompleted(new Set(progress.sections_completed ?? []));
       setCases(new Set(progress.cases_completed ?? []));
     }
+    // Derive per-lesson passes from saved evaluation attempts (no extra table).
+    if (Array.isArray(attempts)) {
+      const passed = attempts
+        .filter((a) => a.passed && a.lesson_id)
+        .map((a) => a.lesson_id as string);
+      if (passed.length) setLessonPasses(new Set(passed));
+    }
     setHydrated(true);
   }, [snapshotQuery.data, hydrated]);
 
@@ -94,6 +101,21 @@ export function useChapterProgress(chapterId: string, totalCases: number) {
     () => Math.round((completed.size / LESSONS.length) * 100),
     [completed],
   );
+
+  // V7 certification progress = validated core lessons / 5 × 100.
+  const certifiedLessons = useMemo(
+    () => CORE_LESSON_IDS.filter((id) => lessonPasses.has(id)).length,
+    [lessonPasses],
+  );
+  const certificationPercent = useMemo(
+    () => Math.round((certifiedLessons / CORE_LESSON_IDS.length) * 100),
+    [certifiedLessons],
+  );
+  const certificationReady = certifiedLessons >= CORE_LESSON_IDS.length;
+
+  const markLessonPassed = useCallback((lessonId: string) => {
+    setLessonPasses((prev) => (prev.has(lessonId) ? prev : new Set(prev).add(lessonId)));
+  }, []);
 
   const overallStatus = useMemo<"not_started" | "in_progress" | "completed">(() => {
     if (completed.size === 0) return "not_started";
