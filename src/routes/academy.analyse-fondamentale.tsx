@@ -358,6 +358,8 @@ function Chapter1Page() {
             {renderCase(4, "micro")}
           </Reveal>
         </div>
+
+        {renderGate("micro")}
       </LessonSection>
 
       {/* 1.4 — Outils d'analyse */}
