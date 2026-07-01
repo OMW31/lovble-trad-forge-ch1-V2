@@ -114,6 +114,8 @@ function Chapter1Page() {
       completedSections={completed}
       signedIn={signedIn}
       profile={profile}
+      lessonPasses={lessonPasses}
+      certificationPercent={certificationPercent}
       headerActions={<AssessmentModal chapterId={CHAPTER.id} signedIn={signedIn} progressPercent={progressPercent} />}
     >
 
