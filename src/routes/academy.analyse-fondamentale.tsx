@@ -32,6 +32,7 @@ import { DcfSimulator } from "@/components/academy/DcfSimulator";
 import { ScenarioBuilder } from "@/components/academy/ScenarioBuilder";
 import { MacroRegimeRadar } from "@/components/academy/MacroRegimeRadar";
 import { LessonMiniHero } from "@/components/academy/LessonMiniHero";
+import { LessonEvaluationGate } from "@/components/academy/LessonEvaluationGate";
 import { useChapterProgress } from "@/lib/academy/useChapterProgress";
 
 export const Route = createFileRoute("/academy/analyse-fondamentale")({
