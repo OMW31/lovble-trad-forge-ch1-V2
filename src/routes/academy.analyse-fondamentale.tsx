@@ -410,6 +410,8 @@ function Chapter1Page() {
             {renderCase(7, "outils")}
           </Reveal>
         </div>
+
+        {renderGate("outils")}
       </LessonSection>
 
       {/* 1.5 — Prévisions */}
