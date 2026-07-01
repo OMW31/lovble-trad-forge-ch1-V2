@@ -45,11 +45,18 @@ export function AssessmentModal({
   lessonId,
   signedIn,
   progressPercent,
+  onPassed,
+  triggerLabel = "Évaluation",
+  triggerClassName,
 }: {
   chapterId: string;
   lessonId?: string;
   signedIn: boolean;
   progressPercent: number;
+  /** Called with the level whenever an evaluation is passed (≥70 %). */
+  onPassed?: (level: EvaluationLevel) => void;
+  triggerLabel?: string;
+  triggerClassName?: string;
 }) {
   const [open, setOpen] = useState(false);
   const [active, setActiveState] = useState<EvaluationLevel>("standard");
@@ -82,6 +89,10 @@ export function AssessmentModal({
     const computed = scoreEvaluation(active, answers);
     setResult(computed);
 
+    if (computed.passed) onPassed?.(active);
+
+
+
     if (signedIn) {
       await mutation.mutateAsync({
         data: {
@@ -108,9 +119,9 @@ export function AssessmentModal({
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button className="bg-gradient-forge text-forge-foreground shadow-glow hover:opacity-95">
+        <Button className={cn("bg-gradient-forge text-forge-foreground shadow-glow hover:opacity-95", triggerClassName)}>
           <BrainCircuit className="h-4 w-4" />
-          Évaluation
+          {triggerLabel}
         </Button>
       </DialogTrigger>
       <DialogContent className="max-h-[92vh] max-w-6xl overflow-y-auto border-border bg-background p-0 sm:rounded-2xl">

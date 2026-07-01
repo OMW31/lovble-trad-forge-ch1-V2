@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Scale, TrendingUp, BarChart3, Calculator, LineChart, History, CheckCircle2, Award, Activity } from "lucide-react";
+import { Scale, TrendingUp, BarChart3, Calculator, LineChart, History, CheckCircle2, Award, Activity, Lock } from "lucide-react";
 import { CHAPTER, LESSONS } from "@/lib/academy/chapter1";
 import { CASE_STUDIES } from "@/lib/academy/market-data";
 import { ChapterShell } from "@/components/academy/ChapterShell";
@@ -32,6 +32,7 @@ import { DcfSimulator } from "@/components/academy/DcfSimulator";
 import { ScenarioBuilder } from "@/components/academy/ScenarioBuilder";
 import { MacroRegimeRadar } from "@/components/academy/MacroRegimeRadar";
 import { LessonMiniHero } from "@/components/academy/LessonMiniHero";
+import { LessonEvaluationGate } from "@/components/academy/LessonEvaluationGate";
 import { useChapterProgress } from "@/lib/academy/useChapterProgress";
 
 export const Route = createFileRoute("/academy/analyse-fondamentale")({
@@ -72,6 +73,11 @@ function Chapter1Page() {
     progressPercent,
     markSection,
     markCase,
+    lessonPasses,
+    certifiedLessons,
+    certificationPercent,
+    certificationReady,
+    markLessonPassed,
   } = useChapterProgress(CHAPTER.id, CASE_STUDIES.length);
 
   const meta = (id: string) => LESSONS.find((l) => l.id === id)!;
@@ -104,11 +110,28 @@ function Chapter1Page() {
     );
   };
 
+  const renderGate = (lessonId: string) => (
+    <Reveal>
+      <LessonEvaluationGate
+        chapterId={CHAPTER.id}
+        lesson={meta(lessonId)}
+        signedIn={signedIn}
+        progressPercent={progressPercent}
+        passed={lessonPasses.has(lessonId)}
+        onPassed={markLessonPassed}
+      />
+    </Reveal>
+  );
+
+
+
   return (
     <ChapterShell
       completedSections={completed}
       signedIn={signedIn}
       profile={profile}
+      lessonPasses={lessonPasses}
+      certificationPercent={certificationPercent}
       headerActions={<AssessmentModal chapterId={CHAPTER.id} signedIn={signedIn} progressPercent={progressPercent} />}
     >
 
@@ -206,6 +229,8 @@ function Chapter1Page() {
             />
           </Reveal>
         </div>
+
+        {renderGate("intro")}
       </LessonSection>
 
       {/* 1.2 — Macroéconomie */}
@@ -233,6 +258,15 @@ function Chapter1Page() {
             <Reveal delay={120}><KpiTile label="NFP" value="emploi" hint="marché du travail" tone="bull" /></Reveal>
             <Reveal delay={160}><KpiTile label="Balance" value="commerce" hint="export − import" /></Reveal>
             <Reveal delay={200}><KpiTile label="PMI" value="confiance" hint="indicateur avancé" tone="data" /></Reveal>
+          </div>
+
+          <div className="grid gap-4 lg:grid-cols-2">
+            <Reveal>
+              <VisualLayer src="/academy/ch1/visuals/a1.webp" alt="L'écosystème macroéconomique — comment les indicateurs clés pilotent l'économie" variant="figure" />
+            </Reveal>
+            <Reveal delay={80}>
+              <VisualLayer src="/academy/ch1/visuals/a2.webp" alt="La hiérarchie de l'intelligence — du signal à l'impact (indicateurs avancés, coïncidents, retardés)" variant="figure" />
+            </Reveal>
           </div>
         </div>
 
@@ -289,6 +323,8 @@ function Chapter1Page() {
             {renderCase(2, "macro")}
           </Reveal>
         </div>
+
+        {renderGate("macro")}
       </LessonSection>
 
       {/* 1.3 — Microéconomie */}
@@ -335,6 +371,8 @@ function Chapter1Page() {
             {renderCase(4, "micro")}
           </Reveal>
         </div>
+
+        {renderGate("micro")}
       </LessonSection>
 
       {/* 1.4 — Outils d'analyse */}
@@ -387,6 +425,8 @@ function Chapter1Page() {
             {renderCase(7, "outils")}
           </Reveal>
         </div>
+
+        {renderGate("outils")}
       </LessonSection>
 
       {/* 1.5 — Prévisions */}
@@ -426,6 +466,8 @@ function Chapter1Page() {
             {renderCase(9, "previsions")}
           </Reveal>
         </div>
+
+        {renderGate("previsions")}
       </LessonSection>
 
       {/* 1.6 — Cas pratiques */}
@@ -453,40 +495,75 @@ function Chapter1Page() {
         </div>
       </LessonSection>
 
-      {/* Completion */}
+      {/* Certification finale — V7 : débloquée à 100 % (5 leçons validées) */}
       <Reveal>
-        <CompletionPanel completed={completed.size} cases={cases.size} />
+        <CompletionPanel
+          chapterId={CHAPTER.id}
+          signedIn={signedIn}
+          certifiedLessons={certifiedLessons}
+          certificationPercent={certificationPercent}
+          certificationReady={certificationReady}
+          cases={cases.size}
+        />
       </Reveal>
     </ChapterShell>
   );
 }
 
-function CompletionPanel({ completed, cases }: { completed: number; cases: number }) {
-  const total = LESSONS.length;
-  const done = completed >= total;
+function CompletionPanel({
+  chapterId,
+  signedIn,
+  certifiedLessons,
+  certificationPercent,
+  certificationReady,
+  cases,
+}: {
+  chapterId: string;
+  signedIn: boolean;
+  certifiedLessons: number;
+  certificationPercent: number;
+  certificationReady: boolean;
+  cases: number;
+}) {
+  const total = 5;
   return (
     <section className="mt-8 overflow-hidden rounded-3xl border bg-gradient-hero p-8 text-center">
       <div className="mx-auto flex max-w-lg flex-col items-center">
-        {done ? (
+        {certificationReady ? (
           <Award className="h-10 w-10 text-forge" />
         ) : (
           <CheckCircle2 className="h-10 w-10 text-muted-foreground" />
         )}
         <h3 className="mt-4 font-display text-2xl font-bold text-foreground">
-          {done ? "Chapitre 1 maîtrisé" : "Continuez votre progression"}
+          {certificationReady ? "Certification finale débloquée" : "Progressez vers la certification"}
         </h3>
         <p className="mt-2 text-sm text-muted-foreground">
-          {done
-            ? "Vous avez complété les 6 sections. Le Chapitre 2 — Banques Centrales — est débloqué."
-            : `Complétez chaque section en répondant à son scénario. ${completed}/${total} sections · ${cases}/10 cas.`}
+          {certificationReady
+            ? "Les 5 leçons sont validées (≥ 70 %). Lancez la certification finale : 3 niveaux × 10 scénarios institutionnels."
+            : `Chaque leçon vaut 20 %, créditée seulement quand son évaluation est réussie. ${certifiedLessons}/${total} leçons validées · ${cases}/10 cas rejoués.`}
         </p>
         <div className="mt-5 h-2 w-full max-w-sm overflow-hidden rounded-full bg-border">
           <div
             className="h-full rounded-full bg-gradient-forge transition-all duration-700"
-            style={{ width: `${(completed / total) * 100}%` }}
+            style={{ width: `${certificationPercent}%` }}
           />
+        </div>
+        <div className="mt-6">
+          {certificationReady ? (
+            <AssessmentModal
+              chapterId={chapterId}
+              signedIn={signedIn}
+              progressPercent={100}
+              triggerLabel="Passer la Certification Finale"
+            />
+          ) : (
+            <span className="inline-flex items-center gap-2 rounded-lg border border-border bg-surface px-4 py-2.5 font-mono text-xs uppercase tracking-wider text-muted-foreground">
+              <Lock className="h-4 w-4" /> Certification verrouillée — {certificationPercent}%
+            </span>
+          )}
         </div>
       </div>
     </section>
   );
 }
+

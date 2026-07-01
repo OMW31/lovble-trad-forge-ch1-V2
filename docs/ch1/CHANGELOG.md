@@ -75,3 +75,28 @@
 - Fiabiliser la navigation mobile/tablette sans toucher au design.
 - Remettre en place les éléments documentés mais absents (mini-heroes, radar régimes, sous-sections sidebar, scroll bidirectionnel).
 - Préparer le Round B (upscaling) avec une documentation globale opérable.
+
+## 2026-07-01 · Round B (Upscaling) livré
+### Comportement d'exécution
+- Règle intégrée dans `AGENTS.md` : après planification, exécuter TOUS les sprints/tâches sans s'arrêter après un seul incrément (boucle d'itération jusqu'à la dernière tâche).
+
+### Respiration entre leçons
+- `LessonSection` : rythme vertical généreux (`pt-16/pb-20` → `lg:pt-24/pb-28`), diviseur premium par leçon (grand numéro fantôme + filet dégradé + « Section 1.x »), espacement interne `space-y-8 → lg:space-y-12`. Inspiré du prototype partagé (image-6).
+
+### Learning Navigation Engine (mobile/tablette)
+- Nouveau `LearningNavigationEngine` : flèche discrète haut-gauche → Sidebar Overlay (< lg uniquement, desktop conserve sa sticky). Arbre leçons + sous-sections, états visité/actif/validé, progression certification, resume par scrollIntoView. Fermeture clic extérieur / Échap.
+
+### Progression V7 (5 × 20 %, gatée par évaluation)
+- `useChapterProgress` étendu (additif) : `lessonPasses`, `certifiedLessons`, `certificationPercent`, `certificationReady`, `markLessonPassed`. Les validations sont dérivées des `evaluation_attempts` existants (aucune migration requise).
+- `LessonEvaluationGate` en fin de leçons 1.1 → 1.5 : crédite les 20 % uniquement si évaluation ≥ 70 %.
+- `AssessmentModal` enrichi (non remplacé) : `onPassed`, `triggerLabel`, `triggerClassName`. La logique d'évaluation existante est conservée intégralement.
+- `CompletionPanel` → panneau de certification finale gaté à 100 % (5 leçons validées), sinon verrouillé avec pourcentage.
+
+### Moteur de scénarios unique + Library + Difficulty
+- Nouveaux libs : `scenario-library.ts` (ScenarioSpec par composants, source = `CASE_STUDIES`), `difficulty-engine.ts` (révélation des couches Standard/High/Premium), `scenario-engine.ts` (modes Learning/Evaluation, Random Selection anti-répétition). Zéro duplication de contenu.
+
+### Visuels manquants intégrés
+- Les 3 visuels manquants (a1/a2/a3) convertis en WebP depuis les références et intégrés via `VisualLayer` (figure) dans 1.2 — jamais posés en `<img>` brut.
+
+### Anti-régression
+- Aucune leçon/widget supprimé. Typecheck OK. Sidebar desktop, scroll-spy, nav inférieure, modal d'évaluation, accès public et persistance invité conservés.

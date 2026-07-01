@@ -115,3 +115,17 @@ Registre anti-régression du Chapitre 1. Toute implémentation future doit relir
 - Widgets historiques + `MacroRegimeRadar` présents.
 - Visuels a4/a8/a12/a17 intégrés via `VisualLayer` (aucun visuel posé).
 - À FAIRE Round B : flèche + Sidebar Overlay (mobile/tablette), progression 5×20 % gatée par évaluation de leçon, certification finale à 100 %, moteur de scénarios unique (pause pédagogique), Scenario Library + Difficulty Engine, fiches par widget, intégration des 3 visuels manquants.
+
+## Features ajoutées — Round B (2026-07-01)
+### Composants / libs nouveaux (ne jamais casser)
+- [x] `LearningNavigationEngine` — flèche + Sidebar Overlay mobile/tablette (< lg)
+- [x] `LessonEvaluationGate` — évaluation de leçon gatée 70 % (1.1 → 1.5)
+- [x] `useChapterProgress` étendu — `lessonPasses`, `certificationPercent`, `certificationReady`, `markLessonPassed`
+- [x] `AssessmentModal` enrichi — `onPassed` / `triggerLabel` (logique existante intacte)
+- [x] `scenario-library.ts` / `difficulty-engine.ts` / `scenario-engine.ts`
+- [x] Visuels a1/a2/a3 intégrés (VisualLayer figure)
+
+### Garanties Round B
+- [x] Logique d'évaluation existante conservée (améliorée, pas supprimée)
+- [x] Progression section existante intacte (V7 ajoutée en parallèle, non destructive)
+- [x] Typecheck OK, aucune leçon/widget retiré

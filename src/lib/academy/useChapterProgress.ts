@@ -29,6 +29,9 @@ function computeUnlockedLevels(progressPercent: number): EvaluationLevel[] {
  * - Signed-in users: state hydrates from Lovable Cloud on mount and is
  *   persisted (debounced) on every change, so the chapter resumes exactly.
  */
+/** The 5 core lessons (excludes the 1.6 capstone index) — V7: 5 × 20 %. */
+export const CORE_LESSON_IDS = ["intro", "macro", "micro", "outils", "previsions"] as const;
+
 export function useChapterProgress(chapterId: string, totalCases: number) {
   const [signedIn, setSignedIn] = useState(false);
   const [authReady, setAuthReady] = useState(false);
@@ -36,6 +39,8 @@ export function useChapterProgress(chapterId: string, totalCases: number) {
   const [cases, setCases] = useState<Set<string>>(new Set());
   const [profile, setProfile] = useState<ChapterProfile | null>(null);
   const [hydrated, setHydrated] = useState(false);
+  // V7: a lesson is officially credited (20 %) only once its evaluation passes (≥70 %).
+  const [lessonPasses, setLessonPasses] = useState<Set<string>>(new Set());
 
   const loadSnapshot = useServerFn(getChapterSnapshot);
   const saveSnapshot = useServerFn(upsertChapterSnapshot);
@@ -68,7 +73,7 @@ export function useChapterProgress(chapterId: string, totalCases: number) {
 
   useEffect(() => {
     if (!snapshotQuery.data || hydrated) return;
-    const { profile: p, progress } = snapshotQuery.data;
+    const { profile: p, progress, attempts } = snapshotQuery.data;
     if (p) {
       setProfile({
         id: p.id,
@@ -82,6 +87,13 @@ export function useChapterProgress(chapterId: string, totalCases: number) {
       setCompleted(new Set(progress.sections_completed ?? []));
       setCases(new Set(progress.cases_completed ?? []));
     }
+    // Derive per-lesson passes from saved evaluation attempts (no extra table).
+    if (Array.isArray(attempts)) {
+      const passed = attempts
+        .filter((a) => a.passed && a.lesson_id)
+        .map((a) => a.lesson_id as string);
+      if (passed.length) setLessonPasses(new Set(passed));
+    }
     setHydrated(true);
   }, [snapshotQuery.data, hydrated]);
 
@@ -89,6 +101,21 @@ export function useChapterProgress(chapterId: string, totalCases: number) {
     () => Math.round((completed.size / LESSONS.length) * 100),
     [completed],
   );
+
+  // V7 certification progress = validated core lessons / 5 × 100.
+  const certifiedLessons = useMemo(
+    () => CORE_LESSON_IDS.filter((id) => lessonPasses.has(id)).length,
+    [lessonPasses],
+  );
+  const certificationPercent = useMemo(
+    () => Math.round((certifiedLessons / CORE_LESSON_IDS.length) * 100),
+    [certifiedLessons],
+  );
+  const certificationReady = certifiedLessons >= CORE_LESSON_IDS.length;
+
+  const markLessonPassed = useCallback((lessonId: string) => {
+    setLessonPasses((prev) => (prev.has(lessonId) ? prev : new Set(prev).add(lessonId)));
+  }, []);
 
   const overallStatus = useMemo<"not_started" | "in_progress" | "completed">(() => {
     if (completed.size === 0) return "not_started";
@@ -165,6 +192,12 @@ export function useChapterProgress(chapterId: string, totalCases: number) {
     unlockedLevels,
     markSection,
     markCase,
+    // V7 evaluation-gated progression
+    lessonPasses,
+    certifiedLessons,
+    certificationPercent,
+    certificationReady,
+    markLessonPassed,
     isSyncing: snapshotQuery.isFetching,
   };
 }

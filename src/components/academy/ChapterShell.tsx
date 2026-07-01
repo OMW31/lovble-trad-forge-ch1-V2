@@ -4,6 +4,7 @@ import { ArrowLeft, Check, ChevronRight, CloudCheck, Flame, Lock } from "lucide-
 import { LESSONS, CHAPTER } from "@/lib/academy/chapter1";
 import { cn } from "@/lib/utils";
 import { MobileLessonBreadcrumb } from "./MobileLessonBreadcrumb";
+import { LearningNavigationEngine } from "./LearningNavigationEngine";
 import { AcademyAccountButton } from "./AcademyAccountButton";
 import type { ChapterProfile } from "@/lib/academy/useChapterProgress";
 
@@ -84,12 +85,16 @@ export function ChapterShell({
   headerActions,
   signedIn = false,
   profile = null,
+  lessonPasses = new Set<string>(),
+  certificationPercent = 0,
 }: {
   children: ReactNode;
   completedSections: Set<string>;
   headerActions?: ReactNode;
   signedIn?: boolean;
   profile?: ChapterProfile | null;
+  lessonPasses?: Set<string>;
+  certificationPercent?: number;
 }) {
   const ids = LESSONS.map((l) => l.id);
   const subIds = useMemo(() => LESSONS.flatMap((l) => l.subsections.map((s) => s.id)), []);
@@ -222,6 +227,16 @@ export function ChapterShell({
 
         <main className="min-w-0 flex-1 py-8 pb-28 lg:py-12 lg:pb-12">{children}</main>
       </div>
+
+      <LearningNavigationEngine
+        lessons={LESSONS}
+        active={active}
+        activeSub={activeSub}
+        visited={visited}
+        completedSections={completedSections}
+        lessonPasses={lessonPasses}
+        certificationPercent={certificationPercent}
+      />
 
       <MobileLessonBreadcrumb lessons={LESSONS} activeId={active} />
     </div>

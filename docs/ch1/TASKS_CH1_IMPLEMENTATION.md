@@ -102,3 +102,15 @@ Toujours mettre à jour `CHANGELOG.md` et `SENTINEL.md` après chaque incrément
 - [ ] Fiches widget individuelles (Widget-Interaction-Guide)
 - [ ] Intégration des 3 visuels manquants + extension des fonds (a5/a6/a7/a9/a10/a11/a13/a14/a15/a16)
 - [ ] Migration backend tracking sous-section + évaluations par leçon (RLS + GRANT)
+
+## Versioning — 2026-07-01 · Round B (Upscaling) exécuté
+- [x] Learning Navigation Engine : flèche + Sidebar Overlay (mobile/tablette uniquement)
+- [x] Progression V7 : 5 leçons × 20 %, créditées sur évaluation ≥ 70 % (dérivée des attempts existants)
+- [x] Évaluation par leçon branchée à la progression (`LessonEvaluationGate` 1.1 → 1.5)
+- [x] Certification finale gatée à 100 % (`CompletionPanel` + AssessmentModal)
+- [x] Moteur de scénarios unique (Learning + Evaluation) : `scenario-engine.ts`
+- [x] Scenario Library + Difficulty Engine + Random Selection : `scenario-library.ts`, `difficulty-engine.ts`
+- [x] Respiration entre leçons (diviseur premium + rythme vertical)
+- [x] Intégration des 3 visuels manquants (a1/a2/a3) via VisualLayer
+- [x] Règle de comportement « ne jamais s'arrêter après un sprint » intégrée à AGENTS.md
+- [ ] Fiches widget individuelles détaillées (gabarit prêt, remplissage exhaustif à poursuivre)
