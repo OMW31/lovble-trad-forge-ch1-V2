@@ -89,6 +89,10 @@ export function AssessmentModal({
     const computed = scoreEvaluation(active, answers);
     setResult(computed);
 
+    if (computed.passed) onPassed?.(active);
+
+
+
     if (signedIn) {
       await mutation.mutateAsync({
         data: {
