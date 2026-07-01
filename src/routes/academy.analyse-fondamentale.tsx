@@ -259,6 +259,15 @@ function Chapter1Page() {
             <Reveal delay={160}><KpiTile label="Balance" value="commerce" hint="export − import" /></Reveal>
             <Reveal delay={200}><KpiTile label="PMI" value="confiance" hint="indicateur avancé" tone="data" /></Reveal>
           </div>
+
+          <div className="grid gap-4 lg:grid-cols-2">
+            <Reveal>
+              <VisualLayer src="/academy/ch1/visuals/a1.webp" alt="L'écosystème macroéconomique — comment les indicateurs clés pilotent l'économie" variant="figure" />
+            </Reveal>
+            <Reveal delay={80}>
+              <VisualLayer src="/academy/ch1/visuals/a2.webp" alt="La hiérarchie de l'intelligence — du signal à l'impact (indicateurs avancés, coïncidents, retardés)" variant="figure" />
+            </Reveal>
+          </div>
         </div>
 
         <div id="macro-dashboard" className="scroll-mt-24 space-y-6">
