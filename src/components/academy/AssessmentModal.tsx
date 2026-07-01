@@ -45,11 +45,18 @@ export function AssessmentModal({
   lessonId,
   signedIn,
   progressPercent,
+  onPassed,
+  triggerLabel = "Évaluation",
+  triggerClassName,
 }: {
   chapterId: string;
   lessonId?: string;
   signedIn: boolean;
   progressPercent: number;
+  /** Called with the level whenever an evaluation is passed (≥70 %). */
+  onPassed?: (level: EvaluationLevel) => void;
+  triggerLabel?: string;
+  triggerClassName?: string;
 }) {
   const [open, setOpen] = useState(false);
   const [active, setActiveState] = useState<EvaluationLevel>("standard");
