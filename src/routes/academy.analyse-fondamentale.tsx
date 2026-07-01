@@ -449,6 +449,8 @@ function Chapter1Page() {
             {renderCase(9, "previsions")}
           </Reveal>
         </div>
+
+        {renderGate("previsions")}
       </LessonSection>
 
       {/* 1.6 — Cas pratiques */}
