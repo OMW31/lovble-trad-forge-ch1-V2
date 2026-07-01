@@ -486,40 +486,75 @@ function Chapter1Page() {
         </div>
       </LessonSection>
 
-      {/* Completion */}
+      {/* Certification finale — V7 : débloquée à 100 % (5 leçons validées) */}
       <Reveal>
-        <CompletionPanel completed={completed.size} cases={cases.size} />
+        <CompletionPanel
+          chapterId={CHAPTER.id}
+          signedIn={signedIn}
+          certifiedLessons={certifiedLessons}
+          certificationPercent={certificationPercent}
+          certificationReady={certificationReady}
+          cases={cases.size}
+        />
       </Reveal>
     </ChapterShell>
   );
 }
 
-function CompletionPanel({ completed, cases }: { completed: number; cases: number }) {
-  const total = LESSONS.length;
-  const done = completed >= total;
+function CompletionPanel({
+  chapterId,
+  signedIn,
+  certifiedLessons,
+  certificationPercent,
+  certificationReady,
+  cases,
+}: {
+  chapterId: string;
+  signedIn: boolean;
+  certifiedLessons: number;
+  certificationPercent: number;
+  certificationReady: boolean;
+  cases: number;
+}) {
+  const total = 5;
   return (
     <section className="mt-8 overflow-hidden rounded-3xl border bg-gradient-hero p-8 text-center">
       <div className="mx-auto flex max-w-lg flex-col items-center">
-        {done ? (
+        {certificationReady ? (
           <Award className="h-10 w-10 text-forge" />
         ) : (
           <CheckCircle2 className="h-10 w-10 text-muted-foreground" />
         )}
         <h3 className="mt-4 font-display text-2xl font-bold text-foreground">
-          {done ? "Chapitre 1 maîtrisé" : "Continuez votre progression"}
+          {certificationReady ? "Certification finale débloquée" : "Progressez vers la certification"}
         </h3>
         <p className="mt-2 text-sm text-muted-foreground">
-          {done
-            ? "Vous avez complété les 6 sections. Le Chapitre 2 — Banques Centrales — est débloqué."
-            : `Complétez chaque section en répondant à son scénario. ${completed}/${total} sections · ${cases}/10 cas.`}
+          {certificationReady
+            ? "Les 5 leçons sont validées (≥ 70 %). Lancez la certification finale : 3 niveaux × 10 scénarios institutionnels."
+            : `Chaque leçon vaut 20 %, créditée seulement quand son évaluation est réussie. ${certifiedLessons}/${total} leçons validées · ${cases}/10 cas rejoués.`}
         </p>
         <div className="mt-5 h-2 w-full max-w-sm overflow-hidden rounded-full bg-border">
           <div
             className="h-full rounded-full bg-gradient-forge transition-all duration-700"
-            style={{ width: `${(completed / total) * 100}%` }}
+            style={{ width: `${certificationPercent}%` }}
           />
+        </div>
+        <div className="mt-6">
+          {certificationReady ? (
+            <AssessmentModal
+              chapterId={chapterId}
+              signedIn={signedIn}
+              progressPercent={100}
+              triggerLabel="Passer la Certification Finale"
+            />
+          ) : (
+            <span className="inline-flex items-center gap-2 rounded-lg border border-border bg-surface px-4 py-2.5 font-mono text-xs uppercase tracking-wider text-muted-foreground">
+              <Lock className="h-4 w-4" /> Certification verrouillée — {certificationPercent}%
+            </span>
+          )}
         </div>
       </div>
     </section>
   );
 }
+
