@@ -312,6 +312,8 @@ function Chapter1Page() {
             {renderCase(2, "macro")}
           </Reveal>
         </div>
+
+        {renderGate("macro")}
       </LessonSection>
 
       {/* 1.3 — Microéconomie */}
