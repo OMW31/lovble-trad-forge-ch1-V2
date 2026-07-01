@@ -119,9 +119,9 @@ export function AssessmentModal({
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button className="bg-gradient-forge text-forge-foreground shadow-glow hover:opacity-95">
+        <Button className={cn("bg-gradient-forge text-forge-foreground shadow-glow hover:opacity-95", triggerClassName)}>
           <BrainCircuit className="h-4 w-4" />
-          Évaluation
+          {triggerLabel}
         </Button>
       </DialogTrigger>
       <DialogContent className="max-h-[92vh] max-w-6xl overflow-y-auto border-border bg-background p-0 sm:rounded-2xl">
