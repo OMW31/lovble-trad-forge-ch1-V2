@@ -192,6 +192,12 @@ export function useChapterProgress(chapterId: string, totalCases: number) {
     unlockedLevels,
     markSection,
     markCase,
+    // V7 evaluation-gated progression
+    lessonPasses,
+    certifiedLessons,
+    certificationPercent,
+    certificationReady,
+    markLessonPassed,
     isSyncing: snapshotQuery.isFetching,
   };
 }
