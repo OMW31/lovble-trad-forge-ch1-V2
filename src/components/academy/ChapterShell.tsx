@@ -4,6 +4,7 @@ import { ArrowLeft, Check, ChevronRight, CloudCheck, Flame, Lock } from "lucide-
 import { LESSONS, CHAPTER } from "@/lib/academy/chapter1";
 import { cn } from "@/lib/utils";
 import { MobileLessonBreadcrumb } from "./MobileLessonBreadcrumb";
+import { LearningNavigationEngine } from "./LearningNavigationEngine";
 import { AcademyAccountButton } from "./AcademyAccountButton";
 import type { ChapterProfile } from "@/lib/academy/useChapterProgress";
 
