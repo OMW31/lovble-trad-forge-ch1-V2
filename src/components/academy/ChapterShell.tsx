@@ -84,12 +84,16 @@ export function ChapterShell({
   headerActions,
   signedIn = false,
   profile = null,
+  lessonPasses = new Set<string>(),
+  certificationPercent = 0,
 }: {
   children: ReactNode;
   completedSections: Set<string>;
   headerActions?: ReactNode;
   signedIn?: boolean;
   profile?: ChapterProfile | null;
+  lessonPasses?: Set<string>;
+  certificationPercent?: number;
 }) {
   const ids = LESSONS.map((l) => l.id);
   const subIds = useMemo(() => LESSONS.flatMap((l) => l.subsections.map((s) => s.id)), []);
