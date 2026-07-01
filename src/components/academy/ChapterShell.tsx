@@ -228,6 +228,16 @@ export function ChapterShell({
         <main className="min-w-0 flex-1 py-8 pb-28 lg:py-12 lg:pb-12">{children}</main>
       </div>
 
+      <LearningNavigationEngine
+        lessons={LESSONS}
+        active={active}
+        activeSub={activeSub}
+        visited={visited}
+        completedSections={completedSections}
+        lessonPasses={lessonPasses}
+        certificationPercent={certificationPercent}
+      />
+
       <MobileLessonBreadcrumb lessons={LESSONS} activeId={active} />
     </div>
   );
