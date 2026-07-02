@@ -1,86 +1,126 @@
-# Plan World-Class — Chapitre 1 (corrections + upscaling)
+# Plan World-Class — Chapitre 1 · Run-up final (Audit → Correctifs → Complétion)
 
-Approche chirurgicale : on ne reconstruit rien, on corrige, on remet en place ce qui était documenté mais absent, puis on industrialise. SENTINEL.md relu avant et après chaque incrément. Aucune feature réussie supprimée (déplacer / factoriser / standardiser). Tous les docs sont versionnés (jamais effacés).
-
-Décisions verrouillées avec toi :
-- Specs des 14 visuels conçues par moi (effet/position/animation/opacité/fondu/gradient), 1 markdown par visuel, emplacements réservés documentés pour les 3 manquants.
-- Flèche + Sidebar Overlay = uniquement écrans sans sticky (mobile/tablette). Desktop garde sa sticky, mais on lui AJOUTE les sous-sections + tracking de progression précis.
-- Macro Radar polygone (4 régimes Goldilocks/Stagflation/Récession/Expansion + implications) = nouvelle section dédiée pleine largeur dans 1.1. L'aside briefing actuel reste.
-- Livraison en 2 rounds d'implémentation : Round A = corrections, Round B = upscaling. Ce plan couvre les deux + la doc globale.
+> Approche chirurgicale. On ne réinvente rien. On audite l'existant, on le compare à la doc, on finit les implémentations incomplètes, on corrige les incohérences. Aucune feature réussie supprimée. SENTINEL.md relu avant/après chaque incrément. Docs versionnées.
 
 ---
 
-## PHASE 1 — Corrections (Round A)
+## PARTIE 0 — AUDIT & REVUE COMPLÈTE (état réel du code)
 
-### 1. Bug navigation inférieure (1 fois sur 2)
-Cause : `MobileLessonBreadcrumb` calcule prev/next à partir du `activeId` issu du scroll-spy asynchrone (IntersectionObserver + rootMargin) et navigue par `#hash` brut → course entre l'état observé et le clic.
-Fix (logique seulement, design conservé) :
-- Découpler la cible de navigation du scroll-spy : maintenir un index courant déterministe dans un état dédié, mis à jour au clic immédiatement, réconcilié ensuite par le scroll-spy.
-- Remplacer le `href="#id"` brut par un scroll programmatique fiable (`scrollIntoView` + offset header) qui fonctionne même si le hash est identique.
-- Garantir l'idempotence (re-tap sur même cible re-scrolle).
+### 0.1 Confirmation des priorités V7.5 (1 → 8)
 
-### 2. Responsive des 2 widgets récents (sélectionnés)
-- `EconomicCycleWheel` : la roue SVG `h-52 w-52` + grille `lg:grid-cols-[220px_1fr]` déborde sur mobile/tablette. Fix : conteneur SVG fluide (`max-w` + `aspect-square`), grille `grid-cols-1` jusqu'à `lg`, paddings/typo responsives.
-- `MacroRelationshipEngine` : `min-w-[680px]` force un scroll-x qui casse le premium. Fix : layout adaptatif (chaîne verticale empilée < `md`, horizontale scrollable ≥ `md` avec masque de fondu), suppression du débordement.
-- Audit Playwright mobile (390), tablette (834), desktop (1280) avant/après.
+| # | Priorité | État réel (vérifié dans le code) | Verdict |
+|---|----------|----------------------------------|---------|
+| 1 | Responsive Mobile | `EconomicCycleWheel` + `MacroRelationshipEngine` refactorés, 0 overflow (audit Playwright 390/834/1280) | ✅ FAIT |
+| 2 | Doc World-Class TradingView | `TradingView-Scenarisee-World-Class.md` présent + pipeline documenté | ✅ FAIT (doc), ⚠️ implémentation runtime non branchée |
+| 3 | Audit UX Mobile | Breadcrumb corrigé (scroll programmatique), nav engine mobile | ✅ FAIT |
+| 4 | Prototype Lovable | Route `academy.analyse-fondamentale.tsx` intégrée bout-en-bout | ✅ FAIT |
+| 5 | **Nouveau modèle d'évaluations scénarisées** | `scenario-engine.ts` (assembleScenario/pickScenario/nextScenario) existe mais **n'est branché à AUCUN composant UI** ; pas de mode Evaluation avec pause pédagogique en runtime | ❌ NON IMPLÉMENTÉ (data-layer seul) |
+| 6 | **Documentation des widgets** | `Widget-Interaction-Guide.md` existe mais **fiches non remplies exhaustivement** (1 fiche/widget attendue) | ⚠️ PARTIEL |
+| 7 | **Refonte complète des évaluations (Partie A/B/C)** | `AssessmentModal` = 3 *niveaux* (standard/high/premium) × parties A/B/C, mais **banque = 4 questions/niveau** (spec : 7–15/partie), pas de questions ouvertes, Partie B ne réutilise pas les visuels, pas de séparation nette leçon vs certification | ❌ NON CONFORME |
+| 8 | **Scenario Library Engine** | `scenario-library.ts` + `difficulty-engine.ts` existent (révélation par couches, random selection) mais **non exploités en UI** | ❌ NON IMPLÉMENTÉ (data-layer seul) |
 
-### 3. Macro Radar — section dédiée 1.1
-- Nouveau composant `MacroRegimeRadar` : radar SVG polygone (axes Croissance, Emploi, Inflation, Banques C., Liquidité, Sentiment) + toggles 4 régimes + panneau implications (Long/Short) comme Ba1.png.
-- Inséré en section pleine largeur dans 1.1, l'aside barres du `MissionBriefing` conservé.
+**Conclusion audit V7.5 :** priorités 1–4 ✅. Priorités 5, 7, 8 ont une **fondation data** mais **zéro surface UI** → à brancher. Priorité 6 à compléter.
 
-### 4. Mini-heroes (dès 1.2)
-- Nouveau composant `LessonMiniHero` (réf image-5) : badge n°, « LEÇON 1.x », durée, titre, sous-titre, fil d'étapes (Concept→…→Feedback), bloc Mission Briefing (Objectifs + Question clé).
-- Intégré au début des leçons 1.2 → 1.5 (1.1 = intro, exclue). Données portées dans `chapter1.ts`.
+### 0.2 Constats précis par fichier (bugs & écarts confirmés)
 
-### 5. Intégration des 14 visuels (aucun visuel « posé »)
-- Couche `VisualLayer` réutilisable : chaque visuel reçoit position, animation d'entrée, opacité, fondu (mask-image), gradient overlay, intégration background.
-- Répartition des `a4`→`a17` dans les sections selon le Visual DNA (backgrounds atmosphériques + figures contextuelles), jamais en simple `<img>` brut.
-- Emplacements réservés documentés pour les 3 visuels manquants.
+**A. Sidebar mobile (`LearningNavigationEngine.tsx`) — BUG confirmé.**
+`go(id)` appelle `setOpen(false)` à CHAQUE clic (ligne 42) → la sidebar se ferme quand on clique une leçon, empêchant le dépliage des sous-sections. **Attendu :** clic leçon = déplier + rester ouvert ; fermeture uniquement via bouton ✕ ou clic extérieur (backdrop déjà OK).
 
-### 6. Sidebar desktop — sous-sections + tracking précis
-- Étendre la sticky desktop : accordéon des sous-sections par leçon, état (✓ / en cours / à faire) par sous-section, section, leçon, chapitre.
-- Tracking hiérarchique : sous-section → section → leçon (20%) → chapitre (100%).
+**B. Progression sidebar — incohérente.**
+- Mobile (`LearningNavigationEngine`) affiche `certificationPercent` (basé sur leçons validées).
+- Desktop (`ChapterShell` aside) affiche `subVisitedCount/subIds` (blocs *vus*, pas validés) + header global `progress = completedSections/6` (sections *complétées* via scénarios).
+- **3 métriques de progression divergentes** cohabitent (sections vues, sections complétées, leçons validées) → la barre « ne semble pas fonctionner ». Pas de résumé unifié (leçons validées/restantes, scénarios réussis/restants, % chapitre, % certification), pas d'explication de la logique de validation, pas de Login/Logout.
 
-### 7. Scroll up/down bidirectionnel
-- `Reveal` actuel ne se joue qu'une fois (montée). Ajouter variante bidirectionnelle (entrée + sortie douce) via Framer Motion, avec fallback `prefers-reduced-motion`.
+**C. Hero (`ChapterHero.tsx`) — bandeau non marquee.**
+Ligne 69 : `overflow-x-auto` statique (scroll manuel), pas d'animation infinie. **Attendu :** marquee horizontal infini, fluide, responsive, pause au hover, `prefers-reduced-motion`.
 
-### 8. Animation stack
-- `bun add framer-motion gsap` (+ `@gsap/react`). Standardiser : Framer Motion pour overlays/reveal/interactions, GSAP pour séquences scroll premium. Espaces de respiration documentés entre leçons.
+**D. Évaluations (`AssessmentModal.tsx` + `evaluation-bank.ts`) — sous-dimensionnées.**
+- 4 questions par niveau (spec 7–15/partie). Pas de questions ouvertes (Partie A). Partie B ne réutilise pas les 17 visuels. Le même modal sert leçon ET certification finale.
+- `LessonEvaluationGate` réutilise `AssessmentModal` complet (A+B+C) pour une *leçon* → mélange la logique certification (Partie C scénarios) dans l'évaluation de leçon. **Spec :** leçon = Partie A (QCM + ouvertes) + Partie B (widgets/visuels) ; certification finale = Partie C (≥10 scénarios scriptés) sur **page dédiée**.
 
----
+**E. Bloc « Passer l'évaluation » (`LessonEvaluationGate.tsx`) — responsive cassé.**
+Grille `grid-cols-[minmax(0,1fr)_auto]` fixe : sur mobile, le bouton `AssessmentModal` (label long) écrase la colonne texte → hiérarchie/espacements à revoir (empilage vertical < sm).
 
-## PHASE 2 — Upscaling (Round B)
+**F. Certification finale (`CompletionPanel`) — ouvre un modal, pas une page.**
+Spec : page dédiée `/academy/analyse-fondamentale/certification`, verrouillée tant que les 5 leçons ne sont pas validées, préparée pour le futur agent. Actuellement `AssessmentModal` inline.
 
-### 9. Learning Navigation Engine (composant réutilisable)
-- Flèche discrète haut-gauche → Sidebar Overlay (mobile/tablette uniquement) : 5 leçons, accordéon sous-sections, états, progression globale, validées/restantes, sauvegarde auto. Fermeture clic extérieur / flèche.
-- Nav inférieure conservée (déjà corrigée en Phase 1).
+**G. Index des scénarios (`academy.analyse-fondamentale.tsx` l.487-495) — navigation imprécise.**
+Chaque carte `Cas N` pointe vers `#macro/#micro/#outils/#previsions` (l'ancre de la LEÇON), pas vers le scénario exact. Les `renderCase` n'ont pas d'`id` par cas. **Attendu :** clic → scénario exact + regroupement par leçon + cartographie claire.
 
-### 10. Modèle de progression V7 (5 × 20%)
-- Réaligner sur la spec : 5 leçons, progression officielle créditée seulement si évaluation de leçon ≥70%. Navigation libre maintenue.
-- Évaluation par leçon (Partie A QCM/ouvertes + Partie B widgets/interprétation, 7–15 questions). 1.6 devient l'index/capstone.
-- Certification finale déverrouillée à 100% (5 leçons validées), 3 niveaux × 10 scénarios.
-- Persistance étendue (sous-section/section/leçon) dans le backend existant.
+**H. Logout — absent.**
+`AcademyAccountButton.tsx` : membre connecté → lien vers `/auth` uniquement. Aucun `supabase.auth.signOut()`. Pas de menu utilisateur (dropdown dispo : `src/components/ui/dropdown-menu.tsx`).
 
-### 11. Moteur de scénarios unique (2 modes)
-- Une seule base : Mode Learning (narration continue) + Mode Evaluation (pause pédagogique → publication → question → 4 réponses → feedback → reprise → débrief).
-- Réutilise `CandleReplay`/`Scenario` existants (non supprimés, factorisés).
+**I. Visuels — sous-exploités.**
+Les 17 `.webp` (`a1…a17`) sont bien présents dans `public/academy/ch1/visuals/`. **Mais** seuls ~5 sont réellement montés dans la route (`a1`, `a2` en figure ; `a4`, `a8`, `a12` en background). Pas de Lightbox (agrandissement au clic), pas de réutilisation dans la Partie B, positionnement à confronter à `CH1_VISUAL_DNA.md` / `CH1_ASSET_MAP.md`.
 
-### 12. Scenario Library Engine
-- Scénario = description par composants (contexte, macro, technique, géopolitique, intermarket, banques centrales, volatilité, difficulté, paramètres). Difficulty Engine révèle plus/moins de couches selon Standard/High/Premium. Random Selection Engine pour non-répétition.
+**J. Liberté de navigation — OK mais à confirmer.**
+Aucune leçon n'est verrouillée (navigation libre déjà possible). Seule la certification doit verrouiller. ✅ conforme dans l'esprit, à re-tester après refonte.
 
 ---
 
-## Documentation à produire (versionnée, jamais effacée)
-Nouveaux : `TradingView-Scenarisee-World-Class.md`, `Widget-Interaction-Guide.md`, `Learning-Navigation-Engine.md`, `Evaluation-System-Architecture.md`, `Scenario-Library-Architecture.md`, `Difficulty-Scaling-Engine.md`, `CH1_VISUAL_SPECS/` (1 .md par visuel).
-Mises à jour : `PRD_CH1_WORLD_CLASS.md`, `TASKS_CH1_IMPLEMENTATION.md`, `CHANGELOG.md`, `SENTINEL.md`, `IMPLEMENTATION_ROADMAP.md` (ajout des deux rounds, sans suppression).
+## PARTIE 1 — PLAN D'ATTAQUE MIS À JOUR (par sprints)
+
+> Ordre = valeur/risque. Chaque sprint est atomique, testé, doc + SENTINEL mis à jour. On enchaîne tous les sprints (pas d'arrêt mi-parcours).
+
+### SPRINT 1 — Correctifs UX chirurgicaux (faible risque, fort impact)
+1. **Sidebar : ne plus fermer au clic leçon** (`LearningNavigationEngine`). Clic leçon = toggle dépliage + scroll, **reste ouverte**. Clic sous-section (feuille) = scroll + fermeture. Fermeture sinon uniquement ✕ / backdrop. Ajouter un état `expanded` découplé du scroll-spy.
+2. **Hero marquee infini** (`ChapterHero` + `styles.css`). Track dupliqué (×2) animé `translateX(-50%)`, keyframe `marquee-x`, `.marquee-mask` (fondu bords), pause hover, `prefers-reduced-motion`. Responsive (vitesse via `--marquee-duration`).
+3. **Responsive bloc « Passer l'évaluation »** (`LessonEvaluationGate`). Empilage vertical < sm, bouton pleine largeur mobile, hiérarchie/espacements alignés design system.
+4. **Index scénarios → navigation précise** (route + `renderCase`). Ajouter `id="case-{index}"` (scroll-mt) à chaque cas ; regrouper l'index par leçon (Macro 1–3, Micro 4–5, Outils 6–8, Prévisions 9–10) ; carte → `#case-N` exact.
+5. **Logout complet** (`AcademyAccountButton` → dropdown-menu). Avatar haut-droite → menu (Profil, Progression, Déconnexion) via `supabase.auth.signOut()` + invalidation. Présent aussi dans la sidebar.
+
+### SPRINT 2 — Tableau de bord de progression (HUD + vue détaillée)
+6. **Métrique unifiée** dans `useChapterProgress` : exposer un objet `dashboard` unique { leçonsValidées, leçonsRestantes, leçonsÉchouées, scénariosRéussis/restants, %chapitre, %certification, score moyen }. Éliminer les 3 métriques divergentes (garder l'usage interne, mais **une seule source affichée**).
+7. **HUD sidebar (mobile + desktop)** : mini-résumé toujours visible (leçons validées x/5, % certification) + bouton « Voir ma progression » → **modal premium** (desktop) / sheet (mobile).
+8. **Dashboard premium (modal/page)** inspiré Duolingo / FIFA Ultimate Team / RPG : anneaux de progression, badges par leçon, série (streak), objectifs, radar de compétences (réutilise `MacroRegimeRadar` visuel), scénarios réussis. **3 concepts desktop proposés ci-dessous (§ Partie 2) → décision requise.**
+9. **Explication de la logique de validation** intégrée au HUD (« chaque leçon = 20 %, créditée à ≥70 % ; certification déverrouillée à 5/5 »).
+
+### SPRINT 3 — Refonte des évaluations de leçon (Partie A + B)
+10. **Séparer leçon vs certification.** `LessonEvaluationGate` n'ouvre plus que **Partie A + Partie B** (le modal reste le support). Partie C (scénarios) sort de l'évaluation de leçon.
+11. **Banque de questions par leçon** (`evaluation-bank.ts` → structure par `lessonId`) : 7–15 items, Partie A (QCM + **questions ouvertes** auto-évaluées par mots-clés/rubrique), Partie B (lecture d'indicateurs, **graphiques + visuels a1…a17**, widgets). Scoring par partie, seuil 70 %, sauvegarde backend (`saveEvaluationAttempt` déjà en place), feedback premium, **boîte de dialogue si échec** (revoir tel bloc).
+12. **Réutilisation des visuels en Partie B** : composant `VisualQuestion` (image + Lightbox + choix). Standardisé.
+
+### SPRINT 4 — Certification finale (page dédiée, Partie C)
+13. **Nouvelle route** `academy.analyse-fondamentale.certification.tsx` (page, pas modal). Verrou : inaccessible tant que 5/5 leçons non validées → écran explicatif listant précisément les leçons restantes.
+14. **Partie C uniquement** : ≥10 scénarios scriptés (branche le `scenario-engine` + `scenario-library` existants, mode Evaluation avec pause pédagogique). Page **préparée pour le futur agent** (structure + slots + doc `Evaluation-System-Architecture.md`).
+15. `CompletionPanel` → CTA vers la page (au lieu du modal).
+
+### SPRINT 5 — Scenario Library Engine + mode Evaluation (branchement UI) [Prio 5 & 8]
+16. Composant `ScenarioPlayer` unifié (Learning / Evaluation) consommant `assembleScenario` : Contexte → bougies → **pause pédagogique** → publication → question → 4 réponses → feedback → reprise → débrief → outcome. Réutilise `CandleReplay`.
+17. Random Selection Engine branché (non-répétition), révélation par difficulté (`difficulty-engine`).
+
+### SPRINT 6 — Visuels : Lightbox + audit positionnement [Prio visuels]
+18. **Lightbox universelle** (`VisualLayer`/`VisualFigure` + Dialog) : agrandissement au clic sur **chaque** visuel du chapitre. Standardisé.
+19. **Audit des 17 visuels** vs `CH1_VISUAL_DNA.md` + `CH1_ASSET_MAP.md` : monter les visuels manquants aux bons emplacements (actuellement ~5/17 en UI), corriger positions/opacités.
+
+### SPRINT 7 — Documentation & anti-régression [Prio 6]
+20. Compléter `Widget-Interaction-Guide.md` (1 fiche exhaustive/widget : rôle, inputs, lecture, piège, question-type). MAJ `CHANGELOG.md`, `SENTINEL.md`, `TASKS_CH1_IMPLEMENTATION.md`, `Scenario_Inventory.md` (repositionnement scénarios 1.1→1.5).
+21. Audit Playwright multi-breakpoints final + relecture SENTINEL.
 
 ---
 
-## Détails techniques
-- Stack : TanStack Start + Tailwind v4 (tokens `src/styles.css`) + shadcn/ui. Ajout `framer-motion`, `gsap`, `@gsap/react`.
-- Fichiers Phase 1 : `MobileLessonBreadcrumb.tsx`, `EconomicCycleWheel.tsx`, `MacroRelationshipEngine.tsx`, `primitives.tsx` (Reveal bidirectionnel + `VisualLayer`), `ChapterShell.tsx` (sous-sections sticky), `chapter1.ts` (sous-sections + métadonnées mini-hero), nouveaux `MacroRegimeRadar.tsx`, `LessonMiniHero.tsx`, route `academy.analyse-fondamentale.tsx`.
-- Fichiers Phase 2 : nouveaux `LearningNavigationEngine.tsx`, `LessonAssessment.tsx`, `scenario-engine.ts`, `scenario-library.ts`, `difficulty-engine.ts` ; extension `useChapterProgress.ts` + `progress.functions.ts` + migration backend pour le tracking sous-section et évaluations par leçon (GRANT + RLS scoping `auth.uid()`).
-- Qualité : aucune couleur en dur (tokens uniquement), `prefers-reduced-motion`, audits Playwright multi-breakpoints, relecture SENTINEL après chaque incrément.
-- Anti-régression : routes publiques, leçons 1.1→1.6, widgets listés, sidebar/scroll-spy, modal d'évaluation, accès public, persistance invité — tous re-vérifiés.
+## PARTIE 2 — Dashboard desktop : 3 concepts UX (décision requise)
 
-Après approbation, j'exécute le Round A (corrections) intégralement, je mets à jour la doc + SENTINEL, puis j'enchaîne le Round B (upscaling).
+**Concept A — « Cockpit RPG » (recommandé ✅).**
+Modal plein écran type fiche de personnage : à gauche un **anneau de certification** (5 segments = 5 leçons, remplis quand validés), au centre des **cartes-badges** par leçon (état, score, médaille bronze/argent/or selon %), à droite un **radar de compétences** (Macro/Micro/Outils/Prévisions/Scénarios) + **streak** et objectifs du jour. Réutilise `MacroRegimeRadar` (déjà premium) → cohérence maximale, coût faible.
+*Pourquoi :* lisible d'un coup d'œil, gamifié sans surcharge, réutilise l'existant, scalable aux futurs chapitres.
+
+**Concept B — « FIFA Ultimate Team ».**
+Cartes-joueur (une par leçon) avec note globale (OVR), stats détaillées, effets de rareté selon score. Très spectaculaire mais lourd à produire et moins lisible pour la progression réelle.
+
+**Concept C — « Duolingo Path ».**
+Chemin vertical à nœuds (leçon = nœud, validé/actif/verrouillé), couronnes, ligue hebdo. Excellent pour la motivation continue mais oriente « parcours linéaire » alors que la nav est libre → léger conflit conceptuel.
+
+**Recommandation : Concept A** (impact/effort optimal, réutilise `MacroRegimeRadar`, gamification mesurée, extensible). Mobile = même données condensées dans un sheet depuis le HUD sidebar.
+
+---
+
+## Anti-régression (inchangé, re-vérifié à chaque sprint)
+Routes publiques ; leçons 1.1→1.6 ; tous les widgets ; sidebar/scroll-spy ; persistance invité + connectée ; accès public ; aucune couleur en dur (tokens `styles.css`) ; `prefers-reduced-motion`.
+
+---
+
+## Décisions à confirmer avant build
+1. **Concept dashboard desktop** : valider A (recommandé) ou choisir B/C.
+2. **Questions ouvertes (Partie A)** : auto-notation par mots-clés/rubrique (sans IA) — OK ?
+3. **Portée immédiate** : je bascule en build mode et j'exécute Sprints 1→7 d'affilée (aucun arrêt mi-parcours), ou tu veux valider sprint par sprint ?
