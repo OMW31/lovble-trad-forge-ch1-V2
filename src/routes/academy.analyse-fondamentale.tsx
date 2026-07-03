@@ -78,6 +78,7 @@ function Chapter1Page() {
     certificationPercent,
     certificationReady,
     markLessonPassed,
+    dashboard,
   } = useChapterProgress(CHAPTER.id, CASE_STUDIES.length);
 
   const meta = (id: string) => LESSONS.find((l) => l.id === id)!;
