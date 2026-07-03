@@ -121,16 +121,18 @@ export function LearningNavigationEngine({
               <nav className="flex-1 space-y-1 overflow-y-auto p-3">
                 {lessons.map((l) => {
                   const isActive = active === l.id;
+                  const isOpen = expanded === l.id;
                   const done = completedSections.has(l.id);
                   const validated = lessonPasses.has(l.id);
                   return (
                     <div key={l.id}>
                       <button
                         type="button"
-                        onClick={() => go(l.id)}
+                        onClick={() => goLesson(l.id)}
+                        aria-expanded={isOpen}
                         className={cn(
                           "flex w-full items-start gap-3 rounded-lg border border-transparent px-3 py-2.5 text-left transition-all",
-                          isActive ? "border-border bg-surface" : "hover:bg-surface/60",
+                          isActive || isOpen ? "border-border bg-surface" : "hover:bg-surface/60",
                         )}
                       >
                         <span
@@ -151,9 +153,10 @@ export function LearningNavigationEngine({
                           </span>
                           <span className="mt-0.5 block truncate text-[11px] text-muted-foreground/70">{l.subtitle}</span>
                         </span>
+                        <ChevronRight className={cn("mt-1 h-3.5 w-3.5 shrink-0 text-muted-foreground transition-transform", isOpen && "rotate-90")} />
                       </button>
 
-                      {isActive && (
+                      {isOpen && (
                         <ul className="ml-[1.45rem] mt-1 space-y-0.5 border-l border-border/70 pl-3">
                           {l.subsections.map((s) => {
                             const subActive = activeSub === s.id;
