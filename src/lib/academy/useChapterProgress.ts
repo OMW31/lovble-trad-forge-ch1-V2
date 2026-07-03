@@ -122,9 +122,50 @@ export function useChapterProgress(chapterId: string, totalCases: number) {
   );
   const certificationReady = certifiedLessons >= CORE_LESSON_IDS.length;
 
-  const markLessonPassed = useCallback((lessonId: string) => {
+  const markLessonPassed = useCallback((lessonId: string, score?: number) => {
     setLessonPasses((prev) => (prev.has(lessonId) ? prev : new Set(prev).add(lessonId)));
+    if (typeof score === "number") {
+      setLessonScores((prev) => (score > (prev[lessonId] ?? -1) ? { ...prev, [lessonId]: score } : prev));
+    }
   }, []);
+
+  /** Unified progression model consumed by the sidebar HUD + Cockpit dashboard. */
+  const dashboard = useMemo(() => {
+    const total = CORE_LESSON_IDS.length;
+    const lessons = LESSONS.filter((l) => (CORE_LESSON_IDS as readonly string[]).includes(l.id)).map((l) => {
+      const validated = lessonPasses.has(l.id);
+      const score = lessonScores[l.id];
+      const medal: "gold" | "silver" | "bronze" | null = validated
+        ? typeof score === "number"
+          ? score >= 90
+            ? "gold"
+            : score >= 80
+              ? "silver"
+              : "bronze"
+          : "bronze"
+        : null;
+      return { id: l.id, num: l.num, title: l.title, validated, score: score ?? null, medal };
+    });
+    const validatedCount = lessons.filter((l) => l.validated).length;
+    const scored = lessons.filter((l) => typeof l.score === "number");
+    const averageScore = scored.length
+      ? Math.round(scored.reduce((sum, l) => sum + (l.score ?? 0), 0) / scored.length)
+      : 0;
+    return {
+      lessons,
+      lessonsValidated: validatedCount,
+      lessonsTotal: total,
+      lessonsRemaining: total - validatedCount,
+      scenariosPassed: cases.size,
+      scenariosTotal: totalCases,
+      scenariosRemaining: Math.max(0, totalCases - cases.size),
+      chapterPercent: certificationPercent,
+      certificationPercent,
+      certificationReady,
+      averageScore,
+    };
+  }, [lessonPasses, lessonScores, cases, totalCases, certificationPercent, certificationReady]);
+
 
   const overallStatus = useMemo<"not_started" | "in_progress" | "completed">(() => {
     if (completed.size === 0) return "not_started";
