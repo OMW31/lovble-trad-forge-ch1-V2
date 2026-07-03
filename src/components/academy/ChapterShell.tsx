@@ -246,7 +246,19 @@ export function ChapterShell({
         completedSections={completedSections}
         lessonPasses={lessonPasses}
         certificationPercent={certificationPercent}
+        dashboard={dashboard}
+        onOpenDashboard={dashboard ? openDashboard : undefined}
       />
+
+      {dashboard && (
+        <ProgressDashboard
+          open={dashboardOpen}
+          onOpenChange={setDashboardOpen}
+          dashboard={dashboard}
+          profile={profile}
+          signedIn={signedIn}
+        />
+      )}
 
       <MobileLessonBreadcrumb lessons={LESSONS} activeId={active} />
     </div>
