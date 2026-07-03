@@ -84,29 +84,31 @@ function Chapter1Page() {
   const renderCase = (caseIndex: number, sectionId: string) => {
     const cs = CASE_STUDIES[caseIndex];
     return (
-      <Scenario
-        title={`Cas ${cs.index} — ${cs.title}`}
-        level={cs.level}
-        context={
-          <>
-            <span className="mb-2 inline-block rounded-full border border-data/30 bg-data/10 px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider text-data">
-              {cs.driver}
-            </span>
-            <br />
-            {cs.context}
-          </>
-        }
-        visual={<CandleReplay caseStudy={cs} />}
-        prompt={cs.decision.prompt}
-        choices={cs.decision.choices}
-        correctId={cs.decision.correctId}
-        explanation={cs.decision.explanation}
-        outcome={cs.outcome}
-        onComplete={() => {
-          markCase(cs.id);
-          markSection(sectionId);
-        }}
-      />
+      <div id={`case-${cs.index}`} className="scroll-mt-24">
+        <Scenario
+          title={`Cas ${cs.index} — ${cs.title}`}
+          level={cs.level}
+          context={
+            <>
+              <span className="mb-2 inline-block rounded-full border border-data/30 bg-data/10 px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider text-data">
+                {cs.driver}
+              </span>
+              <br />
+              {cs.context}
+            </>
+          }
+          visual={<CandleReplay caseStudy={cs} />}
+          prompt={cs.decision.prompt}
+          choices={cs.decision.choices}
+          correctId={cs.decision.correctId}
+          explanation={cs.decision.explanation}
+          outcome={cs.outcome}
+          onComplete={() => {
+            markCase(cs.id);
+            markSection(sectionId);
+          }}
+        />
+      </div>
     );
   };
 
