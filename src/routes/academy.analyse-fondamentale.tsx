@@ -486,14 +486,39 @@ function Chapter1Page() {
           </p>
         </Reveal>
 
-        <div id="cas-pratiques-index" className="scroll-mt-24 grid gap-3 md:grid-cols-2 xl:grid-cols-5">
-          {CASE_STUDIES.map((cs) => (
-            <a key={cs.id} href={`#${cs.index <= 3 ? "macro" : cs.index <= 5 ? "micro" : cs.index <= 8 ? "outils" : "previsions"}`} className="premium-hover rounded-xl border bg-surface p-4">
-              <div className="font-mono text-[10px] uppercase tracking-wider text-data">Cas {cs.index}</div>
-              <div className="mt-2 text-sm font-semibold leading-tight text-foreground">{cs.title}</div>
-              <div className="mt-2 text-xs text-muted-foreground">{cs.instrument} · {cs.period}</div>
-            </a>
-          ))}
+        <div id="cas-pratiques-index" className="scroll-mt-24 space-y-6">
+          {([
+            { lesson: "1.2 · Macroéconomie", anchor: "macro", from: 1, to: 3 },
+            { lesson: "1.3 · Microéconomie", anchor: "micro", from: 4, to: 5 },
+            { lesson: "1.4 · Outils d'analyse", anchor: "outils", from: 6, to: 8 },
+            { lesson: "1.5 · Prévisions", anchor: "previsions", from: 9, to: 10 },
+          ] as const).map((group) => {
+            const groupCases = CASE_STUDIES.filter((cs) => cs.index >= group.from && cs.index <= group.to);
+            return (
+              <div key={group.anchor}>
+                <div className="mb-2 flex items-center gap-2">
+                  <a href={`#${group.anchor}`} className="font-mono text-[11px] uppercase tracking-wider text-forge hover:underline">
+                    {group.lesson}
+                  </a>
+                  <span className="font-mono text-[10px] text-muted-foreground/70">
+                    Cas {group.from}–{group.to}
+                  </span>
+                </div>
+                <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
+                  {groupCases.map((cs) => (
+                    <a key={cs.id} href={`#case-${cs.index}`} className="premium-hover rounded-xl border bg-surface p-4">
+                      <div className="flex items-center justify-between">
+                        <div className="font-mono text-[10px] uppercase tracking-wider text-data">Cas {cs.index}</div>
+                        <span className="rounded-full border border-border px-1.5 py-0.5 font-mono text-[9px] uppercase text-muted-foreground">Niv. {cs.level}</span>
+                      </div>
+                      <div className="mt-2 text-sm font-semibold leading-tight text-foreground">{cs.title}</div>
+                      <div className="mt-2 text-xs text-muted-foreground">{cs.instrument} · {cs.period}</div>
+                    </a>
+                  ))}
+                </div>
+              </div>
+            );
+          })}
         </div>
       </LessonSection>
 
