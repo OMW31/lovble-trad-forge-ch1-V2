@@ -89,12 +89,19 @@ export function useChapterProgress(chapterId: string, totalCases: number) {
       setCompleted(new Set(progress.sections_completed ?? []));
       setCases(new Set(progress.cases_completed ?? []));
     }
-    // Derive per-lesson passes from saved evaluation attempts (no extra table).
+    // Derive per-lesson passes + best scores from saved evaluation attempts (no extra table).
     if (Array.isArray(attempts)) {
       const passed = attempts
         .filter((a) => a.passed && a.lesson_id)
         .map((a) => a.lesson_id as string);
       if (passed.length) setLessonPasses(new Set(passed));
+      const best: Record<string, number> = {};
+      attempts.forEach((a) => {
+        if (!a.lesson_id) return;
+        const s = typeof a.score === "number" ? a.score : 0;
+        if (s > (best[a.lesson_id] ?? -1)) best[a.lesson_id] = s;
+      });
+      if (Object.keys(best).length) setLessonScores(best);
     }
     setHydrated(true);
   }, [snapshotQuery.data, hydrated]);
