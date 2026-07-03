@@ -15,6 +15,32 @@ export interface ChapterProfile {
   avatar_url: string | null;
 }
 
+export type Medal = "gold" | "silver" | "bronze" | null;
+
+export interface DashboardLesson {
+  id: string;
+  num: string;
+  title: string;
+  validated: boolean;
+  score: number | null;
+  medal: Medal;
+}
+
+export interface ChapterDashboard {
+  lessons: DashboardLesson[];
+  lessonsValidated: number;
+  lessonsTotal: number;
+  lessonsRemaining: number;
+  scenariosPassed: number;
+  scenariosTotal: number;
+  scenariosRemaining: number;
+  chapterPercent: number;
+  certificationPercent: number;
+  certificationReady: boolean;
+  averageScore: number;
+}
+
+
 /** Levels unlocked from a section-progress percentage. */
 function computeUnlockedLevels(progressPercent: number): EvaluationLevel[] {
   if (progressPercent >= 100) return ["standard", "high", "premium"];
