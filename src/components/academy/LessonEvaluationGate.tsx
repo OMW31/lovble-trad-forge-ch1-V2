@@ -30,7 +30,7 @@ export function LessonEvaluationGate({
         passed ? "border-bull/40 bg-bull/5" : "border-forge/30 bg-gradient-hero",
       )}
     >
-      <div className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-4">
+      <div className="flex flex-col gap-4 sm:grid sm:grid-cols-[minmax(0,1fr)_auto] sm:items-center">
         <div className="min-w-0">
           <div className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.18em] text-forge">
             {passed ? <CheckCircle2 className="h-3.5 w-3.5 text-bull" /> : <Award className="h-3.5 w-3.5" />}
@@ -47,7 +47,7 @@ export function LessonEvaluationGate({
         </div>
         <div className="shrink-0">
           {passed ? (
-            <span className="inline-flex items-center gap-1.5 rounded-lg border border-bull/40 bg-bull/10 px-3 py-2 font-mono text-xs uppercase tracking-wider text-bull">
+            <span className="inline-flex w-full items-center justify-center gap-1.5 rounded-lg border border-bull/40 bg-bull/10 px-3 py-2 font-mono text-xs uppercase tracking-wider text-bull sm:w-auto">
               <CheckCircle2 className="h-4 w-4" /> Validée
             </span>
           ) : (
@@ -57,6 +57,7 @@ export function LessonEvaluationGate({
               signedIn={signedIn}
               progressPercent={progressPercent}
               triggerLabel="Passer l'évaluation"
+              triggerClassName="w-full sm:w-auto"
               onPassed={() => onPassed(lesson.id)}
             />
           )}
