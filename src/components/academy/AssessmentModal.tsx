@@ -53,8 +53,8 @@ export function AssessmentModal({
   lessonId?: string;
   signedIn: boolean;
   progressPercent: number;
-  /** Called with the level whenever an evaluation is passed (≥70 %). */
-  onPassed?: (level: EvaluationLevel) => void;
+  /** Called with the level + score whenever an evaluation is passed (≥70 %). */
+  onPassed?: (level: EvaluationLevel, score: number) => void;
   triggerLabel?: string;
   triggerClassName?: string;
 }) {
@@ -89,7 +89,7 @@ export function AssessmentModal({
     const computed = scoreEvaluation(active, answers);
     setResult(computed);
 
-    if (computed.passed) onPassed?.(active);
+    if (computed.passed) onPassed?.(active, computed.score);
 
 
 

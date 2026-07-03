@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { Check, ChevronRight, PanelLeftOpen, X, Award } from "lucide-react";
 import type { LessonMeta } from "@/lib/academy/chapter1";
+import type { ChapterDashboard } from "@/lib/academy/useChapterProgress";
+import { SidebarProgressHUD } from "./ProgressDashboard";
 import { cn } from "@/lib/utils";
 
 /**
@@ -18,6 +20,8 @@ export function LearningNavigationEngine({
   completedSections,
   lessonPasses,
   certificationPercent,
+  dashboard,
+  onOpenDashboard,
 }: {
   lessons: LessonMeta[];
   active: string;
@@ -26,8 +30,11 @@ export function LearningNavigationEngine({
   completedSections: Set<string>;
   lessonPasses: Set<string>;
   certificationPercent: number;
+  dashboard?: ChapterDashboard;
+  onOpenDashboard?: () => void;
 }) {
   const [open, setOpen] = useState(false);
+  const [expanded, setExpanded] = useState<string>(active);
   const reduce = useReducedMotion();
 
   // Close on Escape.
@@ -38,11 +45,26 @@ export function LearningNavigationEngine({
     return () => window.removeEventListener("keydown", onKey);
   }, [open]);
 
-  const go = (id: string) => {
-    setOpen(false);
+  // Keep the expanded lesson synced with scroll position while the drawer is open.
+  useEffect(() => {
+    if (open) setExpanded(active);
+  }, [open, active]);
+
+  const scrollTo = (id: string) =>
     requestAnimationFrame(() => {
       document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
     });
+
+  // Clicking a lesson expands its sub-sections AND scrolls, WITHOUT closing.
+  const goLesson = (id: string) => {
+    setExpanded((prev) => (prev === id ? prev : id));
+    scrollTo(id);
+  };
+
+  // Clicking a leaf sub-section navigates then closes (it's the final destination).
+  const goSub = (id: string) => {
+    setOpen(false);
+    scrollTo(id);
   };
 
   const validatedCount = lessonPasses.size;
@@ -91,30 +113,44 @@ export function LearningNavigationEngine({
                 </button>
               </div>
 
-              {/* Certification progress */}
-              <div className="border-b border-border px-4 py-3">
-                <div className="flex items-center justify-between font-mono text-[10px] uppercase tracking-wider text-muted-foreground">
-                  <span className="inline-flex items-center gap-1.5"><Award className="h-3.5 w-3.5 text-forge" /> Certification</span>
-                  <span className="tabular-nums">{validatedCount}/5 leçons</span>
+              {/* Progression HUD → opens the full Cockpit dashboard */}
+              {dashboard && onOpenDashboard ? (
+                <div className="border-b border-border p-3">
+                  <SidebarProgressHUD
+                    dashboard={dashboard}
+                    onOpen={() => {
+                      setOpen(false);
+                      onOpenDashboard();
+                    }}
+                  />
                 </div>
-                <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-border">
-                  <div className="h-full rounded-full bg-gradient-forge transition-all duration-500" style={{ width: `${certificationPercent}%` }} />
+              ) : (
+                <div className="border-b border-border px-4 py-3">
+                  <div className="flex items-center justify-between font-mono text-[10px] uppercase tracking-wider text-muted-foreground">
+                    <span className="inline-flex items-center gap-1.5"><Award className="h-3.5 w-3.5 text-forge" /> Certification</span>
+                    <span className="tabular-nums">{validatedCount}/5 leçons</span>
+                  </div>
+                  <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-border">
+                    <div className="h-full rounded-full bg-gradient-forge transition-all duration-500" style={{ width: `${certificationPercent}%` }} />
+                  </div>
                 </div>
-              </div>
+              )}
 
               <nav className="flex-1 space-y-1 overflow-y-auto p-3">
                 {lessons.map((l) => {
                   const isActive = active === l.id;
+                  const isOpen = expanded === l.id;
                   const done = completedSections.has(l.id);
                   const validated = lessonPasses.has(l.id);
                   return (
                     <div key={l.id}>
                       <button
                         type="button"
-                        onClick={() => go(l.id)}
+                        onClick={() => goLesson(l.id)}
+                        aria-expanded={isOpen}
                         className={cn(
                           "flex w-full items-start gap-3 rounded-lg border border-transparent px-3 py-2.5 text-left transition-all",
-                          isActive ? "border-border bg-surface" : "hover:bg-surface/60",
+                          isActive || isOpen ? "border-border bg-surface" : "hover:bg-surface/60",
                         )}
                       >
                         <span
@@ -135,9 +171,10 @@ export function LearningNavigationEngine({
                           </span>
                           <span className="mt-0.5 block truncate text-[11px] text-muted-foreground/70">{l.subtitle}</span>
                         </span>
+                        <ChevronRight className={cn("mt-1 h-3.5 w-3.5 shrink-0 text-muted-foreground transition-transform", isOpen && "rotate-90")} />
                       </button>
 
-                      {isActive && (
+                      {isOpen && (
                         <ul className="ml-[1.45rem] mt-1 space-y-0.5 border-l border-border/70 pl-3">
                           {l.subsections.map((s) => {
                             const subActive = activeSub === s.id;
@@ -146,7 +183,7 @@ export function LearningNavigationEngine({
                               <li key={s.id}>
                                 <button
                                   type="button"
-                                  onClick={() => go(s.id)}
+                                  onClick={() => goSub(s.id)}
                                   className={cn(
                                     "flex w-full items-center gap-2 rounded-md px-2 py-1.5 text-left text-xs transition-colors",
                                     subActive ? "bg-surface text-foreground" : "text-muted-foreground hover:text-foreground",

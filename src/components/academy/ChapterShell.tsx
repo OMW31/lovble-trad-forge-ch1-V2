@@ -6,7 +6,8 @@ import { cn } from "@/lib/utils";
 import { MobileLessonBreadcrumb } from "./MobileLessonBreadcrumb";
 import { LearningNavigationEngine } from "./LearningNavigationEngine";
 import { AcademyAccountButton } from "./AcademyAccountButton";
-import type { ChapterProfile } from "@/lib/academy/useChapterProgress";
+import { ProgressDashboard, SidebarProgressHUD } from "./ProgressDashboard";
+import type { ChapterDashboard, ChapterProfile } from "@/lib/academy/useChapterProgress";
 
 function useScrollSpy(ids: string[]) {
   const [active, setActive] = useState(ids[0]);
@@ -87,6 +88,7 @@ export function ChapterShell({
   profile = null,
   lessonPasses = new Set<string>(),
   certificationPercent = 0,
+  dashboard,
 }: {
   children: ReactNode;
   completedSections: Set<string>;
@@ -95,6 +97,7 @@ export function ChapterShell({
   profile?: ChapterProfile | null;
   lessonPasses?: Set<string>;
   certificationPercent?: number;
+  dashboard?: ChapterDashboard;
 }) {
   const ids = LESSONS.map((l) => l.id);
   const subIds = useMemo(() => LESSONS.flatMap((l) => l.subsections.map((s) => s.id)), []);
@@ -102,6 +105,8 @@ export function ChapterShell({
   const { activeSub, visited } = useSubsectionSpy(subIds);
   const progress = Math.round((completedSections.size / LESSONS.length) * 100);
   const subVisitedCount = visited.size;
+  const [dashboardOpen, setDashboardOpen] = useState(false);
+  const openDashboard = () => setDashboardOpen(true);
 
   return (
     <div className="min-h-screen bg-background">
@@ -132,13 +137,18 @@ export function ChapterShell({
               )}
             </div>
             {headerActions}
-            <AcademyAccountButton signedIn={signedIn} profile={profile} />
+            <AcademyAccountButton signedIn={signedIn} profile={profile} onOpenDashboard={dashboard ? openDashboard : undefined} />
           </div>
         </div>
       </header>
 
       <div className="mx-auto flex max-w-[1400px] gap-8 px-4 sm:px-6">
         <aside className="sticky top-14 hidden h-[calc(100vh-3.5rem)] w-72 shrink-0 overflow-y-auto py-8 lg:block">
+          {dashboard && (
+            <div className="mb-4">
+              <SidebarProgressHUD dashboard={dashboard} onOpen={openDashboard} />
+            </div>
+          )}
           <div className="mb-3 flex items-center justify-between">
             <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">{CHAPTER.num}</span>
             <span className="font-mono text-[10px] tabular-nums text-muted-foreground">{subVisitedCount}/{subIds.length} blocs</span>
@@ -236,7 +246,19 @@ export function ChapterShell({
         completedSections={completedSections}
         lessonPasses={lessonPasses}
         certificationPercent={certificationPercent}
+        dashboard={dashboard}
+        onOpenDashboard={dashboard ? openDashboard : undefined}
       />
+
+      {dashboard && (
+        <ProgressDashboard
+          open={dashboardOpen}
+          onOpenChange={setDashboardOpen}
+          dashboard={dashboard}
+          profile={profile}
+          signedIn={signedIn}
+        />
+      )}
 
       <MobileLessonBreadcrumb lessons={LESSONS} activeId={active} />
     </div>

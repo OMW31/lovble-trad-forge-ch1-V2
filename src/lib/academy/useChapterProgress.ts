@@ -15,6 +15,32 @@ export interface ChapterProfile {
   avatar_url: string | null;
 }
 
+export type Medal = "gold" | "silver" | "bronze" | null;
+
+export interface DashboardLesson {
+  id: string;
+  num: string;
+  title: string;
+  validated: boolean;
+  score: number | null;
+  medal: Medal;
+}
+
+export interface ChapterDashboard {
+  lessons: DashboardLesson[];
+  lessonsValidated: number;
+  lessonsTotal: number;
+  lessonsRemaining: number;
+  scenariosPassed: number;
+  scenariosTotal: number;
+  scenariosRemaining: number;
+  chapterPercent: number;
+  certificationPercent: number;
+  certificationReady: boolean;
+  averageScore: number;
+}
+
+
 /** Levels unlocked from a section-progress percentage. */
 function computeUnlockedLevels(progressPercent: number): EvaluationLevel[] {
   if (progressPercent >= 100) return ["standard", "high", "premium"];
@@ -41,6 +67,8 @@ export function useChapterProgress(chapterId: string, totalCases: number) {
   const [hydrated, setHydrated] = useState(false);
   // V7: a lesson is officially credited (20 %) only once its evaluation passes (≥70 %).
   const [lessonPasses, setLessonPasses] = useState<Set<string>>(new Set());
+  // Best evaluation score per lesson (0–100), used for medals in the dashboard.
+  const [lessonScores, setLessonScores] = useState<Record<string, number>>({});
 
   const loadSnapshot = useServerFn(getChapterSnapshot);
   const saveSnapshot = useServerFn(upsertChapterSnapshot);
@@ -87,12 +115,19 @@ export function useChapterProgress(chapterId: string, totalCases: number) {
       setCompleted(new Set(progress.sections_completed ?? []));
       setCases(new Set(progress.cases_completed ?? []));
     }
-    // Derive per-lesson passes from saved evaluation attempts (no extra table).
+    // Derive per-lesson passes + best scores from saved evaluation attempts (no extra table).
     if (Array.isArray(attempts)) {
       const passed = attempts
         .filter((a) => a.passed && a.lesson_id)
         .map((a) => a.lesson_id as string);
       if (passed.length) setLessonPasses(new Set(passed));
+      const best: Record<string, number> = {};
+      attempts.forEach((a) => {
+        if (!a.lesson_id) return;
+        const s = typeof a.score === "number" ? a.score : 0;
+        if (s > (best[a.lesson_id] ?? -1)) best[a.lesson_id] = s;
+      });
+      if (Object.keys(best).length) setLessonScores(best);
     }
     setHydrated(true);
   }, [snapshotQuery.data, hydrated]);
@@ -113,9 +148,50 @@ export function useChapterProgress(chapterId: string, totalCases: number) {
   );
   const certificationReady = certifiedLessons >= CORE_LESSON_IDS.length;
 
-  const markLessonPassed = useCallback((lessonId: string) => {
+  const markLessonPassed = useCallback((lessonId: string, score?: number) => {
     setLessonPasses((prev) => (prev.has(lessonId) ? prev : new Set(prev).add(lessonId)));
+    if (typeof score === "number") {
+      setLessonScores((prev) => (score > (prev[lessonId] ?? -1) ? { ...prev, [lessonId]: score } : prev));
+    }
   }, []);
+
+  /** Unified progression model consumed by the sidebar HUD + Cockpit dashboard. */
+  const dashboard = useMemo<ChapterDashboard>(() => {
+    const total = CORE_LESSON_IDS.length;
+    const lessons = LESSONS.filter((l) => (CORE_LESSON_IDS as readonly string[]).includes(l.id)).map((l) => {
+      const validated = lessonPasses.has(l.id);
+      const score = lessonScores[l.id];
+      const medal: "gold" | "silver" | "bronze" | null = validated
+        ? typeof score === "number"
+          ? score >= 90
+            ? "gold"
+            : score >= 80
+              ? "silver"
+              : "bronze"
+          : "bronze"
+        : null;
+      return { id: l.id, num: l.num, title: l.title, validated, score: score ?? null, medal };
+    });
+    const validatedCount = lessons.filter((l) => l.validated).length;
+    const scored = lessons.filter((l) => typeof l.score === "number");
+    const averageScore = scored.length
+      ? Math.round(scored.reduce((sum, l) => sum + (l.score ?? 0), 0) / scored.length)
+      : 0;
+    return {
+      lessons,
+      lessonsValidated: validatedCount,
+      lessonsTotal: total,
+      lessonsRemaining: total - validatedCount,
+      scenariosPassed: cases.size,
+      scenariosTotal: totalCases,
+      scenariosRemaining: Math.max(0, totalCases - cases.size),
+      chapterPercent: certificationPercent,
+      certificationPercent,
+      certificationReady,
+      averageScore,
+    };
+  }, [lessonPasses, lessonScores, cases, totalCases, certificationPercent, certificationReady]);
+
 
   const overallStatus = useMemo<"not_started" | "in_progress" | "completed">(() => {
     if (completed.size === 0) return "not_started";
@@ -194,10 +270,12 @@ export function useChapterProgress(chapterId: string, totalCases: number) {
     markCase,
     // V7 evaluation-gated progression
     lessonPasses,
+    lessonScores,
     certifiedLessons,
     certificationPercent,
     certificationReady,
     markLessonPassed,
+    dashboard,
     isSyncing: snapshotQuery.isFetching,
   };
 }

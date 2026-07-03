@@ -252,4 +252,21 @@
     background-size: 200% 100%;
     animation: glow-sweep 2.4s linear infinite;
   }
+
+  @keyframes marquee-x {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+  .animate-marquee {
+    animation: marquee-x var(--marquee-duration, 40s) linear infinite;
+    will-change: transform;
+  }
+  .marquee-mask {
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+    mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+  }
+  .group\/marquee:hover .animate-marquee { animation-play-state: paused; }
+  @media (prefers-reduced-motion: reduce) {
+    .animate-marquee { animation: none; }
+  }
 }
