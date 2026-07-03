@@ -156,7 +156,7 @@ export function useChapterProgress(chapterId: string, totalCases: number) {
   }, []);
 
   /** Unified progression model consumed by the sidebar HUD + Cockpit dashboard. */
-  const dashboard = useMemo(() => {
+  const dashboard = useMemo<ChapterDashboard>(() => {
     const total = CORE_LESSON_IDS.length;
     const lessons = LESSONS.filter((l) => (CORE_LESSON_IDS as readonly string[]).includes(l.id)).map((l) => {
       const validated = lessonPasses.has(l.id);
