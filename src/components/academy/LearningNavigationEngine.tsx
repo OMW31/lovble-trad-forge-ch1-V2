@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { Check, ChevronRight, PanelLeftOpen, X, Award } from "lucide-react";
 import type { LessonMeta } from "@/lib/academy/chapter1";
+import type { ChapterDashboard } from "@/lib/academy/useChapterProgress";
+import { SidebarProgressHUD } from "./ProgressDashboard";
 import { cn } from "@/lib/utils";
 
 /**
@@ -18,6 +20,8 @@ export function LearningNavigationEngine({
   completedSections,
   lessonPasses,
   certificationPercent,
+  dashboard,
+  onOpenDashboard,
 }: {
   lessons: LessonMeta[];
   active: string;
@@ -26,6 +30,8 @@ export function LearningNavigationEngine({
   completedSections: Set<string>;
   lessonPasses: Set<string>;
   certificationPercent: number;
+  dashboard?: ChapterDashboard;
+  onOpenDashboard?: () => void;
 }) {
   const [open, setOpen] = useState(false);
   const [expanded, setExpanded] = useState<string>(active);
