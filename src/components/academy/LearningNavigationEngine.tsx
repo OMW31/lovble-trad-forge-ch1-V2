@@ -113,16 +113,28 @@ export function LearningNavigationEngine({
                 </button>
               </div>
 
-              {/* Certification progress */}
-              <div className="border-b border-border px-4 py-3">
-                <div className="flex items-center justify-between font-mono text-[10px] uppercase tracking-wider text-muted-foreground">
-                  <span className="inline-flex items-center gap-1.5"><Award className="h-3.5 w-3.5 text-forge" /> Certification</span>
-                  <span className="tabular-nums">{validatedCount}/5 leçons</span>
+              {/* Progression HUD → opens the full Cockpit dashboard */}
+              {dashboard && onOpenDashboard ? (
+                <div className="border-b border-border p-3">
+                  <SidebarProgressHUD
+                    dashboard={dashboard}
+                    onOpen={() => {
+                      setOpen(false);
+                      onOpenDashboard();
+                    }}
+                  />
                 </div>
-                <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-border">
-                  <div className="h-full rounded-full bg-gradient-forge transition-all duration-500" style={{ width: `${certificationPercent}%` }} />
+              ) : (
+                <div className="border-b border-border px-4 py-3">
+                  <div className="flex items-center justify-between font-mono text-[10px] uppercase tracking-wider text-muted-foreground">
+                    <span className="inline-flex items-center gap-1.5"><Award className="h-3.5 w-3.5 text-forge" /> Certification</span>
+                    <span className="tabular-nums">{validatedCount}/5 leçons</span>
+                  </div>
+                  <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-border">
+                    <div className="h-full rounded-full bg-gradient-forge transition-all duration-500" style={{ width: `${certificationPercent}%` }} />
+                  </div>
                 </div>
-              </div>
+              )}
 
               <nav className="flex-1 space-y-1 overflow-y-auto p-3">
                 {lessons.map((l) => {
