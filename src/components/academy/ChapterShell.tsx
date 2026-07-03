@@ -137,7 +137,7 @@ export function ChapterShell({
               )}
             </div>
             {headerActions}
-            <AcademyAccountButton signedIn={signedIn} profile={profile} />
+            <AcademyAccountButton signedIn={signedIn} profile={profile} onOpenDashboard={dashboard ? openDashboard : undefined} />
           </div>
         </div>
       </header>
