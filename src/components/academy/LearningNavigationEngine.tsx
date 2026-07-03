@@ -28,6 +28,7 @@ export function LearningNavigationEngine({
   certificationPercent: number;
 }) {
   const [open, setOpen] = useState(false);
+  const [expanded, setExpanded] = useState<string>(active);
   const reduce = useReducedMotion();
 
   // Close on Escape.
@@ -38,11 +39,26 @@ export function LearningNavigationEngine({
     return () => window.removeEventListener("keydown", onKey);
   }, [open]);
 
-  const go = (id: string) => {
-    setOpen(false);
+  // Keep the expanded lesson synced with scroll position while the drawer is open.
+  useEffect(() => {
+    if (open) setExpanded(active);
+  }, [open, active]);
+
+  const scrollTo = (id: string) =>
     requestAnimationFrame(() => {
       document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
     });
+
+  // Clicking a lesson expands its sub-sections AND scrolls, WITHOUT closing.
+  const goLesson = (id: string) => {
+    setExpanded((prev) => (prev === id ? prev : id));
+    scrollTo(id);
+  };
+
+  // Clicking a leaf sub-section navigates then closes (it's the final destination).
+  const goSub = (id: string) => {
+    setOpen(false);
+    scrollTo(id);
   };
 
   const validatedCount = lessonPasses.size;
