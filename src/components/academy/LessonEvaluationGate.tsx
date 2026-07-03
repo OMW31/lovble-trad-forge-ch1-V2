@@ -21,7 +21,7 @@ export function LessonEvaluationGate({
   signedIn: boolean;
   progressPercent: number;
   passed: boolean;
-  onPassed: (lessonId: string) => void;
+  onPassed: (lessonId: string, score?: number) => void;
 }) {
   return (
     <div
