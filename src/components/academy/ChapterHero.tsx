@@ -64,16 +64,18 @@ export function ChapterHero() {
         </div>
       </div>
 
-      {/* Live ticker strip */}
-      <div className="relative border-t border-border/70 bg-background/40 backdrop-blur-sm">
-        <div className="flex items-center gap-6 overflow-x-auto px-6 py-2.5 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-          {TICKERS.map((t) => (
-            <div key={t.sym} className="flex shrink-0 items-baseline gap-2 font-mono text-xs">
-              <span className="text-muted-foreground">{t.sym}</span>
-              <span className="tabular-nums text-foreground">{t.val}</span>
-              <span className={t.up ? "text-bull" : "text-bear"}>{t.chg}</span>
-            </div>
-          ))}
+      {/* Live ticker strip — infinite marquee */}
+      <div className="group/marquee relative border-t border-border/70 bg-background/40 backdrop-blur-sm">
+        <div className="marquee-mask overflow-hidden py-2.5">
+          <div className="flex w-max animate-marquee items-center" style={{ ["--marquee-duration" as string]: "38s" }} aria-hidden>
+            {[...TICKERS, ...TICKERS].map((t, i) => (
+              <div key={`${t.sym}-${i}`} className="flex shrink-0 items-baseline gap-2 px-6 font-mono text-xs">
+                <span className="text-muted-foreground">{t.sym}</span>
+                <span className="tabular-nums text-foreground">{t.val}</span>
+                <span className={t.up ? "text-bull" : "text-bear"}>{t.chg}</span>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>
