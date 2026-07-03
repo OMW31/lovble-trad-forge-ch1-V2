@@ -6,7 +6,8 @@ import { cn } from "@/lib/utils";
 import { MobileLessonBreadcrumb } from "./MobileLessonBreadcrumb";
 import { LearningNavigationEngine } from "./LearningNavigationEngine";
 import { AcademyAccountButton } from "./AcademyAccountButton";
-import type { ChapterProfile } from "@/lib/academy/useChapterProgress";
+import { ProgressDashboard, SidebarProgressHUD } from "./ProgressDashboard";
+import type { ChapterDashboard, ChapterProfile } from "@/lib/academy/useChapterProgress";
 
 function useScrollSpy(ids: string[]) {
   const [active, setActive] = useState(ids[0]);
