@@ -88,6 +88,7 @@ export function ChapterShell({
   profile = null,
   lessonPasses = new Set<string>(),
   certificationPercent = 0,
+  dashboard,
 }: {
   children: ReactNode;
   completedSections: Set<string>;
@@ -96,6 +97,7 @@ export function ChapterShell({
   profile?: ChapterProfile | null;
   lessonPasses?: Set<string>;
   certificationPercent?: number;
+  dashboard?: ChapterDashboard;
 }) {
   const ids = LESSONS.map((l) => l.id);
   const subIds = useMemo(() => LESSONS.flatMap((l) => l.subsections.map((s) => s.id)), []);
@@ -103,6 +105,8 @@ export function ChapterShell({
   const { activeSub, visited } = useSubsectionSpy(subIds);
   const progress = Math.round((completedSections.size / LESSONS.length) * 100);
   const subVisitedCount = visited.size;
+  const [dashboardOpen, setDashboardOpen] = useState(false);
+  const openDashboard = () => setDashboardOpen(true);
 
   return (
     <div className="min-h-screen bg-background">
