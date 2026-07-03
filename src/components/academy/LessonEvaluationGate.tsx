@@ -58,7 +58,7 @@ export function LessonEvaluationGate({
               progressPercent={progressPercent}
               triggerLabel="Passer l'évaluation"
               triggerClassName="w-full sm:w-auto"
-              onPassed={() => onPassed(lesson.id)}
+              onPassed={(_level, score) => onPassed(lesson.id, score)}
             />
           )}
         </div>
