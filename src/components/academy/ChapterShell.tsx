@@ -144,6 +144,11 @@ export function ChapterShell({
 
       <div className="mx-auto flex max-w-[1400px] gap-8 px-4 sm:px-6">
         <aside className="sticky top-14 hidden h-[calc(100vh-3.5rem)] w-72 shrink-0 overflow-y-auto py-8 lg:block">
+          {dashboard && (
+            <div className="mb-4">
+              <SidebarProgressHUD dashboard={dashboard} onOpen={openDashboard} />
+            </div>
+          )}
           <div className="mb-3 flex items-center justify-between">
             <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">{CHAPTER.num}</span>
             <span className="font-mono text-[10px] tabular-nums text-muted-foreground">{subVisitedCount}/{subIds.length} blocs</span>
