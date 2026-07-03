@@ -165,7 +165,7 @@ export function LearningNavigationEngine({
                               <li key={s.id}>
                                 <button
                                   type="button"
-                                  onClick={() => go(s.id)}
+                                  onClick={() => goSub(s.id)}
                                   className={cn(
                                     "flex w-full items-center gap-2 rounded-md px-2 py-1.5 text-left text-xs transition-colors",
                                     subActive ? "bg-surface text-foreground" : "text-muted-foreground hover:text-foreground",
