@@ -41,6 +41,8 @@ export function useChapterProgress(chapterId: string, totalCases: number) {
   const [hydrated, setHydrated] = useState(false);
   // V7: a lesson is officially credited (20 %) only once its evaluation passes (≥70 %).
   const [lessonPasses, setLessonPasses] = useState<Set<string>>(new Set());
+  // Best evaluation score per lesson (0–100), used for medals in the dashboard.
+  const [lessonScores, setLessonScores] = useState<Record<string, number>>({});
 
   const loadSnapshot = useServerFn(getChapterSnapshot);
   const saveSnapshot = useServerFn(upsertChapterSnapshot);
