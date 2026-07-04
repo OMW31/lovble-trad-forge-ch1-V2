@@ -1,6 +1,7 @@
 import { type ReactNode } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { cn } from "@/lib/utils";
+import { VisualLightbox } from "./VisualLightbox";
 
 /**
  * Fade/rise on scroll — bidirectional (plays on the way down AND back up).
@@ -50,6 +51,7 @@ export function VisualLayer({
   className,
   opacity = 0.5,
   position = "center",
+  label,
 }: {
   src: string;
   alt: string;
@@ -57,6 +59,7 @@ export function VisualLayer({
   className?: string;
   opacity?: number;
   position?: string;
+  label?: string;
 }) {
   const reduce = useReducedMotion();
 
@@ -69,11 +72,12 @@ export function VisualLayer({
         viewport={{ once: false, amount: 0.25 }}
         transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
       >
-        <img
+        <VisualLightbox
           src={src}
           alt={alt}
-          loading="lazy"
-          className="aspect-[16/9] w-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"
+          label={label}
+          className="border-0"
+          imageClassName="transition-transform duration-700 group-hover:scale-[1.04]"
         />
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-background/85 via-background/10 to-transparent" />
       </motion.figure>
