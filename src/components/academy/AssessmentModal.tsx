@@ -1,4 +1,5 @@
 import { useMemo, useState } from "react";
+import type { ElementType } from "react";
 import { Award, BarChart3, BrainCircuit, Gauge, Lock, Sparkles, Target } from "lucide-react";
 import { useMutation } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
@@ -16,7 +17,7 @@ import {
 import { saveEvaluationAttempt } from "@/lib/academy/progress.functions";
 import { cn } from "@/lib/utils";
 
-const LEVEL_META: Record<EvaluationLevel, { label: string; icon: React.ElementType; summary: string; tone: string }> = {
+const LEVEL_META: Record<EvaluationLevel, { label: string; icon: ElementType; summary: string; tone: string }> = {
   standard: {
     label: "Standard",
     icon: Target,
