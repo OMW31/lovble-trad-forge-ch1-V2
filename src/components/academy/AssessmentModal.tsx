@@ -1,21 +1,27 @@
 import { useMemo, useState } from "react";
-import { Award, BarChart3, BrainCircuit, CheckCircle2, Gauge, Lock, Sparkles, Target, XCircle } from "lucide-react";
+import type { ElementType } from "react";
+import { Award, BarChart3, BrainCircuit, Gauge, Lock, Sparkles, Target } from "lucide-react";
 import { useMutation } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
-import { CandleReplay } from "@/components/academy/CandleReplay";
-import { CASE_STUDIES } from "@/lib/academy/market-data";
-import { EVALUATION_BANK, getEvaluationCase, scoreEvaluation, type EvaluationLevel, type EvaluationPart } from "@/lib/academy/evaluation-bank";
+import { VisualQuestion } from "@/components/academy/VisualQuestion";
+import {
+  getChapterDiagnosticQuestions,
+  getLessonEvaluationQuestions,
+  scoreQuestions,
+  type EvaluationLevel,
+  type EvaluationPart,
+} from "@/lib/academy/evaluation-bank";
 import { saveEvaluationAttempt } from "@/lib/academy/progress.functions";
 import { cn } from "@/lib/utils";
 
-const LEVEL_META = {
+const LEVEL_META: Record<EvaluationLevel, { label: string; icon: ElementType; summary: string; tone: string }> = {
   standard: {
     label: "Standard",
     icon: Target,
-    summary: "Validation solide des concepts, surprise vs consensus, décision simple.",
+    summary: "Validation solide des concepts et des transmissions principales.",
     tone: "text-bull border-bull/30 bg-bull/10",
   },
   high: {
@@ -30,15 +36,15 @@ const LEVEL_META = {
     summary: "Raisonnement institutionnel: drivers hiérarchisés, scénario, invalidation.",
     tone: "text-forge border-forge/30 bg-forge/10",
   },
-} as const;
-
-const PART_LABEL: Record<EvaluationPart, string> = {
-  A: "Partie A · QCM",
-  B: "Partie B · Widgets / dashboards",
-  C: "Partie C · TradingView scénarisé",
 };
 
-type Result = ReturnType<typeof scoreEvaluation> | null;
+const PART_LABEL: Record<EvaluationPart, string> = {
+  A: "Partie A · QCM enrichis",
+  B: "Partie B · Widgets / visuels",
+  C: "Partie C · Certification dédiée",
+};
+
+type Result = ReturnType<typeof scoreQuestions> | null;
 
 export function AssessmentModal({
   chapterId,
@@ -53,7 +59,6 @@ export function AssessmentModal({
   lessonId?: string;
   signedIn: boolean;
   progressPercent: number;
-  /** Called with the level + score whenever an evaluation is passed (≥70 %). */
   onPassed?: (level: EvaluationLevel, score: number) => void;
   triggerLabel?: string;
   triggerClassName?: string;
@@ -71,10 +76,13 @@ export function AssessmentModal({
     return ["standard"] as EvaluationLevel[];
   }, [progressPercent]);
 
-  const questions = EVALUATION_BANK[active];
+  const questions = useMemo(
+    () => (lessonId ? getLessonEvaluationQuestions(lessonId, active) : getChapterDiagnosticQuestions(active)),
+    [active, lessonId],
+  );
+  const parts = ["A", "B"] as EvaluationPart[];
   const meta = LEVEL_META[active];
   const Icon = meta.icon;
-  const replayCase = getEvaluationCase(active, CASE_STUDIES);
   const answeredCount = questions.filter((q) => answers[q.id]).length;
   const canSubmit = answeredCount === questions.length && !mutation.isPending;
 
@@ -86,12 +94,9 @@ export function AssessmentModal({
 
   const submit = async () => {
     if (!canSubmit) return;
-    const computed = scoreEvaluation(active, answers);
+    const computed = scoreQuestions(questions, answers, parts);
     setResult(computed);
-
     if (computed.passed) onPassed?.(active, computed.score);
-
-
 
     if (signedIn) {
       await mutation.mutateAsync({
@@ -103,14 +108,14 @@ export function AssessmentModal({
           score: computed.score,
           maxScore: computed.maxScore,
           passed: computed.passed,
-          partAAnswers: questions.filter((q) => q.part === "A").map((q) => ({ questionId: q.id, answer: answers[q.id], correct: answers[q.id] === q.correctId })),
-          partBAnswers: questions.filter((q) => q.part === "B").map((q) => ({ questionId: q.id, answer: answers[q.id], correct: answers[q.id] === q.correctId, widget: q.widget })),
-          partCAnswers: questions.filter((q) => q.part === "C").map((q) => ({ questionId: q.id, answer: answers[q.id], correct: answers[q.id] === q.correctId, caseId: q.caseId })),
-          feedback: {
-            engine: "chapter_1_assessment_v2",
-            partScores: computed.parts,
-            unlockRule: "70/70/70",
-          },
+          partAAnswers: questions
+            .filter((q) => q.part === "A")
+            .map((q) => ({ questionId: q.id, answer: answers[q.id], correct: answers[q.id] === q.correctId })),
+          partBAnswers: questions
+            .filter((q) => q.part === "B")
+            .map((q) => ({ questionId: q.id, answer: answers[q.id], correct: answers[q.id] === q.correctId, widget: q.widget, visualId: q.visualId })),
+          partCAnswers: [],
+          feedback: { engine: "chapter_1_lesson_ab_v3", partScores: computed.parts, unlockRule: "A>=70 && B>=70" },
         },
       });
     }
@@ -129,7 +134,7 @@ export function AssessmentModal({
           <DialogHeader>
             <DialogTitle className="font-display text-2xl text-foreground">Evaluation Command Center</DialogTitle>
             <DialogDescription className="max-w-2xl text-sm text-muted-foreground">
-              Système indépendant en 3 niveaux: QCM, widgets/dashboards et replay TradingView scénarisé. Seuil de validation: 70%.
+              Évaluation de leçon en deux volets : Partie A QCM enrichis, Partie B widgets et visuels. Seuil de validation : 70 % par partie.
             </DialogDescription>
           </DialogHeader>
         </div>
@@ -175,58 +180,23 @@ export function AssessmentModal({
                     </div>
                   </div>
 
-                  {(["A", "B", "C"] as EvaluationPart[]).map((part) => (
+                  {parts.map((part) => (
                     <section key={part} className="rounded-2xl border bg-card p-4 shadow-elegant">
                       <div className="mb-4 flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
                         <Sparkles className="h-3.5 w-3.5 text-forge" /> {PART_LABEL[part]}
                       </div>
-                      {part === "C" && (
-                        <div className="mb-4 overflow-hidden rounded-xl border bg-surface">
-                          <CandleReplay caseStudy={replayCase} />
-                        </div>
-                      )}
                       <div className="space-y-4">
-                        {questions.filter((q) => q.part === part).map((question) => {
-                          const selected = answers[question.id];
-                          const reveal = result !== null;
-                          return (
-                            <div key={question.id} className="rounded-xl border bg-surface p-4">
-                              <div className="flex flex-wrap items-start justify-between gap-2">
-                                <h4 className="max-w-2xl text-sm font-semibold leading-relaxed text-foreground">{question.prompt}</h4>
-                                {question.widget && (
-                                  <span className="rounded-full border border-data/30 bg-data/10 px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider text-data">
-                                    {question.widget}
-                                  </span>
-                                )}
-                              </div>
-                              <div className="mt-3 grid gap-2">
-                                {question.choices.map((choice) => {
-                                  const picked = selected === choice.id;
-                                  const correct = question.correctId === choice.id;
-                                  return (
-                                    <button
-                                      key={choice.id}
-                                      onClick={() => !result && setAnswers((prev) => ({ ...prev, [question.id]: choice.id }))}
-                                      className={cn(
-                                        "flex items-center justify-between gap-3 rounded-lg border px-3 py-2.5 text-left text-sm transition-all",
-                                        picked && !reveal && "border-forge bg-forge/10",
-                                        !picked && !reveal && "border-border hover:border-forge/40 hover:bg-surface-2",
-                                        reveal && correct && "border-bull/50 bg-bull/10",
-                                        reveal && picked && !correct && "border-bear/50 bg-bear/10",
-                                        reveal && !picked && !correct && "opacity-55",
-                                      )}
-                                    >
-                                      <span className="text-foreground">{choice.label}</span>
-                                      {reveal && correct && <CheckCircle2 className="h-4 w-4 shrink-0 text-bull" />}
-                                      {reveal && picked && !correct && <XCircle className="h-4 w-4 shrink-0 text-bear" />}
-                                    </button>
-                                  );
-                                })}
-                              </div>
-                              {reveal && <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{question.explanation}</p>}
-                            </div>
-                          );
-                        })}
+                        {questions
+                          .filter((q) => q.part === part)
+                          .map((question) => (
+                            <VisualQuestion
+                              key={question.id}
+                              question={question}
+                              selected={answers[question.id]}
+                              reveal={result !== null}
+                              onSelect={(choiceId) => setAnswers((prev) => ({ ...prev, [question.id]: choiceId }))}
+                            />
+                          ))}
                       </div>
                     </section>
                   ))}
@@ -240,13 +210,13 @@ export function AssessmentModal({
                   <p className="mt-2 text-sm text-muted-foreground">
                     {result
                       ? result.passed
-                        ? "Niveau validé. La tentative est sauvegardée si le compte est connecté."
-                        : "Niveau non validé: le seuil 70% n’est pas atteint."
-                      : "Répondez aux trois parties pour lancer le scoring."}
+                        ? "Leçon validée. La tentative est sauvegardée si le compte est connecté."
+                        : "Leçon non validée: chaque partie doit atteindre 70 %."
+                      : "Répondez aux parties A et B pour lancer le scoring."}
                   </p>
 
                   <div className="mt-5 space-y-3">
-                    {(result?.parts ?? (["A", "B", "C"] as EvaluationPart[]).map((part) => ({ part, score: 0, correct: 0, total: questions.filter((q) => q.part === part).length }))).map((part) => (
+                    {(result?.parts ?? parts.map((part) => ({ part, score: 0, correct: 0, total: questions.filter((q) => q.part === part).length }))).map((part) => (
                       <div key={part.part} className="rounded-lg border bg-surface p-3">
                         <div className="flex items-center justify-between font-mono text-[10px] uppercase tracking-wider text-muted-foreground">
                           <span>{PART_LABEL[part.part]}</span>
@@ -263,7 +233,7 @@ export function AssessmentModal({
                     <BrainCircuit className="h-4 w-4" />
                     {mutation.isPending ? "Sauvegarde..." : "Calculer le score"}
                   </Button>
-                  {!signedIn && <p className="mt-3 text-xs leading-relaxed text-muted-foreground">Connecte-toi pour sauvegarder les tentatives et débloquer la continuité premium.</p>}
+                  {!signedIn && <p className="mt-3 text-xs leading-relaxed text-muted-foreground">Connectez-vous pour sauvegarder les tentatives et débloquer la continuité premium.</p>}
                 </aside>
               </div>
             </TabsContent>
