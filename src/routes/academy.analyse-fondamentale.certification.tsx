@@ -1,11 +1,14 @@
 import { useMemo, useState } from "react";
 import { Link, createFileRoute } from "@tanstack/react-router";
-import { ArrowLeft, Award, CheckCircle2, Lock, Trophy } from "lucide-react";
+import { useMutation } from "@tanstack/react-query";
+import { useServerFn } from "@tanstack/react-start";
+import { ArrowLeft, Award, CheckCircle2, Lock, ShieldCheck, Trophy } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ChapterShell } from "@/components/academy/ChapterShell";
 import { ScenarioPlayer } from "@/components/academy/ScenarioPlayer";
 import { CHAPTER } from "@/lib/academy/chapter1";
 import { CASE_STUDIES } from "@/lib/academy/market-data";
+import { saveEvaluationAttempt } from "@/lib/academy/progress.functions";
 import { assembleScenario } from "@/lib/academy/scenario-engine";
 import { SCENARIO_LIBRARY } from "@/lib/academy/scenario-library";
 import { useChapterProgress } from "@/lib/academy/useChapterProgress";
@@ -25,12 +28,35 @@ export const Route = createFileRoute("/academy/analyse-fondamentale/certificatio
 function CertificationPage() {
   const { signedIn, profile, completed, lessonPasses, certificationPercent, certificationReady, dashboard } = useChapterProgress(CHAPTER.id, CASE_STUDIES.length);
   const [results, setResults] = useState<Record<string, boolean>>({});
+  const [saved, setSaved] = useState(false);
+  const saveAttempt = useServerFn(saveEvaluationAttempt);
+  const mutation = useMutation({ mutationFn: saveAttempt });
   const scenarios = useMemo(() => SCENARIO_LIBRARY.map((spec) => assembleScenario(spec, spec.difficulte, "evaluation")), []);
   const answered = Object.keys(results).length;
   const correct = Object.values(results).filter(Boolean).length;
   const score = Math.round((correct / Math.max(1, scenarios.length)) * 100);
   const passed = answered === scenarios.length && score >= 70;
   const remaining = dashboard.lessons.filter((lesson) => !lesson.validated);
+
+  const saveCertification = async () => {
+    if (!signedIn || answered !== scenarios.length) return;
+    await mutation.mutateAsync({
+      data: {
+        chapterId: CHAPTER.id,
+        lessonId: null,
+        level: "premium",
+        status: "graded",
+        score,
+        maxScore: 100,
+        passed,
+        partAAnswers: [],
+        partBAnswers: [],
+        partCAnswers: scenarios.map((scenario) => ({ scenarioId: scenario.spec.id, correct: Boolean(results[scenario.spec.id]) })),
+        feedback: { engine: "chapter_1_certification_part_c_v1", scenarioCount: scenarios.length, threshold: 70 },
+      },
+    });
+    setSaved(true);
+  };
 
   return (
     <ChapterShell completedSections={completed} signedIn={signedIn} profile={profile} lessonPasses={lessonPasses} certificationPercent={certificationPercent} dashboard={dashboard}>
@@ -79,7 +105,13 @@ function CertificationPage() {
               {passed ? <Trophy className="mx-auto h-10 w-10 text-forge" /> : <CheckCircle2 className="mx-auto h-10 w-10 text-muted-foreground" />}
               <h2 className="mt-4 font-display text-2xl font-bold text-foreground">{answered === scenarios.length ? (passed ? "Certification réussie" : "Certification non validée") : "Certification en cours"}</h2>
               <p className="mx-auto mt-2 max-w-xl text-sm text-muted-foreground">{answered === scenarios.length ? `${correct}/${scenarios.length} décisions correctes · score ${score} %.` : "Terminez les dix scénarios pour calculer le score final."}</p>
-              <Button disabled className="mt-6 bg-gradient-forge text-forge-foreground shadow-glow opacity-80">Sauvegarde certification bientôt synchronisée</Button>
+              {signedIn ? (
+                <Button disabled={answered !== scenarios.length || mutation.isPending || saved} onClick={saveCertification} className="mt-6 bg-gradient-forge text-forge-foreground shadow-glow hover:opacity-95">
+                  <ShieldCheck className="h-4 w-4" /> {saved ? "Certification sauvegardée" : mutation.isPending ? "Sauvegarde..." : "Sauvegarder la tentative"}
+                </Button>
+              ) : (
+                <p className="mt-6 text-xs text-muted-foreground">Connectez-vous pour sauvegarder cette tentative.</p>
+              )}
             </section>
           </>
         )}
