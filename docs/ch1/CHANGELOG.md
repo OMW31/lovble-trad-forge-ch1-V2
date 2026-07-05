@@ -100,3 +100,16 @@
 
 ### Anti-régression
 - Aucune leçon/widget supprimé. Typecheck OK. Sidebar desktop, scroll-spy, nav inférieure, modal d'évaluation, accès public et persistance invité conservés.
+
+## 2026-07-05 · Run-up final Sprints 3→7 complété
+### Production-ready completion
+- `ScenarioPlayer` ajouté et branché : mode Learning dans les cas 1→10, mode Evaluation pour la certification.
+- Nouvelle route `/academy/analyse-fondamentale/certification` : page dédiée Partie C, verrouillée tant que 5/5 leçons ne sont pas validées.
+- `CompletionPanel` pointe désormais vers la page de certification au lieu d’ouvrir un modal.
+- Banque d’évaluation A+B étendue : toutes les questions restent QCM enrichis ; les visuels a1→a17 sont référencés en Partie B.
+- `AssessmentModal` affiche une boîte de dialogue d’échec avec retour vers la leçon concernée.
+- Progression invité rendue persistante localement, progression connectée toujours synchronisée backend via les fonctions existantes.
+- `VisualLightbox` standardisée sur les figures et questions visuelles ; A1/A2/A3 documentés ; index visuel passé à 17/17.
+
+### Documentation / anti-régression
+- `Widget-Interaction-Guide.md`, `Scenario_Inventory.md`, `CH1_ASSET_MAP.md`, `CH1_VISUAL_SPECS/INDEX.md`, `SENTINEL.md`, `TASKS_CH1_IMPLEMENTATION.md` mis à jour en append-only.

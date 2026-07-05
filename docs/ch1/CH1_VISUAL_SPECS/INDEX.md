@@ -3,9 +3,12 @@
 Spécification détaillée par visuel (effet, position, animation, opacité, fondu, gradient, alt, responsive).
 Tous les visuels passent par le composant `VisualLayer` (`src/components/academy/primitives.tsx`) — aucun visuel n'est « posé » en `<img>` brut.
 
-## Catalogue (14 disponibles : a4 → a17)
+## Catalogue (17 disponibles : a1 → a17)
 | Visuel | Statut | Placement |
 |---|---|---|
+| [A1](A1.md) | INTÉGRÉ | 1.2 · concept macro + Partie B |
+| [A2](A2.md) | INTÉGRÉ | 1.2 · concept macro + Partie B |
+| [A3](A3.md) | INTÉGRÉ | 1.2 · concept macro + Partie B |
 | [A4](A4.md) | INTÉGRÉ | 1.2 · groupe widgets macro (#macro-widgets) |
 | [A5](A5.md) | RÉSERVÉ | 1.2 · command center (#macro-dashboard) |
 | [A6](A6.md) | RÉSERVÉ | 1.3 · intro micro (#micro-concept) |
@@ -21,10 +24,7 @@ Tous les visuels passent par le composant `VisualLayer` (`src/components/academy
 | [A16](A16.md) | RÉSERVÉ | 1.6 · index cas (#cas-pratiques-index) |
 | [A17](A17.md) | INTÉGRÉ | 1.1 · visual hybrid layer (VisualHybridLayer) |
 
-## Emplacements réservés (3 visuels à fournir)
-Trois visuels supplémentaires sont attendus (réf. « 17 visuels » partagés en chat). Slots réservés et documentés :
-- **RESERVED-1** → 1.1 hero secondaire / bandeau d'ouverture chapitre.
-- **RESERVED-2** → 1.2 bandeau de transition audit-analyse-reporting.
-- **RESERVED-3** → 1.6 clôture capstone / certification.
-
-Dès réception : déposer en `public/academy/ch1/visuals/`, créer le `.md` de spec, brancher via `VisualLayer`, puis mettre à jour `SENTINEL.md`.
+## Check-out 2026-07-05
+- Les 17 visuels a1→a17 sont présents sous `/academy/ch1/visuals/`.
+- Les visuels sont montés via `VisualLayer` ou `VisualLightbox` ; les questions Partie B référencent désormais a1→a17.
+- Les anciens slots réservés sont clos par A1/A2/A3.

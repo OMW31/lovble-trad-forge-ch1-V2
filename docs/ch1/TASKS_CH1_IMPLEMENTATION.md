@@ -113,4 +113,13 @@ Toujours mettre à jour `CHANGELOG.md` et `SENTINEL.md` après chaque incrément
 - [x] Respiration entre leçons (diviseur premium + rythme vertical)
 - [x] Intégration des 3 visuels manquants (a1/a2/a3) via VisualLayer
 - [x] Règle de comportement « ne jamais s'arrêter après un sprint » intégrée à AGENTS.md
-- [ ] Fiches widget individuelles détaillées (gabarit prêt, remplissage exhaustif à poursuivre)
+- [x] Fiches widget individuelles détaillées (version condensée opérable)
+
+## Versioning — 2026-07-05 · Run-up final Sprints 1→7 terminé
+- [x] Sprint 1 — correctifs UX chirurgicaux confirmés
+- [x] Sprint 2 — Cockpit RPG / HUD progression confirmé
+- [x] Sprint 3 — évaluations leçon A+B, QCM enrichis uniquement, visuels Partie B
+- [x] Sprint 4 — certification finale en page dédiée verrouillée à 5/5
+- [x] Sprint 5 — ScenarioPlayer + Scenario Library Engine branchés à l’UI
+- [x] Sprint 6 — Lightbox standardisée + 17 visuels présents/documentés/référencés
+- [x] Sprint 7 — docs de suivi mises à jour en append-only

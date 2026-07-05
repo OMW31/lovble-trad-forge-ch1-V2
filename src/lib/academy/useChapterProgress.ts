@@ -58,6 +58,13 @@ function computeUnlockedLevels(progressPercent: number): EvaluationLevel[] {
 /** The 5 core lessons (excludes the 1.6 capstone index) — V7: 5 × 20 %. */
 export const CORE_LESSON_IDS = ["intro", "macro", "micro", "outils", "previsions"] as const;
 
+interface LocalChapterProgress {
+  completed?: string[];
+  cases?: string[];
+  lessonPasses?: string[];
+  lessonScores?: Record<string, number>;
+}
+
 export function useChapterProgress(chapterId: string, totalCases: number) {
   const [signedIn, setSignedIn] = useState(false);
   const [authReady, setAuthReady] = useState(false);
@@ -69,9 +76,29 @@ export function useChapterProgress(chapterId: string, totalCases: number) {
   const [lessonPasses, setLessonPasses] = useState<Set<string>>(new Set());
   // Best evaluation score per lesson (0–100), used for medals in the dashboard.
   const [lessonScores, setLessonScores] = useState<Record<string, number>>({});
+  const [localReady, setLocalReady] = useState(false);
 
   const loadSnapshot = useServerFn(getChapterSnapshot);
   const saveSnapshot = useServerFn(upsertChapterSnapshot);
+  const localStorageKey = `tradforge:${chapterId}:progress:v7`;
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    try {
+      const raw = window.localStorage.getItem(localStorageKey);
+      if (raw) {
+        const parsed = JSON.parse(raw) as LocalChapterProgress;
+        if (parsed.completed) setCompleted(new Set(parsed.completed));
+        if (parsed.cases) setCases(new Set(parsed.cases));
+        if (parsed.lessonPasses) setLessonPasses(new Set(parsed.lessonPasses));
+        if (parsed.lessonScores) setLessonScores(parsed.lessonScores);
+      }
+    } catch (error) {
+      console.warn("Failed to read local chapter progress", error);
+    } finally {
+      setLocalReady(true);
+    }
+  }, [localStorageKey]);
 
   // Track auth state.
   useEffect(() => {
@@ -131,6 +158,23 @@ export function useChapterProgress(chapterId: string, totalCases: number) {
     }
     setHydrated(true);
   }, [snapshotQuery.data, hydrated]);
+
+  useEffect(() => {
+    if (!localReady || typeof window === "undefined") return;
+    try {
+      window.localStorage.setItem(
+        localStorageKey,
+        JSON.stringify({
+          completed: Array.from(completed),
+          cases: Array.from(cases),
+          lessonPasses: Array.from(lessonPasses),
+          lessonScores,
+        } satisfies LocalChapterProgress),
+      );
+    } catch (error) {
+      console.warn("Failed to persist local chapter progress", error);
+    }
+  }, [localReady, localStorageKey, completed, cases, lessonPasses, lessonScores]);
 
   const progressPercent = useMemo(
     () => Math.round((completed.size / LESSONS.length) * 100),

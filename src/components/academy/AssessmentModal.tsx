@@ -3,6 +3,16 @@ import type { ElementType } from "react";
 import { Award, BarChart3, BrainCircuit, Gauge, Lock, Sparkles, Target } from "lucide-react";
 import { useMutation } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
@@ -67,6 +77,7 @@ export function AssessmentModal({
   const [active, setActiveState] = useState<EvaluationLevel>("standard");
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [result, setResult] = useState<Result>(null);
+  const [failureOpen, setFailureOpen] = useState(false);
   const saveAttempt = useServerFn(saveEvaluationAttempt);
   const mutation = useMutation({ mutationFn: saveAttempt });
 
@@ -97,6 +108,7 @@ export function AssessmentModal({
     const computed = scoreQuestions(questions, answers, parts);
     setResult(computed);
     if (computed.passed) onPassed?.(active, computed.score);
+    else setFailureOpen(true);
 
     if (signedIn) {
       await mutation.mutateAsync({
@@ -122,14 +134,15 @@ export function AssessmentModal({
   };
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
-        <Button className={cn("bg-gradient-forge text-forge-foreground shadow-glow hover:opacity-95", triggerClassName)}>
-          <BrainCircuit className="h-4 w-4" />
-          {triggerLabel}
-        </Button>
-      </DialogTrigger>
-      <DialogContent className="max-h-[92vh] max-w-6xl overflow-y-auto border-border bg-background p-0 sm:rounded-2xl">
+    <>
+      <Dialog open={open} onOpenChange={setOpen}>
+        <DialogTrigger asChild>
+          <Button className={cn("bg-gradient-forge text-forge-foreground shadow-glow hover:opacity-95", triggerClassName)}>
+            <BrainCircuit className="h-4 w-4" />
+            {triggerLabel}
+          </Button>
+        </DialogTrigger>
+        <DialogContent className="max-h-[92vh] max-w-6xl overflow-y-auto border-border bg-background p-0 sm:rounded-2xl">
         <div className="border-b border-border bg-gradient-hero p-6">
           <DialogHeader>
             <DialogTitle className="font-display text-2xl text-foreground">Evaluation Command Center</DialogTitle>
@@ -239,7 +252,33 @@ export function AssessmentModal({
             </TabsContent>
           </Tabs>
         </div>
-      </DialogContent>
-    </Dialog>
+        </DialogContent>
+      </Dialog>
+
+      <AlertDialog open={failureOpen} onOpenChange={setFailureOpen}>
+        <AlertDialogContent className="border-border bg-background">
+          <AlertDialogHeader>
+            <AlertDialogTitle className="font-display text-foreground">Validation non obtenue</AlertDialogTitle>
+            <AlertDialogDescription>
+              Chaque partie doit atteindre 70 %. Revenez au bloc de leçon, relisez les widgets/visuels concernés, puis relancez l'évaluation.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Continuer ici</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={() => {
+                if (lessonId) {
+                  setOpen(false);
+                  window.setTimeout(() => document.getElementById(lessonId)?.scrollIntoView({ behavior: "smooth", block: "start" }), 50);
+                }
+              }}
+              className="bg-gradient-forge text-forge-foreground hover:opacity-95"
+            >
+              Revoir la leçon
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+    </>
   );
 }

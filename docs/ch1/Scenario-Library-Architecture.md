@@ -33,5 +33,5 @@ interface ScenarioSpec {
 - Maintenance centralisée, montée en charge vers des centaines de scénarios.
 
 ## État
-- [ ] Library + Engine + Difficulty + Random (Round B).
+- [x] Library + Engine + Difficulty + Random branchés (`scenario-library.ts`, `scenario-engine.ts`, `difficulty-engine.ts`).
 - Réutilise `CASE_STUDIES` / `CandleReplay` existants comme première source.

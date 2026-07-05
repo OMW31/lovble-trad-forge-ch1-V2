@@ -12,3 +12,8 @@
 | Scenario 8 | bloc final | 1.4 |
 | Scenario 9 | bloc final | 1.5 |
 | Scenario 10 | bloc final | 1.5 |
+
+## Check-out 2026-07-05
+- Les cas 1→10 sont branchés via `ScenarioPlayer` en mode Learning dans les leçons ciblées.
+- La certification finale réutilise les mêmes specs via `assembleScenario(..., "evaluation")` en page dédiée.
+- L’index final conserve son rôle d’index navigable et pointe vers `#case-N` pour chaque cas exact.

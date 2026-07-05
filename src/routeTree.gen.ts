@@ -14,6 +14,7 @@ import { Route as AuthRouteImport } from './routes/auth'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AcademyIndexRouteImport } from './routes/academy.index'
 import { Route as AcademyAnalyseFondamentaleRouteImport } from './routes/academy.analyse-fondamentale'
+import { Route as AcademyAnalyseFondamentaleCertificationRouteImport } from './routes/academy.analyse-fondamentale.certification'
 
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
@@ -41,28 +42,37 @@ const AcademyAnalyseFondamentaleRoute =
     path: '/academy/analyse-fondamentale',
     getParentRoute: () => rootRouteImport,
   } as any)
+const AcademyAnalyseFondamentaleCertificationRoute =
+  AcademyAnalyseFondamentaleCertificationRouteImport.update({
+    id: '/certification',
+    path: '/certification',
+    getParentRoute: () => AcademyAnalyseFondamentaleRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
-  '/academy/analyse-fondamentale': typeof AcademyAnalyseFondamentaleRoute
+  '/academy/analyse-fondamentale': typeof AcademyAnalyseFondamentaleRouteWithChildren
   '/academy/': typeof AcademyIndexRoute
+  '/academy/analyse-fondamentale/certification': typeof AcademyAnalyseFondamentaleCertificationRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
-  '/academy/analyse-fondamentale': typeof AcademyAnalyseFondamentaleRoute
+  '/academy/analyse-fondamentale': typeof AcademyAnalyseFondamentaleRouteWithChildren
   '/academy': typeof AcademyIndexRoute
+  '/academy/analyse-fondamentale/certification': typeof AcademyAnalyseFondamentaleCertificationRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
-  '/academy/analyse-fondamentale': typeof AcademyAnalyseFondamentaleRoute
+  '/academy/analyse-fondamentale': typeof AcademyAnalyseFondamentaleRouteWithChildren
   '/academy/': typeof AcademyIndexRoute
+  '/academy/analyse-fondamentale/certification': typeof AcademyAnalyseFondamentaleCertificationRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -72,6 +82,7 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/academy/analyse-fondamentale'
     | '/academy/'
+    | '/academy/analyse-fondamentale/certification'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -79,6 +90,7 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/academy/analyse-fondamentale'
     | '/academy'
+    | '/academy/analyse-fondamentale/certification'
   id:
     | '__root__'
     | '/'
@@ -86,13 +98,14 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/academy/analyse-fondamentale'
     | '/academy/'
+    | '/academy/analyse-fondamentale/certification'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthRoute: typeof AuthRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
-  AcademyAnalyseFondamentaleRoute: typeof AcademyAnalyseFondamentaleRoute
+  AcademyAnalyseFondamentaleRoute: typeof AcademyAnalyseFondamentaleRouteWithChildren
   AcademyIndexRoute: typeof AcademyIndexRoute
 }
 
@@ -133,14 +146,36 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AcademyAnalyseFondamentaleRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/academy/analyse-fondamentale/certification': {
+      id: '/academy/analyse-fondamentale/certification'
+      path: '/certification'
+      fullPath: '/academy/analyse-fondamentale/certification'
+      preLoaderRoute: typeof AcademyAnalyseFondamentaleCertificationRouteImport
+      parentRoute: typeof AcademyAnalyseFondamentaleRoute
+    }
   }
 }
+
+interface AcademyAnalyseFondamentaleRouteChildren {
+  AcademyAnalyseFondamentaleCertificationRoute: typeof AcademyAnalyseFondamentaleCertificationRoute
+}
+
+const AcademyAnalyseFondamentaleRouteChildren: AcademyAnalyseFondamentaleRouteChildren =
+  {
+    AcademyAnalyseFondamentaleCertificationRoute:
+      AcademyAnalyseFondamentaleCertificationRoute,
+  }
+
+const AcademyAnalyseFondamentaleRouteWithChildren =
+  AcademyAnalyseFondamentaleRoute._addFileChildren(
+    AcademyAnalyseFondamentaleRouteChildren,
+  )
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthRoute: AuthRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
-  AcademyAnalyseFondamentaleRoute: AcademyAnalyseFondamentaleRoute,
+  AcademyAnalyseFondamentaleRoute: AcademyAnalyseFondamentaleRouteWithChildren,
   AcademyIndexRoute: AcademyIndexRoute,
 }
 export const routeTree = rootRouteImport

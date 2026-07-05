@@ -129,3 +129,15 @@ Registre anti-régression du Chapitre 1. Toute implémentation future doit relir
 - [x] Logique d'évaluation existante conservée (améliorée, pas supprimée)
 - [x] Progression section existante intacte (V7 ajoutée en parallèle, non destructive)
 - [x] Typecheck OK, aucune leçon/widget retiré
+
+## Features ajoutées — Run-up final (2026-07-05)
+### Composants / routes nouveaux (ne jamais casser)
+- [x] `ScenarioPlayer` — lecteur unifié Learning/Evaluation consommant `assembleScenario`
+- [x] Route `/academy/analyse-fondamentale/certification` — certification finale dédiée, pas modal
+- [x] `VisualLightbox` / `VisualQuestion` — logique visuelle standardisée pour Partie B
+- [x] A1→A17 présents, documentés et référencés dans le chapitre ou les évaluations
+
+### Garanties Run-up final
+- [x] Navigation libre conservée ; seul l’accès certification est verrouillé à 5/5 leçons validées
+- [x] Partie C sortie du modal de leçon et montée en page dédiée
+- [x] Aucun widget/leçon historique supprimé

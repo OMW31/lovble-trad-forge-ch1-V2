@@ -22,6 +22,13 @@ export function ChapterHero() {
   return (
     <section className="relative overflow-hidden rounded-3xl border bg-gradient-hero">
       <div className="absolute inset-0 grid-bg opacity-60" aria-hidden />
+      <img
+        src="/academy/ch1/visuals/a10.webp"
+        alt=""
+        role="presentation"
+        loading="eager"
+        className="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-[0.12] [mask-image:radial-gradient(90%_90%_at_72%_35%,#000_0%,transparent_72%)]"
+      />
 
       <div className="relative px-6 py-10 sm:px-10 sm:py-14">
         <div className="flex items-center justify-between gap-4">

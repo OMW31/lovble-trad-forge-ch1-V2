@@ -1,7 +1,7 @@
 import { Activity, ArrowDownRight, ArrowUpRight, CheckCircle2, Layers3, Lock, Radar, Target } from "lucide-react";
 import { LESSONS } from "@/lib/academy/chapter1";
 import { cn } from "@/lib/utils";
-import { ConceptCard, Eyebrow } from "./primitives";
+import { ConceptCard, Eyebrow, VisualLayer } from "./primitives";
 
 const visualAssets = [
   { src: "/academy/ch1/visuals/a4.webp", label: "Macro engine" },
@@ -150,10 +150,9 @@ export function VisualHybridLayer() {
       </div>
       <div className="mt-5 grid gap-4 lg:grid-cols-3">
         {visualAssets.map((asset) => (
-          <figure key={asset.src} className="premium-hover overflow-hidden rounded-xl border bg-surface">
-            <img src={asset.src} alt={`Référence visuelle ${asset.label} pour le chapitre Analyse Fondamentale`} className="aspect-[16/9] w-full object-cover" loading="lazy" />
-            <figcaption className="border-t px-3 py-2 font-mono text-[10px] uppercase tracking-wider text-muted-foreground">{asset.label} · WebP hybrid reference</figcaption>
-          </figure>
+          <div key={asset.src}>
+            <VisualLayer src={asset.src} alt={`Référence visuelle ${asset.label} pour le chapitre Analyse Fondamentale`} variant="figure" label={`${asset.label} · WebP hybrid reference`} />
+          </div>
         ))}
       </div>
       <div className="mt-5 grid gap-4 lg:grid-cols-3">

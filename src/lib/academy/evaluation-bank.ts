@@ -135,6 +135,7 @@ const byLesson: Record<CoreLessonId, EvaluationQuestion[]> = {
       ],
       correctId: "a",
       explanation: "Le raisonnement institutionnel est conditionnel: thèse, transmission, invalidation.",
+      visualId: "a1",
     },
     {
       id: "intro-b-4",
@@ -255,6 +256,21 @@ const byLesson: Record<CoreLessonId, EvaluationQuestion[]> = {
       explanation: "Les flux se confirment ou se contredisent entre obligations, devises, matières premières et risque.",
       visualId: "a13",
     },
+    {
+      id: "macro-b-5",
+      part: "B",
+      widget: "Macro Indicator Lab",
+      prompt: "La hiérarchie signal → indicateur → impact sert à:",
+      choices: [
+        { id: "a", label: "Transformer une publication en scénario marché exploitable" },
+        { id: "b", label: "Lire les données sans consensus" },
+        { id: "c", label: "Écarter la temporalité des indicateurs" },
+        { id: "d", label: "Remplacer l'analyse par un seul chiffre" },
+      ],
+      correctId: "a",
+      explanation: "Le signal n'a de valeur que lorsqu'il est relié à une transmission et à une classe d'actifs.",
+      visualId: "a2",
+    },
   ],
   micro: [
     {
@@ -352,6 +368,7 @@ const byLesson: Record<CoreLessonId, EvaluationQuestion[]> = {
       ],
       correctId: "a",
       explanation: "Les dashboards servent à transformer des chiffres en risque, qualité et scénario de marché.",
+      visualId: "a3",
     },
     {
       id: "micro-b-4",

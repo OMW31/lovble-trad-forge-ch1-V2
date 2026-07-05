@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { Link, createFileRoute } from "@tanstack/react-router";
 import { Scale, TrendingUp, BarChart3, Calculator, LineChart, History, CheckCircle2, Award, Activity, Lock } from "lucide-react";
 import { CHAPTER, LESSONS } from "@/lib/academy/chapter1";
 import { CASE_STUDIES } from "@/lib/academy/market-data";
@@ -33,7 +33,10 @@ import { ScenarioBuilder } from "@/components/academy/ScenarioBuilder";
 import { MacroRegimeRadar } from "@/components/academy/MacroRegimeRadar";
 import { LessonMiniHero } from "@/components/academy/LessonMiniHero";
 import { LessonEvaluationGate } from "@/components/academy/LessonEvaluationGate";
+import { ScenarioPlayer } from "@/components/academy/ScenarioPlayer";
 import { useChapterProgress } from "@/lib/academy/useChapterProgress";
+import { assembleScenario } from "@/lib/academy/scenario-engine";
+import { getSpecById } from "@/lib/academy/scenario-library";
 
 export const Route = createFileRoute("/academy/analyse-fondamentale")({
   head: () => ({
@@ -84,31 +87,34 @@ function Chapter1Page() {
   const meta = (id: string) => LESSONS.find((l) => l.id === id)!;
   const renderCase = (caseIndex: number, sectionId: string) => {
     const cs = CASE_STUDIES[caseIndex];
+    const spec = getSpecById(`spec-${cs.id}`);
     return (
       <div id={`case-${cs.index}`} className="scroll-mt-24">
-        <Scenario
-          title={`Cas ${cs.index} — ${cs.title}`}
-          level={cs.level}
-          context={
-            <>
-              <span className="mb-2 inline-block rounded-full border border-data/30 bg-data/10 px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider text-data">
-                {cs.driver}
-              </span>
-              <br />
-              {cs.context}
-            </>
-          }
-          visual={<CandleReplay caseStudy={cs} />}
-          prompt={cs.decision.prompt}
-          choices={cs.decision.choices}
-          correctId={cs.decision.correctId}
-          explanation={cs.decision.explanation}
-          outcome={cs.outcome}
-          onComplete={() => {
-            markCase(cs.id);
-            markSection(sectionId);
-          }}
-        />
+        {spec ? (
+          <ScenarioPlayer
+            scenario={assembleScenario(spec, spec.difficulte, "learning")}
+            onComplete={() => {
+              markCase(cs.id);
+              markSection(sectionId);
+            }}
+          />
+        ) : (
+          <Scenario
+            title={`Cas ${cs.index} — ${cs.title}`}
+            level={cs.level}
+            context={cs.context}
+            visual={<CandleReplay caseStudy={cs} />}
+            prompt={cs.decision.prompt}
+            choices={cs.decision.choices}
+            correctId={cs.decision.correctId}
+            explanation={cs.decision.explanation}
+            outcome={cs.outcome}
+            onComplete={() => {
+              markCase(cs.id);
+              markSection(sectionId);
+            }}
+          />
+        )}
       </div>
     );
   };
@@ -579,12 +585,13 @@ function CompletionPanel({
         </div>
         <div className="mt-6">
           {certificationReady ? (
-            <AssessmentModal
-              chapterId={chapterId}
-              signedIn={signedIn}
-              progressPercent={100}
-              triggerLabel="Passer la Certification Finale"
-            />
+            <Link
+              to="/academy/analyse-fondamentale/certification"
+              className="inline-flex items-center justify-center gap-2 rounded-lg bg-gradient-forge px-5 py-3 text-sm font-semibold text-forge-foreground shadow-glow transition-opacity hover:opacity-95"
+            >
+              Passer la Certification Finale
+              <Award className="h-4 w-4" />
+            </Link>
           ) : (
             <span className="inline-flex items-center gap-2 rounded-lg border border-border bg-surface px-4 py-2.5 font-mono text-xs uppercase tracking-wider text-muted-foreground">
               <Lock className="h-4 w-4" /> Certification verrouillée — {certificationPercent}%

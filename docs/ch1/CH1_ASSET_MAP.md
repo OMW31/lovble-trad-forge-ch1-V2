@@ -48,6 +48,9 @@
 - `src/components/academy/MobileLessonBreadcrumb.tsx`
 
 ## Visuels hybrides WebP
+- `public/academy/ch1/visuals/a1.webp`
+- `public/academy/ch1/visuals/a2.webp`
+- `public/academy/ch1/visuals/a3.webp`
 - `public/academy/ch1/visuals/a4.webp`
 - `public/academy/ch1/visuals/a5.webp`
 - `public/academy/ch1/visuals/a6.webp`
@@ -62,6 +65,13 @@
 - `public/academy/ch1/visuals/a15.webp`
 - `public/academy/ch1/visuals/a16.webp`
 - `public/academy/ch1/visuals/a17.webp`
+
+## Routes ajoutées — run-up final
+- `/academy/analyse-fondamentale/certification` — page dédiée de certification finale (Partie C).
+
+## Composants ajoutés — run-up final
+- `ScenarioPlayer.tsx` — lecteur Learning/Evaluation branché sur `assembleScenario`.
+- `VisualLightbox.tsx` / `VisualQuestion.tsx` — inspection visuelle et questions Partie B standardisées.
 
 ## Backend entities
 - profiles
