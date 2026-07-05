@@ -53,4 +53,4 @@ Choix utilisateur → Feedback immédiat → Animation reprend → Débrief → 
 
 ## État
 - [x] Base `CandleReplay` + cas existants.
-- [ ] Pause pédagogique + mode Evaluation unifié (Round B).
+- [x] Pause pédagogique + mode Evaluation unifié via `ScenarioPlayer` (run-up final 2026-07-05).
