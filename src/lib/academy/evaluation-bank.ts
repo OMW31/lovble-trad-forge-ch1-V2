@@ -641,13 +641,20 @@ export function getChapterDiagnosticQuestions(level: EvaluationLevel) {
   return picks.map((q) => ({ ...q, id: `diagnostic-${level}-${q.id}`, level }));
 }
 
+/**
+ * Pondération officielle des évaluations de leçon : le cœur de TradForge est
+ * l'analyse (Partie B / widgets-visuels), pas le QCM (Partie A).
+ * Score global = 30 % Partie A + 70 % Partie B.
+ */
+export const LESSON_PART_WEIGHTS: Partial<Record<EvaluationPart, number>> = { A: 0.3, B: 0.7 };
+
 export function scoreQuestions(
   questions: EvaluationQuestion[],
   answers: Record<string, string>,
   requiredParts: EvaluationPart[],
+  weights?: Partial<Record<EvaluationPart, number>>,
 ) {
   const correct = questions.filter((q) => answers[q.id] === q.correctId).length;
-  const score = Math.round((correct / Math.max(1, questions.length)) * 100);
   const parts = requiredParts.map((part) => {
     const partQuestions = questions.filter((q) => q.part === part);
     const partCorrect = partQuestions.filter((q) => answers[q.id] === q.correctId).length;
@@ -658,13 +665,25 @@ export function scoreQuestions(
       total: partQuestions.length,
     } satisfies EvaluationScorePart;
   });
+
+  let score: number;
+  if (weights) {
+    const active = parts.filter((p) => p.total > 0);
+    const totalWeight = active.reduce((sum, p) => sum + (weights[p.part] ?? 0), 0) || 1;
+    score = Math.round(active.reduce((sum, p) => sum + p.score * (weights[p.part] ?? 0), 0) / totalWeight);
+  } else {
+    score = Math.round((correct / Math.max(1, questions.length)) * 100);
+  }
+
   return {
     score,
     maxScore: 100,
     correct,
     total: questions.length,
-    passed: parts.every((part) => part.total > 0 && part.score >= 70),
+    // Pondéré : seuil global 70 %. Non pondéré (diagnostic/certif) : chaque partie ≥ 70 %.
+    passed: weights ? score >= 70 : parts.every((part) => part.total > 0 && part.score >= 70),
     parts,
+    weighted: Boolean(weights),
   };
 }
 
