@@ -1,4 +1,5 @@
 import type { CaseStudy } from "./market-data";
+import { buildVisualQuestion, nextSeedIndex } from "./visual-question-bank";
 
 export type EvaluationLevel = "standard" | "high" | "premium";
 export type EvaluationPart = "A" | "B" | "C";
