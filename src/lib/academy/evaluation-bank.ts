@@ -642,6 +642,34 @@ export function getChapterDiagnosticQuestions(level: EvaluationLevel) {
 }
 
 /**
+ * Évaluation de leçon (F1) — Partie A (QCM) + Partie B (widgets/visuels).
+ * Pas de niveaux standard/high/premium (réservés à la certification).
+ * La Partie B est générée depuis la banque de questions par visuel (F12) avec
+ * rotation anti-répétition ; fallback sur la question de base si le visuel n'est
+ * pas encore dans la banque. `rotate` désactivable pour des rendus déterministes.
+ */
+export function getLessonAssessmentQuestions(
+  lessonId: string | undefined,
+  options: { rotate?: boolean } = {},
+): EvaluationQuestion[] {
+  const key = CORE_LESSON_EVALUATION_IDS.includes(lessonId as CoreLessonId)
+    ? (lessonId as CoreLessonId)
+    : "intro";
+  const base = byLesson[key];
+  const partA = base.filter((q) => q.part === "A");
+  const partB = base
+    .filter((q) => q.part === "B")
+    .map((q) => {
+      if (!q.visualId) return q;
+      const seedIndex = options.rotate === false ? 0 : nextSeedIndex(q.visualId);
+      const built = buildVisualQuestion(q.visualId, seedIndex);
+      return built ? { ...built, id: `${lessonId ?? "intro"}-${built.id}` } : q;
+    });
+  return [...partA, ...partB];
+}
+
+
+/**
  * Pondération officielle des évaluations de leçon : le cœur de TradForge est
  * l'analyse (Partie B / widgets-visuels), pas le QCM (Partie A).
  * Score global = 30 % Partie A + 70 % Partie B.
