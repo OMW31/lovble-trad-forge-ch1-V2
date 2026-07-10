@@ -1,4 +1,5 @@
 import type { CaseStudy } from "./market-data";
+import { buildVisualQuestion, nextSeedIndex } from "./visual-question-bank";
 
 export type EvaluationLevel = "standard" | "high" | "premium";
 export type EvaluationPart = "A" | "B" | "C";
@@ -641,13 +642,48 @@ export function getChapterDiagnosticQuestions(level: EvaluationLevel) {
   return picks.map((q) => ({ ...q, id: `diagnostic-${level}-${q.id}`, level }));
 }
 
+/**
+ * Évaluation de leçon (F1) — Partie A (QCM) + Partie B (widgets/visuels).
+ * Pas de niveaux standard/high/premium (réservés à la certification).
+ * La Partie B est générée depuis la banque de questions par visuel (F12) avec
+ * rotation anti-répétition ; fallback sur la question de base si le visuel n'est
+ * pas encore dans la banque. `rotate` désactivable pour des rendus déterministes.
+ */
+export function getLessonAssessmentQuestions(
+  lessonId: string | undefined,
+  options: { rotate?: boolean } = {},
+): EvaluationQuestion[] {
+  const key = CORE_LESSON_EVALUATION_IDS.includes(lessonId as CoreLessonId)
+    ? (lessonId as CoreLessonId)
+    : "intro";
+  const base = byLesson[key];
+  const partA = base.filter((q) => q.part === "A");
+  const partB = base
+    .filter((q) => q.part === "B")
+    .map((q) => {
+      if (!q.visualId) return q;
+      const seedIndex = options.rotate === false ? 0 : nextSeedIndex(q.visualId);
+      const built = buildVisualQuestion(q.visualId, seedIndex);
+      return built ? { ...built, id: `${lessonId ?? "intro"}-${built.id}` } : q;
+    });
+  return [...partA, ...partB];
+}
+
+
+/**
+ * Pondération officielle des évaluations de leçon : le cœur de TradForge est
+ * l'analyse (Partie B / widgets-visuels), pas le QCM (Partie A).
+ * Score global = 30 % Partie A + 70 % Partie B.
+ */
+export const LESSON_PART_WEIGHTS: Partial<Record<EvaluationPart, number>> = { A: 0.3, B: 0.7 };
+
 export function scoreQuestions(
   questions: EvaluationQuestion[],
   answers: Record<string, string>,
   requiredParts: EvaluationPart[],
+  weights?: Partial<Record<EvaluationPart, number>>,
 ) {
   const correct = questions.filter((q) => answers[q.id] === q.correctId).length;
-  const score = Math.round((correct / Math.max(1, questions.length)) * 100);
   const parts = requiredParts.map((part) => {
     const partQuestions = questions.filter((q) => q.part === part);
     const partCorrect = partQuestions.filter((q) => answers[q.id] === q.correctId).length;
@@ -658,13 +694,25 @@ export function scoreQuestions(
       total: partQuestions.length,
     } satisfies EvaluationScorePart;
   });
+
+  let score: number;
+  if (weights) {
+    const active = parts.filter((p) => p.total > 0);
+    const totalWeight = active.reduce((sum, p) => sum + (weights[p.part] ?? 0), 0) || 1;
+    score = Math.round(active.reduce((sum, p) => sum + p.score * (weights[p.part] ?? 0), 0) / totalWeight);
+  } else {
+    score = Math.round((correct / Math.max(1, questions.length)) * 100);
+  }
+
   return {
     score,
     maxScore: 100,
     correct,
     total: questions.length,
-    passed: parts.every((part) => part.total > 0 && part.score >= 70),
+    // Pondéré : seuil global 70 %. Non pondéré (diagnostic/certif) : chaque partie ≥ 70 %.
+    passed: weights ? score >= 70 : parts.every((part) => part.total > 0 && part.score >= 70),
     parts,
+    weighted: Boolean(weights),
   };
 }
 

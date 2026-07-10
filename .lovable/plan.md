@@ -1,66 +1,100 @@
-# Chapitre 1 — Run-up final : Audit → Correctifs → Complétion
+# CH1 — Run-up Final avant ouverture grand public
 
-## Résultat de l'audit (confirmation V7.5)
-- **Priorités 1–4** (Responsive mobile, Doc TradingView, Audit UX mobile, Prototype) : **faites** et vérifiées dans le code.
-- **Priorités 5, 7, 8** (évaluations scénarisées, refonte évals A/B/C, Scenario Library Engine) : **fondation data présente** (`scenario-engine.ts`, `scenario-library.ts`, `difficulty-engine.ts`, banque d'évaluation) mais **non branchée à l'UI** → à finir.
-- **Priorité 6** (doc widgets) : fichier présent, fiches à compléter.
+## PARTIE 1 — Audit de l'existant (livré vs documenté)
 
-### Bugs/écarts confirmés
-1. Sidebar mobile (`LearningNavigationEngine`) se **ferme au clic sur une leçon** (`setOpen(false)` systématique) au lieu de déplier.
-2. Hero : bandeau en scroll statique, **pas de marquee infini**.
-3. Progression incohérente : 3 métriques divergentes (vues / complétées / validées), pas de résumé, pas d'explication, **pas de logout**.
-4. Évaluations sous-dimensionnées (4 questions/niveau), leçon et certification mélangées dans un seul modal.
-5. Bloc « Passer l'évaluation » cassé en mobile.
-6. Index scénarios pointe vers la leçon, **pas vers le cas exact**.
-7. Certification ouvre un modal (attendu : **page dédiée**).
-8. 17 visuels présents mais **~5 montés**, aucune Lightbox.
+### ✅ Effectivement implémenté
+- Marquee hero, sidebar overlay (`LearningNavigationEngine`), logout, dashboard « Cockpit RPG ».
+- `ScenarioPlayer` (learning/evaluation) + moteur `assembleScenario` / `difficulty-engine`.
+- Route certification dédiée + verrou 5/5.
+- `VisualLightbox` + `VisualQuestion` ; a1–a17 référencés dans les questions Partie B.
+- Banque d'évaluation A/B par leçon dans `evaluation-bank.ts`.
+
+### ❌ Écarts confirmés (documenté mais NON implémenté)
+1. **Modal d'évaluation de leçon montre encore Standard/High/Premium** (`AssessmentModal.tsx`). Attendu : 2 onglets **Partie A / Partie B** + score total ; niveaux exclusifs à la certification.
+2. **Pondération 30/70 absente** (`scoreQuestions` = ratio brut).
+3. **Guides d'utilisation des widgets INEXISTANTS** (aucun carrousel « GUIDE D'UTILISATION » type Bo1/Bo2/Bo3).
+4. **Visuels non placés dans le corps des leçons** (a3,a5,a6,a7,a9,a10,a11,a13,a14,a15,a16 « RÉSERVÉ »).
+5. **Rotation scénarios non appliquée** (aucun historique côté `ScenarioPlayer`).
+6. **Pas d'encyclopédie widgets** ni de couche **notes i18n**.
 
 ---
 
-## Sprint 1 — Correctifs UX chirurgicaux
-- **Sidebar** : clic leçon = déplier + scroll, **reste ouverte** ; clic sous-section = scroll + fermeture ; sinon fermeture uniquement via ✕ / backdrop.
-- **Hero marquee infini** : piste dupliquée, keyframe `marquee-x` dans `styles.css`, masque de fondu, pause au survol, `prefers-reduced-motion`, responsive.
-- **Bloc « Passer l'évaluation »** : empilage vertical < sm, bouton pleine largeur, hiérarchie/espacements alignés.
-- **Index scénarios** : `id="case-N"` par cas + regroupement par leçon (Macro 1–3, Micro 4–5, Outils 6–8, Prévisions 9–10) + carte → cas exact.
-- **Logout complet** : `AcademyAccountButton` → menu (Profil, Progression, Déconnexion) via `supabase.auth.signOut()` (cancelQueries → clear → signOut → navigate `/auth`), présent aussi dans la sidebar.
+## PARTIE 2 — Plan final (A, N, O, Q, W, X + additions)
 
-## Sprint 2 — Tableau de bord de progression « Cockpit RPG »
-- **Métrique unifiée** dans `useChapterProgress` : objet `dashboard` unique { leçonsValidées / échouées / restantes, scénarios réussis/restants, %chapitre, %certification, score moyen }.
-- **HUD** permanent (mini-résumé + bouton « Voir ma progression ») dans la sidebar desktop et mobile.
-- **Cockpit RPG** : anneau de certification 5 segments, cartes-badges par leçon (médailles bronze/argent/or selon score), radar de compétences (réutilise `MacroRegimeRadar`), streak et objectifs. Modal premium desktop / sheet mobile.
-- Explication intégrée de la logique de validation (20 % par leçon à ≥70 %, certification à 5/5).
+### Sprint F1 — Refonte du modal d'évaluation de leçon (W)
+- Supprimer les onglets `standard/high/premium` ; nouveaux onglets **Partie A (QCM/enrichis)** et **Partie B (Widgets/Interprétation)**.
+- Volume : **7 à 15 questions** par leçon.
+- `scoreQuestions` repondéré **30 % A + 70 % B** (cœur = analyse), seuil global 70 %, détail par partie dans le Score Engine.
+- Conserver sauvegarde backend + boîte d'échec « Revoir la leçon ». Ne PAS toucher au moteur de certification.
 
-## Sprint 3 — Refonte des évaluations de leçon (Partie A + B)
-- `LessonEvaluationGate` n'ouvre plus que **Partie A + Partie B** (la Partie C sort vers la certification).
-- Banque par `lessonId` : **7–15 items**, Partie A = **QCM enrichis** (choix multiples, vrai/faux justifié, associations — pas de texte libre), Partie B = lecture d'indicateurs/graphiques/**visuels a1…a17**/widgets.
-- Scoring par partie, seuil 70 %, sauvegarde backend, feedback premium, **boîte de dialogue si échec** (renvoi au bloc concerné).
-- Composant `VisualQuestion` (image + Lightbox + choix) standardisé.
+### Sprint F2 — Guides d'utilisation par widget (A, X)
+- Composant `WidgetGuide` (carrousel modal type Bo1/Bo2/Bo3 : titres numérotés, corps, encart Astuce/Institutionnel, dots, Suivant/Compris).
+- Bouton d'aide `?` dans `WidgetFrame`.
+- Source `src/lib/academy/widget-guides.ts` couvrant **les 21 widgets**. Standard = Market Driver Visualizer.
 
-## Sprint 4 — Certification finale (page dédiée)
-- Nouvelle route `academy.analyse-fondamentale.certification.tsx` (**page, pas modal**).
-- Verrou : inaccessible tant que 5/5 leçons non validées → écran explicatif listant précisément les leçons restantes.
-- Contenu = **Partie C uniquement**, ≥10 scénarios scriptés. Structure/slots préparés pour le futur agent.
-- `CompletionPanel` → CTA vers la page.
+### Sprint F3 — Encyclopédie widgets + manuel d'implémentation (A, X)
+- `docs/ch1/WIDGET_ENCYCLOPEDIA.md` : Description, Logique, Données, Interactions, Animations, UX, Implémentation par widget.
+- `docs/ch1/IMPLEMENTATION_MANUAL.md` : manuel pour futurs agents.
+- MAJ (append-only) `Widget-Interaction-Guide.md`.
 
-## Sprint 5 — Scenario Library Engine + mode Evaluation (branchement UI)
-- Composant `ScenarioPlayer` unifié (Learning / Evaluation) consommant `assembleScenario` : contexte → bougies → **pause pédagogique** → publication → question → 4 réponses → feedback → reprise → débrief → outcome (réutilise `CandleReplay`).
-- Random Selection Engine (non-répétition) + révélation par difficulté branchés.
+### Sprint F4 — Placement des visuels dans les leçons (O, N)
+- Monter tous les visuels manquants aux emplacements `INDEX.md` via `VisualLayer` + Lightbox.
+- **Couche notes i18n** : visuels en anglais ; notes d'application/illustration traduisibles (prop `note`/`caption`).
+- MAJ `INDEX.md` (RÉSERVÉ → INTÉGRÉ).
 
-## Sprint 6 — Visuels : Lightbox + audit positionnement
-- **Lightbox universelle** (agrandissement au clic) sur **chaque** visuel du chapitre, standardisée.
-- Audit des 17 visuels vs `CH1_VISUAL_DNA.md` / `CH1_ASSET_MAP.md` : monter les visuels manquants aux bons emplacements, corriger positions/opacités.
+### Sprint F5 — Valorisation visuelle premium (O)
+- Révélations séquencées, timelines animées, effets cinématiques (parallax léger, mask reveal), `prefers-reduced-motion`.
 
-## Sprint 7 — Documentation & anti-régression
-- Compléter `Widget-Interaction-Guide.md` (1 fiche/widget), MAJ `CHANGELOG.md`, `SENTINEL.md`, `TASKS_CH1_IMPLEMENTATION.md`, `Scenario_Inventory.md`.
-- Audit Playwright multi-breakpoints (390/834/1280) + relecture SENTINEL.
+### Sprint F6 — Rotation intelligente des scénarios (Q)
+- Mémoire d'historique (localStorage) empêchant le retour d'un scénario avant **≥5 itérations** ; `pickScenario(level, exclude)` en learning ET certification.
+
+### Sprint F7 — Documentation, anti-régression & QA
+- Append-only : `CHANGELOG.md`, `SENTINEL.md`, `TASKS_CH1_IMPLEMENTATION.md`, `Scenario_Inventory.md`, `CH1_ASSET_MAP.md`.
+- QA Playwright 390/834/1280 ; relecture SENTINEL avant/après chaque sprint.
+
+---
+
+## PARTIE 3 — Additions (débrief complémentaire)
+
+> **Dépendances bloquantes** : F8 nécessite la **doc « Icon Library / Brand DNA »** ; F9–F11 nécessitent la **livraison des assets V2 (PNG) + backgrounds**. Rien n'est produit sans ces docs/assets ; les sprints attendent la fourniture avant exécution.
+
+### Sprint F8 — Bibliothèque d'icônes TradForge (Brand DNA)
+- Construire une bibliothèque d'icônes 100 % TradForge **strictement selon la doc fournie** (contours, échelle, conventions).
+- Rien avant réception de la doc ; documenter le système (naming, tokens, variants, tailles, usage) dans `docs/ch1/ICON_LIBRARY.md`.
+
+### Sprint F9 — Flux 1 : Migration complète des visuels V2 (chapitres, priorité immédiate)
+- **Conversion batch PNG → WebP** (même pipeline que les premiers assets).
+- **Remplacement de tous les visuels V1** des leçons/chapitres par les V2 ; suppression des anciennes références une fois validé.
+- Validation Desktop/Tablette/Mobile + optimisation poids/qualité + contrôle responsive.
+- Objectif : plus aucun ancien visuel dans les chapitres.
+
+### Sprint F10 — Déploiement des backgrounds + doc de placement
+- Intégrer la nouvelle famille de backgrounds partout où prévu : Hero, Mission Briefing, Sections, Widgets, Dashboards, Popups, Modales, Évaluations, Certification, Sidebar, Footer, Loading, TradingView, Workspace.
+- `docs/ch1/BACKGROUNDS_PLACEMENT.md` : par background → emplacement, intensité, overlay, animation, opacité, blur éventuel, règles d'utilisation.
+
+### Sprint F11 — Flux 2 : Évaluations Partie B (migration progressive hybride)
+- **Conserver temporairement** les anciens visuels d'évaluation (Partie B) tant que les V2 n'existent pas.
+- Le moteur d'évaluation doit fonctionner en **phase hybride** (V1 + V2 coexistants).
+- Remplacement progressif dès que chaque équivalent V2 est produit ; indépendant de F9.
+
+### Sprint F12 — Visual Question Bank Engine (Partie B)
+- Pour chaque visuel utilisé en Partie B : banque de **20 à 50 questions** (formulations, distracteurs, niveaux Standard/High/Premium, concepts, angles d'interprétation).
+- Sélection non répétitive : à réapparition d'un visuel, la question diffère quasi systématiquement.
+- Extension de `evaluation-bank.ts` (structure par `visualId` → pool de questions) + intégration au modal Partie B.
+- `docs/ch1/VISUAL_QUESTION_BANK.md` : par visuel → concepts évalués, indicateurs, widgets associés, erreurs fréquentes, objectifs pédagogiques, banque de questions, difficulté, liens scénarios.
+
+### Sprint F13 — Backend/Storage : LAIS finalisation
+- Vérifier et finaliser la logique **backend + stockage** des tentatives Partie A et B (table `evaluation_attempts` existante : partAAnswers/partBAnswers/partScores/pondération 30/70).
+- Implémenter/valider le **Lesson Assessment Intelligence System** décrit dans la doc partagée (leçon → compétences → objets pédagogiques → banques → évaluation générée).
+- `docs/ch1/LESSON_ASSESSMENT_INTELLIGENCE_SYSTEM.md` comme document de référence transversal (CH1 → Academy).
+- RLS/GRANT scoping `auth.uid()` ; aucune migration destructive (ajout de colonnes uniquement si strictement nécessaire).
 
 ---
 
 ## Détails techniques
-- Stack : TanStack Start + Tailwind v4 (tokens `styles.css`) + shadcn/ui + framer-motion/GSAP. Aucune couleur en dur, `prefers-reduced-motion` respecté.
-- Nouveaux fichiers : `academy.analyse-fondamentale.certification.tsx`, `ProgressDashboard.tsx` (Cockpit RPG), `ScenarioPlayer.tsx`, `VisualQuestion.tsx`, `VisualLightbox.tsx` ; extension `useChapterProgress.ts`, `evaluation-bank.ts`, `AssessmentModal.tsx`, `AcademyAccountButton.tsx`, `ChapterShell.tsx`, `LearningNavigationEngine.tsx`, `ChapterHero.tsx`, `LessonEvaluationGate.tsx`, route principale.
-- Backend : réutilise `evaluation_attempts` / `chapter_progress` existants (aucune migration destructive ; ajout de colonnes seulement si strictement nécessaire, avec GRANT + RLS `auth.uid()`).
-- Auth : logout via `supabase.auth.signOut()`, affordance pilotée par la session.
+- Stack inchangée (TanStack Start + Tailwind v4 tokens + shadcn + framer-motion). Aucune couleur en dur, `prefers-reduced-motion` respecté.
+- Nouveaux fichiers : `WidgetGuide.tsx`, `widget-guides.ts`, `ICON_LIBRARY.md`, `BACKGROUNDS_PLACEMENT.md`, `VISUAL_QUESTION_BANK.md`, `LESSON_ASSESSMENT_INTELLIGENCE_SYSTEM.md`, `WIDGET_ENCYCLOPEDIA.md`, `IMPLEMENTATION_MANUAL.md`. Extensions : `AssessmentModal.tsx`, `evaluation-bank.ts`, `primitives.tsx`, `ScenarioPlayer.tsx`, route principale.
+- Backend : réutilise `evaluation_attempts` (aucune migration destructive).
 
-## Anti-régression
-Routes publiques, leçons 1.1→1.6, tous les widgets, sidebar/scroll-spy, persistance invité + connectée, navigation libre (verrou seulement sur la certification). SENTINEL relu avant/après chaque sprint. Exécution **des 7 sprints d'affilée** sans arrêt intermédiaire.
+## Anti-régression (SENTINEL)
+Certification et ses niveaux Standard/High/Premium intacts ; leçons 1.1→1.6 et widgets conservés ; navigation libre ; persistance invité/connecté. On améliore, on ne supprime pas. Docs versionnées (append-only). Exécution des sprints d'affilée sans arrêt intermédiaire ; F8–F11 démarrent à réception des docs/assets fournis.

@@ -1,5 +1,22 @@
 # CHANGELOG
 
+## 2026-07-09 — Run-up final (F1 + F12)
+### F1 · Refonte évaluation de leçon (pondération 30/70)
+- `evaluation-bank.ts` : `scoreQuestions` accepte désormais une pondération par partie ; ajout de `LESSON_PART_WEIGHTS` (A=30 %, B=70 %). Seuil pondéré : score global ≥ 70 % (le diagnostic/certif garde la règle « chaque partie ≥ 70 % » — rétro-compatible).
+- Ajout de `getLessonAssessmentQuestions()` (parties A+B, sans niveaux standard/high/premium).
+- `AssessmentModal.tsx` : mode leçon = onglets **Partie A** / **Partie B** (badges de poids 30/70), score engine pondéré, ré-génération de série + « Nouvelle série de questions ». Les niveaux restent réservés au diagnostic de chapitre et à la certification.
+
+### F12 · Visual Question Bank Engine
+- Nouveau `visual-question-bank.ts` : banque de questions par visuel (a1→a17), plusieurs formulations/distracteurs par visuel, `buildVisualQuestion()` + rotation anti-répétition persistée (`tradforge:visualbank:rotation:v1`).
+- La Partie B des évaluations de leçon pioche désormais dans cette banque en rotation (fallback sur la question de base).
+- Fondation prête à scaler vers 20-50 questions/visuel sans changement d'API.
+
+### Reste planifié (non exécuté ce run)
+- F2 (WidgetGuide Bo1-Bo3), F3/F7 (encyclopédie + manuel IA), F4/F5 (placements visuels dans les corps de leçon + valorisation cinématique), F6 (mémoire rotation scénarios ≥5).
+- F8-F11 bloqués tant que les docs (icônes Brand DNA, backgrounds) et assets V2/WebP ne sont pas fournis.
+
+
+
 ## 2026-06-26
 ### Foundations
 - Lovable Cloud activé pour supporter auth, profils, progression persistée, reprise exacte et évaluations.
