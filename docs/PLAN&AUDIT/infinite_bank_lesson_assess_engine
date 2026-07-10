@@ -1,0 +1,520 @@
+Après lecture des documents, je confirme que **la logique officielle est bien celle que tu viens de préciser**, et qu'elle est distincte de la certification finale.
+
+La documentation actuelle sépare explicitement **deux moteurs d'évaluation** :
+
+* **Évaluation de leçon (1.1 → 1.5)** :
+
+  * Partie A : QCM + réponses ouvertes.
+  * Partie B : widgets, indicateurs et interprétation.
+  * Validation ≥ 70 %.
+  * Cette évaluation valide la leçon et contribue aux 5 × 20 % de progression. 
+* **Certification finale** :
+
+  * scénarios interactifs,
+  * Standard / High / Premium,
+  * moteur indépendant. 
+
+Autrement dit, ce que nous allons produire concerne **uniquement le premier moteur**. Nous ne touchons pas au moteur de certification.
+
+---
+
+# Je proposerais même de renommer le système
+
+Le nom *Question Intelligence System* me plaît, mais je pense qu'on peut être encore plus cohérent avec le rôle réel.
+
+Je proposerais :
+
+> **Lesson Assessment Intelligence System (LAIS)**
+
+ou
+
+> **Lesson Intelligence Assessment Engine (LIAE)**
+
+Pourquoi ?
+
+Parce que ce système n'est pas une banque de questions.
+
+C'est le moteur documentaire qui alimente **les évaluations internes des leçons**.
+
+C'est beaucoup plus précis.
+
+---
+
+# Ce que ce document va réellement produire
+
+Je pense qu'il faut le considérer comme le **document de référence** de toutes les évaluations internes.
+
+Par exemple :
+
+```
+LESSON_ASSESSMENT_INTELLIGENCE_SYSTEM.md
+```
+
+Ce document deviendra le standard pour :
+
+CH1
+
+↓
+
+CH2
+
+↓
+
+CH3
+
+↓
+
+...
+
+↓
+
+Toute l'Academy.
+
+---
+
+# Son objectif
+
+Aujourd'hui :
+
+```
+Leçon
+
+↓
+
+Questions
+```
+
+Demain :
+
+```
+Leçon
+
+↓
+
+Compétences
+
+↓
+
+Objets pédagogiques
+
+↓
+
+Banques documentaires
+
+↓
+
+Évaluation générée
+```
+
+C'est totalement différent.
+
+---
+
+# Architecture proposée
+
+## Niveau 1
+
+Chaque leçon devient une unité.
+
+Le Chapitre 1 comporte bien cinq leçons évaluées (1.1 à 1.5), chacune validée séparément, la partie 1.6 servant de capstone/index dans l'architecture actuelle. 
+
+Donc :
+
+```
+Leçon 1
+
+Leçon 2
+
+Leçon 3
+
+Leçon 4
+
+Leçon 5
+```
+
+---
+
+## Niveau 2
+
+Chaque leçon possède :
+
+```
+Evaluation
+```
+
+---
+
+Cette évaluation est composée de deux blocs uniquement.
+
+```
+A
+
+B
+```
+
+Strictement rien d'autre.
+
+---
+
+# Partie A
+
+Connaissances.
+
+Elle contient :
+
+QCM
+
+*
+
+Questions ouvertes.
+
+---
+
+## Banque
+
+Je ne créerais pas simplement
+
+30 questions.
+
+Je créerais :
+
+entre
+
+35
+
+et
+
+50
+
+questions.
+
+Réparties ainsi :
+
+| Type              | Quantité |
+| ----------------- | -------: |
+| QCM               |       15 |
+| Réponses ouvertes |       10 |
+| Application       |        8 |
+| Justification     |        7 |
+| **Total**         |   **40** |
+
+Ensuite,
+
+à chaque tentative,
+
+le moteur tire :
+
+```
+4
+
+QCM
+
++
+
+4
+
+ouvertes
+
++
+
+2
+
+application
+
++
+
+1
+
+justification
+```
+
+Par exemple.
+
+Ainsi,
+
+deux évaluations successives ne sont quasiment jamais identiques.
+
+---
+
+# Partie B
+
+C'est ici que se situe la vraie valeur.
+
+Elle ne dépend plus des questions.
+
+Elle dépend des objets pédagogiques.
+
+---
+
+Chaque leçon possède :
+
+```
+Widgets
+
+Images
+
+Infographies
+
+Animations
+
+Visualisations
+
+Indicateurs
+```
+
+Tous deviennent des objets évaluables.
+
+---
+
+# La nouveauté majeure
+
+Chaque objet possède maintenant :
+
+sa propre banque.
+
+Par exemple.
+
+```
+Macro Dashboard
+```
+
+↓
+
+40 questions.
+
+---
+
+```
+Macro Radar
+```
+
+↓
+
+35 questions.
+
+---
+
+```
+Economic Cycle
+
+```
+
+↓
+
+50 questions.
+
+---
+
+```
+Yield Curve
+```
+
+↓
+
+45 questions.
+
+---
+
+```
+Visual A4
+```
+
+↓
+
+30 questions.
+
+---
+
+```
+Visual A5
+```
+
+↓
+
+25 questions.
+
+---
+
+etc.
+
+---
+
+# Ce que je rajouterais
+
+Je pense que c'est LE changement qui fera énormément progresser TradForge.
+
+Avant d'écrire les questions,
+
+on documente entièrement le widget.
+
+Autrement dit,
+
+chaque widget possède :
+
+---
+
+## Fiche documentaire
+
+Nom
+
+Objectif
+
+Concept expliqué
+
+Données utilisées
+
+Informations visibles
+
+Informations implicites
+
+Erreurs fréquentes
+
+Compétences évaluables
+
+Pièges pédagogiques
+
+Niveau de difficulté
+
+---
+
+Ensuite,
+
+les questions sont générées
+
+à partir de cette fiche.
+
+Pas l'inverse.
+
+---
+
+# Même logique pour les visuels
+
+C'est probablement l'amélioration la plus importante.
+
+Aujourd'hui,
+
+on a :
+
+```
+Image
+
+↓
+
+Question
+```
+
+Je remplacerais cela par :
+
+```
+Image
+
+↓
+
+Analyse documentaire
+
+↓
+
+Extraction pédagogique
+
+↓
+
+Banque de connaissances
+
+↓
+
+Banque de questions
+```
+
+---
+
+Par exemple.
+
+Le visuel
+
+A16
+
+ne donnera plus :
+
+> "Que représente cette image ?"
+
+Il pourra donner :
+
+* Quel régime économique est représenté ?
+* Quel changement de politique monétaire semble probable ?
+* Quel indicateur confirme cette hypothèse ?
+* Quelle information manque avant de conclure ?
+* Quelle serait la réaction probable du marché obligataire ?
+* Quelle devise bénéficierait le plus de cette configuration ?
+* Quel risque invaliderait cette lecture ?
+
+Toutes ces questions proviennent de la **même image**, mais évaluent des compétences différentes.
+
+---
+
+# Banque documentaire
+
+Je créerais une structure documentaire unique.
+
+```
+Leçon
+
+↓
+
+Objets
+
+↓
+
+Concepts
+
+↓
+
+Compétences
+
+↓
+
+Questions
+```
+
+Jamais :
+
+```
+Leçon
+
+↓
+
+Questions
+```
+
+---
+
+# Métadonnées
+
+Chaque question devrait posséder une fiche.
+
+| Champ          | Description                                 |
+| -------------- | ------------------------------------------- |
+| ID             | Identifiant unique                          |
+| Leçon          | 1.1 → 1.5                                   |
+| Partie         | A ou B                                      |
+| Objet associé  | Widget, image ou indicateur                 |
+| Concept évalué | Ex. inflation, PIB, corrélation             |
+| Compétence     | Reconnaître, interpréter, comparer, décider |
+| Difficulté     | Facile, moyenne, difficile                  |
+| Type           | QCM, ouverte                                |
+| Réponse        | Attendue                                    |
+| Explication    | Débrief pédagogique                         |
+
+Ainsi, la banque devient filtrable, réutilisable et extensible.
+
+---
+
+# Ce que cela produira concrètement
+
+À terme, pour **chaque leçon** :
+
+* une banque de **35 à 50 questions** pour la Partie A ;
+* une banque de **35 à 50 questions** pour la Partie B, réparties par widget, indicateur, visuel et interaction ;
+* un moteur qui sélectionne dynamiquement un sous-ensemble de questions à chaque tentative ;
+* une pondération fixe **30 % (Partie A) / 70 % (Partie B)**, conformément à la décision déjà retenue pour les évaluations internes.
+
+Le résultat est un système où les évaluations restent centrées sur les cinq leçons du chapitre, tout en éliminant la répétition et les questions superficielles. La même image, le même widget ou la même infographie peuvent être mobilisés plusieurs fois, mais sous des angles cognitifs différents (observation, interprétation, causalité, décision, validation d'hypothèse), ce qui augmente fortement la durée de vie pédagogique de la banque sans modifier la logique de progression déjà définie dans TradForge.
