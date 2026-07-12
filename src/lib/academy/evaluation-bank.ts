@@ -16,6 +16,8 @@ export interface EvaluationQuestion {
   caseId?: string;
   visualId?: string;
   level?: EvaluationLevel;
+  /** 1 = facile · 2 = moyen · 3 = difficile (piochage pondéré des évaluations). */
+  difficulty?: 1 | 2 | 3;
 }
 
 export interface EvaluationScorePart {
