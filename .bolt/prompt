@@ -1,0 +1,73 @@
+# TradForge Academy — Agent Governance
+
+## Serveur de développement
+- **URL standard** : http://localhost:8081/
+- **Remarque** : Port 8080 abandonné. Forcer arrêt/relance si nécessaire.
+
+## Règles de gouvernance TradForge
+
+### 1. Analyse d'impact obligatoire (avant toute implémentation massive)
+Avant d'écrire du code sur un chantier transverse, produire :
+- la liste des **composants concernés** ;
+- la liste des **fichiers concernés** ;
+- la liste des **risques de régression** ;
+- un **plan d'exécution** ordonné (sprints/étapes).
+
+### 2. Exécution automatique
+Une fois le plan validé, l'agent :
+- exécute **tous les sprints jusqu'au dernier** ;
+- **sans redemander confirmation** ;
+- s'arrête uniquement en cas de **blocage réel** (dépendance manquante, ambiguïté vision > 3 % d'incertitude, échec build irréductible).
+
+### 3. Vision produit
+Pour tout sujet de **vision** : **ne jamais supposer**. Poser des questions jusqu'à **≥ 97 % de compréhension** avant d'agir.
+
+### 4. Questions techniques
+Toujours **benchmark + best practices + concurrence + recherche approfondie** avant une décision technique structurante.
+
+### 5. Anti-régression
+Avant ET après chaque run : dérouler `SENTINEL.md`. Aucune fonctionnalité listée « faite » ne doit régresser. Toute régression détectée est corrigée dans le même run.
+
+### 6. Documentation vivante
+Fichiers `PRD/TASKS/CHANGELOG/SENTINEL/...` : **additifs, versionnés**. On met à jour les statuts et on ajoute des révisions datées — jamais de réécriture destructive de l'historique.
+
+## Comportement d'exécution — Règles de projet (CH1 World-Class)
+
+1. **Ne jamais s'arrêter après un seul sprint.** Une fois la planification validée, exécuter l'INTÉGRALITÉ de l'implémentation : tous les sprints, toutes les tâches, jusqu'à ce que la dernière tâche du dernier sprint soit marquée `DONE`. Boucle d'itération proactive plutôt que rendre la main après un incrément.
+
+2. **Ne jamais dévier du plan.** Si ce n'est pas planifié, ne pas l'exécuter.
+
+3. **Stabilité d'abord.** Aux phases critiques, être chirurgical : avant toute modification, analyser les changements susceptibles de casser une logique, puis prendre les mesures adéquates. Ne jamais régresser, réduire ou rétrograder une fonctionnalité existante. **On améliore, on ne supprime pas.**
+
+4. **Docs versionnées, jamais effacées.** PRD / TASKS / CHANGELOG / SENTINEL : on ajoute et on met à jour avec les nouvelles données pour le tracking futur ; on ne supprime pas l'historique.
+
+5. **SENTINEL relu avant/après chaque incrément** pour garantir l'anti-régression.
+
+## Structure documentation
+
+### Emplacements standards
+- `docs/IMPLEMENTATION/` → PRD, TASKS, SENTINEL, CHANGELOG, ROADMAP (sources de vérité opérationnelles)
+- `docs/STANDARDS/` → Architectures réutilisables cross-chapitres (Scenario Library, Difficulty Engine, Evaluation System)
+- `docs/ch1/` → Spécificités Chapitre 1 (visuels A1-A17, widgets, DNA, Component Library)
+- `docs/PLAN&AUDIT/` → Rapports de planification et audit par run
+- `.lovable/plan.md` → Plan actif (sprints à venir)
+
+### Conventions d'écriture
+- **Pragmatique** : dire plus avec peu de mots
+- **Direct** : verbes d'action, pas de prose
+- **Anti-répétition** : factoriser, ne pas dupliquer
+- **Format** : date (YYYY-MM-DD) + bullets + rationale courte
+- **Versioning** : append-only strict, jamais effacer historique
+
+## Philosophie Elite (signatures agents fondateurs)
+
+1. **Append-only** : ajouter/mettre à jour, jamais supprimer historique
+2. **Anti-régression** : SENTINEL relu avant/après chaque incrément
+3. **Chirurgical** : améliorer sans casser (extend, pas replace)
+4. **Prototypage continu** : sprints atomiques numérotés
+5. **Dire plus avec moins** : concis, précis, opérable
+6. **Type safety** : TS strict, zéro any, discriminated unions
+7. **Composition** : factoriser patterns (WidgetFrame, VisualLayer, Reveal)
+8. **Performance** : lazy, memo, viewport detection
+9. **Accessibility** : prefers-reduced-motion, ARIA, keyboard nav
+10. **Versioning** : dates explicites + rationale courte
