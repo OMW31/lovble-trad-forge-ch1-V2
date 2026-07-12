@@ -1,100 +1,76 @@
-# CH1 — Run-up Final avant ouverture grand public
+# CH1 — Sprint Unique Final (Prototype Grand Public)
 
-## PARTIE 1 — Audit de l'existant (livré vs documenté)
+## Résultat de l'audit (état réel du code)
 
-### ✅ Effectivement implémenté
-- Marquee hero, sidebar overlay (`LearningNavigationEngine`), logout, dashboard « Cockpit RPG ».
-- `ScenarioPlayer` (learning/evaluation) + moteur `assembleScenario` / `difficulty-engine`.
-- Route certification dédiée + verrou 5/5.
-- `VisualLightbox` + `VisualQuestion` ; a1–a17 référencés dans les questions Partie B.
-- Banque d'évaluation A/B par leçon dans `evaluation-bank.ts`.
+| Élément | État actuel | Cible sprint |
+|---|---|---|
+| Modal éval leçon (A/B, 30/70) | ✅ En place | Densifier à 7Q/partie |
+| Pondération 30/70 + scoring | ✅ En place (`scoreQuestions`) | Conserver |
+| Nb questions par partie | ❌ ~4 (banques courtes) | **7 par partie** |
+| Répartition difficulté (2 facile/2 moyen/3 dur) | ❌ Absente | À implémenter |
+| Banque Partie A dense (≥25/leçon) | ❌ Absente | Intégrer depuis doc LAIS |
+| Banque Partie B (10/visuel-widget) | ⚠️ 3 seeds/visuel | Porter à 10, piocher 7 |
+| Modal **diagnostic** (chapitre) | ❌ Encore Standard/High/Premium | Refonte en **A/B** |
+| Gate certification (5/5 leçons) | ⚠️ Partiel | Bouton « Évaluation » top-bar conditionné |
+| Auth pseudo + profil initial | ❌ Absent | Ajouter à l'inscription |
+| Éval réservée aux comptes | ⚠️ Sauvegarde seule | **Éval = connexion requise** |
+| Backend LAIS (Part A/B storage) | ✅ Table `evaluation_attempts` OK | Finaliser payload (difficulté, rotation, partScores) |
+| Migration visuels V2 + backgrounds | ⛔ **Bloqué** (doc prompts non fournie) | En attente de ta doc |
 
-### ❌ Écarts confirmés (documenté mais NON implémenté)
-1. **Modal d'évaluation de leçon montre encore Standard/High/Premium** (`AssessmentModal.tsx`). Attendu : 2 onglets **Partie A / Partie B** + score total ; niveaux exclusifs à la certification.
-2. **Pondération 30/70 absente** (`scoreQuestions` = ratio brut).
-3. **Guides d'utilisation des widgets INEXISTANTS** (aucun carrousel « GUIDE D'UTILISATION » type Bo1/Bo2/Bo3).
-4. **Visuels non placés dans le corps des leçons** (a3,a5,a6,a7,a9,a10,a11,a13,a14,a15,a16 « RÉSERVÉ »).
-5. **Rotation scénarios non appliquée** (aucun historique côté `ScenarioPlayer`).
-6. **Pas d'encyclopédie widgets** ni de couche **notes i18n**.
-
----
-
-## PARTIE 2 — Plan final (A, N, O, Q, W, X + additions)
-
-### Sprint F1 — Refonte du modal d'évaluation de leçon (W)
-- Supprimer les onglets `standard/high/premium` ; nouveaux onglets **Partie A (QCM/enrichis)** et **Partie B (Widgets/Interprétation)**.
-- Volume : **7 à 15 questions** par leçon.
-- `scoreQuestions` repondéré **30 % A + 70 % B** (cœur = analyse), seuil global 70 %, détail par partie dans le Score Engine.
-- Conserver sauvegarde backend + boîte d'échec « Revoir la leçon ». Ne PAS toucher au moteur de certification.
-
-### Sprint F2 — Guides d'utilisation par widget (A, X)
-- Composant `WidgetGuide` (carrousel modal type Bo1/Bo2/Bo3 : titres numérotés, corps, encart Astuce/Institutionnel, dots, Suivant/Compris).
-- Bouton d'aide `?` dans `WidgetFrame`.
-- Source `src/lib/academy/widget-guides.ts` couvrant **les 21 widgets**. Standard = Market Driver Visualizer.
-
-### Sprint F3 — Encyclopédie widgets + manuel d'implémentation (A, X)
-- `docs/ch1/WIDGET_ENCYCLOPEDIA.md` : Description, Logique, Données, Interactions, Animations, UX, Implémentation par widget.
-- `docs/ch1/IMPLEMENTATION_MANUAL.md` : manuel pour futurs agents.
-- MAJ (append-only) `Widget-Interaction-Guide.md`.
-
-### Sprint F4 — Placement des visuels dans les leçons (O, N)
-- Monter tous les visuels manquants aux emplacements `INDEX.md` via `VisualLayer` + Lightbox.
-- **Couche notes i18n** : visuels en anglais ; notes d'application/illustration traduisibles (prop `note`/`caption`).
-- MAJ `INDEX.md` (RÉSERVÉ → INTÉGRÉ).
-
-### Sprint F5 — Valorisation visuelle premium (O)
-- Révélations séquencées, timelines animées, effets cinématiques (parallax léger, mask reveal), `prefers-reduced-motion`.
-
-### Sprint F6 — Rotation intelligente des scénarios (Q)
-- Mémoire d'historique (localStorage) empêchant le retour d'un scénario avant **≥5 itérations** ; `pickScenario(level, exclude)` en learning ET certification.
-
-### Sprint F7 — Documentation, anti-régression & QA
-- Append-only : `CHANGELOG.md`, `SENTINEL.md`, `TASKS_CH1_IMPLEMENTATION.md`, `Scenario_Inventory.md`, `CH1_ASSET_MAP.md`.
-- QA Playwright 390/834/1280 ; relecture SENTINEL avant/après chaque sprint.
+## Décisions verrouillées (tes réponses)
+- **Visuels V2** : la migration attend ta doc de prompts/mapping. On **ne devine pas** le mapping (19 fichiers → 17 slots). Tant que la doc n'est pas là, les chapitres gardent V1 ; dès réception, swap strict A1→A17 + branding/logo vérifiés. Aucune régression premium.
+- **Profil initial** : `Investisseur`, `Trader indépendant`, `Analyste financier/macro`, `Étudiant avancé en économie` **+ « Autre » (texte libre)**. Stocké dans `profiles.preferences` (jsonb) — **aucune migration destructive**.
 
 ---
 
-## PARTIE 3 — Additions (débrief complémentaire)
+## Sprint F-FINAL (exécuté d'un bloc, sans arrêt intermédiaire)
 
-> **Dépendances bloquantes** : F8 nécessite la **doc « Icon Library / Brand DNA »** ; F9–F11 nécessitent la **livraison des assets V2 (PNG) + backgrounds**. Rien n'est produit sans ces docs/assets ; les sprints attendent la fourniture avant exécution.
+### 1. Banque de questions Partie A (moteur dense)
+- Nouveau `src/lib/academy/part-a-bank.ts` : intégrer les QCM+QRO de la doc LAIS (leçons 1.1→1.5), chaque item typé `{ id, lesson, difficulty(1-3), prompt, choices, correctId, explanation }`. QRO converties en QCM à distracteurs (format déjà supporté).
+- Cible MVP : ≥25 items/leçon Partie A.
+- `pickPartA(lessonId)` : tire **7 questions** — 2 (diff.1) + 2 (diff.2) + 3 (diff.3) — avec **rotation anti-répétition** (localStorage, même mécanisme que `visual-question-bank`).
 
-### Sprint F8 — Bibliothèque d'icônes TradForge (Brand DNA)
-- Construire une bibliothèque d'icônes 100 % TradForge **strictement selon la doc fournie** (contours, échelle, conventions).
-- Rien avant réception de la doc ; documenter le système (naming, tokens, variants, tailles, usage) dans `docs/ch1/ICON_LIBRARY.md`.
+### 2. Banque Partie B (widgets/visuels, densifiée)
+- Étendre `visual-question-bank.ts` : porter chaque pool à **10 seeds** en injectant les banques widgets de la doc LAIS (mappées visuel↔widget↔leçon), avec champ `difficulty`.
+- `pickPartB(lessonId)` : tire **7 questions** sur les visuels/widgets de la leçon, même répartition 2/2/3 + rotation.
+- Les visuels d'évaluation **restent V1** (conservation temporaire explicitement demandée jusqu'aux équivalents V2).
 
-### Sprint F9 — Flux 1 : Migration complète des visuels V2 (chapitres, priorité immédiate)
-- **Conversion batch PNG → WebP** (même pipeline que les premiers assets).
-- **Remplacement de tous les visuels V1** des leçons/chapitres par les V2 ; suppression des anciennes références une fois validé.
-- Validation Desktop/Tablette/Mobile + optimisation poids/qualité + contrôle responsive.
-- Objectif : plus aucun ancien visuel dans les chapitres.
+### 3. Moteur d'évaluation
+- `getLessonAssessmentQuestions()` : brancher `pickPartA` + `pickPartB` (7+7 = 14). Conserver `scoreQuestions` + `LESSON_PART_WEIGHTS` (30/70, seuil global 70 %).
+- **Refonte du diagnostic chapitre** (`getChapterDiagnosticQuestions`) : passer en logique **A/B** (suppression Standard/High/Premium du modal), en piochant transversalement dans les banques.
 
-### Sprint F10 — Déploiement des backgrounds + doc de placement
-- Intégrer la nouvelle famille de backgrounds partout où prévu : Hero, Mission Briefing, Sections, Widgets, Dashboards, Popups, Modales, Évaluations, Certification, Sidebar, Footer, Loading, TradingView, Workspace.
-- `docs/ch1/BACKGROUNDS_PLACEMENT.md` : par background → emplacement, intensité, overlay, animation, opacité, blur éventuel, règles d'utilisation.
+### 4. Modal (`AssessmentModal.tsx`)
+- Supprimer le rendu à 3 niveaux du mode diagnostic → réutiliser l'UI A/B (déjà soignée) pour leçon **et** diagnostic.
+- Score engine : afficher répartition difficulté + partScores. Garder « Nouvelle série » (rotation).
 
-### Sprint F11 — Flux 2 : Évaluations Partie B (migration progressive hybride)
-- **Conserver temporairement** les anciens visuels d'évaluation (Partie B) tant que les V2 n'existent pas.
-- Le moteur d'évaluation doit fonctionner en **phase hybride** (V1 + V2 coexistants).
-- Remplacement progressif dès que chaque équivalent V2 est produit ; indépendant de F9.
+### 5. Gate certification + top-bar
+- Bouton « Évaluation » de la barre supérieure : ouvre la **certification finale** uniquement si les 5 leçons sont validées (`useChapterProgress`), sinon état verrouillé + message de prérequis (règles `Evaluation-System-Architecture`).
 
-### Sprint F12 — Visual Question Bank Engine (Partie B)
-- Pour chaque visuel utilisé en Partie B : banque de **20 à 50 questions** (formulations, distracteurs, niveaux Standard/High/Premium, concepts, angles d'interprétation).
-- Sélection non répétitive : à réapparition d'un visuel, la question diffère quasi systématiquement.
-- Extension de `evaluation-bank.ts` (structure par `visualId` → pool de questions) + intégration au modal Partie B.
-- `docs/ch1/VISUAL_QUESTION_BANK.md` : par visuel → concepts évalués, indicateurs, widgets associés, erreurs fréquentes, objectifs pédagogiques, banque de questions, difficulté, liens scénarios.
+### 6. Auth & profil (CRITIQUE scale)
+- `auth.tsx` (onglet inscription) : champ **pseudo** (→ `username` + `display_name`, respect contrainte 3–32) + sélecteur **profil initial** (4 + Autre libre) → `preferences.profileType`.
+- Gating : ouverture d'une évaluation (leçon ou certification) exige une session → sinon CTA « Créer un compte pour passer l'évaluation et sauvegarder ta progression ». Sauvegarde progression conservée.
+- Vérifier flux login/logout complet (déjà présent) ; pas de page paramètres profil (reportée).
 
-### Sprint F13 — Backend/Storage : LAIS finalisation
-- Vérifier et finaliser la logique **backend + stockage** des tentatives Partie A et B (table `evaluation_attempts` existante : partAAnswers/partBAnswers/partScores/pondération 30/70).
-- Implémenter/valider le **Lesson Assessment Intelligence System** décrit dans la doc partagée (leçon → compétences → objets pédagogiques → banques → évaluation générée).
-- `docs/ch1/LESSON_ASSESSMENT_INTELLIGENCE_SYSTEM.md` comme document de référence transversal (CH1 → Academy).
-- RLS/GRANT scoping `auth.uid()` ; aucune migration destructive (ajout de colonnes uniquement si strictement nécessaire).
+### 7. Backend / Storage LAIS
+- `progress.functions.ts` : `saveEvaluationAttempt` enrichit `feedback` (difficultés servies, rotation, partScores 30/70) et `part_a_answers`/`part_b_answers` (id, difficulté, correct). Aucune colonne nouvelle nécessaire → **aucune migration** (réutilise `evaluation_attempts`).
+- Confirmer RLS/GRANT `auth.uid()` sur les 5 tables (audit rapide, pas de changement destructif).
+
+### 8. Anti-régression & QA
+- Playwright 390 / 834 / 1280 : parcours leçon → éval A/B (14Q) → score → sauvegarde connecté ; diagnostic A/B ; gate certif verrouillé/déverrouillé ; inscription pseudo+profil ; responsive widgets signalés (EconomicCycleWheel, MacroRelationshipEngine).
+- Relecture `SENTINEL.md` avant/après.
+- Docs **append-only** : `CHANGELOG.md`, `TASKS_CH1_IMPLEMENTATION.md`, `SENTINEL.md`, `CH1_ASSET_MAP.md`.
 
 ---
+
+## En attente de ta livraison (non exécuté ce sprint)
+- **Doc prompts + visuels V2 finaux (branding/logo intégrés)** → déclenche : renommage strict A1→A17, conversion batch PNG→WebP (pipeline existant), swap chapitres, intégration backgrounds + `BACKGROUNDS_PLACEMENT.md`, migration progressive Partie B vers V2.
+- Bibliothèque d'icônes Brand DNA (attend la doc dédiée).
+- Encyclopédie widgets / guides Bo1-Bo3 / moteur `lesson-assessment-intelligence.ts` : reportés (hors périmètre sortie publique).
 
 ## Détails techniques
-- Stack inchangée (TanStack Start + Tailwind v4 tokens + shadcn + framer-motion). Aucune couleur en dur, `prefers-reduced-motion` respecté.
-- Nouveaux fichiers : `WidgetGuide.tsx`, `widget-guides.ts`, `ICON_LIBRARY.md`, `BACKGROUNDS_PLACEMENT.md`, `VISUAL_QUESTION_BANK.md`, `LESSON_ASSESSMENT_INTELLIGENCE_SYSTEM.md`, `WIDGET_ENCYCLOPEDIA.md`, `IMPLEMENTATION_MANUAL.md`. Extensions : `AssessmentModal.tsx`, `evaluation-bank.ts`, `primitives.tsx`, `ScenarioPlayer.tsx`, route principale.
-- Backend : réutilise `evaluation_attempts` (aucune migration destructive).
+- Stack inchangée (TanStack Start + Tailwind v4 tokens + shadcn + framer-motion). Zéro couleur en dur, `prefers-reduced-motion` respecté.
+- Nouveau fichier : `src/lib/academy/part-a-bank.ts`. Extensions : `visual-question-bank.ts`, `evaluation-bank.ts`, `AssessmentModal.tsx`, `auth.tsx`, `progress.functions.ts`, route chapitre + `LearningNavigationEngine.tsx` (top-bar gate), `useChapterProgress.ts`.
+- Backend : réutilise `evaluation_attempts` (part_a/b/c_answers + feedback jsonb), aucune migration destructive.
 
 ## Anti-régression (SENTINEL)
-Certification et ses niveaux Standard/High/Premium intacts ; leçons 1.1→1.6 et widgets conservés ; navigation libre ; persistance invité/connecté. On améliore, on ne supprime pas. Docs versionnées (append-only). Exécution des sprints d'affilée sans arrêt intermédiaire ; F8–F11 démarrent à réception des docs/assets fournis.
+Certification et sa logique intactes ; leçons 1.1→1.6 et widgets conservés ; navigation libre ; persistance invité/connecté (avec éval désormais réservée aux comptes). On améliore, on ne supprime pas. Docs versionnées (append-only). V2/backgrounds strictement bloqués jusqu'à réception de la doc pour préserver le rendu premium.

@@ -1,5 +1,8 @@
 import type { CaseStudy } from "./market-data";
 import { buildVisualQuestion, nextSeedIndex } from "./visual-question-bank";
+import { pickBankItems, toEvaluationQuestion } from "./assessment-picker";
+import { PART_A_BANK } from "./part-a-bank";
+import { PART_B_BANK } from "./part-b-bank";
 
 export type EvaluationLevel = "standard" | "high" | "premium";
 export type EvaluationPart = "A" | "B" | "C";
@@ -16,6 +19,8 @@ export interface EvaluationQuestion {
   caseId?: string;
   visualId?: string;
   level?: EvaluationLevel;
+  /** 1 = facile · 2 = moyen · 3 = difficile (piochage pondéré des évaluations). */
+  difficulty?: 1 | 2 | 3;
 }
 
 export interface EvaluationScorePart {
@@ -634,20 +639,20 @@ export function getLessonEvaluationQuestions(lessonId: string | undefined, level
 }
 
 export function getChapterDiagnosticQuestions(level: EvaluationLevel) {
-  const all = CORE_LESSON_EVALUATION_IDS.flatMap((id) => byLesson[id]);
-  const picks = [
-    ...all.filter((q) => q.part === "A").slice(0, 4),
-    ...all.filter((q) => q.part === "B").slice(0, 4),
-  ];
-  return picks.map((q) => ({ ...q, id: `diagnostic-${level}-${q.id}`, level }));
+  // Diagnostic chapitre en logique Partie A / Partie B (plus de niveaux dans le modal).
+  const allA = CORE_LESSON_EVALUATION_IDS.flatMap((id) => PART_A_BANK[id]);
+  const allB = CORE_LESSON_EVALUATION_IDS.flatMap((id) => PART_B_BANK[id]);
+  const partA = pickBankItems(allA, "diagnostic-A").map((item) => toEvaluationQuestion(item, "A", `diag-${level}`));
+  const partB = pickBankItems(allB, "diagnostic-B").map((item) => toEvaluationQuestion(item, "B", `diag-${level}`));
+  return [...partA, ...partB];
 }
 
 /**
- * Évaluation de leçon (F1) — Partie A (QCM) + Partie B (widgets/visuels).
- * Pas de niveaux standard/high/premium (réservés à la certification).
- * La Partie B est générée depuis la banque de questions par visuel (F12) avec
- * rotation anti-répétition ; fallback sur la question de base si le visuel n'est
- * pas encore dans la banque. `rotate` désactivable pour des rendus déterministes.
+ * Évaluation de leçon (Sprint F-FINAL) — Partie A (QCM enrichis) + Partie B
+ * (widgets/visuels). Pas de niveaux standard/high/premium (réservés à la
+ * certification). Chaque partie pioche 7 questions (2 faciles + 2 moyens +
+ * 3 difficiles) dans une banque dense, avec rotation anti-répétition.
+ * `rotate` désactivable pour des rendus déterministes.
  */
 export function getLessonAssessmentQuestions(
   lessonId: string | undefined,
@@ -656,16 +661,13 @@ export function getLessonAssessmentQuestions(
   const key = CORE_LESSON_EVALUATION_IDS.includes(lessonId as CoreLessonId)
     ? (lessonId as CoreLessonId)
     : "intro";
-  const base = byLesson[key];
-  const partA = base.filter((q) => q.part === "A");
-  const partB = base
-    .filter((q) => q.part === "B")
-    .map((q) => {
-      if (!q.visualId) return q;
-      const seedIndex = options.rotate === false ? 0 : nextSeedIndex(q.visualId);
-      const built = buildVisualQuestion(q.visualId, seedIndex);
-      return built ? { ...built, id: `${lessonId ?? "intro"}-${built.id}` } : q;
-    });
+  const rotate = options.rotate !== false;
+  const partA = pickBankItems(PART_A_BANK[key], `${key}-A`, { rotate }).map((item) =>
+    toEvaluationQuestion(item, "A", `${key}-a`),
+  );
+  const partB = pickBankItems(PART_B_BANK[key], `${key}-B`, { rotate }).map((item) =>
+    toEvaluationQuestion(item, "B", `${key}-b`),
+  );
   return [...partA, ...partB];
 }
 
