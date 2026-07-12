@@ -1,5 +1,8 @@
 import type { CaseStudy } from "./market-data";
 import { buildVisualQuestion, nextSeedIndex } from "./visual-question-bank";
+import { pickBankItems, toEvaluationQuestion } from "./assessment-picker";
+import { PART_A_BANK } from "./part-a-bank";
+import { PART_B_BANK } from "./part-b-bank";
 
 export type EvaluationLevel = "standard" | "high" | "premium";
 export type EvaluationPart = "A" | "B" | "C";
