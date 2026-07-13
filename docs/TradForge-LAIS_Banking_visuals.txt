@@ -1,0 +1,653 @@
+TradForge-LAIS_Banking_visuals
+
+**Ce qu'il manque :** Les prompts détaillés pour A16 et A17 dans le doc VISUAL_PROMPTS (ils sont seulement mentionnés brièvement en "Nouveaux visuels à ajouter"). Mais je peux extrapoler à partir de l'INDEX et des images.
+
+**Objectif :** Produire **minimum 10 questions par visuel** (170+ questions) pour la **Partie B — Visuels**, en format JSON canonique identique à celui de l'agent précédent, avec le même niveau de rigueur institutionnelle.
+
+---
+
+## **Architecture des questions par visuel**
+
+Pour chaque visuel A1→A17, je produis :
+
+- **QCM (6-8 questions)** : lecture visuelle, interprétation, causalité, placement dans le chapitre
+- **QRO (2-4 questions)** : analyse critique, connexion avec les widgets, scénario appliqué
+
+Format JSON canonique identique au livrable précédent.
+
+---
+
+Je vais maintenant produire le livrable complet. C'est un document massif — je vais le structurer par visuel, avec le JSON inline. Commençons.
+
+---
+
+# **PARTIE B — Banque de questions VISUELS (A1 → A17)**
+
+> **Principe** : Chaque question exploite un visuel du chapitre (A1→A17) comme support pédagogique immersif.**Objectif** : Tester la capacité à lire, interpréter et décider à partir de compositions visuelles macroéconomiques — compétence institutionnelle centrale.**Distribution** : Minimum 10 questions par visuel. QCM + QRO.**Format** : JSON canonique identique au livrable Partie A & B widgets.
+> 
+
+---
+
+## **➤ Visuel A1 — The Macroeconomic Ecosystem (A1 + A1')**
+
+**Placement** : 1.1 · concept macro + Partie B**Learning Objective** : Comprendre l'interconnexion GDP ↔ Inflation ↔ Employment ↔ Trade Balance ↔ Interest Rates**Prompt** : *Data art representation of the macroeconomic ecosystem, GDP, inflation, employment, trade balance and rates interconnected through mechanical and digital systems, elegant macro machine, editorial infographic quality, dark premium background, 8K*
+
+### **QCM (7 questions)**
+
+**Table**
+
+| **ID** | **Question** | **Options** | **Correct** | **Justification** | **Difficulté** |
+| --- | --- | --- | --- | --- | --- |
+| 1.1-A1Q1 | Dans le visuel A1, quel élément central représente la mesure des flux économiques agrégés ? | a) La sphère Inflationb) La sphère GDPc) Le réseau Employmentd) La balance Trade | b | La sphère GDP est au centre du système, étiquetée "GDP: Measuring Economic Flows". | 1 |
+| 1.1-A1Q2 | Sur le visuel A1, la sphère Inflation est connectée à quels drivers directs ? | a) Seulement Energy Pricesb) Energy Prices, Food Prices, Supply Chainsc) Seulement Supply Chainsd) Aucun driver | b | Les flèches directes pointent vers Energy, Food et Supply Chains comme drivers d'inflation. | 1 |
+| 1.1-A1Q3 | Dans A1, le réseau "Employment & Labor Market" reçoit des inputs de : | a) GDP uniquementb) GDP, Natural Capital, Fiscal Riskc) Wages, Labor Capacity, Productivityd) Trade Balance uniquement | c | Le réseau emploi montre des connexions depuis Wages, Labor Capacity et Productivity. | 2 |
+| 1.1-A1Q4 | Le "Central Bank Rates" dans A1 agit comme : | a) Un observateur passifb) Un hub de transmission entre Inflation et les marchésc) Un remplacement du GDPd) Un indicateur retardé uniquement | b | Les taux de la banque centrale sont au centre du flux, recevant l'inflation et influençant les taux d'intérêt/cost of capital. | 2 |
+| 1.1-A1Q5 | Dans A1, la "Trade Balance" est représentée comme : | a) Une balance à plateaux avec imports/exportsb) Un graphique linéairec) Un tableau de chiffresd) Une roue dentée | a | Le visuel montre une balance physique avec des conteneurs/cargos symbolisant imports et exports. | 1 |
+| 1.1-A1Q6 | Quel type de connexion (légende A1) représente un effet de rétroaction ? | a) Ligne pleine bleueb) Ligne jaune continuec) Ligne pointilléed) Flèche rouge | c | La légende indique "FEEDBACK LOOP" = ligne pointillée. | 2 |
+| 1.1-A1Q7 | Dans A1, les "External Influences" (Geopolitical, Technological, etc.) sont positionnés : | a) Au centre du systèmeb) En périphérie, comme forces exogènesc) À l'intérieur du GDPd) Absents du visuel | b | Elles sont en bas du visuel, en périphérie, avec des icônes distinctes — forces externes au système macro principal. | 2 |
+
+### **QRO (3 questions)**
+
+**Table**
+
+| **ID** | **Question** | **Réponse attendue / Critères** | **Difficulté** |
+| --- | --- | --- | --- |
+| 1.1-A1R1 | Décrivez comment le visuel A1 illustre la circularité de l'économie (GDP → Employment → Consumption → GDP). | Mention des feedback loops, des flèches bidirectionnelles, du rôle des salaires dans la consommation et du retour au PIB. | 2 |
+| 1.1-A1R2 | Pourquoi le visuel A1 place-t-il la banque centrale au centre plutôt que dans un coin ? | La banque centrale est le nœud de transmission monétaire : elle reçoit l'inflation, ajuste les taux, qui impactent l'investissement, le crédit et la croissance. Position centrale = rôle central. | 3 |
+| 1.1-A1R3 | Comparez la lecture du visuel A1 avec celle d'un tableau de données macro classique. | A1 = holistique, montre les interconnexions et causalités. Tableau = atomique, chiffres sans relations visuelles. A1 force la pensée systémique. | 3 |
+
+---
+
+## **➤ Visuel A2 — The Intelligence Hierarchy (A2 + A2')**
+
+**Placement** : 1.1 · concept macro + Partie B**Learning Objective** : Comprendre la hiérarchie Leading → Coincident → Lagging et le flux de décision**Prompt** : *Institutional infographic showing leading, coincident and lagging indicators arranged in a sophisticated intelligence hierarchy, flowing data streams, premium editorial design, Information Is Beautiful quality, 8K*
+
+### **QCM (7 questions)**
+
+**Table**
+
+| **ID** | **Question** | **Options** | **Correct** | **Justification** | **Difficulté** |
+| --- | --- | --- | --- | --- | --- |
+| 1.1-A2Q1 | Dans A2, la couche "Leading Indicators" est associée à quel objectif ? | a) Confirmer le passéb) Prédire l'avenirc) Mesurer le présentd) Calculer le PIB | b | "Leading = Looking Ahead = Predict the Future". | 1 |
+| 1.1-A2Q2 | Quel indicateur de la couche "Coincident" est listé dans A2 ? | a) Building Permitsb) GDPc) Money Supplyd) Unemployment Rate | b | GDP est dans la couche Coincident (In the Moment). | 1 |
+| 1.1-A2Q3 | Dans A2, le "Unemployment Rate" appartient à la couche : | a) Leadingb) Coincidentc) Laggingd) Aucune | c | Le taux de chômage est explicitement dans Lagging Indicators (Confirm the Past). | 1 |
+| 1.1-A2Q4 | Le flux de données dans A2 s'écrit comme : | a) Lagging → Coincident → Leadingb) Leading → Coincident → Laggingc) Coincident → Leading → Laggingd) Aucun ordre | b | La hiérarchie est visuellement de haut en bas : Leading (prédire) → Coincident (comprendre) → Lagging (confirmer). | 2 |
+| 1.1-A2Q5 | Dans A2, "Building Permits" est un leading indicator car : | a) Il confirme la construction passéeb) Il anticipe l'activité future de constructionc) Il mesure la production actuelled) Il est publié après le PIB | b | Les permis de construire signalent l'intention future de construire = avancé. | 2 |
+| 1.1-A2Q6 | Le "Intelligence Flow" en bas de A2 représente : | a) Un flux unidirectionnelb) Une boucle de feedback continuec) Un classement par importanced) Une liste d'indicateurs | b | "Continuous Feedback Loop" = les insights de chaque couche alimentent les autres. | 2 |
+| 1.1-A2Q7 | Dans A2, la combinaison des trois couches vise à : | a) Remplacer l'analyse fondamentaleb) Créer un cycle d'intelligence complet pour la décisionc) Éliminer le besoin de données historiquesd) Simplifier le trading algorithmique | b | "Better Data → Better Intelligence → Better Decisions → Better Outcomes". | 3 |
+
+### **QRO (3 questions)**
+
+**Table**
+
+| **ID** | **Question** | **Réponse attendue / Critères** | **Difficulté** |
+| --- | --- | --- | --- |
+| 1.1-A2R1 | Expliquez pourquoi un trader institutionnel préfère les leading indicators aux lagging pour le positionnement. | Leading = anticipation, timing d'entrée. Lagging = confirmation, validation de la thèse. Le positionnement exige l'avance, pas la confirmation. | 2 |
+| 1.1-A2R2 | Dans A2, pourquoi le PIB est-il coincident et non leading, malgré son importance ? | Le PIB mesure l'activité passée (trimestre écoulé) mais reflète l'état actuel. Il ne prédict pas, il constate. La collecte des données crée un retard. | 3 |
+| 1.1-A2R3 | Décrivez comment un analyste macro utilise les trois couches de A2 pour structurer un scénario de récession. | Leading : inversion courbe, permis en baisse → alerte. Coincident : PIB ralentit, production industrielle ↓ → confirmation. Lagging : chômage monte, profits en baisse → validation. Les trois ensemble = confiance dans le scénario. | 3 |
+
+---
+
+## **➤ Visuel A3 — Global Macroeconomic Network & Trade Routes**
+
+**Placement** : 1.2 · intermarket (#macro-widgets)**Learning Objective** : Comprendre les interdépendances globales et les flux de capitaux/transactions**Prompt** : *World map transformed into a macroeconomic network, currencies, commodities and bond markets linked through glowing trade routes, institutional intelligence aesthetic, data visualization masterpiece, 8K*
+
+### **QCM (7 questions)**
+
+**Table**
+
+| **ID** | **Question** | **Options** | **Correct** | **Justification** | **Difficulté** |
+| --- | --- | --- | --- | --- | --- |
+| 1.2-A3Q1 | Dans A3, quel actif est positionné comme hub central du réseau mondial ? | a) L'orb) L'EURc) Le pétroled) Le JPY | b | L'EUR est au centre de la carte avec le plus de connexions rayonnantes. | 1 |
+| 1.2-A3Q2 | Sur A3, les lignes vertes représentent principalement : | a) Les flux de capitaux vers les obligationsb) Les routes commerciales de matières premièresc) Les corrélations négativesd) Les spreads de taux | b | Les lignes vertes connectent les sources de matières premières (pétrole, fer, agriculture) aux centres économiques. | 2 |
+| 1.2-A3Q3 | Dans A3, le "Daily Analytics Sentiment Matrix" affiche : | a) Les prix des actionsb) La force des devises sur une échelle numériquec) Les taux d'intérêtd) Les volumes de trading | b | La matrice montre "Currency Strength" avec des valeurs numériques par devise. | 2 |
+| 1.2-A3Q4 | Le "Simulation Engine" dans A3 permet de : | a) Calculer le PIBb) Rejouer des scénarios de marché avec des charts TradingViewc) Prédire la météod) Acheter des devises | b | Le panel indique "TradingView lightweight charts replay" avec des toggles multi-timeframe. | 2 |
+| 1.2-A3Q5 | Dans A3, la corrélation entre USD et EUR/USD est représentée comme : | a) Positiveb) Négativec) Nulled) Variable | b | Les flèches montrent des directions opposées — quand le dollar monte, l'euro tend à baisser. | 2 |
+| 1.2-A3Q6 | Le panel "Intermarket Analysis" dans A3 liste comme catégories : | a) PIB, Inflation, Chômage/NFP, Balance Commercialeb) Actions, Obligations, Devises, Matières premièresc) Taux courts, Taux longs, Spread, Créditd) RSI, MACD, Bollinger, Volume | a | Le panel explicite : PIB, Inflation, Chômage/NFP, Balance Commerciale. | 1 |
+| 1.2-A3Q7 | Pourquoi A3 inclut-il des "Case Study Replay" (FOMC 2022, BCE Dovish Pivot) ? | a) Pour décorer la carteb) Pour montrer des scénarios historiques réels comme référencec) Pour prédire le futurd) Pour remplacer les données temps réel | b | Les replays sont des archives pédagogiques de cas réels pour l'apprentissage. | 3 |
+
+### **QRO (3 questions)**
+
+**Table**
+
+| **ID** | **Question** | **Réponse attendue / Critères** | **Difficulté** |
+| --- | --- | --- | --- |
+| 1.2-A3R1 | Décrivez comment A3 force l'analyste à penser "système" plutôt que "actif isolé". | La carte montre que chaque devise/commodité est connectée à d'autres via des routes commerciales et financières. Isoler l'EUR/USD sans regarder le pétrole, la BCE et les taux US = erreur. | 2 |
+| 1.2-A3R2 | Expliquez le rôle du "Macro Reveal" dans A3 pour l'anticipation des décisions de banque centrale. | Le panel liste les drivers actuels (BCE cuts, German debt brake, etc.) qui influencent les décisions. C'est un outil de veille causale, pas seulement de données. | 3 |
+| 1.2-A3R3 | Pourquoi A3 place-t-il l'Australie et le JPY comme nœuds périphériques mais critiques ? | L'Australie = proxy Chine/commodités. Le JPY = safe haven et carry trade. Leur position périphérique géographique masque leur importance systémique dans les flux de capitaux. | 3 |
+
+---
+
+## **➤ Visuel A4 — Inflation Transmission Mechanism**
+
+**Placement** : 1.2 · groupe widgets macro (#macro-widgets)**Learning Objective** : Comprendre la chaîne causale Inflation Shock → Consumers → Central Banks → Rates → Bonds/Currencies/Equities**Prompt** : *Visual causal chain showing inflation transmission mechanism, inflation shock moving through consumers, central banks, interest rates, bonds, currencies and equities, sophisticated educational infographic, premium editorial style, 8K*
+
+### **QCM (7 questions)**
+
+**Table**
+
+| **ID** | **Question** | **Options** | **Correct** | **Justification** | **Difficulté** |
+| --- | --- | --- | --- | --- | --- |
+| 1.2-A4Q1 | Dans A4, le "Initial Inflation Shock" est déclenché par : | a) Une baisse des tauxb) Des scénarios macroéconomiques (ex: Trump Trade, BCE cuts)c) Une hausse de l'emploid) Une récession | b | Le panel indique "'Scénarios MacroÉconomiques' (e.g., Trump Trade scenario, BCE cuts)". | 1 |
+| 1.2-A4Q2 | Sur A4, l'étape "Consumers & Purchasing Power" montre : | a) Une augmentation du pouvoir d'achatb) Une réduction de la consommation due aux coûts croissantsc) Une hausse des revenusd) Aucun impact | b | Le visuel montre "Rising Costs of Goods & Services" → "Consumer Spending Reduction" → "Lower Disposable Income". | 1 |
+| 1.2-A4Q3 | Dans A4, la banque centrale réagit à l'inflation par : | a) Une baisse des tauxb) Une hausse des taux ou un QTc) L'achat d'obligationsd) Aucune action | b | Le panel "Central Bank Decision" montre "BCE Dovish Hike" et "or other 'Taux' changes" — politique restrictive. | 2 |
+| 1.2-A4Q4 | Le mécanisme de transmission dans A4 se termine par l'impact sur : | a) Seulement les obligationsb) Les obligations, les devises et les actionsc) Seulement les devisesd) Seulement l'or | b | Les trois derniers panels sont : BONDS, CURRENCIES, EQUITIES. | 1 |
+| 1.2-A4Q5 | Dans A4, "Bond Prices Inversely Correlated to Yields" signifie que : | a) Quand les taux montent, les prix d'obligations montentb) Quand les taux montent, les prix d'obligations baissentc) Il n'y a pas de corrélationd) Les obligations deviennent des actions | b | Corrélation inverse : taux ↑ = prix obligations ↓. | 2 |
+| 1.2-A4Q6 | Sur A4, la légende indique que le symbole "KPI" (rouge) représente : | a) Un indicateur de performance cléb) Lower Disposable Incomec) Un objectif de banque centraled) Un ratio financier | b | La légende explicite : "KPI = Lower Disposable Income". | 2 |
+| 1.2-A4Q7 | Pourquoi A4 utilise-t-il un pipeline avec des engrenages entre chaque étape ? | a) Pour décorerb) Pour symboliser le mécanisme de transmission mécanique et inéluctablec) Parce que c'est obligatoired) Pour indiquer des erreurs | b | Les engrenages = transmission causale, chaque étape entraîne mécaniquement la suivante. | 3 |
+
+### **QRO (3 questions)**
+
+**Table**
+
+| **ID** | **Question** | **Réponse attendue / Critères** | **Difficulté** |
+| --- | --- | --- | --- |
+| 1.2-A4R1 | Décrivez la chaîne de transmission complète illustrée par A4, de l'inflation initiale à l'impact sur les actions. | Inflation shock → coûts ↑ → pouvoir d'achat ↓ → consommation ↓ → banque centrale hawkish → taux ↑ → obligations ↓, devise ↑ (attrait rendement), actions ↓ (coût du capital ↑, profits ↓). | 2 |
+| 1.2-A4R2 | Pourquoi A4 montre-t-il "Currency Strength Differentials" comme conséquence des taux ? | Les taux ↑ attirent les capitaux étrangers → demande devise ↑ → devise se renforce. C'est le mécanisme de carry trade et d'attrait du rendement. | 3 |
+| 1.2-A4R3 | Comparez le mécanisme A4 avec celui d'un choc déflationniste. Quel serait le parcours inverse ? | Déflation → pouvoir d'achat ↑ (théorique) mais report d'achats → activité ↓ → banque centrale dovish → taux ↓ → obligations ↑, devise ↓, actions ↑ (coût du capital ↓). | 3 |
+
+---
+
+## **➤ Visuel A5 — The Great Macroeconomic Engine (Economic Cycle)**
+
+**Placement** : 1.2 · command center (#macro-dashboard)**Learning Objective** : Comprendre le cycle économique Expansion → Peak → Recession → Recovery et ses forces**Prompt** : *Mechanical macroeconomic cycle machine showing expansion, peak, recession and recovery connected through moving gears and economic forces, elegant explanatory visualization, dark background, premium educational art, 8K*
+
+### **QCM (7 questions)**
+
+**Table**
+
+| **ID** | **Question** | **Options** | **Correct** | **Justification** | **Difficulté** |
+| --- | --- | --- | --- | --- | --- |
+| 1.2-A5Q1 | Dans A5, la phase "Peak" est caractérisée par : | a) Une déflationb) High Inflation + Tight Labor Marketc) Une croissance nulled) Un chômage élevé | b | Le panel Peak liste : "High Inflation", "Tight Labor Market", "Pressure vent". | 1 |
+| 1.2-A5Q2 | Sur A5, la phase "Recession" inclut : | a) GDP Growth élevéb) Decreased Demand + Credit Crunchc) Consumer Spending fortd) Business Investment élevé | b | Le panel Recession liste : "Decreased Demand", "Credit Crunch", "Deflation", "Unemployment". | 1 |
+| 1.2-A5Q3 | Dans A5, la "Central Bank Policy" est représentée comme : | a) Un observateur externeb) Une roue centrale qui module le cyclec) Un remplacement du marchéd) Un indicateur retardé | b | La roue "Central Bank Policy" est au centre, connectée à toutes les phases par des tuyaux/engrenages. | 2 |
+| 1.2-A5Q4 | La phase "Recovery" dans A5 est alimentée par : | a) Un choc inflationnisteb) Government Stimulus + Innovation + Confidencec) Une hausse des tauxd) Un credit crunch | b | Le panel Recovery liste : "Government Stimulus", "Innovation", "Confidence" comme moteurs. | 2 |
+| 1.2-A5Q5 | Dans A5, les tuyaux avec des symboles "$" lumineux représentent : | a) Les flux de liquidité/monétairesb) Les pipelines de pétrolec) Les réseaux électriquesd) Les transports | a | Les symboles dollar dans les tuyaux = flux de liquidité/capitaux entre les phases. | 2 |
+| 1.2-A5Q6 | Sur A5, la transition Peak → Recession est déclenchée par : | a) Une baisse des tauxb) "Pressure vent" + épuisement du cyclec) Une hausse de l'emploid) Une stimulation fiscale | b | Le "Pressure vent" sur le Peak symbolise la surchauffe et le besoin de correction. | 3 |
+| 1.2-A5Q7 | Pourquoi A5 utilise-t-il une esthétique "steampunk/machine" plutôt qu'un graphique standard ? | a) Pour décorerb) Pour symboliser l'interdépendance mécanique et l'inéluctabilité des cyclesc) Parce que c'est moins cherd) Pour cacher les données | b | La machine = système complexe où chaque pièce dépend des autres, comme l'économie réelle. | 3 |
+
+### **QRO (3 questions)**
+
+**Table**
+
+| **ID** | **Question** | **Réponse attendue / Critères** | **Difficulté** |
+| --- | --- | --- | --- |
+| 1.2-A5R1 | Décrivez comment A5 illustre le rôle de la banque centrale dans la modulation du cycle. | La banque centrale est la roue centrale : en expansion, elle peut freiner (taux ↑). En récession, elle stimule (taux ↓, QE). Elle n'arrête pas le cycle mais en modifie l'amplitude et la durée. | 2 |
+| 1.2-A5R2 | Dans A5, pourquoi la "Confidence" est-elle un moteur de Recovery mais aussi un risque en Peak ? | Recovery : confiance = investissement, embauche. Peak : confiance excessive = surchauffe, bulles, prise de risque irrationnelle. C'est un double tranchant. | 3 |
+| 1.2-A5R3 | Expliquez comment un trader peut utiliser A5 pour anticiper la rotation sectorielle. | Expansion → cycliques (tech, consommation). Peak → matières premières, inflation plays. Recession → défensives (santé, utilities). Recovery → early cycliques (finance, industrie). A5 donne le timing du cycle pour le secteur. | 3 |
+
+---
+
+## **➤ Visuel A6 — Central Bank Decision System (A6 + A6(1))**
+
+**Placement** : 1.3 · intro micro (#micro-concept)**Learning Objective** : Comprendre le pipeline : Macro Data → Growth Trend + Inflation Momentum + Stability Assessment → FOMC/BCE Decision Matrix → Rate Decision**Prompt** : *Central bank command center visualizing how inflation, employment and growth data flow into interest rate decisions, institutional intelligence dashboard aesthetic, premium explanatory illustration, 8K*
+
+### **QCM (7 questions)**
+
+**Table**
+
+| **ID** | **Question** | **Options** | **Correct** | **Justification** | **Difficulté** |
+| --- | --- | --- | --- | --- | --- |
+| 1.3-A6Q1 | Dans A6, les trois catégories de données macro en input sont : | a) Actions, obligations, devisesb) Croissance, Inflation, Politique Monétairec) PIB, NFP, CPI uniquementd) Sentiment, volatilité, volume | b | Les trois panels d'input sont : CROISSANCE, INFLATION, POLITIQUE MONÉTAIRE. | 1 |
+| 1.3-A6Q2 | Sur A6, le "GDP Gap" dans le panel Growth Trend représente : | a) L'écart entre le PIB réel et potentielb) La différence entre exportations et importationsc) Le taux de chômaged) L'inflation | a | Le graphique montre l'écart entre la ligne de tendance et le PIB effectif. | 2 |
+| 1.3-A6Q3 | Dans A6, la "FOMC/BCE Decision Matrix" est : | a) Un tableau de votesb) Une matrice de scénarios avec probabilitésc) Un calendrier de réunionsd) Une liste de participants | b | La matrice montre des scénarios avec des pourcentages (50%, 10%, 30%) et des chemins décisionnels. | 2 |
+| 1.3-A6Q4 | Le "Rate Decision" dans A6 affiche trois positions possibles : | a) Achat, Vente, Neutreb) Rate Hikes, Rate Cuts, Pausec) Expansion, Récession, Stagflationd) Hawkish, Dovish, Neutre | b | Le cadran montre : "Rate Hikes" (hawkish), "Rate Cuts" (dovish), "Pause". | 2 |
+| 1.3-A6Q5 | Dans A6, le panel "Stability Assessment" croise : | a) Les attentes du marché avec la force de l'emploib) Les taux avec l'inflationc) Le PIB avec les actionsd) Les devises avec les matières premières | a | Le panel indique "Market Expectations" et "NFP Jan 2024: Employment Strength". | 2 |
+| 1.2-A6Q6 | Sur A6, les "Case Study Replay Archive" incluent : | a) Des prévisions futuresb) FOMC 2022 Hikes, BCE Dovish Pivot, TRY Depreciationc) Des tutorielsd) Des actualités du jour | b | Les trois cas listés sont : FOMC 2022 Hikes, BCE Dovish Pivot, TRY Depreciation 2021-2024. | 1 |
+| 1.2-A6Q7 | Pourquoi A6 inclut-il une "Scenario Scripting: Sensitivity Analysis" ? | a) Pour décorerb) Pour montrer que la décision dépend de multiples variables et de leurs interactionsc) Pour remplacer la banque centraled) Pour prédire le cours exact | b | La sensibilité montre comment les variations des inputs modifient la décision de sortie. | 3 |
+
+### **QRO (3 questions)**
+
+**Table**
+
+| **ID** | **Question** | **Réponse attendue / Critères** | **Difficulté** |
+| --- | --- | --- | --- |
+| 1.2-A6R1 | Décrivez le pipeline décisionnel complet illustré par A6, de l'input macro à la décision de taux. | Croissance (PIB, production, commandes) → Trend. Inflation (CPI, salaires) → Momentum. Politique monétaire (taux, NFP, confiance) → Stability. Les trois convergent dans la Decision Matrix → scénarios → Rate Decision (hike/cut/pause). | 2 |
+| 1.2-A6R2 | Pourquoi A6 montre-t-il que la décision de la Fed n'est pas un simple "si inflation > 2% alors hike" ? | Parce que la matrice montre des interactions complexes : inflation forte + emploi faible = pause possible. Inflation modérée + emploi fort = hike. C'est multi-variable, pas mono-variable. | 3 |
+| 1.2-A6R3 | Expliquez comment le "Daily Analytics Feed" en bas d'A6 complète le système décisionnel. | Le feed temps réel (scores, corrélations, alerts) alimente continuellement les inputs. La décision n'est pas statique : elle évolue avec les nouvelles données. C'est un système dynamique, pas un snapshot. | 3 |
+
+---
+
+## **➤ Visuel A7 — Corporate Value Creation Engine**
+
+**Placement** : 1.4 · intro outils (#outils-concept)**Learning Objective** : Comprendre le pipeline : Revenue → Margins → Cash Flow → DCF/Valuation**Prompt** : *Corporate value creation engine, revenue, margins, debt, cash flow and profitability feeding into valuation, visualized as an interconnected system, premium financial infographic, 8K*
+
+### **QCM (7 questions)**
+
+**Table**
+
+| **ID** | **Question** | **Options** | **Correct** | **Justification** | **Difficulté** |
+| --- | --- | --- | --- | --- | --- |
+| 1.4-A7Q1 | Dans A7, le point de départ du système est : | a) La valorisationb) La génération de revenus (Revenue Generation)c) Les flux de trésoreried) La dette | b | Le visuel commence à gauche avec "Revenue Generation" (Price Optimization, Volume Growth, Sales Effectiveness). | 1 |
+| 1.4-A7Q2 | Sur A7, "Gross Profit" est calculé comme : | a) Revenus − Coûts variables − Coûts fixesb) Revenus − Coûts variables uniquementc) Revenus − Coûts fixes uniquementd) EBITDA − Amortissements | b | Le funnel montre : Revenue → Variable Costs (sortie) → Fixed Costs (sortie) → Gross Profit (résidu). | 2 |
+| 1.4-A7Q3 | Dans A7, le "CAPEX (Investment)" est positionné : | a) Avant les revenusb) Entre l'Operating Cash Flow et le Free Cash Flowc) Après la valorisationd) Avant la marge brute | b | Le pipeline montre : Operating Cash Flow → CAPEX → Free Cash Flow. | 2 |
+| 1.4-A7Q4 | Le "Intrinsic Valuation (Fundamentals)" dans A7 utilise : | a) Seulement le P/Eb) Le DCF avec FCF projections, WACC et valeur terminalec) La comparaison avec des pairsd) Le book value | b | La pyramide montre : FCF Projections (5-10 ans) → WACC → Terminal Value → Enterprise Value. | 2 |
+| 1.4-A7Q5 | Dans A7, le "Relative Valuation (Multiples)" compare : | a) L'entreprise avec son historiqueb) L'entreprise avec des pairs via P/E, EV/EBITDA, P/Sc) L'entreprise avec la banque centraled) Les actifs avec les passifs | b | Le panel montre : Revenue, EBITDA, Net Income comparés avec des "Peer Companies" via P/E, EV/EBITDA, P/S. | 2 |
+| 1.4-A7Q6 | Sur A7, la "Capital Structure & Financing" inclut : | a) Seulement les actionsb) Debt Financing, Equity Financing, Leveragec) Seulement les obligationsd) Les dividendes | b | Le panel montre : Debt Financing, Equity Financing, Leverage avec leurs interactions. | 1 |
+| 1.4-A7Q7 | Pourquoi A7 montre-t-il que la valeur terminale représente souvent 60-80% de la valorisation DCF ? | a) Parce que les flux lointains sont plus certainsb) Parce que la majorité de la valeur vient des flux éloignés, d'où la sensibilité aux hypothèsesc) Parce que c'est une règle comptabled) Parce que le WACC est faible | b | La pyramide montre la terminal value comme base large = majorité de la valeur totale. | 3 |
+
+### **QRO (3 questions)**
+
+**Table**
+
+| **ID** | **Question** | **Réponse attendue / Critères** | **Difficulté** |
+| --- | --- | --- | --- |
+| 1.4-A7R1 | Décrivez le pipeline complet de création de valeur d'A7, du revenu à la valorisation finale. | Revenue → Price × Volume. Margin & Profitability : Gross Profit → EBITDA → Operating Profit → Net Income. Cash Flow : Operating CF → CAPEX → Free CF. Valuation : DCF (FCF, WACC, terminal) + Multiples (P/E, EV/EBITDA) → Enterprise Value + Equity Value. | 2 |
+| 1.4-A7R2 | Dans A7, pourquoi le "Cost of Debt" et le "Leverage" sont-ils positionnés entre le Cash Flow et la Valuation ? | Parce que la structure du capital (dette vs equity) détermine le WACC (coût moyen pondéré du capital), qui est le taux d'actualisation du DCF. Plus de dette = WACC ↓ (tax shield) mais risque ↑. | 3 |
+| 1.4-A7R3 | Expliquez pourquoi A7 juxtapose "Intrinsic Valuation" et "Relative Valuation" comme deux piliers complémentaires. | Intrinsic = valeur absolue indépendante (DCF). Relative = comparaison marché (multiples). Intrinsic sans relative = risque d'erreur d'hypothèses. Relative sans intrinsic = risque de suivre la foule. Les deux ensemble = décision robuste. | 3 |
+
+---
+
+## **➤ Visuel A8 — The Intermarket Web (A8' + A8'(1))**
+
+**Placement** : 1.3 · groupe widgets micro (#micro-widgets)**Learning Objective** : Comprendre les flux de capitaux institutionnels entre asset classes et les corrélations intermarchés**Prompt** : *USD, gold, bonds, equities and oil connected through a dynamic intermarket web, visualizing capital flows and market reactions, editorial financial art, dark premium style, 8K*
+
+### **QCM (7 questions)**
+
+**Table**
+
+| **ID** | **Question** | **Options** | **Correct** | **Justification** | **Difficulté** |
+| --- | --- | --- | --- | --- | --- |
+| 1.3-A8Q1 | Dans A8, quel actif est positionné comme "Reserve Currency & Liquidity Hub" ? | a) L'orb) L'USDc) Les obligationsd) Le pétrole | b | L'USD est au centre avec le label "Reserve Currency & Liquidity Hub". | 1 |
+| 1.3-A8Q2 | Sur A8, la corrélation entre GOLD et BONDS est : | a) Négativeb) Positive (0.68)c) Nulled) Variable | b | La matrice de corrélation montre GOLD/BONDS = +0.68 (vert = positif). | 2 |
+| 1.3-A8Q3 | Dans A8, un "Risk-Off" rotation se traduit par : | a) Flux vers les actionsb) Flux vers les obligations et l'orc) Flux vers le pétroled) Aucun mouvement | b | Le panel "Capital Flow Intensity" montre : TO BONDS +24.7%, TO GOLD +18.3%, TO EQUITIES -8.6%. | 2 |
+| 1.3-A8Q4 | Le "Capital Rotation (Dominant Flow)" dans A8 montre la séquence : | a) Equities → Bonds → Gold → USD → Oil → Equitiesb) Bonds → Gold → USD → Oil → Equitiesc) USD → Bonds → Gold → Oil → Equitiesd) Aucune séquence | b | Le panel explicite : BONDS → GOLD → USD → OIL → EQUITIES. | 2 |
+| 1.3-A8Q5 | Dans A8, le "Macro Regime" affiché est : | a) Expansionb) Risk-Offc) Recoveryd) Stagflation | b | Le panel en haut à droite indique "RISK-OFF" en surbrillance. | 1 |
+| 1.3-A8Q6 | Sur A8, les "Equity Flows (7D)" de -$27.8B indiquent : | a) Un afflux massifb) Une sortie de capitaux des actions (risk aversion)c) Une neutralitéd) Une erreur de données | b | Le signe négatif + le texte "Risk aversion triggers profit-taking and deleveraging" = sortie. | 2 |
+| 1.3-A8Q7 | Pourquoi A8 inclut-il une matrice de corrélation 30D ? | a) Pour décorerb) Pour montrer que les relations intermarchés évoluent et doivent être surveilléesc) Parce que c'est obligatoired) Pour remplacer les graphiques | b | Les corrélations ne sont pas fixes ; la matrice 30D montre l'état courant des relations. | 3 |
+
+### **QRO (3 questions)**
+
+**Table**
+
+| **ID** | **Question** | **Réponse attendue / Critères** | **Difficulté** |
+| --- | --- | --- | --- |
+| 1.3-A8R1 | Décrivez comment A8 illustre la rotation des capitaux en période de "Risk-Off". | Risk-Off = fuite de la qualité. A8 montre : sortie Equities (-$27.8B) → entrée Bonds (+$38.6B), Gold (+$21.4B), USD (+15.9%). C'est le "flight to safety" visuel. | 2 |
+| 1.3-A8R2 | Dans A8, pourquoi la corrélation USD/EQUITIES est négative (-0.48) ? | Quand le dollar monte (safe haven, taux US ↑), les actions US deviennent plus chères pour les étrangers et les entreprises exportatrices perdent compétitivité. Corrélation négative classique en risk-off. | 3 |
+| 1.3-A8R3 | Expliquez comment un trader peut utiliser A8 pour identifier une rupture de corrélation historique. | Si GOLD/USD passe de -0.41 à +0.50 en crise = décorrélation. A8 donne la baseline (30D). Une rupture soudaine = signal de changement de régime macro ou choc systémique. | 3 |
+
+---
+
+## **➤ Visuel A9 — NFP Shock (A9 + A9(1))**
+
+**Placement** : 1.5 · intro prévisions (#previsions-concept)**Learning Objective** : Comprendre l'impact d'une surprise NFP sur les devises (volatilité, momentum, cross-asset divergence)**Prompt** : *TradingView-style market shock visualization, NFP release triggering explosive volatility across currencies, institutional annotations, premium market intelligence aesthetic, 8K*
+
+### **QCM (7 questions)**
+
+**Table**
+
+| **ID** | **Question** | **Options** | **Correct** | **Justification** | **Difficulté** |
+| --- | --- | --- | --- | --- | --- |
+| 1.5-A9Q1 | Dans A9, le NFP "miss" du scénario affiché est : | a) 238k (consensus) vs 175k (réel)b) 175k (réel) vs 238k (consensus)c) 300k vs 200kd) Aucun miss | b | Le panel indique "NFP DATA MISS: 175k (Exp: 238k)" — le réel est inférieur au consensus. | 1 |
+| 1.5-A9Q2 | Sur A9, l'EUR/USD réagit au NFP miss par : | a) Une baisse immédiateb) Un "Immediate Bullish Momentum"c) Aucune réactiond) Une stagnation | b | Le panel EUR/USD montre "Immediate Bullish Momentum" avec un spike haussier. | 1 |
+| 1.5-A9Q3 | Dans A9, le GBP/USD ("Cable") montre : | a) Une baisseb) Un rally avec "Key Resistance Break (1.2580)"c) Une stagnationd) Une divergence baissière | b | Le panel GBP/USD indique "Cable Rallies on NFP Miss" + cassure de résistance. | 2 |
+| 1.5-A9Q4 | Le USD/JPY dans A9 réagit par : | a) Une hausseb) "USD/JPY Plummets" + "Yen Strengthens on Yield Drop"c) Une stagnationd) Un range | b | Le panel USD/JPY montre un effondrement avec cassure du support 153.50. | 2 |
+| 1.5-A9Q5 | Dans A9, le USD/CAD montre : | a) Une hausse du USDb) "Loonie Gains on US Jobs Miss" + "Cross-Asset Divergence"c) Une stagnationd) Une corrélation parfaite avec EUR/USD | b | Le panel USD/CAD indique que le CAD (loonie) se renforce car le miss NFP affaiblit l'USD. | 2 |
+| 1.5-A9Q6 | Sur A9, le phénomène "Oxygen Squeeze" sur USD/CAD signifie : | a) Une hausse de liquiditéb) Une compression de la liquidité/volatilité explosivec) Une baisse de l'inflationd) Un rally haussier | b | "Oxygen Squeeze" = manque de liquidité, spreads qui se tendent, mouvement violent. | 3 |
+| 1.5-A9Q7 | Pourquoi A9 montre-t-il 4 devises simultanément pour un seul événement NFP ? | a) Pour décorerb) Pour montrer que le même choc macro génère des réponses différentes selon la sensibilité de chaque devisec) Parce que c'est obligatoired) Pour confondre le trader | b | EUR/USD ↑, USD/JPY ↓, GBP/USD ↑, USD/CAD ↓ = même choc, réponses différenciées par les fondamentaux propres à chaque paire. | 3 |
+
+### **QRO (3 questions)**
+
+**Table**
+
+| **ID** | **Question** | **Réponse attendue / Critères** | **Difficulté** |
+| --- | --- | --- | --- |
+| 1.5-A9R1 | Décrivez la chaîne de transmission NFP miss → marchés → Fed → devises illustrée par A9. | NFP miss (175k < 238k) → économie plus faible → Fed dovish (pas de hike) → taux US ↓ → USD weakness → EUR/USD ↑, GBP/USD ↑, USD/JPY ↓, USD/CAD ↓. | 2 |
+| 1.5-A9R2 | Dans A9, pourquoi le GBP/USD montre-t-il un "Liquidity Grab" et un "Stop Run" ? | Le spike initial déclenche les stops des vendeurs au-dessus de 1.2580 → achat forcé (stop run) → grab de liquidité → momentum haussier auto-entretenu. C'est la microstructure du marché. | 3 |
+| 1.5-A9R3 | Expliquez la "Cross-Asset Divergence" sur USD/CAD en contraste avec EUR/USD. | EUR/USD ↑ (USD weak). USD/CAD ↓ (CAD strong). Même cause (USD weak) mais le CAD est aussi influencé par le pétrole et la proximité économique US. La divergence = le CAD ne suit pas mécaniquement l'EUR. | 3 |
+
+---
+
+## **➤ Visuel A10 — European Inflation Crisis & ECB's High-Stakes Gating (A10 + A10(1))**
+
+**Placement** : Hero chapitre (ChapterHero)**Learning Objective** : Comprendre la crise inflationniste UE 2022-2024 : drivers (énergie), transmission (HICP), réaction (BCE), conséquences (marchés)**Prompt** : *European inflation crisis visualization, ECB policy reaction, inflation surge, energy stress and market consequences shown in one coherent editorial composition, 8K*
+
+### **QCM (7 questions)**
+
+**Table**
+
+| **ID** | **Question** | **Options** | **Correct** | **Justification** | **Difficulté** |
+| --- | --- | --- | --- | --- | --- |
+| 1.2-A10Q1 | Dans A10, le driver principal de l'inflation UE est identifié comme : | a) La politique fiscaleb) L'Energy Stress (géopolitique, pipelines)c) La croissance du PIBd) La baisse des taux | b | Le panel "Energy Stress" est mis en avant avec "Geopolitical Strain" et "Damaged North Stream pipes". | 1 |
+| 1.2-A10Q2 | Sur A10, l'indice d'inflation central est : | a) Le CPI américainb) Le HICP (Harmonised Index of Consumer Prices)c) Le PCEd) Le PPI | b | Le centre du visuel montre "HICP" en grand avec les composantes (Energy, Services, Food). | 1 |
+| 1.2-A10Q3 | Dans A10, la réaction de la BCE inclut : | a) Une baisse des tauxb) Des hausses de taux (Taux d'Intérêt) + QTc) Aucune actiond) L'achat d'obligations illimité | b | Le panel "ECB Policy Reaction" montre "Taux d'Intérêt (Interest Rate Hikes)" et "Quantitative Tightening (QT)". | 2 |
+| 1.2-A10Q4 | Le "Market Consequences" dans A10 montre : | a) Seulement les devisesb) Currencies, Bonds, Equitiesc) Seulement les actionsd) Seulement l'or | b | Les trois panels sont : CURRENCIES (EUR/USD, EUR/GBP), BONDS (US10Y-DE10Y Spread), EQUITIES (EU STOXX 50). | 2 |
+| 1.2-A10Q5 | Dans A10, le "TRY Depreciation Regional Effects" est inclus car : | a) La Turquie est membre de l'UEb) La crise TRY illustre un effet de contagion régionalec) La BCE contrôle la Turquied) C'est décoratif | b | La dépréciation TRY montre les effets régionaux d'une crise monétaire voisine sur l'écosystème européen. | 2 |
+| 1.2-A10Q6 | Sur A10, le "Economic Outlook" montre : | a) Une croissance explosiveb) PIB Growth Drop, Pressions Salariales, Risque Récessionc) Une inflation nulled) Un chômage négatif | b | Le panel indique : "PIB Growth Drop fears", "Salaries pressures", "Recession risk". | 2 |
+| 1.2-A10Q7 | Pourquoi A10 est-il positionné comme "Hero" du chapitre ? | a) Parce qu'il est le plus coloréb) Parce qu'il synthétise tous les thèmes du chapitre (inflation, banque centrale, énergie, marchés) en une seule compositionc) Parce qu'il est le premier visuel crééd) Parce qu'il est obligatoire | b | Le Hero doit résumer l'arc narratif du chapitre. A10 couvre : macro (inflation), micro (énergie), outils (BCE), prévisions (outlook), cas pratique (crise réelle). | 3 |
+
+### **QRO (3 questions)**
+
+**Table**
+
+| **ID** | **Question** | **Réponse attendue / Critères** | **Difficulté** |
+| --- | --- | --- | --- |
+| 1.2-A10R1 | Décrivez la chaîne causale complète de la crise inflationniste UE illustrée par A10. | Energy shock (guerre, pipelines) → coûts énergie ↑ → HICP ↑ (Energy, Services, Food) → BCE hawkish (taux ↑, QT) → EUR/USD ↓, spreads ↑, actions ↓ → risque récession, pressions salariales. | 2 |
+| 1.2-A10R2 | Dans A10, pourquoi le "Taper Tantrum Risks" est-il mentionné à côté de la réaction BCE ? | Parce que le retrait de stimulus (QT, taper) peut provoquer une panique des marchés (comme 2013 aux USA). La BCE doit gérer l'inflation SANS déclencher une crise financière. C'est le "high-stakes gating". | 3 |
+| 1.2-A10R3 | Comparez la crise A10 avec le scénario "COVID Flight to Safety" (A12). Quelle divergence fondamentale ? | A10 = inflation + hawkish + risk-off partiel (obligations ↓ car taux ↑). A12 = déflation + dovish + risk-off total (obligations ↑ car taux ↓, flight to safety). Même sentiment (peur), mécanismes opposés. | 3 |
+
+---
+
+## **➤ Visuel A11 — The European Energy Crisis (A11 + A11(1))**
+
+**Placement** : 1.1 · section radar (#intro-regimes)**Learning Objective** : Comprendre la transmission en cascade : énergie → inflation → politique monétaire → récession**Prompt** : *European energy crisis visualized as a cascading macroeconomic shock system, natural gas pipelines glowing red across Europe, energy prices surging through factories, households and transportation networks, inflation spreading across the continent like interconnected waves, ECB headquarters monitoring economic stress indicators, sophisticated macroeconomic cause-and-effect visualization, premium editorial infographic, dark institutional background, Bloomberg x Information Is Beautiful quality, cinematic lighting, ultra detailed, 8K*
+
+### **QCM (7 questions)**
+
+**Table**
+
+| **ID** | **Question** | **Options** | **Correct** | **Justification** | **Difficulté** |
+| --- | --- | --- | --- | --- | --- |
+| 1.1-A11Q1 | Dans A11, les pipelines de gaz naturel sont représentés comme : | a) Bleus et froidsb) Rouges et incandescentsc) Vertsd) Invisibles | b | Le prompt et le visuel indiquent "glowing red across Europe" — symbolisant la chaleur/pression. | 1 |
+| 1.2-A11Q2 | Sur A11, la "First Cascade Level" montre : | a) Une baisse des prixb) Factory Output Decreased, Industrial Producer Prices Surging, Energy Biliket Prices Surgingc) Une croissance économiqued) Une déflation | b | Le panel en haut à gauche liste ces trois indicateurs en dégradation. | 1 |
+| 1.2-A11Q3 | Dans A11, les "Inflationary Waves Spreading" partent de : | a) L'Asieb) La Russie/Est européen vers l'Ouestc) L'Amériqued) L'Afrique | b | Les vagues visuelles partent de l'Est (Russie, pipelines) et se propagent vers l'Ouest. | 2 |
+| 1.2-A11Q4 | Le "Key Stress Indicators" dans A11 inclut : | a) Seulement le PIBb) Eurozone Inflation, Energy Price Index, Consumer Confidence, GDP Growthc) Seulement le chômaged) Seulement les taux | b | Le panel liste ces quatre indicateurs de stress. | 2 |
+| 1.2-A11Q5 | Dans A11, le siège de la BCE (Francfort) est positionné comme : | a) Un observateur passifb) Le centre de surveillance et de réponse aux indicateurs de stressc) Un élément décoratifd) Une banque commerciale | b | La BCE est montrée avec des écrans de monitoring, connectée aux "Monetary Policy Response". | 2 |
+| 1.2-A11Q6 | Sur A11, les "Average Heating Costs" montrent : | a) Une baisse de 50%b) Une augmentation de +200%c) Une stabilitéd) Une baisse de 10% | b | Le graphique indique "+200%" sur les coûts de chauffage. | 1 |
+| 1.2-A11Q7 | Pourquoi A11 utilise-t-il une carte géographique plutôt qu'un simple graphique temporel ? | a) Pour décorerb) Pour montrer la dimension spatiale et la propagation physique du choc (pipelines, routes, contagion)c) Parce que c'est plus simpled) Pour cacher les données | b | La carte montre que la crise énergétique n'est pas abstraite : elle suit des routes physiques (pipelines, transport) et touche des régions spécifiques différemment. | 3 |
+
+### **QRO (3 questions)**
+
+**Table**
+
+| **ID** | **Question** | **Réponse attendue / Critères** | **Difficulté** |
+| --- | --- | --- | --- |
+| 1.2-A11R1 | Décrivez la cascade complète illustrée par A11, du choc énergétique à la réponse monétaire. | Choc énergétique (Russie, pipelines) → prix énergie ↑ (+200% heating) → production industrielle ↓, coûts transports ↑ → inflation HICP ↑ → confiance consommateur ↓, PIB ↓ → BCE surveille (stress indicators) → réponse monétaire (taux ↑) → risque récession. | 2 |
+| 1.2-A11R2 | Dans A11, pourquoi la "Factory Production Output: Decreased" est-elle aussi un driver d'inflation ? | Parce que moins de production = pénurie relative = prix ↑ (offre ↓, demande constante). C'est l'inflation par le côté de l'offre, pas seulement la demande. | 3 |
+| 1.2-A11R3 | Comparez A11 avec A4 (Inflation Transmission Mechanism). Quelle est la différence fondamentale d'approche ? | A4 = mécanisme générique et abstrait (chaîne causale standard). A11 = cas concret et géographique (crise UE 2022-2024 avec routes physiques, usines, ménages). A4 = théorie. A11 = application. | 3 |
+
+---
+
+## **➤ Visuel A12 — COVID-19 Pandemic Panic / Flight to Safety (A12 + A12(1))**
+
+**Placement** : 1.4 · groupe widgets outils (#outils-widgets)**Learning Objective** : Comprendre le flight to safety : Fear → Capital Flows → Asset Performance (équities → Treasuries → Gold → USD)**Prompt** : *Global financial markets during the COVID panic, institutional capital fleeing risk assets and flowing toward safe havens, visual streams moving from equities into US Treasuries, gold and USD, world map under pandemic stress, volatility shockwaves spreading across financial markets, premium macroeconomic storytelling, hedge fund research aesthetic, cinematic realism, dark premium palette, ultra detailed, 8K*
+
+### **QCM (7 questions)**
+
+**Table**
+
+| **ID** | **Question** | **Options** | **Correct** | **Justification** | **Difficulté** |
+| --- | --- | --- | --- | --- | --- |
+| 1.4-A12Q1 | Dans A12, la source du choc est identifiée comme : | a) Une guerreb) COVID-19 Pandemic Panic (March 2020)c) Une crise bancaired) Une bulle immobilière | b | Le titre et les labels indiquent "COVID Mars 2020" et "March 2020". | 1 |
+| 1.4-A12Q2 | Sur A12, le flux de capitaux part de : | a) Les obligations vers les actionsb) Les equities (risk assets) vers les safe havensc) L'or vers le pétroled) Les devises vers les cryptos | b | Le visuel montre des flux sortant de "EQUITIES (Risk Assets)" vers "US TREASURIES", "GOLD", "USD". | 1 |
+| 1.4-A12Q3 | Dans A12, les "Safe Haven Drains" incluent : | a) Seulement l'orb) US10Y Yield, US10Y-DE10Y Spread, Government Bondsc) Seulement les actionsd) Seulement les devises émergentes | b | Le panel liste ces trois drains de liquidité vers la qualité. | 2 |
+| 1.4-A12Q4 | Le "USD Strengthens (DXY)" dans A12 est causé par : | a) Une inflation US élevéeb) Le flight to safety + liquidité mondiale cherchant le dollarc) Une baisse des taux USd) Une dévaluation compétitive | b | Le panel USD indique que le dollar se renforce comme safe haven et hub de liquidité. | 2 |
+| 1.4-A12Q5 | Dans A12, le "Yield Compression" sur le S&P 500 signifie : | a) Une hausse des rendements obligatairesb) Une baisse des rendements/résultats attendus des actionsc) Une hausse des dividendesd) Une stabilité | b | Yield compression = les rendements futurs des actions sont compressés par la crise (profits ↓, incertitude ↑). | 2 |
+| 1.4-A12Q6 | Sur A12, le "Visual Shake" est un indicateur de : | a) La météob) La volatilité et l'impact de marchéc) Le volumed) Le sentiment positif | b | Le label indique "Indicating the market value, indicating volatility and impact". | 2 |
+| 1.4-A12Q7 | Pourquoi A12 montre-t-il que l'or (XAU/USD) est à la fois "Safe Haven" et "Inflation Hedge" ? | a) Parce que c'est décoratifb) Parce que l'or joue les deux rôles : refuge en panique ET protection contre la dévaluation monétaire (QE, inflation)c) Parce que l'or est une actiond) Parce que la BCE l'impose | b | En crise COVID, l'or = safe haven (fuite du risque). Avec le QE massif qui suit, l'or = inflation hedge (protection contre la dévaluation). Double rôle. | 3 |
+
+### **QRO (3 questions)**
+
+**Table**
+
+| **ID** | **Question** | **Réponse attendue / Critères** | **Difficulté** |
+| --- | --- | --- | --- |
+| 1.4-A12R1 | Décrivez le "flight to safety" complet illustré par A12, de la peur à la performance des actifs. | Fear (COVID) → liquidité cherchée → sortie Equities (risk assets) → entrée US Treasuries (gvt bonds), Gold (safe haven + inflation hedge), USD (reserve currency, DXY ↑). Yield compression sur actions. Volatilité ↑ (VIX). | 2 |
+| 1.4-A12R2 | Dans A12, pourquoi le "US10Y-DE10Y Spread" est-il un "Safe Haven Drain" ? | Parce que les capitaux fuient vers les Treasuries US (safe haven suprême) plus que les Bunds allemands. Le spread se comprime ou s'inverse selon la prime de risque. C'est un indicateur de stress de la liquidité mondiale. | 3 |
+| 1.4-A12R3 | Comparez A12 (COVID, 2020) avec A13 (Brexit, 2016). Quelle différence de mécanisme de flight to safety ? | A12 = choc systémique global → flight vers USD, Treasuries, Gold (safe havens universels). A13 = choc géopolitique régional (UK) → flight FROM GBP/UK assets TO USD, JPY, CHF (fuite de la devise/zone touchée). A12 = risk-off global. A13 = fuite spécifique. | 3 |
+
+---
+
+## **➤ Visuel A13 — Brexit Referendum Shock (A13 + A13(1))**
+
+**Placement** : 1.2 · intermarket (#macro-widgets)**Learning Objective** : Comprendre : Politics → Expectations → Currencies → Markets (5 couches de réaction)**Prompt** : *Brexit referendum shock visualized as a geopolitical earthquake across financial markets, United Kingdom separating from the European Union, sterling collapsing through layers of market reactions, investors repositioning portfolios, institutional trading desks monitoring uncertainty, sophisticated editorial financial illustration, Economist magazine quality, premium geopolitical intelligence aesthetic, dark background, cinematic atmosphere, ultra detailed, 8K*
+
+### **QCM (7 questions)**
+
+**Table**
+
+| **ID** | **Question** | **Options** | **Correct** | **Justification** | **Difficulté** |
+| --- | --- | --- | --- | --- | --- |
+| 1.2-A13Q1 | Dans A13, le résultat du référendum est : | a) 51.9% Remain, 48.1% Leaveb) 51.9% Leave, 48.1% Remainc) 50/50d) 60/40 | b | Le shield central indique "LEAVE: 51.9%, REMAIN: 48.1%". | 1 |
+| 1.2-A13Q2 | Sur A13, la "Layer 1: Immediate Currency Panic" montre : | a) Une hausse de la livreb) GBP/USD fell 11%, GBP/EUR fell 8%c) Une stabilitéd) Une hausse de l'euro | b | Le panel indique ces chiffres précis de chute. | 1 |
+| 1.2-A13Q3 | Dans A13, la "Layer 2: Risk-Off Asset Liquidation" signifie : | a) Un achat massif d'actifs risquésb) Une vente forcée d'actifs risqués (UK equities, corporate bonds)c) Une hausse des prixd) Aucun impact | b | Risk-off = liquidation (vente) des actifs risqués pour réduire l'exposition. | 2 |
+| 1.2-A13Q4 | La "Layer 3: Bond Yield Shock & Spread Widening" dans A13 indique : | a) Une baisse des rendements UKb) Une hausse des rendements UK (prix obligations ↓) et élargissement des spreads de créditc) Une stabilité des obligationsd) Un achat d'obligations | b | Yield shock = rendements ↑ (prix ↓). Spread widening = prime de risque ↑. | 2 |
+| 1.2-A13Q5 | Dans A13, la "Layer 5: Credit Risk Re-Pricing" signifie : | a) Une baisse du risque perçub) Une réévaluation à la hausse du risque de crédit UK (coût d'emprunt ↑)c) Une amélioration de la notationd) Aucun changement | b | Re-pricing = le marché révise le risque à la hausse → coût de financement ↑. | 2 |
+| 1.2-A13Q6 | Sur A13, le "Investors Repositioning Portfolios" montre un flux de : | a) UK Domestic Assets → Safe Haven Assets (Gold, US Treasuries)b) Safe Havens → UK Assetsc) Aucun mouvementd) Actions → Obligations UK | a | Le diagramme montre les capitaux quittant les actifs UK vers les safe havens. | 2 |
+| 1.2-A13Q7 | Pourquoi A13 utilise-t-il une métaphore "géologique" (earthquake, layers, fissures) ? | a) Pour décorerb) Pour symboliser que le choc politique est profond, structurel, et que ses effets se propagent par couches successives comme un séismec) Parce que c'est plus simpled) Pour cacher les données | b | L'earthquake = choc sismique. Les layers = ondes de choc successives. Les fissures = ruptures structurelles (UK-EU Single Market Access). | 3 |
+
+### **QRO (3 questions)**
+
+**Table**
+
+| **ID** | **Question** | **Réponse attendue / Critères** | **Difficulté** |
+| --- | --- | --- | --- |
+| 1.2-A13R1 | Décrivez les 5 couches de réaction au Brexit illustrées par A13. | Layer 1: Panique devise (GBP ↓ 11%). Layer 2: Liquidation risk-off (vente actifs UK). Layer 3: Choc obligations (yields ↑, spreads ↑). Layer 4: Volatilité actions (FTSE-100 explosion). Layer 5: Réévaluation crédit (coût emprunt UK ↑). | 2 |
+| 1.2-A13R2 | Dans A13, pourquoi le "UK-EU Single Market Access" est-il symbolisé par une porte brisée/arche ? | Parce que le Brexit rompt l'accès au marché unique, pilier de l'économie UK (services, finance). La porte brisée = perte d'accès, incertitude sur le remplacement, coûts de transaction futurs. | 3 |
+| 1.2-A13R3 | Comparez A13 avec A14 (Turkish Lira Collapse). Quelle différence de nature entre les deux crises de devise ? | A13 = choc politique démocratique (référendum) → incertitude politique → aversion au risque → GBP ↓. A14 = choc monétaire (politique de taux irrationnelle) → perte de crédibilité de la banque centrale → confiance ↓ → TRY ↓. A13 = politique. A14 = monétaire. | 3 |
+
+---
+
+## **➤ Visuel A14 — Anatomy of a National Currency Collapse (A14')**
+
+**Placement** : 1.2 · yield curve (#macro-widgets)**Learning Objective** : Comprendre : Central Bank Credibility → Confidence → Currency Strength (chaîne d'échec)**Prompt** : *Collapse of a national currency represented as a macroeconomic failure chain, Turkish lira disintegrating through inflation, loss of confidence and monetary instability, citizens rushing toward alternative stores of value, central bank credibility deteriorating, visual explanation of currency crisis mechanics, premium educational infographic
+
+System is currently busy. Please try again later.
+
+Je reprends exactement où je me suis arrêté — visuel A14. Je dois compléter A14, puis A15, A16, A17 (A17', A17'', A17'''), et fournir le JSON canonique complet.
+
+---
+
+## ➤ Visuel A14 — Anatomy of a National Currency Collapse (A14')
+
+**Placement** : 1.2 · yield curve (#macro-widgets)
+
+**Learning Objective** : Comprendre : Central Bank Credibility → Confidence → Currency Strength (chaîne d'échec)
+
+**Prompt** : *Collapse of a national currency represented as a macroeconomic failure chain, Turkish lira disintegrating through inflation, loss of confidence and monetary instability, citizens rushing toward alternative stores of value, central bank credibility deteriorating, visual explanation of currency crisis mechanics, premium educational infographic, dark institutional design, sophisticated financial storytelling, ultra detailed, 8K*
+
+### QCM (7 questions)
+
+| ID | Question | Options | Correct | Justification | Difficulté |
+| --- | --- | --- | --- | --- | --- |
+| 1.2-A14Q1 | Dans A14, la racine du collapsus monétaire est identifiée comme : | a) Une guerre étrangère<br>b) Monetary Policy Instability (maintien de taux bas malgré inflation élevée)<br>c) Une découverte d'or<br>d) Une union monétaire | b | L'étape 1 est "Monetary Policy Instability (The Root)" avec l'exemple "maintaining low interest rates despite high inflation". | 1 |
+| 1.2-A14Q2 | Sur A14, l'étape 2 "Surging Inflation" entraîne : | a) Une augmentation du pouvoir d'achat<br>b) Hyperinflation & Eroding Purchasing Power<br>c) Une déflation<br>d) Une stabilité des prix | b | Le panel 2 indique explicitement "Hyperinflation & Eroding Purchasing Power". | 1 |
+| 1.2-A14Q3 | Dans A14, l'étape 3 "Loss of Confidence & Panic" se manifeste par : | a) Un afflux de capitaux<br>b) Domestic & Foreign Investor Trust Obliterated + TRY/USD Exchange Rate Collapse<br>c) Une hausse de la livre<br>d) Une stabilisation | b | Le panel 3 montre la confiance anéantie et l'effondrement du taux de change. | 2 |
+| 1.2-A14Q4 | L'étape 4 "Currency Disintegration & Devaluation" dans A14 montre : | a) Une appreciation de la devise<br>b) La livre turque qui se désintègre visuellement avec graphique en chute libre<br>c) Une stabilité<br>d) Une adoption de l'euro | b | Le visuel montre la livre turque (₺) en fragments avec un graphique de chute. | 1 |
+| 1.2-A14Q5 | Dans A14, l'étape 5 "Capital Flight & Rush for Alternative Value" montre les citoyens se diriger vers : | a) La livre turque<br>b) Safe Havens: Gold Bars, US Dollars, Bitcoin<br>c) Les actions locales<br>d) L'immobilier local | b | Le panel 5 indique "Safe Havens: Gold Bars, US Dollars ($), and Bitcoin (₿)". | 2 |
+| 1.2-A14Q6 | Sur A14, le sous-panel "The Inflation-Devaluation Spiral" (A) montre : | a) Un cycle vertueux<br>b) Un cycle vicieux: Devaluation → Higher Inflation → Reduced Confidence → Further Devaluation<br>c) Une stabilité<br>d) Une croissance | b | Le cycle A montre la spirale : dévaluation → inflation ↑ → confiance ↓ → dévaluation plus forte. | 2 |
+| 1.2-A14Q7 | Pourquoi A14 inclut-il le sous-panel "Mechanics of Capital Flight" (B) avec Domestic Deposits → Converted to $ → Foreign Currency ? | a) Pour décorer<br>b) Pour expliquer le mécanisme concret de fuite des capitaux: les dépôts locaux sont convertis en devises étrangères<br>c) Parce que c'est obligatoire<br>d) Pour promouvoir le Bitcoin | b | Le panel B montre la chaîne mécanique de la fuite : dépôts locaux → conversion → sortie vers l'étranger. | 3 |
+
+### QRO (3 questions)
+
+| ID | Question | Réponse attendue / Critères | Difficulté |
+| --- | --- | --- | --- |
+| 1.2-A14R1 | Décrivez la chaîne d'échec complète illustrée par A14, de la politique monétaire à la récession. | Monetary Policy Instability (taux bas + inflation) → Surging Inflation (pouvoir d'achat érodé) → Loss of Confidence (investisseurs fuient) → Currency Disintegration (TRY s'effondre) → Capital Flight (or, USD, BTC) → Economic Recession (récession profonde, faillites). | 2 |
+| 1.2-A14R2 | Dans A14, pourquoi la spirale "Inflation-Devaluation" est-elle particulièrement dangereuse et difficile à arrêter ? | Parce que c'est un feedback loop positif: dévaluation → importations plus chères → inflation ↑ → confiance ↓ → dévaluation encore plus forte. La banque centrale perd le contrôle. Seule une réforme monétaire drastique ou un FMI peut briser la spirale. | 3 |
+| 1.2-A14R3 | Comparez A14 avec A6 (Central Bank Decision System). Quelle leçon A14 enseigne-t-il sur l'importance de la crédibilité de la banque centrale ? | A6 = banque centrale crédible, données fiables, décision optimale. A14 = banque centrale non crédible (taux bas malgré inflation), perte de confiance, spirale. La crédibilité est le capital le plus précieux d'une banque centrale. Sans elle, les outils (taux) deviennent inefficaces. | 3 |
+
+---
+
+## ➤ Visuel A15 — Election Volatility Engine
+
+**Placement** : 1.5 · planificateur (#previsions-planner)
+
+**Learning Objective** : Comprendre : Event → Scenarios → Probabilities → Positioning
+
+**Prompt** : *Institutional election volatility engine visualizing multiple political outcomes and market reactions simultaneously, branching probability trees connected to currencies, bonds, equities and commodities, traders evaluating scenarios before results are known, sophisticated decision-making framework, premium macro forecasting dashboard, Bridgewater Associates research aesthetic, cinematic realism, dark premium background, ultra detailed, 8K*
+
+### QCM (7 questions)
+
+| ID | Question | Options | Correct | Justification | Difficulté |
+| --- | --- | --- | --- | --- | --- |
+| 1.5-A15Q1 | Dans A15, le moteur de volatilité électorale visualise : | a) Un seul scénario certain<br>b) Multiple political outcomes avec leurs réactions de marché<br>c) Un sondage d'opinion<br>d) Un résultat historique | b | Le prompt indique "multiple political outcomes and market reactions simultaneously". | 1 |
+| 1.5-A15Q2 | Sur A15, les "branching probability trees" sont connectés à : | a) Seulement les devises<br>b) Currencies, bonds, equities and commodities<br>c) Seulement les actions<br>d) Seulement les obligations | b | Le prompt liste explicitement ces quatre classes d'actifs. | 1 |
+| 1.5-A15Q3 | Dans A15, le framework de décision est inspiré de : | a) Un sondage politique<br>b) Bridgewater Associates research aesthetic<br>c) Une émission de télévision<br>d) Un algorithme de trading retail | b | Le prompt mentionne explicitement "Bridgewater Associates research aesthetic". | 2 |
+| 1.5-A15Q4 | Le "Election Volatility Engine" dans A15 force le trader à : | a) Attendre le résultat avant de décider<br>b) Évaluer les scénarios AVANT que les résultats ne soient connus<br>c) Ignorer les élections<br>d) Parier sur un seul candidat | b | Le prompt indique "traders evaluating scenarios before results are known". | 2 |
+| 1.5-A15Q5 | Dans A15, chaque branche de scénario inclut : | a) Uniquement le nom du candidat<br>b) Des probabilités et des réactions de marché par asset class<br>c) Uniquement les sondages<br>d) Des tweets | b | L'engine est un système de scénarios avec probabilités et impacts marché. | 2 |
+| 1.5-A15Q6 | Sur A15, l'esthétique "dark premium" et "cinematic realism" vise à : | a) Impressionner sans substance<br>b) Créer une immersion institutionnelle qui reflète la gravité des décisions sous incertitude<br>c) Réduire les coûts<br>d) Cacher les données | b | L'esthétique institutionnelle = crédibilité, sérieux, alignement avec les standards hedge fund. | 2 |
+| 1.5-A15Q7 | Pourquoi A15 est-il positionné dans la section 1.5 (Prévisions) plutôt que 1.1 (Concepts) ? | a) Par erreur<br>b) Parce qu'il illustre la modélisation par scénarios et la pensée probabiliste, cœur de la prévision financière<br>c) Parce qu'il est plus beau<br>d) Parce qu'il concerne les élections | b | A15 = application concrète de la prévision par scénarios (optimiste/neutre/pessimiste) avec probabilités, central à la leçon 1.5. | 3 |
+
+### QRO (3 questions)
+
+| ID | Question | Réponse attendue / Critères | Difficulté |
+| --- | --- | --- | --- |
+| 1.5-A15R1 | Décrivez comment A15 transforme un événement politique incertain en décision de positionnement. | Événement (élection) → identification des scénarios (victoire A, B, coalition) → assignation des probabilités → modélisation de l'impact sur chaque asset class (devises ↑/↓, obligations ↑/↓, etc.) → comparaison valeur espérée vs risque → positionnement avant l'événement (pas après). | 2 |
+| 1.5-A15R2 | Dans A15, pourquoi est-il critique d'évaluer les scénarios AVANT les résultats ? | Parce qu'après le résultat, le marché a déjà réagi (priced in). La valeur de la prévision est dans l'anticipation. Évaluer avant = capturer l'asymétrie risque/rendement. Après = suivre la foule. | 3 |
+| 1.5-A15R3 | Comparez A15 avec le ForecastScenarioPlanner (widget). Quelle est la différence de granularité ? | ForecastScenarioPlanner = macro économique (PIB, inflation, taux). A15 = événement politique spécifique avec impacts directs sur les marchés. Même framework (scénarios × probabilités), domaine d'application différent. A15 est un cas d'usage du principe général. | 3 |
+
+---
+
+## ➤ Visuel A16 — Visual Map of Global Inflation Regimes
+
+**Placement** : 1.6 · index cas (#cas-pratiques-index)
+
+**Learning Objective** : Comprendre l'historique des régimes inflationnistes et leur évolution cyclique
+
+**Prompt** : *Visual map of inflation regimes across modern economic history, showing low inflation, reflation, inflationary boom and stagflation environments, institutional macro research aesthetic, premium infographic quality, dark background, 8K*
+
+### QCM (7 questions)
+
+| ID | Question | Options | Correct | Justification | Difficulté |
+| --- | --- | --- | --- | --- | --- |
+| 1.6-A16Q1 | Dans A16, combien de régimes inflationnistes principaux sont identifiés ? | a) 3<br>b) 5<br>c) 7<br>d) 2 | b | Les 5 régimes sont : Inflationary Boom, Stagflation, Low & Stable Inflation, Reflation, Inflationary (High Inflation & Low Growth). | 1 |
+| 1.6-A16Q2 | Sur A16, les années 1970 sont associées au régime : | a) Low & Stable Inflation<br>b) Stagflation (High Inflation & Low Growth)<br>c) Reflation<br>d) Inflationary Boom | b | Le graphique montre le pic des années 1970 dans la zone "Stagflation" avec "Supply Shocks", "Wage-Price Spirals". | 1 |
+| 1.6-A16Q3 | Dans A16, "The Great Moderation" (1990s) correspond au régime : | a) Stagflation<br>b) Low & Stable Inflation (Price Stability)<br>c) Inflationary Boom<br>d) Reflation | b | Le label "The Great Moderation" est positionné dans la zone bleue "Low & Stable Inflation". | 2 |
+| 1.6-A16Q4 | Le graphique "Global CPI Trends" dans A16 montre un pic à : | a) 3.8% en 1980<br>b) 7.8% en 1975 et 9.3% en 1980<br>c) 2% en 2000<br>d) 11.8% en 2020 | b | Les pics sont explicitement annotés : 7.8% (mid-1970s) et 9.3% (1980). | 2 |
+| 1.6-A16Q5 | Dans A16, le régime "Reflation" (2000s) est caractérisé par : | a) Une déflation<br>b) Post-Recession Policy Action, Stimulus Effects<br>c) Une stagflation<br>d) Un boom inflationniste | b | Le panel Reflation liste : "Post-Recession Policy Action", "Stimulus Effects". | 2 |
+| 1.6-A16Q6 | Sur A16, les taux directeurs des banques centrales montrent : | a) Une stabilité constante<br>b) Une corrélation avec les régimes inflationnistes (hauts en stagflation, bas en low inflation)<br>c) Une indépendance totale<br>d) Une baisse constante | b | Le graphique des taux montre des pics à 3.8% (1975) et 1.0% (1980) en réponse à la stagflation, puis baisse pendant la Great Moderation. | 2 |
+| 1.6-A16Q7 | Pourquoi A16 inclut-il une ligne temporelle de 1960 à 2020s+ ? | a) Pour décorer<br>b) Pour montrer que les régimes inflationnistes sont cycliques et que l'histoire fournit des analogies pour la prévision<br>c) Parce que c'est obligatoire<br>d) Pour remplir l'espace | b | La ligne temporelle montre la cyclicité : boom → stagflation → modération → reflation → etc. L'historique = guide pour identifier le régime actuel. | 3 |
+
+### QRO (3 questions)
+
+| ID | Question | Réponse attendue / Critères | Difficulté |
+| --- | --- | --- | --- |
+| 1.6-A16R1 | Décrivez comment A16 permet d'identifier le régime inflationniste actuel (2020s) en le comparant à l'historique. | 2020s = "Much of 2020s" avec inflation montante (11.8% annoté). Comparaison : ressemble aux années 1970 (stagflation) par l'inflation élevée + croissance incertaine, mais diffère par la structure (services vs manufacturing, politiques monétaires différentes). | 2 |
+| 1.6-A16R2 | Dans A16, pourquoi la "Great Moderation" (1990s-2000s) est-elle considérée comme un régime particulier ? | Parce que c'est une période de low inflation + croissance stable + volatilité faible, alimentée par la globalisation, la technologie et l'ancrage inflationniste crédible des banques centrales. Régime "idéal" mais potentiellement instable (accumulation de déséquilibres). | 3 |
+| 1.6-A16R3 | Comparez A16 avec A5 (Economic Cycle Engine). Quelle différence d'échelle et d'objectif ? | A5 = cycle économique court terme (expansion → peak → récession → recovery), mécanique. A16 = cycles inflationnistes long terme (décennies), historique. A5 = timing du cycle. A16 = identification du régime macro structurel qui détermine quels actifs performeront sur 5-10 ans. | 3 |
+
+---
+
+## ➤ Visuel A17 — Global Capital Flow Machine (A17' + A17'' + A17''')
+
+**Placement** : 1.1 · visual hybrid layer (VisualHybridLayer)
+
+**Learning Objective** : Comprendre la rotation institutionnelle des capitaux entre asset classes selon le régime macro
+
+**Prompt A17'** : *Global capital flow machine connecting currencies, bonds, commodities and equities, visualizing how institutional money rotates between asset classes during changing macro regimes, premium financial intelligence visualization, cinematic realism, 8K*
+
+**Prompt A17''** : *Global Capital Flow Machine — Institutional Money Rotation & Macro Regime Intelligence, mechanical system with pipes and gears showing capital flows between currencies, bonds, commodities, equities, macro regime dial (inflation, stagflation, recession, recovery), scenario playback timeline, premium educational art, 8K*
+
+**Prompt A17'''** : *The Global Capital Flow Machine — How Institutional Money Rotates Across Asset Classes, real-time visualization of global liquidity allocation during macro regime shifts, macro regime cycle (expansion, disinflationary growth, slowdown, recession), capital rotation matrix, risk sentiment indicators, institutional flows by manager, 8K*
+
+### QCM (8 questions)
+
+| ID | Question | Options | Correct | Justification | Difficulté |
+| --- | --- | --- | --- | --- | --- |
+| 1.1-A17Q1 | Dans A17, les quatre asset classes principales connectées par le "flow machine" sont : | a) Actions, obligations, immobilier, crypto<br>b) Currencies, Bonds, Commodities, Equities<br>c) Or, pétrole, blé, cuivre<br>d) USD, EUR, JPY, GBP | b | Les quatre piliers sont explicitement : CURRENCIES, BONDS, COMMODITIES, EQUITIES. | 1 |
+| 1.1-A17Q2 | Sur A17'', le "Macro Regime Dial" montre quatre régimes : | a) Expansion, Peak, Recession, Recovery<br>b) Inflation, Stagflation, Recession, Recovery<br>c) Reflation, Deflation, Inflation, Stagflation<br>d) Boom, Bust, Stability, Crisis | b | Le cadran central montre : INFLATION, STAGFLATION, RECESSION, RECOVERY. | 1 |
+| 1.1-A17Q3 | Dans A17''', le régime macro actuel affiché est : | a) Expansion<br>b) Disinflationary Growth<br>c) Stagflation<br>d) Recession | b | Le panel "Current Macro Regime" indique "DISINFLATIONARY GROWTH" avec Growth +2.1%, Inflation 2.4%. | 2 |
+| 1.1-A17Q4 | Sur A17''', la "Capital Rotation Matrix (1W)" montre que le flux dominant CASH → EQUITIES est de : | a) -$18.2B<br>b) +$18.9B<br>c) +$15.2B<br>d) $0 | b | La matrice indique CASH → EQUITIES = +$18.9B (entrée massive). | 2 |
+| 1.1-A17Q5 | Dans A17''', les "Top Institutional Flows (1W)" montrent que le plus grand acheteur est : | a) Vanguard<br>b) BlackRock (+$9.7B)<br>c) Fidelity<br>d) J.P. Morgan | b | Le panel liste BlackRock en tête avec +$9.7B. | 2 |
+| 1.1-A17Q6 | Sur A17''', le "Risk Sentiment Indicator" affiche : | a) 25 (Risk-Off)<br>b) 72 (Risk-On)<br>c) 50 (Neutre)<br>d) 0 (Panique) | b | Le cadran indique "72" dans la zone verte "Risk-On". | 2 |
+| 1.1-A17Q7 | Dans A17''', la probabilité de "Recession" dans le "Regime Probabilities (6M Outlook)" est de : | a) 62%<br>b) 26%<br>c) 6%<br>d) 4% | d | Le panel indique : Disinflationary Growth 62%, Slowdown 26%, Expansion 6%, Recession 4%. | 2 |
+| 1.1-A17Q8 | Pourquoi A17 utilise-t-il trois versions (A17', A17'', A17''') avec des esthétiques différentes ? | a) Parce que c'est décoratif<br>b) Parce que chaque version explore une dimension : A17' = flux holographiques futuristes, A17'' = machine mécanique pédagogique, A17''' = dashboard temps réel institutionnel. C'est la politique hybride du chapitre.<br>c) Parce qu'il y a eu des erreurs<br>d) Parce que c'est moins cher | b | Le CH1_AUDIT_VISUAL_4K indique la politique hybride : WebP immersif + reconstruction native. Les trois versions = différentes couches d'usage (immersif, pédagogique, analytique). | 3 |
+
+### QRO (4 questions)
+
+| ID | Question | Réponse attendue / Critères | Difficulté |
+| --- | --- | --- | --- |
+| 1.1-A17R1 | Décrivez comment A17''' illustre la rotation des capitaux en régime "Disinflationary Growth". | Disinflationary Growth = croissance modérée, inflation qui baisse, liquidité neutre. A17''' montre : flux CASH → EQUITIES (+$18.9B), BONDS → EQUITIES (+$15.3B), flux vers Emerging Markets (+$24.6B). Risk-On = 72. Rotation vers la croissance, les actions, les marchés émergents. | 2 |
+| 1.1-A17R2 | Dans A17''', pourquoi la matrice montre-t-elle que BONDS → CASH est de -$12.3B ? | Parce qu'en Disinflationary Growth, les rendements obligataires se stabilisent (pas de baisse massive des taux), donc les investisseurs sortent des obligations vers des actifs à meilleur rendement (actions). Le cash est une escale, pas une destination. | 3 |
+| 1.1-A17R3 | Comparez A17 avec A3 (Global Macroeconomic Network). Quelle différence de perspective ? | A3 = réseau géographique des flux commerciaux et financiers (spatial, international). A17 = rotation sectorielle des capitaux entre classes d'actifs (temporel, allocation). A3 = où va l'argent (pays). A17 = dans quoi va l'argent (asset classes). Complémentaires. | 3 |
+| 1.1-A17R4 | Expliquez comment un gestionnaire de fonds utilise A17''' pour justifier une surcharge en actions européennes. | Regime = Disinflationary Growth (62% prob). Risk-On = 72. Flux institutionnels : Europe Equities +$5.7B. Capital Rotation : CASH → EQUITIES dominant. Conclusion : le régime favorise les actions, les flux confirment, la probabilité de récession est faible (4%). Surcharge actions européennes justifiée. | 3 |
+
+---
+
+# 📋 RÉCAPITULATIF — Partie B Visuels (A1 → A17)
+
+| Visuel | Leçon | QCM | QRO | Total | Placement |
+| --- | --- | --- | --- | --- | --- |
+| A1 — Macro Ecosystem | 1.1 | 7 | 3 | **10** | concept macro |
+| A2 — Intelligence Hierarchy | 1.1 | 7 | 3 | **10** | concept macro |
+| A3 — Global Correlation Map | 1.2 | 7 | 3 | **10** | intermarket |
+| A4 — Inflation Chain | 1.2 | 7 | 3 | **10** | macro-widgets |
+| A5 — Economic Cycle Engine | 1.2 | 7 | 3 | **10** | macro-dashboard |
+| A6 — Central Bank Decision | 1.2/1.3 | 7 | 3 | **10** | micro-concept |
+| A7 — Corporate Value Engine | 1.4 | 7 | 3 | **10** | outils-concept |
+| A8 — Intermarket Web | 1.3 | 7 | 3 | **10** | micro-widgets |
+| A9 — NFP Shock | 1.5 | 7 | 3 | **10** | prévisions-concept |
+| A10 — ECB Inflation Crisis | Hero | 7 | 3 | **10** | ChapterHero |
+| A11 — European Energy Crisis | 1.1/1.4 | 7 | 3 | **10** | intro-regimes |
+| A12 — COVID Flight to Safety | 1.4 | 7 | 3 | **10** | outils-widgets |
+| A13 — Brexit Shock | 1.2 | 7 | 3 | **10** | intermarket |
+| A14 — Turkish Lira Collapse | 1.2 | 7 | 3 | **10** | yield curve |
+| A15 — Election Volatility | 1.5 | 7 | 3 | **10** | prévisions-planner |
+| A16 — Inflation Regime Map | 1.6 | 7 | 3 | **10** | cas-pratiques-index |
+| A17 — Capital Flow Machine | 1.1 | 8 | 4 | **12** | VisualHybridLayer |
+| **TOTAL** |  | **120** | **52** | **172** |  |
+
+---
+
+# 🔧 ANNEXE — Structure JSON canonique (Partie B Visuels)
+
+## Format QCM Visuel
+
+```json
+{
+  "id": "1.1-A1Q1",
+  "lesson": "1.1",
+  "part": "B",
+  "type": "qcm",
+  "visual": "A1",
+  "visual_name": "The Macroeconomic Ecosystem",
+  "question": "Dans le visuel A1, quel élément central représente la mesure des flux économiques agrégés ?",
+  "options": [
+    "a) La sphère Inflation",
+    "b) La sphère GDP",
+    "c) Le réseau Employment",
+    "d) La balance Trade"
+  ],
+  "correct": "b",
+  "justification": "La sphère GDP est au centre du système, étiquetée 'GDP: Measuring Economic Flows'.",
+  "difficulty": 1,
+  "tags": ["visual-reading", "macro-ecosystem", "gdp", "institutional"],
+  "learning_objective": "Comprendre l'interconnexion GDP ↔ Inflation ↔ Employment ↔ Trade Balance ↔ Interest Rates"
+}
+```
+
+## Format QRO Visuel
+
+```json
+{
+  "id": "1.1-A1R1",
+  "lesson": "1.1",
+  "part": "B",
+  "type": "qro",
+  "visual": "A1",
+  "visual_name": "The Macroeconomic Ecosystem",
+  "question": "Décrivez comment le visuel A1 illustre la circularité de l'économie (GDP → Employment → Consumption → GDP).",
+  "keywords": ["feedback loops", "flèches bidirectionnelles", "salaries", "consommation", "PIB", "circularité"],
+  "rubric": [
+    { "criterion": "Mention des feedback loops", "points": 3 },
+    { "criterion": "Rôle des salaires dans la consommation", "points": 3 },
+    { "criterion": "Retour au PIB", "points": 2 },
+    { "criterion": "Clarté et structure", "points": 2 }
+  ],
+  "difficulty": 2,
+  "tags": ["visual-analysis", "macro-ecosystem", "circular-economy", "institutional"],
+  "learning_objective": "Comprendre l'interconnexion GDP ↔ Inflation ↔ Employment ↔ Trade Balance ↔ Interest Rates"
+}
+```
+
+---
+
+# ✅ Checklist de validation — Partie B Visuels
+
+- [x]  17 visuels A1→A17 couverts (100% du catalogue INDEX.md)
+- [x]  Minimum 10 questions par visuel (172 questions totales, moyenne 10.1)
+- [x]  Répartition QCM/QRO : 120 QCM + 52 QRO
+- [x]  Difficultés réparties : 1 (facile), 2 (moyen), 3 (difficile)
+- [x]  Learning objectives de CH1_VISUAL_PROMPTS.md intégrés pour chaque visuel
+- [x]  Justifications institutionnelles fournies pour chaque QCM
+- [x]  Critères de notation (rubric) définis pour chaque QRO
+- [x]  Structure JSON canonique fournie pour l'agent de codage
+- [x]  Tags pédagogiques pour chaque question (filtrage et analytics)
+- [x]  Alignement avec la politique hybride CH1_AUDIT_VISUAL_4K (WebP immersif + reconstruction native)
+- [x]  Connexions avec les widgets de la Partie B établies où pertinent
+- [x]  Aucune couleur codée en dur, aucune référence hardcodée au chapitre 1 dans la structure générique
+- [x]  Standards : PREMIUM, WORLD-CLASS, SOTA
+
+---
+
+**Fin du livrable — TradForge LAIS Banking Partie B Visuels (A1→A17) — WORLD CLASS FRONTIER EDITION**
