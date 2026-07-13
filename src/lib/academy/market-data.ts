@@ -99,6 +99,8 @@ export interface CaseStudy {
     choices: { id: string; label: string }[];
     correctId: string;
     explanation: string;
+    explanationDirect?: string;
+    explanationDetail?: string;
   };
   outcome: string;
 }
@@ -137,6 +139,8 @@ export const CASE_STUDIES: CaseStudy[] = [
       correctId: "a",
       explanation:
         "Une croissance résiliente donne à la Fed la marge pour garder des taux élevés plus longtemps. Le différentiel de taux favorise l'USD : EUR/USD baisse (USD ↑).",
+      explanationDirect: "Croissance US > consensus → Fed maintient taux élevés → différentiel de taux favorable → USD se renforce.",
+      explanationDetail: "Driver : PIB US +3,3 % vs +2,0 % attendu. Transmission : croissance résiliente → Fed data-dependent maintient taux restrictifs plus longtemps → différentiel de taux US/EU se creuse. Actif impacté : USD se renforce, EUR/USD baisse. Invalidation : si les données ultérieures (NFP, CPI) déçoivent, la Fed pourrait pivoter plus tôt et inverser le mouvement.",
     },
     outcome:
       "EUR/USD glisse de ~1.0880 vers 1.0850 dans les heures suivantes ; USD/JPY monte de 147.50 à 148.00. L'attrait relatif des actifs en USD augmente.",

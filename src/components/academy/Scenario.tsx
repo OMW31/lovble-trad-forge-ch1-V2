@@ -1,5 +1,6 @@
 import { useState, type ReactNode } from "react";
 import { Check, X, ArrowRight, Target } from "lucide-react";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { cn } from "@/lib/utils";
 import { LevelBadge } from "./primitives";
 
@@ -16,6 +17,8 @@ export interface ScenarioProps {
   choices: ScenarioChoice[];
   correctId: string;
   explanation: ReactNode;
+  explanationDirect?: ReactNode;
+  explanationDetail?: ReactNode;
   outcome?: ReactNode;
   /** optional visual (e.g. <CandleReplay/>) shown above the decision */
   visual?: ReactNode;
@@ -30,6 +33,8 @@ export function Scenario({
   choices,
   correctId,
   explanation,
+  explanationDirect,
+  explanationDetail,
   outcome,
   visual,
   onComplete,
@@ -108,7 +113,23 @@ export function Scenario({
                 {correct ? <Check className="h-4 w-4" /> : <X className="h-4 w-4" />}
                 {correct ? "Analyse correcte" : "Pas tout à fait"}
               </div>
-              <p className="text-sm leading-relaxed text-muted-foreground">{explanation}</p>
+              <Tabs defaultValue="direct" className="mt-3">
+                <TabsList className="grid h-auto w-full grid-cols-2 gap-1 bg-transparent p-0">
+                  <TabsTrigger value="direct" className="h-auto rounded-lg border border-border bg-card px-3 py-1.5 text-xs data-[state=active]:border-forge/50">
+                    Réponse directe
+                  </TabsTrigger>
+                  <TabsTrigger value="complete" className="h-auto rounded-lg border border-border bg-card px-3 py-1.5 text-xs data-[state=active]:border-forge/50">
+                    Réponse complète
+                  </TabsTrigger>
+                </TabsList>
+                <TabsContent value="direct" className="mt-3">
+                  <p className="text-sm leading-relaxed text-muted-foreground">{explanationDirect ?? explanation}</p>
+                </TabsContent>
+                <TabsContent value="complete" className="mt-3 space-y-2">
+                  <p className="text-sm leading-relaxed text-muted-foreground">{explanationDetail ?? explanation}</p>
+                  <p className="text-sm leading-relaxed text-muted-foreground">{explanation}</p>
+                </TabsContent>
+              </Tabs>
             </div>
             {outcome && (
               <div className="flex items-start gap-2 rounded-lg border border-data/30 bg-data/5 p-4">

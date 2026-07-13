@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
-import { ArrowRight, Check, CheckCircle2, Layers3, PauseCircle, Play, Radar, RotateCcw, ShieldAlert, X } from "lucide-react";
+import { ArrowRight, Check, CircleCheck as CheckCircle2, Layers as Layers3, CirclePause as PauseCircle, Play, Radar, RotateCcw, ShieldAlert, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { CandleReplay } from "@/components/academy/CandleReplay";
 import type { PlayableScenario } from "@/lib/academy/scenario-engine";
 import { cn } from "@/lib/utils";
@@ -161,7 +162,29 @@ export function ScenarioPlayer({
                   {correct ? <CheckCircle2 className="h-4 w-4" /> : <X className="h-4 w-4" />}
                   {correct ? "Décision correcte" : "Décision à recalibrer"}
                 </div>
-                <p className="text-sm leading-relaxed text-muted-foreground">{caseStudy?.decision.explanation ?? "La bonne réponse respecte la hiérarchie driver → transmission → actif → invalidation."}</p>
+                <Tabs defaultValue="direct" className="mt-3">
+                  <TabsList className="grid h-auto w-full grid-cols-2 gap-1 bg-transparent p-0">
+                    <TabsTrigger value="direct" className="h-auto rounded-lg border border-border bg-card px-3 py-1.5 text-xs data-[state=active]:border-forge/50">
+                      Réponse directe
+                    </TabsTrigger>
+                    <TabsTrigger value="complete" className="h-auto rounded-lg border border-border bg-card px-3 py-1.5 text-xs data-[state=active]:border-forge/50">
+                      Réponse complète
+                    </TabsTrigger>
+                  </TabsList>
+                  <TabsContent value="direct" className="mt-3">
+                    <p className="text-sm leading-relaxed text-muted-foreground">
+                      {caseStudy?.decision.explanationDirect ?? caseStudy?.decision.explanation ?? "La bonne réponse respecte la hiérarchie driver → transmission → actif → invalidation."}
+                    </p>
+                  </TabsContent>
+                  <TabsContent value="complete" className="mt-3 space-y-3">
+                    <p className="text-sm leading-relaxed text-muted-foreground">
+                      {caseStudy?.decision.explanationDetail ?? caseStudy?.decision.explanation ?? "La bonne réponse respecte la hiérarchie driver → transmission → actif → invalidation."}
+                    </p>
+                    <p className="text-sm leading-relaxed text-muted-foreground">
+                      {caseStudy?.decision.explanation ?? "La bonne réponse respecte la hiérarchie driver → transmission → actif → invalidation."}
+                    </p>
+                  </TabsContent>
+                </Tabs>
               </div>
               {caseStudy?.outcome && (
                 <div className="rounded-xl border border-forge/30 bg-forge/5 p-4">

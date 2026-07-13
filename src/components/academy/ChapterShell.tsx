@@ -7,7 +7,23 @@ import { MobileLessonBreadcrumb } from "./MobileLessonBreadcrumb";
 import { LearningNavigationEngine } from "./LearningNavigationEngine";
 import { AcademyAccountButton } from "./AcademyAccountButton";
 import { ProgressDashboard, SidebarProgressHUD } from "./ProgressDashboard";
+import { useT } from "@/lib/i18n/useT";
 import type { ChapterDashboard, ChapterProfile } from "@/lib/academy/useChapterProgress";
+
+function LangToggle() {
+  const { lang, toggleLang } = useT();
+  return (
+    <button
+      onClick={toggleLang}
+      className="flex items-center gap-1 rounded-lg border border-border bg-surface px-2.5 py-1.5 font-mono text-[10px] uppercase tracking-wider text-muted-foreground transition-colors hover:text-foreground"
+      aria-label="Toggle language"
+    >
+      {lang === "fr" ? "FR" : "EN"}
+      <span className="text-foreground/30">/</span>
+      {lang === "fr" ? "EN" : "FR"}
+    </button>
+  );
+}
 
 function useScrollSpy(ids: string[]) {
   const [active, setActive] = useState(ids[0]);
@@ -137,6 +153,7 @@ export function ChapterShell({
               )}
             </div>
             {headerActions}
+            <LangToggle />
             <AcademyAccountButton signedIn={signedIn} profile={profile} onOpenDashboard={dashboard ? openDashboard : undefined} />
           </div>
         </div>
