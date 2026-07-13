@@ -1,12 +1,21 @@
 import { createFileRoute, Link, redirect, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { Flame, Mail, LockKeyhole, UserRound, ArrowRight, Sparkles } from "lucide-react";
+import { Flame, Mail, LockKeyhole, UserRound, ArrowRight, Sparkles, AtSign } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { supabase } from "@/integrations/supabase/client";
 import { lovable } from "@/integrations/lovable";
+
+const PROFILE_TYPES = [
+  { value: "investisseur", label: "Investisseur" },
+  { value: "trader", label: "Trader indépendant" },
+  { value: "analyste", label: "Analyste financier/macro" },
+  { value: "etudiant", label: "Étudiant avancé en économie" },
+  { value: "autre", label: "Autre" },
+] as const;
 
 export const Route = createFileRoute("/auth")({
   validateSearch: (search: Record<string, unknown>) => ({
@@ -43,6 +52,9 @@ function AuthPage() {
   const [signUpEmail, setSignUpEmail] = useState("");
   const [signUpPassword, setSignUpPassword] = useState("");
   const [displayName, setDisplayName] = useState("");
+  const [pseudo, setPseudo] = useState("");
+  const [profileType, setProfileType] = useState<string>("investisseur");
+  const [pseudoError, setPseudoError] = useState<string | null>(null);
   const [message, setMessage] = useState<string | null>(null);
   const [loading, setLoading] = useState<"signin" | "signup" | "google" | null>(null);
 
@@ -73,13 +85,21 @@ function AuthPage() {
   const signUp = async () => {
     setLoading("signup");
     setMessage(null);
+    setPseudoError(null);
+    if (pseudo.trim().length < 3 || pseudo.trim().length > 32) {
+      setPseudoError("Le pseudo doit contenir entre 3 et 32 caractères.");
+      setLoading(null);
+      return;
+    }
     const { error } = await supabase.auth.signUp({
       email: signUpEmail,
       password: signUpPassword,
       options: {
         emailRedirectTo: window.location.origin,
         data: {
-          display_name: displayName,
+          display_name: displayName || pseudo,
+          username: pseudo.trim(),
+          profileType,
         },
       },
     });
@@ -192,6 +212,27 @@ function AuthPage() {
                     <UserRound className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
                     <Input className="pl-9" value={displayName} onChange={(e) => setDisplayName(e.target.value)} placeholder="Alex Mercer" />
                   </div>
+                </div>
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-foreground">Pseudo</label>
+                  <div className="relative">
+                    <AtSign className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                    <Input className="pl-9" value={pseudo} onChange={(e) => setPseudo(e.target.value)} placeholder="3 à 32 caractères" />
+                  </div>
+                  {pseudoError && <p className="text-xs text-rose-400">{pseudoError}</p>}
+                </div>
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-foreground">Profil initial</label>
+                  <Select value={profileType} onValueChange={setProfileType}>
+                    <SelectTrigger className="w-full">
+                      <SelectValue placeholder="Choisir un profil" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {PROFILE_TYPES.map((pt) => (
+                        <SelectItem key={pt.value} value={pt.value}>{pt.label}</SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
                 </div>
                 <div className="space-y-2">
                   <label className="text-sm font-medium text-foreground">Email</label>

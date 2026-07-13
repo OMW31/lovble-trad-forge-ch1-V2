@@ -157,3 +157,42 @@ Bloqués jusqu'à réception docs Icon Library + assets V2 + backgrounds (dépen
 
 ### Documentation / anti-régression
 - `Widget-Interaction-Guide.md`, `Scenario_Inventory.md`, `CH1_ASSET_MAP.md`, `CH1_VISUAL_SPECS/INDEX.md`, `SENTINEL.md`, `TASKS_CH1_IMPLEMENTATION.md` mis à jour en append-only.
+
+## Révision 2026-07-13 — Sprint F-FINAL V12 (exécution réelle)
+
+### Sprint 1 — Part A Bank Dense
+- Extension 15→25 questions/leçon (QRO converties en QCM)
+- 50 nouvelles questions (10×5 leçons) ajoutées à part-a-bank.ts
+- IDs R1-R10 par leçon, difficultés 1-3 distribuées
+
+### Sprint 2 — Part B Visual Bank
+- Extension 3→10 seeds par visuel (a1-a17)
+- 119 nouvelles seeds ajoutées à visual-question-bank.ts
+- Angles: lecture visuelle, edge cases, cross-référence, erreurs fréquentes, application institutionnelle, régimes, risk management
+
+### Sprint 3 — Score Engine
+- Pondération 30/70 A/B vérifiée (déjà implémentée)
+- pickBankItems avec distribution 2/2/3 + rotation localStorage
+
+### Sprint 4 — AssessmentModal Debrief
+- AlertDialog remplacé par écran de résultats animé
+- Score hero avec gradient conditionnel (emerald/amber/rose)
+- Breakdown A/B avec barres de progression
+- Revue question-par-question avec expansion (ChevronDown)
+- Boutons "Nouvelle série" (reroll), "Revoir la leçon", "Fermer"
+
+### Sprint 5 — Gate Certification
+- Vérifié: certificationReady = certifiedLessons >= 5 (déjà implémenté)
+- Bouton verrouillé avec Lock icon si < 5/5
+
+### Sprint 6 — Auth Pseudo + Gate
+- Champ pseudo (3-32 chars, validation zod) ajouté au formulaire d'inscription
+- Sélecteur profil initial (5 options: Investisseur, Trader, Analyste, Étudiant, Autre)
+- Gate évaluations: CTA "Créer un compte" si non authentifié
+- Trigger handle_new_user_profile mis à jour pour persister username + preferences.profileType
+
+### Sprint 7 — Backend
+- saveEvaluationAttempt payload vérifié (déjà enrichi avec partScores, weighting, unlockRule)
+
+### Sprint 8 — Documentation
+- Mise à jour CHANGELOG, SENTINEL, TASKS (append-only)

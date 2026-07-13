@@ -123,3 +123,14 @@ Toujours mettre à jour `CHANGELOG.md` et `SENTINEL.md` après chaque incrément
 - [x] Sprint 5 — ScenarioPlayer + Scenario Library Engine branchés à l’UI
 - [x] Sprint 6 — Lightbox standardisée + 17 visuels présents/documentés/référencés
 - [x] Sprint 7 — docs de suivi mises à jour en append-only
+
+## Sprint F-FINAL V12 — Exécution réelle (2026-07-13)
+
+- [DONE] Sprint 1: Part A bank dense (25 Q/lesson, 50 QRO→QCM ajoutées)
+- [DONE] Sprint 2: Part B visual bank (10 seeds/visual, 119 seeds ajoutées)
+- [VERIFIED] Sprint 3: Score engine 30/70 (déjà implémenté)
+- [DONE] Sprint 4: AssessmentModal debrief screen (AlertDialog remplacé)
+- [VERIFIED] Sprint 5: Gate certification 5/5 (déjà implémenté)
+- [DONE] Sprint 6: Auth pseudo + profile type + eval gate
+- [VERIFIED] Sprint 7: Backend payload (déjà enrichi)
+- [DONE] Sprint 8: Documentation mise à jour (append-only)

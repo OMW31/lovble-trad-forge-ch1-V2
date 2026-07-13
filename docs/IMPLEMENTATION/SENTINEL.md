@@ -141,3 +141,26 @@ Registre anti-régression du Chapitre 1. Toute implémentation future doit relir
 - [x] Navigation libre conservée ; seul l’accès certification est verrouillé à 5/5 leçons validées
 - [x] Partie C sortie du modal de leçon et montée en page dédiée
 - [x] Aucun widget/leçon historique supprimé
+
+## Features ajoutées — Sprint F-FINAL V12 (2026-07-13)
+
+### Extensions de banques
+- [x] part-a-bank.ts: 15→25 Q/leçon (50 nouvelles QRO→QCM, IDs R1-R10)
+- [x] visual-question-bank.ts: 3→10 seeds/visual (119 nouvelles seeds)
+
+### AssessmentModal refonte
+- [x] AlertDialog supprimé, remplacé par debrief screen animé
+- [x] Score hero avec gradient conditionnel + feedback contextuel
+- [x] Breakdown A/B avec barres de progression
+- [x] Revue question-par-question expandable
+- [x] Gate évaluations: CTA création de compte si non authentifié
+
+### Auth
+- [x] Champ pseudo (3-32 chars) dans formulaire d'inscription
+- [x] Sélecteur profil initial (5 options)
+- [x] Trigger profiles mis à jour: username + preferences.profileType
+
+### Anti-régression
+- Toutes les fonctionnalités précédentes préservées
+- Build passe sans erreur
+- Aucune suppression de code existant

@@ -1,18 +1,8 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import type { ElementType } from "react";
-import { Award, BarChart3, BrainCircuit, Gauge, Layers, Lock, ScrollText, Sparkles, Target } from "lucide-react";
+import { Award, ChartBar as BarChart3, BrainCircuit, CircleCheck as CheckCircle2, ChevronDown, Gauge, Layers, Lock, ScrollText, Sparkles, Target, Circle as XCircle } from "lucide-react";
 import { useMutation } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from "@/components/ui/alert-dialog";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
@@ -71,6 +61,16 @@ const PART_META: Record<"A" | "B", { label: string; short: string; icon: Element
 
 type Result = ReturnType<typeof scoreQuestions> | null;
 
+const scoreColor = (score: number) => (score >= 90 ? "text-emerald-400" : score >= 70 ? "text-amber-400" : "text-rose-400");
+const scoreBg = (score: number) =>
+  score >= 90 ? "from-emerald-500/20 to-emerald-500/5" : score >= 70 ? "from-amber-500/20 to-amber-500/5" : "from-rose-500/20 to-rose-500/5";
+const feedbackMessage = (score: number, passed: boolean) => {
+  if (score >= 90) return "Excellence — Ta maîtrise des fondamentaux institutionnels est exceptionnelle.";
+  if (passed) return "Solide — Tu as validé cette évaluation avec une bonne compréhension des concepts clés.";
+  if (score >= 50) return "À retravailler — Plusieurs concepts nécessitent une révision approfondie.";
+  return "Non validé — Reprends la leçon et rejoue les widgets avant de retenter l'évaluation.";
+};
+
 export function AssessmentModal({
   chapterId,
   lessonId,
@@ -91,7 +91,8 @@ export function AssessmentModal({
   const [open, setOpen] = useState(false);
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [result, setResult] = useState<Result>(null);
-  const [failureOpen, setFailureOpen] = useState(false);
+  const [stage, setStage] = useState<"questions" | "results">("questions");
+  const [expandedReview, setExpandedReview] = useState<string | null>(null);
   const saveAttempt = useServerFn(saveEvaluationAttempt);
   const mutation = useMutation({ mutationFn: saveAttempt });
 
@@ -124,6 +125,8 @@ export function AssessmentModal({
   const resetAttempt = useCallback((reroll = false) => {
     setAnswers({});
     setResult(null);
+    setStage("questions");
+    setExpandedReview(null);
     setActivePart("A");
     if (reroll) setRollKey((k) => k + 1);
   }, []);
@@ -143,8 +146,8 @@ export function AssessmentModal({
       ? scoreQuestions(questions, answers, parts, LESSON_PART_WEIGHTS)
       : scoreQuestions(questions, answers, parts);
     setResult(computed);
+    setStage("results");
     if (computed.passed) onPassed?.(isLesson ? "standard" : level, computed.score);
-    else setFailureOpen(true);
 
     if (signedIn) {
       await mutation.mutateAsync({
@@ -174,31 +177,47 @@ export function AssessmentModal({
     }
   };
 
-  const partSummaries = result?.parts ?? parts.map((part) => ({ part, score: 0, correct: 0, total: questions.filter((q) => q.part === part).length }));
+  const partSummaries =
+    result?.parts ?? parts.map((part) => ({ part, score: 0, correct: 0, total: questions.filter((q) => q.part === part).length }));
 
   return (
-    <>
-      <Dialog open={open} onOpenChange={setOpen}>
-        <DialogTrigger asChild>
-          <Button className={cn("bg-gradient-forge text-forge-foreground shadow-glow hover:opacity-95", triggerClassName)}>
-            <BrainCircuit className="h-4 w-4" />
-            {triggerLabel}
-          </Button>
-        </DialogTrigger>
-        <DialogContent className="max-h-[92vh] max-w-6xl overflow-y-auto border-border bg-background p-0 sm:rounded-2xl">
-          <div className="border-b border-border bg-gradient-hero p-6">
-            <DialogHeader>
-              <DialogTitle className="font-display text-2xl text-foreground">Evaluation Command Center</DialogTitle>
-              <DialogDescription className="max-w-2xl text-sm text-muted-foreground">
-                {isLesson
-                  ? "Évaluation de leçon en deux volets : Partie A (QCM, 30 %) puis Partie B (widgets & visuels, 70 %). Seuil de validation : 70 % au score global pondéré."
-                  : "Diagnostic de chapitre. Seuil de validation : 70 % par partie."}
-              </DialogDescription>
-            </DialogHeader>
-          </div>
+    <Dialog open={open} onOpenChange={(v) => { setOpen(v); if (!v) setTimeout(() => resetAttempt(true), 200); }}>
+      <DialogTrigger asChild>
+        <Button className={cn("bg-gradient-forge text-forge-foreground shadow-glow hover:opacity-95", triggerClassName)}>
+          <BrainCircuit className="h-4 w-4" />
+          {triggerLabel}
+        </Button>
+      </DialogTrigger>
+      <DialogContent className="max-h-[92vh] max-w-6xl overflow-y-auto border-border bg-background p-0 sm:rounded-2xl">
+        <div className="border-b border-border bg-gradient-hero p-6">
+          <DialogHeader>
+            <DialogTitle className="font-display text-2xl text-foreground">Evaluation Command Center</DialogTitle>
+            <DialogDescription className="max-w-2xl text-sm text-muted-foreground">
+              {isLesson
+                ? "Évaluation de leçon en deux volets : Partie A (QCM, 30 %) puis Partie B (widgets & visuels, 70 %). Seuil de validation : 70 % au score global pondéré."
+                : "Diagnostic de chapitre. Seuil de validation : 70 % par partie."}
+            </DialogDescription>
+          </DialogHeader>
+        </div>
 
-          <div className="p-6">
-            {isLesson ? (
+        <div className="p-6">
+          {stage === "questions" && !signedIn && (
+            <div className="flex flex-col items-center gap-4 py-12 text-center">
+              <Lock className="h-10 w-10 text-forge" />
+              <div>
+                <h3 className="font-display text-lg font-semibold text-foreground">Créer un compte pour passer l'évaluation</h3>
+                <p className="mt-2 max-w-md text-sm text-muted-foreground">
+                  Les évaluations sont réservées aux comptes enregistrés. Crée ton compte pour sauvegarder ta progression et débloquer la certification finale.
+                </p>
+              </div>
+              <Button asChild className="bg-gradient-forge text-forge-foreground shadow-glow hover:opacity-95">
+                <a href="/auth">Créer un compte</a>
+              </Button>
+            </div>
+          )}
+
+          {stage === "questions" && signedIn && (
+            isLesson ? (
               <div className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_340px]">
                 <Tabs value={activePart} onValueChange={(value) => setActivePart(value as "A" | "B")}>
                   <TabsList className="grid h-auto w-full grid-cols-2 gap-2 bg-transparent p-0">
@@ -284,13 +303,8 @@ export function AssessmentModal({
 
                   <Button disabled={!canSubmit} onClick={submit} className="mt-5 w-full bg-gradient-forge text-forge-foreground shadow-glow hover:opacity-95">
                     <BrainCircuit className="h-4 w-4" />
-                    {mutation.isPending ? "Sauvegarde..." : result ? "Recalculer" : "Calculer le score"}
+                    {mutation.isPending ? "Sauvegarde..." : "Calculer le score"}
                   </Button>
-                  {result && (
-                    <Button variant="outline" onClick={() => resetAttempt(true)} className="mt-2 w-full">
-                      Nouvelle série de questions
-                    </Button>
-                  )}
                   {!signedIn && <p className="mt-3 text-xs leading-relaxed text-muted-foreground">Connectez-vous pour sauvegarder les tentatives et débloquer la continuité premium.</p>}
                 </aside>
               </div>
@@ -362,37 +376,158 @@ export function AssessmentModal({
                   </div>
                 </TabsContent>
               </Tabs>
-            )}
-          </div>
-        </DialogContent>
-      </Dialog>
+            )
+          )}
 
-      <AlertDialog open={failureOpen} onOpenChange={setFailureOpen}>
-        <AlertDialogContent className="border-border bg-background">
-          <AlertDialogHeader>
-            <AlertDialogTitle className="font-display text-foreground">Validation non obtenue</AlertDialogTitle>
-            <AlertDialogDescription>
-              {isLesson
-                ? "Le score global pondéré (30 % Partie A + 70 % Partie B) doit atteindre 70 %. Revenez au bloc de leçon, relisez les widgets/visuels concernés, puis relancez l'évaluation."
-                : "Chaque partie doit atteindre 70 %. Revoyez les leçons concernées puis relancez le diagnostic."}
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel>Continuer ici</AlertDialogCancel>
-            <AlertDialogAction
-              onClick={() => {
-                if (lessonId) {
-                  setOpen(false);
-                  window.setTimeout(() => document.getElementById(lessonId)?.scrollIntoView({ behavior: "smooth", block: "start" }), 50);
-                }
-              }}
-              className="bg-gradient-forge text-forge-foreground hover:opacity-95"
-            >
-              Revoir la leçon
-            </AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
-    </>
+          {stage === "results" && result && (
+            <div className="space-y-6">
+              {/* Score hero */}
+              <div className={cn("rounded-2xl border bg-gradient-to-br p-6", scoreBg(result.score))}>
+                <div className="flex items-center justify-between">
+                  <div>
+                    <div className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">Score global</div>
+                    <div className={cn("mt-1 text-5xl font-bold font-display", scoreColor(result.score))}>
+                      {result.score}%
+                    </div>
+                  </div>
+                  {result.passed ? (
+                    <div className="flex items-center gap-2 rounded-full bg-emerald-500/15 px-4 py-2">
+                      <CheckCircle2 className="h-5 w-5 text-emerald-400" />
+                      <span className="font-mono text-xs uppercase tracking-wider text-emerald-400">Validé</span>
+                    </div>
+                  ) : (
+                    <div className="flex items-center gap-2 rounded-full bg-rose-500/15 px-4 py-2">
+                      <XCircle className="h-5 w-5 text-rose-400" />
+                      <span className="font-mono text-xs uppercase tracking-wider text-rose-400">Non validé</span>
+                    </div>
+                  )}
+                </div>
+                <p className="mt-3 text-sm text-muted-foreground">{feedbackMessage(result.score, result.passed)}</p>
+              </div>
+
+              {/* A/B breakdown */}
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                {partSummaries.map((part) => {
+                  const meta = PART_META[part.part as "A" | "B"];
+                  return (
+                    <div key={part.part} className="rounded-xl border bg-card p-4">
+                      <div className="flex items-center justify-between">
+                        <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
+                          {meta?.short ?? part.part}
+                        </span>
+                        <span className="text-xs text-muted-foreground">
+                          {part.correct}/{part.total} correct
+                        </span>
+                      </div>
+                      <div className="mt-2 flex items-baseline gap-2">
+                        <span className={cn("text-2xl font-bold", scoreColor(part.score))}>{part.score}%</span>
+                        <span className="text-xs text-muted-foreground">
+                          poids {meta?.weight ?? 0}%
+                        </span>
+                      </div>
+                      <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-muted">
+                        <div
+                          className={cn("h-full rounded-full transition-all", part.score >= 70 ? "bg-emerald-400" : "bg-rose-400")}
+                          style={{ width: `${part.score}%` }}
+                        />
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+
+              {/* Question-by-question review */}
+              <div className="space-y-3">
+                <div className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
+                  Revue détaillée
+                </div>
+                {questions.map((question) => {
+                  const userAnswer = answers[question.id];
+                  const isCorrect = userAnswer === question.correctId;
+                  const isExpanded = expandedReview === question.id;
+                  return (
+                    <div key={question.id} className="rounded-xl border bg-card overflow-hidden">
+                      <button
+                        onClick={() => setExpandedReview(isExpanded ? null : question.id)}
+                        className="flex w-full items-start gap-3 p-4 text-left hover:bg-muted/30 transition-colors"
+                      >
+                        <div className="mt-0.5 shrink-0">
+                          {isCorrect ? (
+                            <CheckCircle2 className="h-4 w-4 text-emerald-400" />
+                          ) : (
+                            <XCircle className="h-4 w-4 text-rose-400" />
+                          )}
+                        </div>
+                        <div className="min-w-0 flex-1">
+                          <div className="text-sm font-medium text-foreground line-clamp-2">{question.prompt}</div>
+                          <div className="mt-1 flex items-center gap-2 text-xs text-muted-foreground">
+                            <span className={cn("rounded px-1.5 py-0.5 font-mono uppercase", question.part === "A" ? "bg-amber-500/10 text-amber-400" : "bg-sky-500/10 text-sky-400")}>
+                              {question.part}
+                            </span>
+                            {!isCorrect && userAnswer && (
+                              <span className="text-rose-400">Ta réponse: {question.choices.find((c) => c.id === userAnswer)?.label ?? "—"}</span>
+                            )}
+                            {!userAnswer && <span className="text-rose-400">Sans réponse</span>}
+                          </div>
+                        </div>
+                        <ChevronDown className={cn("mt-1 h-4 w-4 shrink-0 text-muted-foreground transition-transform", isExpanded && "rotate-180")} />
+                      </button>
+                      {isExpanded && (
+                        <div className="space-y-2 border-t px-4 py-3 text-sm">
+                          {question.choices.map((choice) => (
+                            <div
+                              key={choice.id}
+                              className={cn(
+                                "flex items-center gap-2 rounded-lg px-3 py-1.5",
+                                choice.id === question.correctId && "bg-emerald-500/10 text-emerald-400",
+                                choice.id === userAnswer && choice.id !== question.correctId && "bg-rose-500/10 text-rose-400",
+                              )}
+                            >
+                              {choice.id === question.correctId && <CheckCircle2 className="h-3.5 w-3.5 shrink-0" />}
+                              {choice.id === userAnswer && choice.id !== question.correctId && <XCircle className="h-3.5 w-3.5 shrink-0" />}
+                              <span>{choice.label}</span>
+                            </div>
+                          ))}
+                          <div className="pt-2 text-xs text-muted-foreground">
+                            <span className="font-medium text-foreground">Justification: </span>
+                            {question.explanation}
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+
+              {/* Actions */}
+              <div className="flex flex-col gap-3 sm:flex-row sm:justify-end">
+                {!result.passed && lessonId && (
+                  <Button
+                    variant="outline"
+                    onClick={() => {
+                      setOpen(false);
+                      setTimeout(() => document.getElementById(lessonId)?.scrollIntoView({ behavior: "smooth", block: "start" }), 50);
+                    }}
+                  >
+                    <ScrollText className="h-4 w-4" />
+                    Revoir la leçon
+                  </Button>
+                )}
+                <Button variant="outline" onClick={() => resetAttempt(true)}>
+                  <Sparkles className="h-4 w-4" />
+                  Nouvelle série
+                </Button>
+                <Button
+                  onClick={() => setOpen(false)}
+                  className={result.passed ? "bg-gradient-forge text-forge-foreground hover:opacity-95" : ""}
+                >
+                  Fermer
+                </Button>
+              </div>
+            </div>
+          )}
+        </div>
+      </DialogContent>
+    </Dialog>
   );
 }
