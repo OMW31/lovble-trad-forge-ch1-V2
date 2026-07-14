@@ -1,9 +1,5 @@
 # TradForge Academy — Agent Governance
 
-## Serveur de développement
-- **URL standard** : http://localhost:8081/
-- **Remarque** : Port 8080 abandonné. Forcer arrêt/relance si nécessaire.
-
 ## Règles de gouvernance TradForge
 
 ### 1. Analyse d'impact obligatoire (avant toute implémentation massive)
