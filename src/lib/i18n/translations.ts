@@ -56,6 +56,32 @@ export const TRANSLATIONS = {
   "eval.correct": { fr: "correct", en: "correct" },
   "eval.weight": { fr: "poids", en: "weight" },
   "eval.items": { fr: "item(s)", en: "item(s)" },
+  "eval.trigger": { fr: "Évaluation", en: "Assessment" },
+  "eval.weightedSuffix": { fr: "· 30 / 70", en: "· 30 / 70" },
+  "eval.lessonPassedSaved": {
+    fr: "Leçon validée. La tentative est sauvegardée si le compte est connecté.",
+    en: "Lesson passed. The attempt is saved if the account is signed in.",
+  },
+  "eval.diagnosticPassedSaved": {
+    fr: "Diagnostic validé. La tentative est sauvegardée.",
+    en: "Diagnostic passed. The attempt is saved.",
+  },
+  "eval.lessonFailedHint": {
+    fr: "Leçon non validée : le score global pondéré doit atteindre 70 %.",
+    en: "Lesson not passed: the weighted global score must reach 70%.",
+  },
+  "eval.diagnosticFailedHint": {
+    fr: "Diagnostic non validé : chaque partie doit atteindre 70 %.",
+    en: "Diagnostic not passed: each part must reach 70%.",
+  },
+  "eval.answerPromptLesson": {
+    fr: "Répondez aux parties A et B, puis lancez le scoring pondéré.",
+    en: "Answer parts A and B, then run the weighted scoring.",
+  },
+  "eval.answerPromptDiagnostic": {
+    fr: "Répondez aux parties A et B, puis lancez le scoring.",
+    en: "Answer parts A and B, then run the scoring.",
+  },
 
   // Feedback messages
   "feedback.excellent": {

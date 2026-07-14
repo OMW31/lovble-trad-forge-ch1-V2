@@ -10,12 +10,15 @@ import { ProgressDashboard, SidebarProgressHUD } from "./ProgressDashboard";
 import { useT } from "@/lib/i18n/useT";
 import type { ChapterDashboard, ChapterProfile } from "@/lib/academy/useChapterProgress";
 
-function LangToggle() {
+function LangToggle({ className }: { className?: string }) {
   const { lang, toggleLang } = useT();
   return (
     <button
       onClick={toggleLang}
-      className="flex items-center gap-1 rounded-lg border border-border bg-surface px-2.5 py-1.5 font-mono text-[10px] uppercase tracking-wider text-muted-foreground transition-colors hover:text-foreground"
+      className={cn(
+        "flex items-center gap-1 rounded-lg border border-border bg-surface px-2.5 py-1.5 font-mono text-[10px] uppercase tracking-wider text-muted-foreground transition-colors hover:text-foreground",
+        className,
+      )}
       aria-label="Toggle language"
     >
       {lang === "fr" ? "FR" : "EN"}
@@ -153,7 +156,7 @@ export function ChapterShell({
               )}
             </div>
             {headerActions}
-            <LangToggle />
+            <LangToggle className="hidden lg:flex" />
             <AcademyAccountButton signedIn={signedIn} profile={profile} onOpenDashboard={dashboard ? openDashboard : undefined} />
           </div>
         </div>

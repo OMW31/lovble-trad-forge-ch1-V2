@@ -1,6 +1,7 @@
 import { useState, type ReactNode } from "react";
 import { Check, X, ArrowRight, Target } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useT } from "@/lib/i18n/useT";
 import { cn } from "@/lib/utils";
 import { LevelBadge } from "./primitives";
 
@@ -39,6 +40,7 @@ export function Scenario({
   visual,
   onComplete,
 }: ScenarioProps) {
+  const { t } = useT();
   const [selected, setSelected] = useState<string | null>(null);
   const answered = selected !== null;
   const correct = selected === correctId;
@@ -111,15 +113,15 @@ export function Scenario({
                 )}
               >
                 {correct ? <Check className="h-4 w-4" /> : <X className="h-4 w-4" />}
-                {correct ? "Analyse correcte" : "Pas tout à fait"}
+                {correct ? t("scenario.correct") : t("scenario.recalibrate")}
               </div>
               <Tabs defaultValue="direct" className="mt-3">
                 <TabsList className="grid h-auto w-full grid-cols-2 gap-1 bg-transparent p-0">
                   <TabsTrigger value="direct" className="h-auto rounded-lg border border-border bg-card px-3 py-1.5 text-xs data-[state=active]:border-forge/50">
-                    Réponse directe
+                    {t("scenario.direct")}
                   </TabsTrigger>
                   <TabsTrigger value="complete" className="h-auto rounded-lg border border-border bg-card px-3 py-1.5 text-xs data-[state=active]:border-forge/50">
-                    Réponse complète
+                    {t("scenario.complete")}
                   </TabsTrigger>
                 </TabsList>
                 <TabsContent value="direct" className="mt-3">

@@ -3,6 +3,7 @@ import { ArrowRight, Check, CircleCheck as CheckCircle2, Layers as Layers3, Circ
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { CandleReplay } from "@/components/academy/CandleReplay";
+import { useT } from "@/lib/i18n/useT";
 import type { PlayableScenario } from "@/lib/academy/scenario-engine";
 import { cn } from "@/lib/utils";
 
@@ -25,6 +26,7 @@ export function ScenarioPlayer({
   className?: string;
 }) {
   const [stage, setStage] = useState<ScenarioStage>(scenario.mode === "evaluation" ? "context" : "decision");
+  const { t } = useT();
   const [selected, setSelected] = useState<string | null>(null);
   const [reported, setReported] = useState(false);
   const caseStudy = scenario.caseStudy;
@@ -160,15 +162,15 @@ export function ScenarioPlayer({
               <div className={cn("rounded-xl border p-4", correct ? "border-bull/40 bg-bull/5" : "border-bear/40 bg-bear/5")}>
                 <div className={cn("mb-1.5 flex items-center gap-2 text-sm font-semibold", correct ? "text-bull" : "text-bear")}>
                   {correct ? <CheckCircle2 className="h-4 w-4" /> : <X className="h-4 w-4" />}
-                  {correct ? "Décision correcte" : "Décision à recalibrer"}
+                  {correct ? t("scenario.correct") : t("scenario.recalibrate")}
                 </div>
                 <Tabs defaultValue="direct" className="mt-3">
                   <TabsList className="grid h-auto w-full grid-cols-2 gap-1 bg-transparent p-0">
                     <TabsTrigger value="direct" className="h-auto rounded-lg border border-border bg-card px-3 py-1.5 text-xs data-[state=active]:border-forge/50">
-                      Réponse directe
+                      {t("scenario.direct")}
                     </TabsTrigger>
                     <TabsTrigger value="complete" className="h-auto rounded-lg border border-border bg-card px-3 py-1.5 text-xs data-[state=active]:border-forge/50">
-                      Réponse complète
+                      {t("scenario.complete")}
                     </TabsTrigger>
                   </TabsList>
                   <TabsContent value="direct" className="mt-3">

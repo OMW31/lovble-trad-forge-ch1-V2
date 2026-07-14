@@ -8,6 +8,8 @@ import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { supabase } from "@/integrations/supabase/client";
 import { lovable } from "@/integrations/lovable";
+import { useT } from "@/lib/i18n/useT";
+import { cn } from "@/lib/utils";
 
 const PROFILE_TYPES = [
   { value: "investisseur", label: "Investisseur" },
@@ -56,7 +58,10 @@ function AuthPage() {
   const [profileType, setProfileType] = useState<string>("investisseur");
   const [pseudoError, setPseudoError] = useState<string | null>(null);
   const [message, setMessage] = useState<string | null>(null);
-  const [loading, setLoading] = useState<"signin" | "signup" | "google" | null>(null);
+  const [messageType, setMessageType] = useState<"error" | "success" | null>(null);
+  const [loading, setLoading] = useState<"signin" | "signup" | "google" | "reset" | "otp" | null>(null);
+  const [showResetPassword, setShowResetPassword] = useState(false);
+  const [showMagicLink, setShowMagicLink] = useState(false);
 
   useEffect(() => {
     const { data } = supabase.auth.onAuthStateChange((event, session) => {
@@ -70,6 +75,7 @@ function AuthPage() {
   const signIn = async () => {
     setLoading("signin");
     setMessage(null);
+    setMessageType(null);
     const { error } = await supabase.auth.signInWithPassword({
       email: signInEmail,
       password: signInPassword,
@@ -77,14 +83,53 @@ function AuthPage() {
     setLoading(null);
     if (error) {
       setMessage(error.message);
+      setMessageType("error");
       return;
     }
     navigate({ to: search.redirect, replace: true });
   };
 
+  const resetPassword = async () => {
+    setLoading("reset");
+    setMessage(null);
+    setMessageType(null);
+    const { error } = await supabase.auth.resetPasswordForEmail(signInEmail, {
+      redirectTo: window.location.origin + "/auth",
+    });
+    setLoading(null);
+    if (error) {
+      setMessage(error.message);
+      setMessageType("error");
+      return;
+    }
+    setMessage("Lien de réinitialisation envoyé par email. Vérifie ta boîte de réception.");
+    setMessageType("success");
+    setShowResetPassword(false);
+  };
+
+  const signInWithMagicLink = async () => {
+    setLoading("otp");
+    setMessage(null);
+    setMessageType(null);
+    const { error } = await supabase.auth.signInWithOtp({
+      email: signInEmail,
+      options: { emailRedirectTo: window.location.origin + "/auth" },
+    });
+    setLoading(null);
+    if (error) {
+      setMessage(error.message);
+      setMessageType("error");
+      return;
+    }
+    setMessage("Lien magique envoyé par email. Clique sur le lien pour te connecter.");
+    setMessageType("success");
+    setShowMagicLink(false);
+  };
+
   const signUp = async () => {
     setLoading("signup");
     setMessage(null);
+    setMessageType(null);
     setPseudoError(null);
     if (pseudo.trim().length < 3 || pseudo.trim().length > 32) {
       setPseudoError("Le pseudo doit contenir entre 3 et 32 caractères.");
@@ -109,11 +154,13 @@ function AuthPage() {
       return;
     }
     setMessage("Compte créé. Connectez-vous pour activer la progression synchronisée.");
+    setMessageType("success");
   };
 
   const signInWithGoogle = async () => {
     setLoading("google");
     setMessage(null);
+    setMessageType(null);
     const result = await lovable.auth.signInWithOAuth("google", {
       redirect_uri: window.location.origin,
     });
@@ -203,6 +250,42 @@ function AuthPage() {
                 <Button onClick={signIn} disabled={loading !== null} className="w-full">
                   {loading === "signin" ? "Connexion..." : "Se connecter"}
                 </Button>
+                <button
+                  type="button"
+                  onClick={() => setShowResetPassword(true)}
+                  className="text-xs text-muted-foreground hover:text-foreground transition-colors text-left"
+                >
+                  Mot de passe oublié?
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setShowMagicLink(true)}
+                  className="text-xs text-muted-foreground hover:text-foreground transition-colors text-left"
+                >
+                  Connexion par lien magique
+                </button>
+                {showResetPassword && (
+                  <div className="space-y-2 rounded-lg border border-border bg-surface p-3">
+                    <p className="text-xs text-muted-foreground">Un lien de réinitialisation sera envoyé à : {signInEmail || "—"}</p>
+                    <div className="flex gap-2">
+                      <Button onClick={resetPassword} disabled={loading !== null || !signInEmail} size="sm" className="flex-1">
+                        {loading === "reset" ? "Envoi..." : "Envoyer le lien"}
+                      </Button>
+                      <Button onClick={() => setShowResetPassword(false)} variant="outline" size="sm">Annuler</Button>
+                    </div>
+                  </div>
+                )}
+                {showMagicLink && (
+                  <div className="space-y-2 rounded-lg border border-border bg-surface p-3">
+                    <p className="text-xs text-muted-foreground">Un lien magique sera envoyé à : {signInEmail || "—"}</p>
+                    <div className="flex gap-2">
+                      <Button onClick={signInWithMagicLink} disabled={loading !== null || !signInEmail} size="sm" className="flex-1">
+                        {loading === "otp" ? "Envoi..." : "Envoyer le lien"}
+                      </Button>
+                      <Button onClick={() => setShowMagicLink(false)} variant="outline" size="sm">Annuler</Button>
+                    </div>
+                  </div>
+                )}
               </TabsContent>
 
               <TabsContent value="signup" className="space-y-4">
@@ -254,7 +337,11 @@ function AuthPage() {
               </TabsContent>
             </Tabs>
 
-            {message && <div className="rounded-lg border border-border bg-surface p-3 text-sm text-muted-foreground">{message}</div>}
+            {message && (
+              <div className={cn("rounded-lg border p-3 text-sm", messageType === "success" ? "border-bull/40 bg-bull/5 text-bull" : "border-bear/40 bg-bear/5 text-bear")}>
+                {message}
+              </div>
+            )}
           </CardContent>
         </Card>
       </div>

@@ -20,22 +20,22 @@ import { saveEvaluationAttempt } from "@/lib/academy/progress.functions";
 import { useT } from "@/lib/i18n/useT";
 import { cn } from "@/lib/utils";
 
-const PART_META: Record<"A" | "B", { label: string; short: string; icon: ElementType; weight: number; tone: string; hint: string }> = {
+const PART_META: Record<"A" | "B", { labelKey: string; shortKey: string; icon: ElementType; weight: number; tone: string; hintKey: string }> = {
   A: {
-    label: "Partie A · QCM enrichis",
-    short: "Partie A",
+    labelKey: "eval.partA",
+    shortKey: "eval.partAShort",
     icon: ScrollText,
     weight: 30,
     tone: "text-data border-data/30 bg-data/10",
-    hint: "Concepts, mécanismes et transmissions clés de la leçon.",
+    hintKey: "eval.partAHint",
   },
   B: {
-    label: "Partie B · Widgets & visuels",
-    short: "Partie B",
+    labelKey: "eval.partB",
+    shortKey: "eval.partBShort",
     icon: Layers,
     weight: 70,
     tone: "text-forge border-forge/30 bg-forge/10",
-    hint: "Interprétation des widgets et infographies — le cœur analytique de TradForge.",
+    hintKey: "eval.partBHint",
   },
 };
 
@@ -44,11 +44,11 @@ type Result = ReturnType<typeof scoreQuestions> | null;
 const scoreColor = (score: number) => (score >= 90 ? "text-emerald-400" : score >= 70 ? "text-amber-400" : "text-rose-400");
 const scoreBg = (score: number) =>
   score >= 90 ? "from-emerald-500/20 to-emerald-500/5" : score >= 70 ? "from-amber-500/20 to-amber-500/5" : "from-rose-500/20 to-rose-500/5";
-const feedbackMessage = (score: number, passed: boolean) => {
-  if (score >= 90) return "Excellence — Ta maîtrise des fondamentaux institutionnels est exceptionnelle.";
-  if (passed) return "Solide — Tu as validé cette évaluation avec une bonne compréhension des concepts clés.";
-  if (score >= 50) return "À retravailler — Plusieurs concepts nécessitent une révision approfondie.";
-  return "Non validé — Reprends la leçon et rejoue les widgets avant de retenter l'évaluation.";
+const feedbackMessageKey = (score: number, passed: boolean) => {
+  if (score >= 90) return "feedback.excellent";
+  if (passed) return "feedback.solid";
+  if (score >= 50) return "feedback.rework";
+  return "feedback.failed";
 };
 
 export function AssessmentModal({
@@ -57,7 +57,7 @@ export function AssessmentModal({
   signedIn,
   progressPercent,
   onPassed,
-  triggerLabel = "Évaluation",
+  triggerLabel,
   triggerClassName,
 }: {
   chapterId: string;
@@ -68,6 +68,7 @@ export function AssessmentModal({
   triggerLabel?: string;
   triggerClassName?: string;
 }) {
+  const { t } = useT();
   const [open, setOpen] = useState(false);
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [result, setResult] = useState<Result>(null);
@@ -150,17 +151,15 @@ export function AssessmentModal({
       <DialogTrigger asChild>
         <Button className={cn("bg-gradient-forge text-forge-foreground shadow-glow hover:opacity-95", triggerClassName)}>
           <BrainCircuit className="h-4 w-4" />
-          {triggerLabel}
+          {triggerLabel ?? t("eval.trigger")}
         </Button>
       </DialogTrigger>
       <DialogContent className="max-h-[92vh] max-w-6xl overflow-y-auto border-border bg-background p-0 sm:rounded-2xl">
         <div className="border-b border-border bg-gradient-hero p-6">
           <DialogHeader>
-            <DialogTitle className="font-display text-2xl text-foreground">Evaluation Command Center</DialogTitle>
+            <DialogTitle className="font-display text-2xl text-foreground">{t("eval.title")}</DialogTitle>
             <DialogDescription className="max-w-2xl text-sm text-muted-foreground">
-              {isLesson
-                ? "Évaluation de leçon en deux volets : Partie A (QCM, 30 %) puis Partie B (widgets & visuels, 70 %). Seuil de validation : 70 % au score global pondéré."
-                : "Diagnostic de chapitre en deux volets : Partie A (QCM) et Partie B (widgets & visuels). Seuil de validation : 70 % par partie."}
+              {isLesson ? t("eval.lessonDesc") : t("eval.diagnosticDesc")}
             </DialogDescription>
           </DialogHeader>
         </div>
@@ -170,13 +169,13 @@ export function AssessmentModal({
             <div className="flex flex-col items-center gap-4 py-12 text-center">
               <Lock className="h-10 w-10 text-forge" />
               <div>
-                <h3 className="font-display text-lg font-semibold text-foreground">Créer un compte pour passer l'évaluation</h3>
+                <h3 className="font-display text-lg font-semibold text-foreground">{t("auth.createToEval")}</h3>
                 <p className="mt-2 max-w-md text-sm text-muted-foreground">
-                  Les évaluations sont réservées aux comptes enregistrés. Crée ton compte pour sauvegarder ta progression et débloquer la certification finale.
+                  {t("auth.createToEvalDesc")}
                 </p>
               </div>
               <Button asChild className="bg-gradient-forge text-forge-foreground shadow-glow hover:opacity-95">
-                <a href="/auth">Créer un compte</a>
+                <a href="/auth">{t("auth.createAccount")}</a>
               </Button>
             </div>
           )}
@@ -197,11 +196,11 @@ export function AssessmentModal({
                         className="h-auto flex-col items-start gap-1 rounded-xl border border-border bg-card px-3 py-3 text-left data-[state=active]:border-forge/50 data-[state=active]:shadow-none"
                       >
                         <span className="flex items-center gap-2 text-sm font-semibold text-foreground">
-                          <PartIcon className="h-4 w-4" /> {item.short}
+                          <PartIcon className="h-4 w-4" /> {t(item.shortKey)}
                           <span className="rounded-full border border-current/20 px-1.5 py-0.5 font-mono text-[9px] text-muted-foreground">{item.weight}%</span>
                         </span>
                         <span className="font-mono text-[10px] uppercase tracking-wider text-muted-foreground">
-                          {done}/{partQuestions.length} répondu(s)
+                          {done}/{partQuestions.length} {t("eval.answered")}
                         </span>
                       </TabsTrigger>
                     );
@@ -215,9 +214,9 @@ export function AssessmentModal({
                     <TabsContent key={part} value={part} className="mt-6 space-y-4">
                       <div className={cn("rounded-2xl border p-4", item.tone)}>
                         <div className="flex items-center gap-2 font-display text-lg font-semibold">
-                          <item.icon className="h-5 w-5" /> {item.label}
+                          <item.icon className="h-5 w-5" /> {t(item.labelKey)}
                         </div>
-                        <p className="mt-1 text-sm text-foreground/80">{item.hint}</p>
+                        <p className="mt-1 text-sm text-foreground/80">{t(item.hintKey)}</p>
                       </div>
                       <div className="space-y-4">
                         {partQuestions.map((question) => (
@@ -237,21 +236,21 @@ export function AssessmentModal({
 
               <aside className="sticky top-20 h-fit rounded-2xl border bg-card p-5 shadow-elegant">
                 <div className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
-                  <BarChart3 className="h-3.5 w-3.5 text-data" /> Score engine {isLesson ? "· 30 / 70" : ""}
+                  <BarChart3 className="h-3.5 w-3.5 text-data" /> {t("eval.scoreEngine")} {isLesson ? t("eval.weightedSuffix") : ""}
                 </div>
                 <div className="mt-4 text-3xl font-semibold text-foreground">{result ? `${result.score}%` : `${answeredCount}/${questions.length}`}</div>
                 <p className="mt-2 text-sm text-muted-foreground">
                   {result
                     ? result.passed
                       ? isLesson
-                        ? "Leçon validée. La tentative est sauvegardée si le compte est connecté."
-                        : "Diagnostic validé. La tentative est sauvegardée."
+                        ? t("eval.lessonPassedSaved")
+                        : t("eval.diagnosticPassedSaved")
                       : isLesson
-                        ? "Leçon non validée : le score global pondéré doit atteindre 70 %."
-                        : "Diagnostic non validé : chaque partie doit atteindre 70 %."
+                        ? t("eval.lessonFailedHint")
+                        : t("eval.diagnosticFailedHint")
                     : isLesson
-                      ? "Répondez aux parties A et B, puis lancez le scoring pondéré."
-                      : "Répondez aux parties A et B, puis lancez le scoring."}
+                      ? t("eval.answerPromptLesson")
+                      : t("eval.answerPromptDiagnostic")}
                 </p>
 
                 <div className="mt-5 space-y-3">
@@ -261,7 +260,7 @@ export function AssessmentModal({
                       <div key={p.part} className="rounded-lg border bg-surface p-3">
                         <div className="flex items-center justify-between font-mono text-[10px] uppercase tracking-wider text-muted-foreground">
                           <span>{meta?.short ?? p.part} {isLesson ? `· ${meta?.weight ?? 0}%` : ""}</span>
-                          <span>{result ? `${p.score}%` : `${p.total} item(s)`}</span>
+                          <span>{result ? `${p.score}%` : `${p.total} ${t("eval.items")}`}</span>
                         </div>
                         <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-border">
                           <div className={cn("h-full rounded-full transition-all", result && p.score >= 70 ? "bg-bull" : "bg-forge")} style={{ width: `${result ? p.score : 0}%` }} />
@@ -273,7 +272,7 @@ export function AssessmentModal({
 
                 <Button disabled={!canSubmit} onClick={submit} className="mt-5 w-full bg-gradient-forge text-forge-foreground shadow-glow hover:opacity-95">
                   <BrainCircuit className="h-4 w-4" />
-                  {mutation.isPending ? "Sauvegarde..." : "Calculer le score"}
+                  {mutation.isPending ? t("eval.saving") : t("eval.calculate")}
                 </Button>
               </aside>
             </div>
@@ -284,7 +283,7 @@ export function AssessmentModal({
               <div className={cn("rounded-2xl border bg-gradient-to-br p-6", scoreBg(result.score))}>
                 <div className="flex items-center justify-between">
                   <div>
-                    <div className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">Score global</div>
+                    <div className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">{t("eval.scoreGlobal")}</div>
                     <div className={cn("mt-1 text-5xl font-bold font-display", scoreColor(result.score))}>
                       {result.score}%
                     </div>
@@ -292,16 +291,16 @@ export function AssessmentModal({
                   {result.passed ? (
                     <div className="flex items-center gap-2 rounded-full bg-emerald-500/15 px-4 py-2">
                       <CheckCircle2 className="h-5 w-5 text-emerald-400" />
-                      <span className="font-mono text-xs uppercase tracking-wider text-emerald-400">Validé</span>
+                      <span className="font-mono text-xs uppercase tracking-wider text-emerald-400">{t("eval.passed")}</span>
                     </div>
                   ) : (
                     <div className="flex items-center gap-2 rounded-full bg-rose-500/15 px-4 py-2">
                       <XCircle className="h-5 w-5 text-rose-400" />
-                      <span className="font-mono text-xs uppercase tracking-wider text-rose-400">Non validé</span>
+                      <span className="font-mono text-xs uppercase tracking-wider text-rose-400">{t("eval.failed")}</span>
                     </div>
                   )}
                 </div>
-                <p className="mt-3 text-sm text-muted-foreground">{feedbackMessage(result.score, result.passed)}</p>
+                <p className="mt-3 text-sm text-muted-foreground">{t(feedbackMessageKey(result.score, result.passed))}</p>
               </div>
 
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
@@ -311,17 +310,17 @@ export function AssessmentModal({
                     <div key={part.part} className="rounded-xl border bg-card p-4">
                       <div className="flex items-center justify-between">
                         <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
-                          {meta?.short ?? part.part}
+                          {meta ? t(meta.shortKey) : part.part}
                         </span>
                         <span className="text-xs text-muted-foreground">
-                          {part.correct}/{part.total} correct
+                          {part.correct}/{part.total} {t("eval.correct")}
                         </span>
                       </div>
                       <div className="mt-2 flex items-baseline gap-2">
                         <span className={cn("text-2xl font-bold", scoreColor(part.score))}>{part.score}%</span>
                         {isLesson && (
                           <span className="text-xs text-muted-foreground">
-                            poids {meta?.weight ?? 0}%
+                            {t("eval.weight")} {meta?.weight ?? 0}%
                           </span>
                         )}
                       </div>
@@ -338,7 +337,7 @@ export function AssessmentModal({
 
               <div className="space-y-3">
                 <div className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
-                  Revue détaillée
+                  {t("eval.detailedReview")}
                 </div>
                 {questions.map((question) => {
                   const userAnswer = answers[question.id];
@@ -364,9 +363,9 @@ export function AssessmentModal({
                               {question.part}
                             </span>
                             {!isCorrect && userAnswer && (
-                              <span className="text-rose-400">Ta réponse: {question.choices.find((c) => c.id === userAnswer)?.label ?? "—"}</span>
+                              <span className="text-rose-400">{t("eval.yourAnswer")}: {question.choices.find((c) => c.id === userAnswer)?.label ?? "—"}</span>
                             )}
-                            {!userAnswer && <span className="text-rose-400">Sans réponse</span>}
+                            {!userAnswer && <span className="text-rose-400">{t("eval.noAnswer")}</span>}
                           </div>
                         </div>
                         <ChevronDown className={cn("mt-1 h-4 w-4 shrink-0 text-muted-foreground transition-transform", isExpanded && "rotate-180")} />
@@ -388,7 +387,7 @@ export function AssessmentModal({
                             </div>
                           ))}
                           <div className="pt-2 text-xs text-muted-foreground">
-                            <span className="font-medium text-foreground">Justification: </span>
+                            <span className="font-medium text-foreground">{t("eval.justification")}: </span>
                             {question.explanation}
                           </div>
                         </div>
@@ -408,18 +407,18 @@ export function AssessmentModal({
                     }}
                   >
                     <ScrollText className="h-4 w-4" />
-                    Revoir la leçon
+                    {t("eval.reviewLesson")}
                   </Button>
                 )}
                 <Button variant="outline" onClick={() => resetAttempt(true)}>
                   <Sparkles className="h-4 w-4" />
-                  Nouvelle série
+                  {t("eval.newSet")}
                 </Button>
                 <Button
                   onClick={() => setOpen(false)}
                   className={result.passed ? "bg-gradient-forge text-forge-foreground hover:opacity-95" : ""}
                 >
-                  Fermer
+                  {t("eval.close")}
                 </Button>
               </div>
             </div>

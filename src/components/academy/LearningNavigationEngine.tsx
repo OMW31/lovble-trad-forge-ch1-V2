@@ -4,6 +4,7 @@ import { Check, ChevronRight, PanelLeftOpen, X, Award } from "lucide-react";
 import type { LessonMeta } from "@/lib/academy/chapter1";
 import type { ChapterDashboard } from "@/lib/academy/useChapterProgress";
 import { SidebarProgressHUD } from "./ProgressDashboard";
+import { useT } from "@/lib/i18n/useT";
 import { cn } from "@/lib/utils";
 
 /**
@@ -208,10 +209,28 @@ export function LearningNavigationEngine({
                   );
                 })}
               </nav>
+              <div className="border-t border-border p-3">
+                <LangToggleInDrawer />
+              </div>
             </motion.aside>
           </div>
         )}
       </AnimatePresence>
     </>
+  );
+}
+
+function LangToggleInDrawer() {
+  const { lang, toggleLang } = useT();
+  return (
+    <button
+      onClick={toggleLang}
+      className="flex w-full items-center justify-center gap-2 rounded-lg border border-border bg-surface px-3 py-2.5 font-mono text-xs uppercase tracking-wider text-muted-foreground transition-colors hover:text-foreground"
+      aria-label="Toggle language"
+    >
+      <span className={cn(lang === "fr" && "text-foreground")}>FR</span>
+      <span className="text-foreground/30">/</span>
+      <span className={cn(lang === "en" && "text-foreground")}>EN</span>
+    </button>
   );
 }
