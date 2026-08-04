@@ -77,23 +77,27 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "TradForge Academy — Analyse Fondamentale" },
+      { title: "TradeForge - See the invisible forces that move every market" },
       {
         name: "description",
         content:
-          "Le laboratoire interactif d'analyse fondamentale. Voir, manipuler, décider, comprendre les moteurs des marchés — niveau institutionnel.",
+          "An institutional-grade macro lab for traders, investors, and analysts. Six chapters, 100+ widgets, 1000+ scenarios, and the twice daily macro signal coming next",
       },
       { name: "author", content: "TradForge" },
       { name: "theme-color", content: "#22252e" },
-      { property: "og:title", content: "TradForge Academy — Analyse Fondamentale" },
+      { property: "og:title", content: "TradeForge - See the invisible forces that move every market" },
       {
         property: "og:description",
         content:
-          "Le laboratoire interactif d'analyse fondamentale. Voir, manipuler, décider, comprendre.",
+          "An institutional-grade macro lab for traders, investors, and analysts. Six chapters, 100+ widgets, 1000+ scenarios, and the twice daily macro signal coming next",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:site", content: "@TradForge" },
+      { name: "twitter:title", content: "TradeForge - See the invisible forces that move every market" },
+      { name: "twitter:description", content: "An institutional-grade macro lab for traders, investors, and analysts. Six chapters, 100+ widgets, 1000+ scenarios, and the twice daily macro signal coming next" },
+      { property: "og:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/DkxptfUa6IYrBnEgOL3GyX3ZwvG2/social-images/social-1785802481849-social-image.webp" },
+      { name: "twitter:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/DkxptfUa6IYrBnEgOL3GyX3ZwvG2/social-images/social-1785802481849-social-image.webp" },
     ],
     links: [
       { rel: "preconnect", href: "https://fonts.googleapis.com" },

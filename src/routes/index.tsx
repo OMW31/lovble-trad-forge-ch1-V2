@@ -5,16 +5,16 @@ import { Eyebrow } from "@/components/academy/primitives";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "TradForge — Le laboratoire d'analyse des marchés" },
+      { title: "TradeForge - See the invisible forces that move every market" },
       {
         name: "description",
         content:
-          "TradForge transforme l'apprentissage des marchés en expérience interactive de niveau institutionnel. Voir, manipuler, décider, comprendre.",
+          "An institutional-grade macro lab for traders, investors, and analysts. Six chapters, 100+ widgets, 1000+ scenarios, and the twice daily macro signal coming next",
       },
-      { property: "og:title", content: "TradForge — Le laboratoire d'analyse des marchés" },
+      { property: "og:title", content: "TradeForge - See the invisible forces that move every market" },
       {
         property: "og:description",
-        content: "Voir, manipuler, décider, comprendre les marchés financiers.",
+        content: "An institutional-grade macro lab for traders, investors, and analysts. Six chapters, 100+ widgets, 1000+ scenarios, and the twice daily macro signal coming next",
       },
     ],
   }),
