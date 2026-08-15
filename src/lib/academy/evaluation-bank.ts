@@ -640,8 +640,9 @@ export function getLessonEvaluationQuestions(lessonId: string | undefined, level
 
 export function getChapterDiagnosticQuestions(level: EvaluationLevel) {
   // Diagnostic chapitre en logique Partie A / Partie B (plus de niveaux dans le modal).
-  const allA = CORE_LESSON_EVALUATION_IDS.flatMap((id) => PART_A_BANK[id]);
-  const allB = CORE_LESSON_EVALUATION_IDS.flatMap((id) => PART_B_BANK[id]);
+  const allA = CORE_LESSON_EVALUATION_IDS.flatMap((id) => getPartABank(id));
+  const allB = CORE_LESSON_EVALUATION_IDS.flatMap((id) => getPartBBank(id));
+
   const partA = pickBankItems(allA, "diagnostic-A").map((item) => toEvaluationQuestion(item, "A", `diag-${level}`));
   const partB = pickBankItems(allB, "diagnostic-B").map((item) => toEvaluationQuestion(item, "B", `diag-${level}`));
   return [...partA, ...partB];
