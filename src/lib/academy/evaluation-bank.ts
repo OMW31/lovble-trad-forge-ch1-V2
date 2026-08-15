@@ -662,12 +662,13 @@ export function getLessonAssessmentQuestions(
     ? (lessonId as CoreLessonId)
     : "intro";
   const rotate = options.rotate !== false;
-  const partA = pickBankItems(PART_A_BANK[key], `${key}-A`, { rotate }).map((item) =>
+  const partA = pickBankItems(getPartABank(key), `${key}-A`, { rotate }).map((item) =>
     toEvaluationQuestion(item, "A", `${key}-a`),
   );
-  const partB = pickBankItems(PART_B_BANK[key], `${key}-B`, { rotate }).map((item) =>
+  const partB = pickBankItems(getPartBBank(key), `${key}-B`, { rotate }).map((item) =>
     toEvaluationQuestion(item, "B", `${key}-b`),
   );
+
   return [...partA, ...partB];
 }
 
