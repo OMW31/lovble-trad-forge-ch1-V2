@@ -1,8 +1,8 @@
 import type { CaseStudy } from "./market-data";
 import { buildVisualQuestion, nextSeedIndex } from "./visual-question-bank";
 import { pickBankItems, toEvaluationQuestion } from "./assessment-picker";
-import { PART_A_BANK } from "./part-a-bank";
-import { PART_B_BANK } from "./part-b-bank";
+import { getPartABank, getPartBBank } from "./question-bank-loader";
+
 
 export type EvaluationLevel = "standard" | "high" | "premium";
 export type EvaluationPart = "A" | "B" | "C";
@@ -640,8 +640,9 @@ export function getLessonEvaluationQuestions(lessonId: string | undefined, level
 
 export function getChapterDiagnosticQuestions(level: EvaluationLevel) {
   // Diagnostic chapitre en logique Partie A / Partie B (plus de niveaux dans le modal).
-  const allA = CORE_LESSON_EVALUATION_IDS.flatMap((id) => PART_A_BANK[id]);
-  const allB = CORE_LESSON_EVALUATION_IDS.flatMap((id) => PART_B_BANK[id]);
+  const allA = CORE_LESSON_EVALUATION_IDS.flatMap((id) => getPartABank(id));
+  const allB = CORE_LESSON_EVALUATION_IDS.flatMap((id) => getPartBBank(id));
+
   const partA = pickBankItems(allA, "diagnostic-A").map((item) => toEvaluationQuestion(item, "A", `diag-${level}`));
   const partB = pickBankItems(allB, "diagnostic-B").map((item) => toEvaluationQuestion(item, "B", `diag-${level}`));
   return [...partA, ...partB];
@@ -662,12 +663,13 @@ export function getLessonAssessmentQuestions(
     ? (lessonId as CoreLessonId)
     : "intro";
   const rotate = options.rotate !== false;
-  const partA = pickBankItems(PART_A_BANK[key], `${key}-A`, { rotate }).map((item) =>
+  const partA = pickBankItems(getPartABank(key), `${key}-A`, { rotate }).map((item) =>
     toEvaluationQuestion(item, "A", `${key}-a`),
   );
-  const partB = pickBankItems(PART_B_BANK[key], `${key}-B`, { rotate }).map((item) =>
+  const partB = pickBankItems(getPartBBank(key), `${key}-B`, { rotate }).map((item) =>
     toEvaluationQuestion(item, "B", `${key}-b`),
   );
+
   return [...partA, ...partB];
 }
 

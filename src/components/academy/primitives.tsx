@@ -186,11 +186,11 @@ export function KpiTile({
   tone?: "neutral" | "bull" | "bear" | "forge" | "data";
 }) {
   return (
-    <div className="rounded-lg border bg-surface p-4">
-      <div className="font-mono text-[10px] uppercase tracking-wider text-muted-foreground">{label}</div>
+    <div className="min-w-0 rounded-lg border bg-surface p-4">
+      <div className="truncate font-mono text-[10px] uppercase tracking-wider text-muted-foreground">{label}</div>
       <div
         className={cn(
-          "mt-1.5 font-mono text-2xl font-semibold tabular-nums",
+          "mt-1.5 break-words font-mono text-[clamp(0.95rem,1.1vw+0.55rem,1.5rem)] font-semibold leading-tight tabular-nums",
           tone === "bull" && "text-bull",
           tone === "bear" && "text-bear",
           tone === "forge" && "text-forge",
@@ -200,10 +200,11 @@ export function KpiTile({
       >
         {value}
       </div>
-      {hint && <div className="mt-1 text-xs text-muted-foreground">{hint}</div>}
+      {hint && <div className="mt-1 text-pretty text-xs leading-snug text-muted-foreground">{hint}</div>}
     </div>
   );
 }
+
 
 export function WidgetFrame({
   title,

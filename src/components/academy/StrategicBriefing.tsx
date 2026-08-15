@@ -104,7 +104,7 @@ export function SkillUnlockPreview({ completed }: { completed: Set<string> }) {
         </div>
         <span className="font-mono text-xs text-muted-foreground">{completed.size}/{LESSONS.length} modules validés</span>
       </div>
-      <div className="mt-5 grid gap-3 md:grid-cols-3 xl:grid-cols-6">
+      <div className="mt-5 grid grid-cols-[repeat(auto-fit,minmax(min(11rem,100%),1fr))] gap-3">
         {LESSONS.map((lesson) => {
           const done = completed.has(lesson.id);
           return (
@@ -112,20 +112,21 @@ export function SkillUnlockPreview({ completed }: { completed: Set<string> }) {
               key={lesson.id}
               href={`#${lesson.id}`}
               className={cn(
-                "premium-hover rounded-xl border bg-surface p-3 transition-all",
+                "premium-hover min-w-0 rounded-xl border bg-surface p-3 transition-all",
                 done ? "border-bull/40 bg-bull/5" : "border-border",
               )}
             >
               <div className="flex items-center justify-between gap-2">
-                <span className="font-mono text-[10px] uppercase tracking-wider text-muted-foreground">{lesson.num}</span>
-                {done ? <CheckCircle2 className="h-4 w-4 text-bull" /> : <Lock className="h-4 w-4 text-muted-foreground" />}
+                <span className="truncate font-mono text-[10px] uppercase tracking-wider text-muted-foreground">{lesson.num}</span>
+                {done ? <CheckCircle2 className="h-4 w-4 shrink-0 text-bull" /> : <Lock className="h-4 w-4 shrink-0 text-muted-foreground" />}
               </div>
-              <div className="mt-3 text-sm font-semibold leading-tight text-foreground">{lesson.title}</div>
-              <p className="mt-1 line-clamp-2 text-xs leading-relaxed text-muted-foreground">{lesson.subtitle}</p>
+              <div className="mt-3 text-balance text-sm font-semibold leading-tight text-foreground">{lesson.title}</div>
+              <p className="mt-1 line-clamp-2 text-pretty text-xs leading-relaxed text-muted-foreground">{lesson.subtitle}</p>
             </a>
           );
         })}
       </div>
+
     </section>
   );
 }
@@ -157,19 +158,22 @@ export function VisualHybridLayer() {
       </div>
       <div className="mt-5 grid gap-4 lg:grid-cols-3">
         {schemas.map((schema) => (
-          <div key={schema.title} className="premium-hover rounded-xl border bg-surface p-4">
-            <div className={cn("font-display text-base font-semibold", schema.tone)}>{schema.title}</div>
-            <div className="mt-4 grid grid-cols-[1fr_auto_1fr_auto_1fr] items-center gap-2 text-center text-xs">
+          <div key={schema.title} className="premium-hover min-w-0 rounded-xl border bg-surface p-4">
+            <div className={cn("text-balance font-display text-base font-semibold leading-snug", schema.tone)}>{schema.title}</div>
+            <ol className="mt-4 flex flex-wrap items-center gap-2 text-xs">
               {[schema.left, schema.mid, schema.right].map((label, index) => (
-                <div key={label} className="contents">
-                  <div className="rounded-lg border bg-card p-3 font-mono text-foreground">{label}</div>
-                  {index < 2 && <div className="text-muted-foreground">→</div>}
-                </div>
+                <li key={label} className="flex min-w-0 items-center gap-2">
+                  <span className="min-w-0 break-words rounded-lg border bg-card px-3 py-2 text-center font-mono text-foreground">
+                    {label}
+                  </span>
+                  {index < 2 && <span aria-hidden className="shrink-0 text-muted-foreground">→</span>}
+                </li>
               ))}
-            </div>
+            </ol>
           </div>
         ))}
       </div>
+
     </section>
   );
 }

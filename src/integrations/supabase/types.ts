@@ -227,6 +227,138 @@ export type Database = {
         }
         Relationships: []
       }
+      question_bank_part_a: {
+        Row: {
+          chapter_id: string
+          choices: Json
+          correct_id: string
+          created_at: string
+          difficulty: number
+          explanation: string
+          id: string
+          is_active: boolean
+          lesson_id: string
+          prompt: string
+          question_key: string
+          updated_at: string
+        }
+        Insert: {
+          chapter_id?: string
+          choices?: Json
+          correct_id: string
+          created_at?: string
+          difficulty: number
+          explanation?: string
+          id?: string
+          is_active?: boolean
+          lesson_id: string
+          prompt: string
+          question_key: string
+          updated_at?: string
+        }
+        Update: {
+          chapter_id?: string
+          choices?: Json
+          correct_id?: string
+          created_at?: string
+          difficulty?: number
+          explanation?: string
+          id?: string
+          is_active?: boolean
+          lesson_id?: string
+          prompt?: string
+          question_key?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      question_bank_part_b: {
+        Row: {
+          chapter_id: string
+          choices: Json
+          correct_id: string
+          created_at: string
+          difficulty: number
+          explanation: string
+          id: string
+          is_active: boolean
+          lesson_id: string
+          prompt: string
+          question_key: string
+          updated_at: string
+          visual_id: string | null
+          widget: string | null
+        }
+        Insert: {
+          chapter_id?: string
+          choices?: Json
+          correct_id: string
+          created_at?: string
+          difficulty: number
+          explanation?: string
+          id?: string
+          is_active?: boolean
+          lesson_id: string
+          prompt: string
+          question_key: string
+          updated_at?: string
+          visual_id?: string | null
+          widget?: string | null
+        }
+        Update: {
+          chapter_id?: string
+          choices?: Json
+          correct_id?: string
+          created_at?: string
+          difficulty?: number
+          explanation?: string
+          id?: string
+          is_active?: boolean
+          lesson_id?: string
+          prompt?: string
+          question_key?: string
+          updated_at?: string
+          visual_id?: string | null
+          widget?: string | null
+        }
+        Relationships: []
+      }
+      question_translations: {
+        Row: {
+          choices: Json
+          created_at: string
+          explanation: string
+          id: string
+          locale: string
+          part: string
+          prompt: string
+          question_key: string
+          updated_at: string
+        }
+        Insert: {
+          choices?: Json
+          created_at?: string
+          explanation?: string
+          id?: string
+          locale: string
+          part: string
+          prompt: string
+          question_key: string
+          updated_at?: string
+        }
+        Update: {
+          choices?: Json
+          created_at?: string
+          explanation?: string
+          id?: string
+          locale?: string
+          part?: string
+          prompt?: string
+          question_key?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       user_roles: {
         Row: {
           created_at: string

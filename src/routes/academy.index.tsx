@@ -1,6 +1,10 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Flame, ArrowRight, Lock, CheckCircle2 } from "lucide-react";
+import { Flame, ArrowRight, Lock, CheckCircle2, Compass } from "lucide-react";
+import { useEffect, useState } from "react";
 import { Eyebrow } from "@/components/academy/primitives";
+import { LanguageSwitch } from "@/components/academy/LanguageSwitch";
+import { PreflightGuide, hasSeenPreflight } from "@/components/academy/PreflightGuide";
+import { useT } from "@/lib/i18n";
 
 export const Route = createFileRoute("/academy/")({
   head: () => ({
@@ -34,27 +38,42 @@ const CHAPTERS = [
 ];
 
 function AcademyIndex() {
+  const t = useT();
+  const [preflight, setPreflight] = useState(false);
+
+  useEffect(() => {
+    if (!hasSeenPreflight()) setPreflight(true);
+  }, []);
+
   return (
     <div className="min-h-screen bg-background">
+      <PreflightGuide open={preflight} onClose={() => setPreflight(false)} />
       <header className="sticky top-0 z-40 border-b border-border/70 bg-background/80 backdrop-blur-xl">
-        <div className="mx-auto flex h-14 max-w-[1100px] items-center justify-between px-4 sm:px-6">
-          <Link to="/" className="flex items-center gap-2 font-display font-semibold text-foreground">
-            <Flame className="h-5 w-5 text-forge" />
-            TradForge
+        <div className="mx-auto grid h-14 max-w-[1100px] grid-cols-[minmax(0,1fr)_auto] items-center gap-3 px-4 sm:px-6">
+          <Link to="/" className="flex min-w-0 items-center gap-2 font-display font-semibold text-foreground">
+            <Flame className="h-5 w-5 shrink-0 text-forge" />
+            <span className="truncate">TradForge</span>
           </Link>
-          <span className="font-mono text-xs uppercase tracking-wider text-muted-foreground">Academy</span>
+          <div className="flex shrink-0 items-center gap-2">
+            <LanguageSwitch />
+            <button
+              type="button"
+              onClick={() => setPreflight(true)}
+              className="inline-flex items-center gap-1.5 rounded-lg border border-border bg-surface px-2.5 py-1.5 font-mono text-[10px] uppercase tracking-wider text-muted-foreground transition-colors hover:text-foreground"
+            >
+              <Compass className="h-3.5 w-3.5" aria-hidden />
+              <span className="hidden sm:inline">{t.nav.replayGuide}</span>
+            </button>
+          </div>
         </div>
       </header>
 
       <main className="mx-auto max-w-[1100px] px-4 py-12 sm:px-6 sm:py-16">
-        <Eyebrow>Parcours certifiant</Eyebrow>
-        <h1 className="mt-4 max-w-2xl font-display text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
-          Apprenez les marchés en <span className="text-gradient-forge">manipulant</span>, pas en lisant.
+        <Eyebrow>{t.hub.eyebrow}</Eyebrow>
+        <h1 className="mt-4 max-w-2xl text-balance font-display text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
+          {t.hub.title}
         </h1>
-        <p className="mt-4 max-w-xl text-base leading-relaxed text-muted-foreground">
-          Un laboratoire interactif de niveau institutionnel. Chaque concept se voit, se manipule, se décide et se
-          comprend.
-        </p>
+        <p className="mt-4 max-w-xl text-pretty text-base leading-relaxed text-muted-foreground">{t.hub.lead}</p>
 
         <div className="mt-12 grid gap-4">
           {CHAPTERS.map((c) => {
