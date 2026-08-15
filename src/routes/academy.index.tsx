@@ -1,6 +1,10 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Flame, ArrowRight, Lock, CheckCircle2 } from "lucide-react";
+import { Flame, ArrowRight, Lock, CheckCircle2, Compass } from "lucide-react";
+import { useEffect, useState } from "react";
 import { Eyebrow } from "@/components/academy/primitives";
+import { LanguageSwitch } from "@/components/academy/LanguageSwitch";
+import { PreflightGuide, hasSeenPreflight } from "@/components/academy/PreflightGuide";
+import { useT } from "@/lib/i18n";
 
 export const Route = createFileRoute("/academy/")({
   head: () => ({
