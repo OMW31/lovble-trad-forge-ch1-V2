@@ -92,6 +92,6 @@ export const fr = {
     passed: "Leçon validée",
     failed: "Non validée — retentez avec une nouvelle série",
   },
-} as const;
+};
 
 export type Dictionary = typeof fr;
