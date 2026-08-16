@@ -190,7 +190,7 @@ export function KpiTile({
       <div className="truncate font-mono text-[10px] uppercase tracking-wider text-muted-foreground">{label}</div>
       <div
         className={cn(
-          "mt-1.5 break-words font-mono text-[clamp(0.95rem,1.1vw+0.55rem,1.5rem)] font-semibold leading-tight tabular-nums",
+          "mt-1.5 hyphens-auto break-words font-mono text-[clamp(0.85rem,0.55vw+0.62rem,1.2rem)] font-semibold leading-tight tabular-nums",
           tone === "bull" && "text-bull",
           tone === "bear" && "text-bear",
           tone === "forge" && "text-forge",
