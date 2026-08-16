@@ -50,7 +50,7 @@ function AcademyIndex() {
       <PreflightGuide open={preflight} onClose={() => setPreflight(false)} />
       <header className="sticky top-0 z-40 border-b border-border/70 bg-background/80 backdrop-blur-xl">
         <div className="mx-auto grid h-14 max-w-[1100px] grid-cols-[minmax(0,1fr)_auto] items-center gap-3 px-4 sm:px-6">
-          <Link to="/" className="flex min-w-0 items-center gap-2 font-display font-semibold text-foreground">
+          <Link to="/academy" className="flex min-w-0 items-center gap-2 font-display font-semibold text-foreground">
             <Flame className="h-5 w-5 shrink-0 text-forge" />
             <span className="truncate">TradForge</span>
           </Link>

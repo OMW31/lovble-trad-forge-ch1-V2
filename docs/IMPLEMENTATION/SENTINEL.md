@@ -141,3 +141,25 @@ Registre anti-régression du Chapitre 1. Toute implémentation future doit relir
 - [x] Navigation libre conservée ; seul l’accès certification est verrouillé à 5/5 leçons validées
 - [x] Partie C sortie du modal de leçon et montée en page dédiée
 - [x] Aucun widget/leçon historique supprimé
+
+## Standards obligatoires (2026-08-17)
+Tout incrément futur est relu contre ces trois documents, avant ET après implémentation :
+- `docs/ch1/VISUAL_INTEGRATION_STANDARD.md` — 3 couches obligatoires, doctrine V1/V2/Backgrounds.
+- `docs/ch1/CH1_ASSET_MATRIX.md` — cartographie exhaustive des assets.
+- `docs/PLAN&AUDIT/GAP_ANALYSIS_VS_AGENT_B0.md` — écarts arbitrés vs version alternative.
+
+## Features ajoutées — Rattrapage stratégique (2026-08-17)
+### À ne jamais casser
+- [x] Registre `visual-assets.ts` — source unique V1 / V2 / Backgrounds
+- [x] `VisualExplainer` + prop `showCaption` sur `VisualLayer` / `VisualLightbox`
+- [x] Banque de questions en base + `question-bank-loader.ts` avec fallback TS
+- [x] `src/lib/i18n/` (provider, dictionnaires FR/EN, `LanguageSwitch`)
+- [x] `PreflightGuide` rejouable — hub uniquement
+- [x] Redirect `/` → `/academy`
+- [x] `scripts/convert-assets.mjs` (non destructif)
+
+### Garanties
+- [x] Ids V1 a1→a17 immuables — les 59 questions Partie B restent adossées
+- [x] Fallback TS : l'évaluation fonctionne même base injoignable
+- [x] Moteur de sélection déterministe, sans IA (2/2/3, 30/70, seuil 70 %)
+- [x] Responsive validé 390 → 2560 px, aucune erreur console

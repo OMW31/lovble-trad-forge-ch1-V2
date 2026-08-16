@@ -157,3 +157,37 @@ Bloqués jusqu'à réception docs Icon Library + assets V2 + backgrounds (dépen
 
 ### Documentation / anti-régression
 - `Widget-Interaction-Guide.md`, `Scenario_Inventory.md`, `CH1_ASSET_MAP.md`, `CH1_VISUAL_SPECS/INDEX.md`, `SENTINEL.md`, `TASKS_CH1_IMPLEMENTATION.md` mis à jour en append-only.
+
+## 2026-08-17 · Plan de rattrapage stratégique — Phases 0 → 6 terminées
+### Phase 0 — Socle documentaire (append-only)
+- `docs/PLAN&AUDIT/GAP_ANALYSIS_VS_AGENT_B0.md` : écart par écart vs version alternative (reprendre / dépasser / ne pas reproduire).
+- `docs/ch1/VISUAL_INTEGRATION_STANDARD.md` : standard officiel des 3 couches (contexte / image / couche native traduisible).
+- `docs/ch1/CH1_ASSET_MATRIX.md` : cartographie exhaustive V1 (a1→a17) / V2 (19) / Backgrounds (5).
+
+### Phase 1 — Système visuel définitif
+- Doctrine V1/V2 complémentaires actée : V1 = évaluations Partie B (ids immuables), V2 = cours & immersion, Backgrounds = ambiance.
+- `scripts/convert-assets.mjs` : conversion WebP q85 reproductible, non destructive (`--force` pour régénérer).
+- Registre unique `src/lib/academy/visual-assets.ts` (+ helper `v1Asset`).
+
+### Phase 2 — Standard d'intégration + couche explicative
+- `VisualExplainer` / `VisualExplainerStacked` déployés sur les 5 leçons cœur : chaîne causale, callouts, lecture institutionnelle en données typées.
+- `VisualLayer` / `VisualLightbox` : nouvelle prop `showCaption` — plus de légende incrustée quand le contexte éditorial la porte déjà.
+- Colonne image du `VisualExplainer` étirée en pleine hauteur sur ≥ lg (fin des bandes vides sur grands écrans).
+
+### Phase 3 — i18n
+- Architecture `src/lib/i18n/` (provider, `useT`, dictionnaires namespacés, locale persistée), FR référence / EN adaptation éditoriale, niveaux 1 et 4 complets. `LanguageSwitch` monté.
+
+### Phase 4 — Banque de questions en base
+- Tables `question_bank_part_a` (75), `question_bank_part_b` (59), `question_translations` avec RLS + GRANT lecture publique.
+- `question-bank-loader.ts` : hydratation async par locale, fallback intégral sur les banques TS. Moteur `assessment-picker` inchangé (déterministe, 2/2/3, pondération 30/70, seuil 70 %).
+
+### Phase 5 — Architecture du parcours
+- `/` redirige désormais vers `/academy` (Chapter Hub = point d'entrée unique). Liens internes (`auth`, hub) repointés.
+- Preflight rejouable depuis le Chapter Hub uniquement, jamais dans le Chapitre 1.
+
+### Phase 6 — Polish grands écrans
+- `KpiTile` : clamp typographique resserré + `hyphens-auto` — plus de mots coupés (« croissance », « directeurs ») en ≥ 1440 px.
+- Harnais responsive Playwright 390 / 834 / 1280 / 1920 / 2560 : `scrollWidth == clientWidth` à toutes les largeurs, zéro erreur console. Seul dépassement restant = marqueau ticker (intentionnel, contenu par `overflow-hidden`).
+
+### Anti-régression
+- Typecheck OK. Aucun visuel, widget, leçon, question ou document supprimé. Ids V1 intacts → aucune question Partie B orpheline.

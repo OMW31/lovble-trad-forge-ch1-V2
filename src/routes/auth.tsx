@@ -114,7 +114,7 @@ function AuthPage() {
 
       <div className="relative mx-auto flex min-h-screen max-w-[1240px] flex-col px-4 py-10 sm:px-6 lg:grid lg:grid-cols-[minmax(0,1fr)_460px] lg:items-center lg:gap-12">
         <section className="pb-10 lg:pb-0">
-          <Link to="/" className="inline-flex items-center gap-2 font-display text-lg font-semibold text-foreground">
+          <Link to="/academy" className="inline-flex items-center gap-2 font-display text-lg font-semibold text-foreground">
             <Flame className="h-5 w-5 text-forge" />
             TradForge
           </Link>

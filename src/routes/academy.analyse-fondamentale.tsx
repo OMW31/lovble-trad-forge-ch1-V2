@@ -6,6 +6,8 @@ import { ChapterShell } from "@/components/academy/ChapterShell";
 import { ChapterHero } from "@/components/academy/ChapterHero";
 import { LessonSection } from "@/components/academy/LessonSection";
 import { ConceptCard, KpiTile, Reveal, Eyebrow, VisualLayer } from "@/components/academy/primitives";
+import { VisualExplainer, VisualExplainerStacked } from "@/components/academy/VisualExplainer";
+import { V2_ASSETS, BACKGROUNDS, v1Asset } from "@/lib/academy/visual-assets";
 import { Scenario } from "@/components/academy/Scenario";
 import { CandleReplay } from "@/components/academy/CandleReplay";
 import { MarketDriverVisualizer } from "@/components/academy/MarketDriverVisualizer";
@@ -171,6 +173,25 @@ function Chapter1Page() {
           <Reveal>
             <MacroRegimeRadar />
           </Reveal>
+          <Reveal delay={80}>
+            <VisualExplainer
+              asset={V2_ASSETS.inflationRegimes}
+              kicker="1.1 · Mémoire des régimes"
+              title="Cinquante ans de régimes d'inflation"
+              lead="Chaque régime impose sa hiérarchie d'actifs. Lire le régime avant de lire la donnée : c'est l'ordre institutionnel."
+              chain={[
+                { label: "Choc d'offre", detail: "1973 · 1979", tone: "bear" },
+                { label: "Désinflation", detail: "Volcker", tone: "data" },
+                { label: "Grande modération", detail: "1990 → 2007" },
+                { label: "Retour inflation", detail: "2021 →", tone: "forge" },
+              ]}
+              callouts={[
+                { label: "Variable pivot", value: "Taux réels", tone: "data" },
+                { label: "Réponse", value: "Politique monétaire", tone: "forge" },
+              ]}
+              reading="Un même chiffre d'IPC n'a pas la même conséquence selon le régime : le marché price la réaction attendue de la banque centrale, pas la donnée brute."
+            />
+          </Reveal>
         </div>
 
         <div id="intro-concept" className="scroll-mt-24 space-y-6">
@@ -202,6 +223,39 @@ function Chapter1Page() {
               <ConceptCard title="Retour à la moyenne">
                 À long terme, le prix tend à <strong>converger</strong> vers la valeur intrinsèque de l'actif.
               </ConceptCard>
+            </Reveal>
+          </div>
+
+          <div className="grid gap-4 xl:grid-cols-2">
+            <Reveal>
+              <VisualExplainerStacked
+                asset={V2_ASSETS.priceValueIceberg}
+                kicker="Principe fondateur"
+                title="Le prix est visible, la valeur est immergée"
+                lead="Le marché cote en permanence un prix ; la valeur intrinsèque, elle, se déduit des fondamentaux."
+                chain={[
+                  { label: "Prix", detail: "cotation", tone: "forge" },
+                  { label: "Sentiment", detail: "flux, narratif" },
+                  { label: "Fondamentaux", detail: "comptes, macro", tone: "data" },
+                  { label: "Valeur", detail: "juste valeur", tone: "bull" },
+                ]}
+                reading="L'écart prix / valeur est l'espace de l'opportunité : il se mesure, il ne se devine pas."
+              />
+            </Reveal>
+            <Reveal delay={80}>
+              <VisualExplainerStacked
+                asset={V2_ASSETS.realEconomy}
+                kicker="Chaîne de valeur"
+                title="De l'économie réelle au prix de marché"
+                lead="Production, emploi et revenus alimentent les bénéfices, qui alimentent les valorisations."
+                chain={[
+                  { label: "Production", tone: "data" },
+                  { label: "Revenus" },
+                  { label: "Bénéfices", tone: "bull" },
+                  { label: "Valorisation", tone: "forge" },
+                ]}
+                reading="Toute thèse fondamentale doit pouvoir se raccrocher à un maillon réel de cette chaîne."
+              />
             </Reveal>
           </div>
         </div>
@@ -261,7 +315,7 @@ function Chapter1Page() {
             </p>
           </Reveal>
 
-          <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
+          <div className="grid grid-cols-[repeat(auto-fit,minmax(min(9.5rem,100%),1fr))] gap-3">
             <Reveal delay={0}><KpiTile label="PIB" value="croissance" hint="activité globale" tone="bull" /></Reveal>
             <Reveal delay={40}><KpiTile label="IPC" value="inflation" hint="prix & taux" tone="forge" /></Reveal>
             <Reveal delay={80}><KpiTile label="Taux" value="directeurs" hint="coût du capital" tone="data" /></Reveal>
@@ -270,14 +324,67 @@ function Chapter1Page() {
             <Reveal delay={200}><KpiTile label="PMI" value="confiance" hint="indicateur avancé" tone="data" /></Reveal>
           </div>
 
-          <div className="grid gap-4 lg:grid-cols-2">
+          <div className="grid gap-4 xl:grid-cols-2">
             <Reveal>
-              <VisualLayer src="/academy/ch1/visuals/a1.webp" alt="L'écosystème macroéconomique — comment les indicateurs clés pilotent l'économie" variant="figure" />
+              <VisualExplainerStacked
+                asset={v1Asset(
+                  "a1",
+                  "Écosystème macroéconomique",
+                  "L'écosystème macroéconomique — comment les indicateurs clés pilotent l'économie",
+                  { lesson: "macro", section: "macro-concept" },
+                )}
+                kicker="1.2 · Figure 1"
+                title="L'écosystème macroéconomique"
+                lead="PIB, inflation, emploi, balance commerciale et taux forment un système bouclé : aucun indicateur ne se lit isolément."
+                chain={[
+                  { label: "Emploi", tone: "bull" },
+                  { label: "Demande" },
+                  { label: "Inflation", tone: "forge" },
+                  { label: "Taux", tone: "data" },
+                ]}
+                reading="Le marché arbitre la boucle complète, pas le point de donnée."
+              />
             </Reveal>
             <Reveal delay={80}>
-              <VisualLayer src="/academy/ch1/visuals/a2.webp" alt="La hiérarchie de l'intelligence — du signal à l'impact (indicateurs avancés, coïncidents, retardés)" variant="figure" />
+              <VisualExplainerStacked
+                asset={v1Asset(
+                  "a2",
+                  "Hiérarchie du signal",
+                  "La hiérarchie de l'intelligence — du signal à l'impact (indicateurs avancés, coïncidents, retardés)",
+                  { lesson: "macro", section: "macro-concept" },
+                )}
+                kicker="1.2 · Figure 2"
+                title="Avancés, coïncidents, retardés"
+                lead="La temporalité d'un indicateur détermine sa valeur décisionnelle : l'avancé anticipe, le retardé confirme."
+                chain={[
+                  { label: "Avancés", detail: "PMI, permis", tone: "data" },
+                  { label: "Coïncidents", detail: "PIB, ventes" },
+                  { label: "Retardés", detail: "chômage, IPC core", tone: "forge" },
+                ]}
+                reading="Se positionner sur un retardé, c'est acheter une information déjà price-ée."
+              />
             </Reveal>
           </div>
+
+          <Reveal>
+            <VisualExplainer
+              asset={V2_ASSETS.productionChain}
+              kicker="Transmission"
+              title="Production → croissance → capitaux → devise"
+              lead="La chaîne de transmission qui relie l'activité industrielle à la valorisation d'une devise."
+              chain={[
+                { label: "Production", tone: "data" },
+                { label: "Croissance", tone: "bull" },
+                { label: "Flux de capitaux" },
+                { label: "Devise", tone: "forge" },
+              ]}
+              callouts={[
+                { label: "Signal amont", value: "PMI manufacturier", tone: "data" },
+                { label: "Signal aval", value: "Taux de change", tone: "forge" },
+              ]}
+              reading="Un choc de production ne se lit sur la devise qu'après avoir traversé la croissance et les flux : d'où le décalage temporel observé."
+            />
+          </Reveal>
         </div>
 
         <div id="macro-dashboard" className="scroll-mt-24 space-y-6">
@@ -292,21 +399,100 @@ function Chapter1Page() {
         <div id="macro-widgets" className="relative scroll-mt-24 space-y-6 overflow-hidden rounded-3xl">
           <VisualLayer src="/academy/ch1/visuals/a4.webp" alt="" variant="background" opacity={0.14} position="center top" />
           <div className="relative space-y-6 p-px">
+            <Reveal>
+              <VisualExplainer
+                asset={V2_ASSETS.cycleWheel}
+                kicker="Widget · contexte"
+                title="Où sommes-nous dans le cycle ?"
+                lead="Le cycle fixe le régime d'exposition : chaque phase favorise une classe d'actifs différente."
+                chain={[
+                  { label: "Expansion", tone: "bull" },
+                  { label: "Ralentissement", tone: "forge" },
+                  { label: "Contraction", tone: "bear" },
+                  { label: "Reprise", tone: "data" },
+                ]}
+                reading="La roue ci-contre se manipule : positionnez la phase et lisez la rotation sectorielle attendue."
+              />
+            </Reveal>
             <div className="grid gap-6 xl:grid-cols-2">
               <Reveal><EconomicCycleWheel /></Reveal>
               <Reveal delay={80}><MacroRelationshipEngine /></Reveal>
             </div>
 
+            <Reveal>
+              <VisualExplainer
+                asset={V2_ASSETS.centralBank}
+                reverse
+                kicker="Widget · contexte"
+                title="La salle où le prix de l'argent se décide"
+                lead="Le taux directeur est le prix de référence de tout le système : il réordonne les rendements, les devises et les valorisations."
+                chain={[
+                  { label: "Inflation", tone: "forge" },
+                  { label: "Décision", detail: "taux directeur", tone: "data" },
+                  { label: "Rendements" },
+                  { label: "Devise", tone: "bull" },
+                ]}
+                callouts={[{ label: "Levier", value: "Taux réel", tone: "data" }]}
+                reading="Le marché ne réagit pas à la décision mais à l'écart avec ce qu'il avait déjà price-é."
+              />
+            </Reveal>
             <div className="grid gap-6 xl:grid-cols-2">
               <Reveal><FedSimulator /></Reveal>
               <Reveal delay={80}><NfpInterpreter /></Reveal>
             </div>
 
+            <Reveal>
+              <VisualExplainer
+                asset={V2_ASSETS.nfpRelease}
+                kicker="Widget · contexte"
+                title="14h30 — la mécanique d'une publication NFP"
+                lead="Emploi, salaires et taux de participation forment un triptyque : le chiffre principal ment souvent seul."
+                chain={[
+                  { label: "NFP", detail: "créations", tone: "bull" },
+                  { label: "Salaires", detail: "pression prix", tone: "forge" },
+                  { label: "Taux", detail: "anticipations", tone: "data" },
+                  { label: "USD" },
+                ]}
+                reading="Un NFP fort avec salaires faibles n'a pas la même conséquence monétaire qu'un NFP faible avec salaires en hausse."
+              />
+            </Reveal>
             <div className="grid gap-6 xl:grid-cols-2">
               <Reveal><GdpCpiInterpreters /></Reveal>
               <Reveal delay={80}><YieldCurveVisualizer /></Reveal>
             </div>
 
+            <Reveal>
+              <VisualExplainer
+                asset={V2_ASSETS.cpiDrivers}
+                reverse
+                kicker="Widget · contexte"
+                title="Ce qui fabrique réellement l'IPC"
+                lead="Matières premières, salaires et loyers alimentent l'indice avec des délais différents."
+                chain={[
+                  { label: "Matières", tone: "forge" },
+                  { label: "Salaires", tone: "bull" },
+                  { label: "Loyers", detail: "composante lente" },
+                  { label: "IPC core", tone: "data" },
+                ]}
+                reading="Le core, plus lent, est celui que la banque centrale suit : il révèle la persistance."
+              />
+            </Reveal>
+
+            <Reveal>
+              <VisualExplainer
+                asset={V2_ASSETS.commoditiesFx}
+                kicker="Widget · contexte"
+                title="Matières premières → devises"
+                lead="Pétrole, or et cuivre transmettent l'inflation importée et repricent les devises exportatrices."
+                chain={[
+                  { label: "Pétrole", tone: "forge" },
+                  { label: "Inflation importée" },
+                  { label: "Rendements", tone: "data" },
+                  { label: "FX", tone: "bull" },
+                ]}
+                reading="Le cuivre est un thermomètre d'activité ; l'or, un thermomètre de taux réels."
+              />
+            </Reveal>
             <Reveal>
               <IntermarketCorrelationMap />
             </Reveal>
@@ -316,6 +502,25 @@ function Chapter1Page() {
         <div id="macro-lab" className="scroll-mt-24 space-y-6">
           <Reveal>
             <SubHead icon={BarChart3}>Laboratoire interactif — simulez une surprise</SubHead>
+          </Reveal>
+          <Reveal>
+            <VisualExplainer
+              asset={V2_ASSETS.tradeFlows}
+              kicker="1.2 · Flux mondiaux"
+              title="La balance commerciale, moteur silencieux des devises"
+              lead="Les échanges physiques créent une demande structurelle de devise, indépendante du narratif de marché."
+              chain={[
+                { label: "Exportations", tone: "bull" },
+                { label: "Demande de devise" },
+                { label: "Balance", tone: "data" },
+                { label: "Taux de change", tone: "forge" },
+              ]}
+              callouts={[
+                { label: "Excédent", value: "Devise soutenue", tone: "bull" },
+                { label: "Déficit", value: "Dépendance aux flux", tone: "bear" },
+              ]}
+              reading="Un déficit courant n'est pas fatal tant que les flux de capitaux le financent : c'est la conjonction des deux qui casse une devise."
+            />
           </Reveal>
           <Reveal>
             <MacroIndicatorLab />
@@ -343,18 +548,44 @@ function Chapter1Page() {
           <LessonMiniHero lesson={meta("micro")} />
         </Reveal>
 
-        <div id="micro-concept" className="scroll-mt-24">
-          <Reveal>
-            <SubHead icon={BarChart3}>Concept</SubHead>
-            <p className="mt-3 max-w-3xl text-base leading-relaxed text-muted-foreground">
-              Au niveau de l'entreprise, l'analyse repose sur les{" "}
-              <strong className="text-foreground">états financiers</strong> : compte de résultat (revenus, marges,
-              bénéfice), bilan (actif = passif + capitaux propres) et tableau des flux de trésorerie. On y mesure la{" "}
-              <strong className="text-foreground">croissance</strong>, la <strong className="text-foreground">rentabilité</strong>{" "}
-              (ROE, ROA, marges), l'<strong className="text-foreground">endettement</strong> (D/E) et la génération de{" "}
-              <strong className="text-foreground">cash-flow</strong>.
-            </p>
-          </Reveal>
+        <div id="micro-concept" className="relative scroll-mt-24 space-y-6 overflow-hidden rounded-3xl">
+          <VisualLayer src={BACKGROUNDS.micro} alt="" variant="background" opacity={0.1} position="center" />
+          <div className="relative space-y-6 p-px">
+            <Reveal>
+              <SubHead icon={BarChart3}>Concept</SubHead>
+              <p className="mt-3 max-w-3xl text-base leading-relaxed text-muted-foreground">
+                Au niveau de l'entreprise, l'analyse repose sur les{" "}
+                <strong className="text-foreground">états financiers</strong> : compte de résultat (revenus, marges,
+                bénéfice), bilan (actif = passif + capitaux propres) et tableau des flux de trésorerie. On y mesure la{" "}
+                <strong className="text-foreground">croissance</strong>, la <strong className="text-foreground">rentabilité</strong>{" "}
+                (ROE, ROA, marges), l'<strong className="text-foreground">endettement</strong> (D/E) et la génération de{" "}
+                <strong className="text-foreground">cash-flow</strong>.
+              </p>
+            </Reveal>
+            <Reveal delay={80}>
+              <VisualExplainer
+                asset={v1Asset(
+                  "a6",
+                  "Anatomie financière d'une entreprise",
+                  "Vue d'ensemble des états financiers : compte de résultat, bilan et flux de trésorerie",
+                  { lesson: "micro", section: "micro-concept" },
+                )}
+                kicker="1.3 · Anatomie"
+                title="Les trois états financiers, un seul récit"
+                lead="Résultat, bilan et cash-flow racontent la même entreprise sous trois angles : performance, structure, liquidité."
+                chain={[
+                  { label: "Résultat", detail: "revenus, marges", tone: "bull" },
+                  { label: "Bilan", detail: "actif = passif + CP", tone: "data" },
+                  { label: "Cash-flow", detail: "trésorerie réelle", tone: "forge" },
+                ]}
+                callouts={[
+                  { label: "Rentabilité", value: "ROE / ROA", tone: "bull" },
+                  { label: "Solidité", value: "D/E", tone: "bear" },
+                ]}
+                reading="Un bénéfice sans cash-flow associé est un signal d'alerte : la trésorerie ne se manipule pas aussi facilement qu'un résultat comptable."
+              />
+            </Reveal>
+          </div>
         </div>
 
         <div id="micro-widgets" className="relative scroll-mt-24 overflow-hidden rounded-3xl">
@@ -391,19 +622,42 @@ function Chapter1Page() {
           <LessonMiniHero lesson={meta("outils")} />
         </Reveal>
 
-        <div id="outils-concept" className="scroll-mt-24">
-          <Reveal>
-            <SubHead icon={Calculator}>Concept</SubHead>
-            <p className="mt-3 max-w-3xl text-base leading-relaxed text-muted-foreground">
-              Pour transformer les données en décision, on s'appuie sur des outils : les{" "}
-              <strong className="text-foreground">ratios</strong> (P/E, P/B, D/E, ROE), le modèle{" "}
-              <strong className="text-foreground">DCF</strong> (actualisation des flux), l'analyse{" "}
-              <strong className="text-foreground">sectorielle</strong>, la comparaison entre pairs (
-              <strong className="text-foreground">peer comparison</strong>) et l'analyse{" "}
-              <strong className="text-foreground">SWOT</strong>. Aucun multiple ne se lit seul : il se compare à la
-              croissance, au secteur et à l'historique.
-            </p>
-          </Reveal>
+        <div id="outils-concept" className="relative scroll-mt-24 space-y-6 overflow-hidden rounded-3xl">
+          <VisualLayer src={BACKGROUNDS.outils} alt="" variant="background" opacity={0.1} position="center" />
+          <div className="relative space-y-6 p-px">
+            <Reveal>
+              <SubHead icon={Calculator}>Concept</SubHead>
+              <p className="mt-3 max-w-3xl text-base leading-relaxed text-muted-foreground">
+                Pour transformer les données en décision, on s'appuie sur des outils : les{" "}
+                <strong className="text-foreground">ratios</strong> (P/E, P/B, D/E, ROE), le modèle{" "}
+                <strong className="text-foreground">DCF</strong> (actualisation des flux), l'analyse{" "}
+                <strong className="text-foreground">sectorielle</strong>, la comparaison entre pairs (
+                <strong className="text-foreground">peer comparison</strong>) et l'analyse{" "}
+                <strong className="text-foreground">SWOT</strong>. Aucun multiple ne se lit seul : il se compare à la
+                croissance, au secteur et à l'historique.
+              </p>
+            </Reveal>
+            <Reveal delay={80}>
+              <VisualExplainer
+                asset={V2_ASSETS.capitalMachine}
+                reverse
+                kicker="1.4 · Machine d'allocation"
+                title="Des entrées macro aux sorties de marché"
+                lead="Les outils d'analyse sont la mécanique qui convertit une lecture macro en allocation explicite."
+                chain={[
+                  { label: "Entrées", detail: "macro, comptes", tone: "data" },
+                  { label: "Modèles", detail: "ratios, DCF" },
+                  { label: "Arbitrage", detail: "pairs, secteur" },
+                  { label: "Allocation", detail: "FX, taux, actions", tone: "forge" },
+                ]}
+                callouts={[
+                  { label: "Multiple", value: "P/E vs croissance", tone: "data" },
+                  { label: "Actualisation", value: "WACC & terminal", tone: "forge" },
+                ]}
+                reading="Un modèle n'est jamais une vérité : c'est un cadre d'hypothèses dont chaque paramètre doit être défendable."
+              />
+            </Reveal>
+          </div>
         </div>
 
         <div id="outils-widgets" className="relative scroll-mt-24 overflow-hidden rounded-3xl">
@@ -445,17 +699,40 @@ function Chapter1Page() {
           <LessonMiniHero lesson={meta("previsions")} />
         </Reveal>
 
-        <div id="previsions-concept" className="scroll-mt-24">
-          <Reveal>
-            <SubHead icon={LineChart}>Concept</SubHead>
-            <p className="mt-3 max-w-3xl text-base leading-relaxed text-muted-foreground">
-              Prévoir consiste à projeter l'avenir à partir des{" "}
-              <strong className="text-foreground">tendances historiques</strong>, de{" "}
-              <strong className="text-foreground">scénarios</strong> (optimiste, neutre, pessimiste) et de la{" "}
-              <strong className="text-foreground">guidance</strong> communiquée par les entreprises. La guidance pèse
-              souvent plus que le dernier résultat publié : elle oriente les anticipations du marché.
-            </p>
-          </Reveal>
+        <div id="previsions-concept" className="relative scroll-mt-24 space-y-6 overflow-hidden rounded-3xl">
+          <VisualLayer src={BACKGROUNDS.previsions} alt="" variant="background" opacity={0.1} position="center" />
+          <div className="relative space-y-6 p-px">
+            <Reveal>
+              <SubHead icon={LineChart}>Concept</SubHead>
+              <p className="mt-3 max-w-3xl text-base leading-relaxed text-muted-foreground">
+                Prévoir consiste à projeter l'avenir à partir des{" "}
+                <strong className="text-foreground">tendances historiques</strong>, de{" "}
+                <strong className="text-foreground">scénarios</strong> (optimiste, neutre, pessimiste) et de la{" "}
+                <strong className="text-foreground">guidance</strong> communiquée par les entreprises. La guidance pèse
+                souvent plus que le dernier résultat publié : elle oriente les anticipations du marché.
+              </p>
+            </Reveal>
+            <Reveal delay={80}>
+              <VisualExplainer
+                asset={V2_ASSETS.energyChain}
+                kicker="1.5 · Chaîne de prévision"
+                title="Anatomie d'un choc : de l'énergie au repricing de l'euro"
+                lead="Une prévision institutionnelle n'est pas une opinion : c'est une chaîne causale datée, avec ses points de rupture."
+                chain={[
+                  { label: "Choc d'offre", detail: "gaz, pétrole", tone: "bear" },
+                  { label: "Coûts", detail: "production" },
+                  { label: "Inflation", detail: "IPC, core", tone: "forge" },
+                  { label: "Réponse BCE", detail: "taux", tone: "data" },
+                  { label: "Croissance / EUR", detail: "repricing", tone: "bear" },
+                ]}
+                callouts={[
+                  { label: "Horizon", value: "3 → 12 mois", tone: "data" },
+                  { label: "Point de rupture", value: "Taux réels > 0", tone: "forge" },
+                ]}
+                reading="Chaque maillon est falsifiable : si les coûts refluent avant la réponse monétaire, le scénario devient caduc et se révise."
+              />
+            </Reveal>
+          </div>
         </div>
 
         <div id="previsions-planner" className="scroll-mt-24 space-y-6">

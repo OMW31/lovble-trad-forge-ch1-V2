@@ -236,3 +236,25 @@ export const BACKGROUNDS = {
 /** ---------- V1 : conservés pour les évaluations Partie B ---------- */
 export const V1_SRC = (id: string) => `${V1}/${id}.webp`;
 export const V1_IDS = Array.from({ length: 17 }, (_, i) => `a${i + 1}`);
+
+/**
+ * Fabrique un VisualAsset à partir d'un identifiant V1 (a1 → a17).
+ * Les V1 restent la référence des questions Partie B : l'id n'est jamais renommé.
+ */
+export function v1Asset(
+  id: string,
+  label: string,
+  alt: string,
+  opts: { lesson?: string; section?: string } = {},
+): VisualAsset {
+  return {
+    id,
+    version: "v1",
+    src: V1_SRC(id),
+    lesson: opts.lesson ?? "chapter",
+    ...(opts.section ? { section: opts.section } : {}),
+    role: "figure",
+    label,
+    alt,
+  };
+}

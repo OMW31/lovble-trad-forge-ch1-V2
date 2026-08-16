@@ -80,12 +80,14 @@ export function VisualExplainer({
         )}
       >
         <div className="min-w-0 border-b lg:border-b-0 lg:border-r">
+          {/* L'image remplit la colonne : pas de bande noire sur grands écrans.
+              Aucun label incrusté ici — le titre éditorial vit dans la couche native. */}
           <VisualLayer
             src={asset.src}
             alt={asset.alt}
             variant="figure"
-            label={asset.label}
-            className="rounded-none border-0"
+            showCaption={false}
+            className="h-full rounded-none border-0 lg:[&_button]:h-full lg:[&_img]:aspect-auto lg:[&_img]:h-full"
           />
         </div>
 
