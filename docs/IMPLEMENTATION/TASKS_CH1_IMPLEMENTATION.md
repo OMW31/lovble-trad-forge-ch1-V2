@@ -123,3 +123,16 @@ Toujours mettre à jour `CHANGELOG.md` et `SENTINEL.md` après chaque incrément
 - [x] Sprint 5 — ScenarioPlayer + Scenario Library Engine branchés à l’UI
 - [x] Sprint 6 — Lightbox standardisée + 17 visuels présents/documentés/référencés
 - [x] Sprint 7 — docs de suivi mises à jour en append-only
+
+## Versioning — 2026-08-17 · Plan de rattrapage stratégique (Phases 0→6) terminé
+- [x] Phase 0 — socle documentaire : GAP_ANALYSIS_VS_AGENT_B0, VISUAL_INTEGRATION_STANDARD, CH1_ASSET_MATRIX, SENTINEL « Standards obligatoires »
+- [x] Phase 1 — doctrine V1/V2/Backgrounds + `scripts/convert-assets.mjs` + registre `visual-assets.ts`
+- [x] Phase 2 — `VisualExplainer` déployé sur les 5 leçons, couche explicative native traduisible, `showCaption`
+- [x] Phase 3 — architecture i18n + niveaux 1 & 4 (FR référence / EN adaptation éditoriale)
+- [x] Phase 4 — banque de questions en base (75 A / 59 B / traductions) + loader avec fallback TS
+- [x] Phase 5 — `/` → `/academy`, Preflight rejouable depuis le hub uniquement
+- [x] Phase 6 — polish grands écrans (KpiTile, colonnes visuelles pleine hauteur) + harnais Playwright 390→2560
+
+### Reste planifié pour un lot ultérieur (documenté, non exécuté)
+- [ ] i18n niveaux 2 / 3 / 5 (cours, scénarios, callouts, media localization) — suivi dans `I18N_STRING_MAP.md`
+- [ ] Régénération Brand DNA des V1 (lot pilote de 3 visuels à soumettre avant série complète)
