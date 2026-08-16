@@ -6,6 +6,8 @@ import { ChapterShell } from "@/components/academy/ChapterShell";
 import { ChapterHero } from "@/components/academy/ChapterHero";
 import { LessonSection } from "@/components/academy/LessonSection";
 import { ConceptCard, KpiTile, Reveal, Eyebrow, VisualLayer } from "@/components/academy/primitives";
+import { VisualExplainer, VisualExplainerStacked } from "@/components/academy/VisualExplainer";
+import { V2_ASSETS, BACKGROUNDS, v1Asset } from "@/lib/academy/visual-assets";
 import { Scenario } from "@/components/academy/Scenario";
 import { CandleReplay } from "@/components/academy/CandleReplay";
 import { MarketDriverVisualizer } from "@/components/academy/MarketDriverVisualizer";
@@ -171,6 +173,25 @@ function Chapter1Page() {
           <Reveal>
             <MacroRegimeRadar />
           </Reveal>
+          <Reveal delay={80}>
+            <VisualExplainer
+              asset={V2_ASSETS.inflationRegimes}
+              kicker="1.1 · Mémoire des régimes"
+              title="Cinquante ans de régimes d'inflation"
+              lead="Chaque régime impose sa hiérarchie d'actifs. Lire le régime avant de lire la donnée : c'est l'ordre institutionnel."
+              chain={[
+                { label: "Choc d'offre", detail: "1973 · 1979", tone: "bear" },
+                { label: "Désinflation", detail: "Volcker", tone: "data" },
+                { label: "Grande modération", detail: "1990 → 2007" },
+                { label: "Retour inflation", detail: "2021 →", tone: "forge" },
+              ]}
+              callouts={[
+                { label: "Variable pivot", value: "Taux réels", tone: "data" },
+                { label: "Réponse", value: "Politique monétaire", tone: "forge" },
+              ]}
+              reading="Un même chiffre d'IPC n'a pas la même conséquence selon le régime : le marché price la réaction attendue de la banque centrale, pas la donnée brute."
+            />
+          </Reveal>
         </div>
 
         <div id="intro-concept" className="scroll-mt-24 space-y-6">
@@ -202,6 +223,39 @@ function Chapter1Page() {
               <ConceptCard title="Retour à la moyenne">
                 À long terme, le prix tend à <strong>converger</strong> vers la valeur intrinsèque de l'actif.
               </ConceptCard>
+            </Reveal>
+          </div>
+
+          <div className="grid gap-4 xl:grid-cols-2">
+            <Reveal>
+              <VisualExplainerStacked
+                asset={V2_ASSETS.priceValueIceberg}
+                kicker="Principe fondateur"
+                title="Le prix est visible, la valeur est immergée"
+                lead="Le marché cote en permanence un prix ; la valeur intrinsèque, elle, se déduit des fondamentaux."
+                chain={[
+                  { label: "Prix", detail: "cotation", tone: "forge" },
+                  { label: "Sentiment", detail: "flux, narratif" },
+                  { label: "Fondamentaux", detail: "comptes, macro", tone: "data" },
+                  { label: "Valeur", detail: "juste valeur", tone: "bull" },
+                ]}
+                reading="L'écart prix / valeur est l'espace de l'opportunité : il se mesure, il ne se devine pas."
+              />
+            </Reveal>
+            <Reveal delay={80}>
+              <VisualExplainerStacked
+                asset={V2_ASSETS.realEconomy}
+                kicker="Chaîne de valeur"
+                title="De l'économie réelle au prix de marché"
+                lead="Production, emploi et revenus alimentent les bénéfices, qui alimentent les valorisations."
+                chain={[
+                  { label: "Production", tone: "data" },
+                  { label: "Revenus" },
+                  { label: "Bénéfices", tone: "bull" },
+                  { label: "Valorisation", tone: "forge" },
+                ]}
+                reading="Toute thèse fondamentale doit pouvoir se raccrocher à un maillon réel de cette chaîne."
+              />
             </Reveal>
           </div>
         </div>
@@ -261,7 +315,7 @@ function Chapter1Page() {
             </p>
           </Reveal>
 
-          <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
+          <div className="grid grid-cols-[repeat(auto-fit,minmax(min(9.5rem,100%),1fr))] gap-3">
             <Reveal delay={0}><KpiTile label="PIB" value="croissance" hint="activité globale" tone="bull" /></Reveal>
             <Reveal delay={40}><KpiTile label="IPC" value="inflation" hint="prix & taux" tone="forge" /></Reveal>
             <Reveal delay={80}><KpiTile label="Taux" value="directeurs" hint="coût du capital" tone="data" /></Reveal>
@@ -270,14 +324,67 @@ function Chapter1Page() {
             <Reveal delay={200}><KpiTile label="PMI" value="confiance" hint="indicateur avancé" tone="data" /></Reveal>
           </div>
 
-          <div className="grid gap-4 lg:grid-cols-2">
+          <div className="grid gap-4 xl:grid-cols-2">
             <Reveal>
-              <VisualLayer src="/academy/ch1/visuals/a1.webp" alt="L'écosystème macroéconomique — comment les indicateurs clés pilotent l'économie" variant="figure" />
+              <VisualExplainerStacked
+                asset={v1Asset(
+                  "a1",
+                  "Écosystème macroéconomique",
+                  "L'écosystème macroéconomique — comment les indicateurs clés pilotent l'économie",
+                  { lesson: "macro", section: "macro-concept" },
+                )}
+                kicker="1.2 · Figure 1"
+                title="L'écosystème macroéconomique"
+                lead="PIB, inflation, emploi, balance commerciale et taux forment un système bouclé : aucun indicateur ne se lit isolément."
+                chain={[
+                  { label: "Emploi", tone: "bull" },
+                  { label: "Demande" },
+                  { label: "Inflation", tone: "forge" },
+                  { label: "Taux", tone: "data" },
+                ]}
+                reading="Le marché arbitre la boucle complète, pas le point de donnée."
+              />
             </Reveal>
             <Reveal delay={80}>
-              <VisualLayer src="/academy/ch1/visuals/a2.webp" alt="La hiérarchie de l'intelligence — du signal à l'impact (indicateurs avancés, coïncidents, retardés)" variant="figure" />
+              <VisualExplainerStacked
+                asset={v1Asset(
+                  "a2",
+                  "Hiérarchie du signal",
+                  "La hiérarchie de l'intelligence — du signal à l'impact (indicateurs avancés, coïncidents, retardés)",
+                  { lesson: "macro", section: "macro-concept" },
+                )}
+                kicker="1.2 · Figure 2"
+                title="Avancés, coïncidents, retardés"
+                lead="La temporalité d'un indicateur détermine sa valeur décisionnelle : l'avancé anticipe, le retardé confirme."
+                chain={[
+                  { label: "Avancés", detail: "PMI, permis", tone: "data" },
+                  { label: "Coïncidents", detail: "PIB, ventes" },
+                  { label: "Retardés", detail: "chômage, IPC core", tone: "forge" },
+                ]}
+                reading="Se positionner sur un retardé, c'est acheter une information déjà price-ée."
+              />
             </Reveal>
           </div>
+
+          <Reveal>
+            <VisualExplainer
+              asset={V2_ASSETS.productionChain}
+              kicker="Transmission"
+              title="Production → croissance → capitaux → devise"
+              lead="La chaîne de transmission qui relie l'activité industrielle à la valorisation d'une devise."
+              chain={[
+                { label: "Production", tone: "data" },
+                { label: "Croissance", tone: "bull" },
+                { label: "Flux de capitaux" },
+                { label: "Devise", tone: "forge" },
+              ]}
+              callouts={[
+                { label: "Signal amont", value: "PMI manufacturier", tone: "data" },
+                { label: "Signal aval", value: "Taux de change", tone: "forge" },
+              ]}
+              reading="Un choc de production ne se lit sur la devise qu'après avoir traversé la croissance et les flux : d'où le décalage temporel observé."
+            />
+          </Reveal>
         </div>
 
         <div id="macro-dashboard" className="scroll-mt-24 space-y-6">
