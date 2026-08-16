@@ -450,18 +450,44 @@ function Chapter1Page() {
           <LessonMiniHero lesson={meta("micro")} />
         </Reveal>
 
-        <div id="micro-concept" className="scroll-mt-24">
-          <Reveal>
-            <SubHead icon={BarChart3}>Concept</SubHead>
-            <p className="mt-3 max-w-3xl text-base leading-relaxed text-muted-foreground">
-              Au niveau de l'entreprise, l'analyse repose sur les{" "}
-              <strong className="text-foreground">états financiers</strong> : compte de résultat (revenus, marges,
-              bénéfice), bilan (actif = passif + capitaux propres) et tableau des flux de trésorerie. On y mesure la{" "}
-              <strong className="text-foreground">croissance</strong>, la <strong className="text-foreground">rentabilité</strong>{" "}
-              (ROE, ROA, marges), l'<strong className="text-foreground">endettement</strong> (D/E) et la génération de{" "}
-              <strong className="text-foreground">cash-flow</strong>.
-            </p>
-          </Reveal>
+        <div id="micro-concept" className="relative scroll-mt-24 space-y-6 overflow-hidden rounded-3xl">
+          <VisualLayer src={BACKGROUNDS.micro} alt="" variant="background" opacity={0.1} position="center" />
+          <div className="relative space-y-6 p-px">
+            <Reveal>
+              <SubHead icon={BarChart3}>Concept</SubHead>
+              <p className="mt-3 max-w-3xl text-base leading-relaxed text-muted-foreground">
+                Au niveau de l'entreprise, l'analyse repose sur les{" "}
+                <strong className="text-foreground">états financiers</strong> : compte de résultat (revenus, marges,
+                bénéfice), bilan (actif = passif + capitaux propres) et tableau des flux de trésorerie. On y mesure la{" "}
+                <strong className="text-foreground">croissance</strong>, la <strong className="text-foreground">rentabilité</strong>{" "}
+                (ROE, ROA, marges), l'<strong className="text-foreground">endettement</strong> (D/E) et la génération de{" "}
+                <strong className="text-foreground">cash-flow</strong>.
+              </p>
+            </Reveal>
+            <Reveal delay={80}>
+              <VisualExplainer
+                asset={v1Asset(
+                  "a6",
+                  "Anatomie financière d'une entreprise",
+                  "Vue d'ensemble des états financiers : compte de résultat, bilan et flux de trésorerie",
+                  { lesson: "micro", section: "micro-concept" },
+                )}
+                kicker="1.3 · Anatomie"
+                title="Les trois états financiers, un seul récit"
+                lead="Résultat, bilan et cash-flow racontent la même entreprise sous trois angles : performance, structure, liquidité."
+                chain={[
+                  { label: "Résultat", detail: "revenus, marges", tone: "bull" },
+                  { label: "Bilan", detail: "actif = passif + CP", tone: "data" },
+                  { label: "Cash-flow", detail: "trésorerie réelle", tone: "forge" },
+                ]}
+                callouts={[
+                  { label: "Rentabilité", value: "ROE / ROA", tone: "bull" },
+                  { label: "Solidité", value: "D/E", tone: "bear" },
+                ]}
+                reading="Un bénéfice sans cash-flow associé est un signal d'alerte : la trésorerie ne se manipule pas aussi facilement qu'un résultat comptable."
+              />
+            </Reveal>
+          </div>
         </div>
 
         <div id="micro-widgets" className="relative scroll-mt-24 overflow-hidden rounded-3xl">
@@ -498,19 +524,42 @@ function Chapter1Page() {
           <LessonMiniHero lesson={meta("outils")} />
         </Reveal>
 
-        <div id="outils-concept" className="scroll-mt-24">
-          <Reveal>
-            <SubHead icon={Calculator}>Concept</SubHead>
-            <p className="mt-3 max-w-3xl text-base leading-relaxed text-muted-foreground">
-              Pour transformer les données en décision, on s'appuie sur des outils : les{" "}
-              <strong className="text-foreground">ratios</strong> (P/E, P/B, D/E, ROE), le modèle{" "}
-              <strong className="text-foreground">DCF</strong> (actualisation des flux), l'analyse{" "}
-              <strong className="text-foreground">sectorielle</strong>, la comparaison entre pairs (
-              <strong className="text-foreground">peer comparison</strong>) et l'analyse{" "}
-              <strong className="text-foreground">SWOT</strong>. Aucun multiple ne se lit seul : il se compare à la
-              croissance, au secteur et à l'historique.
-            </p>
-          </Reveal>
+        <div id="outils-concept" className="relative scroll-mt-24 space-y-6 overflow-hidden rounded-3xl">
+          <VisualLayer src={BACKGROUNDS.outils} alt="" variant="background" opacity={0.1} position="center" />
+          <div className="relative space-y-6 p-px">
+            <Reveal>
+              <SubHead icon={Calculator}>Concept</SubHead>
+              <p className="mt-3 max-w-3xl text-base leading-relaxed text-muted-foreground">
+                Pour transformer les données en décision, on s'appuie sur des outils : les{" "}
+                <strong className="text-foreground">ratios</strong> (P/E, P/B, D/E, ROE), le modèle{" "}
+                <strong className="text-foreground">DCF</strong> (actualisation des flux), l'analyse{" "}
+                <strong className="text-foreground">sectorielle</strong>, la comparaison entre pairs (
+                <strong className="text-foreground">peer comparison</strong>) et l'analyse{" "}
+                <strong className="text-foreground">SWOT</strong>. Aucun multiple ne se lit seul : il se compare à la
+                croissance, au secteur et à l'historique.
+              </p>
+            </Reveal>
+            <Reveal delay={80}>
+              <VisualExplainer
+                asset={V2_ASSETS.capitalMachine}
+                reverse
+                kicker="1.4 · Machine d'allocation"
+                title="Des entrées macro aux sorties de marché"
+                lead="Les outils d'analyse sont la mécanique qui convertit une lecture macro en allocation explicite."
+                chain={[
+                  { label: "Entrées", detail: "macro, comptes", tone: "data" },
+                  { label: "Modèles", detail: "ratios, DCF" },
+                  { label: "Arbitrage", detail: "pairs, secteur" },
+                  { label: "Allocation", detail: "FX, taux, actions", tone: "forge" },
+                ]}
+                callouts={[
+                  { label: "Multiple", value: "P/E vs croissance", tone: "data" },
+                  { label: "Actualisation", value: "WACC & terminal", tone: "forge" },
+                ]}
+                reading="Un modèle n'est jamais une vérité : c'est un cadre d'hypothèses dont chaque paramètre doit être défendable."
+              />
+            </Reveal>
+          </div>
         </div>
 
         <div id="outils-widgets" className="relative scroll-mt-24 overflow-hidden rounded-3xl">
@@ -552,17 +601,40 @@ function Chapter1Page() {
           <LessonMiniHero lesson={meta("previsions")} />
         </Reveal>
 
-        <div id="previsions-concept" className="scroll-mt-24">
-          <Reveal>
-            <SubHead icon={LineChart}>Concept</SubHead>
-            <p className="mt-3 max-w-3xl text-base leading-relaxed text-muted-foreground">
-              Prévoir consiste à projeter l'avenir à partir des{" "}
-              <strong className="text-foreground">tendances historiques</strong>, de{" "}
-              <strong className="text-foreground">scénarios</strong> (optimiste, neutre, pessimiste) et de la{" "}
-              <strong className="text-foreground">guidance</strong> communiquée par les entreprises. La guidance pèse
-              souvent plus que le dernier résultat publié : elle oriente les anticipations du marché.
-            </p>
-          </Reveal>
+        <div id="previsions-concept" className="relative scroll-mt-24 space-y-6 overflow-hidden rounded-3xl">
+          <VisualLayer src={BACKGROUNDS.previsions} alt="" variant="background" opacity={0.1} position="center" />
+          <div className="relative space-y-6 p-px">
+            <Reveal>
+              <SubHead icon={LineChart}>Concept</SubHead>
+              <p className="mt-3 max-w-3xl text-base leading-relaxed text-muted-foreground">
+                Prévoir consiste à projeter l'avenir à partir des{" "}
+                <strong className="text-foreground">tendances historiques</strong>, de{" "}
+                <strong className="text-foreground">scénarios</strong> (optimiste, neutre, pessimiste) et de la{" "}
+                <strong className="text-foreground">guidance</strong> communiquée par les entreprises. La guidance pèse
+                souvent plus que le dernier résultat publié : elle oriente les anticipations du marché.
+              </p>
+            </Reveal>
+            <Reveal delay={80}>
+              <VisualExplainer
+                asset={V2_ASSETS.energyChain}
+                kicker="1.5 · Chaîne de prévision"
+                title="Anatomie d'un choc : de l'énergie au repricing de l'euro"
+                lead="Une prévision institutionnelle n'est pas une opinion : c'est une chaîne causale datée, avec ses points de rupture."
+                chain={[
+                  { label: "Choc d'offre", detail: "gaz, pétrole", tone: "bear" },
+                  { label: "Coûts", detail: "production" },
+                  { label: "Inflation", detail: "IPC, core", tone: "forge" },
+                  { label: "Réponse BCE", detail: "taux", tone: "data" },
+                  { label: "Croissance / EUR", detail: "repricing", tone: "bear" },
+                ]}
+                callouts={[
+                  { label: "Horizon", value: "3 → 12 mois", tone: "data" },
+                  { label: "Point de rupture", value: "Taux réels > 0", tone: "forge" },
+                ]}
+                reading="Chaque maillon est falsifiable : si les coûts refluent avant la réponse monétaire, le scénario devient caduc et se révise."
+              />
+            </Reveal>
+          </div>
         </div>
 
         <div id="previsions-planner" className="scroll-mt-24 space-y-6">
