@@ -399,21 +399,100 @@ function Chapter1Page() {
         <div id="macro-widgets" className="relative scroll-mt-24 space-y-6 overflow-hidden rounded-3xl">
           <VisualLayer src="/academy/ch1/visuals/a4.webp" alt="" variant="background" opacity={0.14} position="center top" />
           <div className="relative space-y-6 p-px">
+            <Reveal>
+              <VisualExplainer
+                asset={V2_ASSETS.cycleWheel}
+                kicker="Widget · contexte"
+                title="Où sommes-nous dans le cycle ?"
+                lead="Le cycle fixe le régime d'exposition : chaque phase favorise une classe d'actifs différente."
+                chain={[
+                  { label: "Expansion", tone: "bull" },
+                  { label: "Ralentissement", tone: "forge" },
+                  { label: "Contraction", tone: "bear" },
+                  { label: "Reprise", tone: "data" },
+                ]}
+                reading="La roue ci-contre se manipule : positionnez la phase et lisez la rotation sectorielle attendue."
+              />
+            </Reveal>
             <div className="grid gap-6 xl:grid-cols-2">
               <Reveal><EconomicCycleWheel /></Reveal>
               <Reveal delay={80}><MacroRelationshipEngine /></Reveal>
             </div>
 
+            <Reveal>
+              <VisualExplainer
+                asset={V2_ASSETS.centralBank}
+                reverse
+                kicker="Widget · contexte"
+                title="La salle où le prix de l'argent se décide"
+                lead="Le taux directeur est le prix de référence de tout le système : il réordonne les rendements, les devises et les valorisations."
+                chain={[
+                  { label: "Inflation", tone: "forge" },
+                  { label: "Décision", detail: "taux directeur", tone: "data" },
+                  { label: "Rendements" },
+                  { label: "Devise", tone: "bull" },
+                ]}
+                callouts={[{ label: "Levier", value: "Taux réel", tone: "data" }]}
+                reading="Le marché ne réagit pas à la décision mais à l'écart avec ce qu'il avait déjà price-é."
+              />
+            </Reveal>
             <div className="grid gap-6 xl:grid-cols-2">
               <Reveal><FedSimulator /></Reveal>
               <Reveal delay={80}><NfpInterpreter /></Reveal>
             </div>
 
+            <Reveal>
+              <VisualExplainer
+                asset={V2_ASSETS.nfpRelease}
+                kicker="Widget · contexte"
+                title="14h30 — la mécanique d'une publication NFP"
+                lead="Emploi, salaires et taux de participation forment un triptyque : le chiffre principal ment souvent seul."
+                chain={[
+                  { label: "NFP", detail: "créations", tone: "bull" },
+                  { label: "Salaires", detail: "pression prix", tone: "forge" },
+                  { label: "Taux", detail: "anticipations", tone: "data" },
+                  { label: "USD" },
+                ]}
+                reading="Un NFP fort avec salaires faibles n'a pas la même conséquence monétaire qu'un NFP faible avec salaires en hausse."
+              />
+            </Reveal>
             <div className="grid gap-6 xl:grid-cols-2">
               <Reveal><GdpCpiInterpreters /></Reveal>
               <Reveal delay={80}><YieldCurveVisualizer /></Reveal>
             </div>
 
+            <Reveal>
+              <VisualExplainer
+                asset={V2_ASSETS.cpiDrivers}
+                reverse
+                kicker="Widget · contexte"
+                title="Ce qui fabrique réellement l'IPC"
+                lead="Matières premières, salaires et loyers alimentent l'indice avec des délais différents."
+                chain={[
+                  { label: "Matières", tone: "forge" },
+                  { label: "Salaires", tone: "bull" },
+                  { label: "Loyers", detail: "composante lente" },
+                  { label: "IPC core", tone: "data" },
+                ]}
+                reading="Le core, plus lent, est celui que la banque centrale suit : il révèle la persistance."
+              />
+            </Reveal>
+
+            <Reveal>
+              <VisualExplainer
+                asset={V2_ASSETS.commoditiesFx}
+                kicker="Widget · contexte"
+                title="Matières premières → devises"
+                lead="Pétrole, or et cuivre transmettent l'inflation importée et repricent les devises exportatrices."
+                chain={[
+                  { label: "Pétrole", tone: "forge" },
+                  { label: "Inflation importée" },
+                  { label: "Rendements", tone: "data" },
+                  { label: "FX", tone: "bull" },
+                ]}
+                reading="Le cuivre est un thermomètre d'activité ; l'or, un thermomètre de taux réels."
+              />
+            </Reveal>
             <Reveal>
               <IntermarketCorrelationMap />
             </Reveal>
@@ -423,6 +502,25 @@ function Chapter1Page() {
         <div id="macro-lab" className="scroll-mt-24 space-y-6">
           <Reveal>
             <SubHead icon={BarChart3}>Laboratoire interactif — simulez une surprise</SubHead>
+          </Reveal>
+          <Reveal>
+            <VisualExplainer
+              asset={V2_ASSETS.tradeFlows}
+              kicker="1.2 · Flux mondiaux"
+              title="La balance commerciale, moteur silencieux des devises"
+              lead="Les échanges physiques créent une demande structurelle de devise, indépendante du narratif de marché."
+              chain={[
+                { label: "Exportations", tone: "bull" },
+                { label: "Demande de devise" },
+                { label: "Balance", tone: "data" },
+                { label: "Taux de change", tone: "forge" },
+              ]}
+              callouts={[
+                { label: "Excédent", value: "Devise soutenue", tone: "bull" },
+                { label: "Déficit", value: "Dépendance aux flux", tone: "bear" },
+              ]}
+              reading="Un déficit courant n'est pas fatal tant que les flux de capitaux le financent : c'est la conjonction des deux qui casse une devise."
+            />
           </Reveal>
           <Reveal>
             <MacroIndicatorLab />
