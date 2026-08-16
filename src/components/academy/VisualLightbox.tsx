@@ -8,12 +8,15 @@ export function VisualLightbox({
   label,
   className,
   imageClassName,
+  showCaption = true,
 }: {
   src: string;
   alt: string;
   label?: string;
   className?: string;
   imageClassName?: string;
+  /** Masque la légende incrustée quand le contexte éditorial la porte déjà. */
+  showCaption?: boolean;
 }) {
   const title = label ?? alt;
 
@@ -34,9 +37,11 @@ export function VisualLightbox({
           <span className="pointer-events-none absolute right-3 top-3 grid h-8 w-8 place-items-center rounded-lg border border-border/70 bg-background/75 text-foreground backdrop-blur-md">
             <Maximize2 className="h-4 w-4" />
           </span>
-          <span className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-background/90 via-background/30 to-transparent px-3 pb-3 pt-10 font-mono text-[10px] uppercase tracking-wider text-muted-foreground">
-            {title}
-          </span>
+          {showCaption && (
+            <span className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-background/90 via-background/30 to-transparent px-3 pb-3 pt-10 font-mono text-[10px] uppercase tracking-wider text-muted-foreground">
+              {title}
+            </span>
+          )}
         </button>
       </DialogTrigger>
       <DialogContent className="max-h-[92vh] max-w-6xl overflow-hidden border-border bg-background p-0">

@@ -52,6 +52,7 @@ export function VisualLayer({
   opacity = 0.5,
   position = "center",
   label,
+  showCaption = true,
 }: {
   src: string;
   alt: string;
@@ -60,6 +61,7 @@ export function VisualLayer({
   opacity?: number;
   position?: string;
   label?: string;
+  showCaption?: boolean;
 }) {
   const reduce = useReducedMotion();
 
@@ -76,6 +78,7 @@ export function VisualLayer({
           src={src}
           alt={alt}
           label={label}
+          showCaption={showCaption}
           className="border-0"
           imageClassName="transition-transform duration-700 group-hover:scale-[1.04]"
         />

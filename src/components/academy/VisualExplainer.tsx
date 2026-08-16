@@ -86,6 +86,7 @@ export function VisualExplainer({
             src={asset.src}
             alt={asset.alt}
             variant="figure"
+            showCaption={false}
             className="h-full rounded-none border-0 lg:[&_button]:h-full lg:[&_img]:aspect-auto lg:[&_img]:h-full"
           />
         </div>
