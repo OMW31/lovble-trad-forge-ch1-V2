@@ -39,6 +39,9 @@ import { ScenarioPlayer } from "@/components/academy/ScenarioPlayer";
 import { useChapterProgress } from "@/lib/academy/useChapterProgress";
 import { assembleScenario } from "@/lib/academy/scenario-engine";
 import { getSpecById } from "@/lib/academy/scenario-library";
+import { useT } from "@/lib/i18n";
+import { cn } from "@/lib/utils";
+
 
 export const Route = createFileRoute("/academy/analyse-fondamentale")({
   head: () => ({
@@ -68,6 +71,30 @@ function SubHead({ icon: Icon, children }: { icon: React.ElementType; children: 
     </Eyebrow>
   );
 }
+
+/**
+ * Top-bar entry point: single, coherent path toward the dedicated
+ * certification route (no legacy Standard / High / Premium diagnostic).
+ */
+function CertificationEntry({ ready, percent }: { ready: boolean; percent: number }) {
+  const t = useT();
+  return (
+    <Link
+      to="/academy/analyse-fondamentale/certification"
+      className={cn(
+        "inline-flex items-center gap-2 rounded-lg border px-3 py-1.5 font-mono text-[11px] uppercase tracking-wider transition-colors",
+        ready
+          ? "border-bull/50 bg-bull/10 text-bull hover:bg-bull/20"
+          : "border-forge/40 bg-forge/10 text-forge hover:bg-forge/20",
+      )}
+    >
+      <Award className="h-3.5 w-3.5" />
+      <span className="hidden sm:inline">{t.gate.certificationCta}</span>
+      <span className="font-mono tabular-nums">{percent}%</span>
+    </Link>
+  );
+}
+
 
 function Chapter1Page() {
   const {
