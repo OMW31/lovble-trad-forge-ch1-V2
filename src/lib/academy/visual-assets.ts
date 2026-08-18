@@ -224,7 +224,27 @@ export const V2_CASE_ASSETS: Record<string, VisualAsset> = {
   },
 };
 
+/**
+ * Correspondance cas historique (market-data) → visuel V2 dédié.
+ * Les cas sans V2 propre retombent proprement sur `undefined` : le
+ * ScenarioPlayer affiche alors sa composition native sans image.
+ */
+const CASE_VISUAL_BY_CASE_ID: Record<string, string> = {
+  "ch1-energy-crisis-eu-2022": "case-european-energy-crisis",
+  "ch1-covid-march-2020": "case-march-2020-liquidity",
+  "ch1-try-depreciation-2021-2024": "case-turkish-lira-collapse",
+  "ch1-brexit-2016": "case-brexit-shock",
+  "ch1-us-election-2016": "case-election-volatility",
+};
+
+export function caseVisualFor(caseId?: string): VisualAsset | undefined {
+  if (!caseId) return undefined;
+  const key = CASE_VISUAL_BY_CASE_ID[caseId];
+  return key ? V2_CASE_ASSETS[key] : undefined;
+}
+
 /** ---------- Backgrounds d'ambiance ---------- */
+
 export const BACKGROUNDS = {
   chapterHero: `${BG}/bg1.webp`,
   macro: `${BG}/bg2.webp`,
