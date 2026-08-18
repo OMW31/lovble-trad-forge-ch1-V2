@@ -11,6 +11,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import type { ChapterProfile } from "@/lib/academy/useChapterProgress";
+import { useT } from "@/lib/i18n";
 
 /** Header account affordance: sign-in CTA for guests, identity menu (with logout) for members. */
 export function AcademyAccountButton({
@@ -24,6 +25,7 @@ export function AcademyAccountButton({
 }) {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
+  const t = useT();
 
   if (!signedIn) {
     return (
@@ -33,12 +35,12 @@ export function AcademyAccountButton({
         className="inline-flex items-center gap-2 rounded-lg border border-border bg-surface px-3 py-1.5 text-sm font-medium text-foreground transition-colors hover:border-forge/50 hover:bg-surface-2"
       >
         <LogIn className="h-4 w-4 text-forge" />
-        <span className="hidden sm:inline">Se connecter</span>
+        <span className="hidden sm:inline">{t.account.signIn}</span>
       </Link>
     );
   }
 
-  const label = profile?.display_name || profile?.username || profile?.email?.split("@")[0] || "Mon compte";
+  const label = profile?.display_name || profile?.username || profile?.email?.split("@")[0] || t.account.defaultLabel;
   const initial = label.charAt(0).toUpperCase();
 
   // Sign-out hygiene: cancel in-flight → clear cache → sign out → replace-navigate.
@@ -73,19 +75,19 @@ export function AcademyAccountButton({
         {onOpenDashboard && (
           <DropdownMenuItem onSelect={() => onOpenDashboard()}>
             <BarChart3 className="h-4 w-4" />
-            Ma progression
+            {t.account.myProgress}
           </DropdownMenuItem>
         )}
         <DropdownMenuItem asChild>
           <Link to="/auth" search={{ redirect: "/academy/analyse-fondamentale" }}>
             <User className="h-4 w-4" />
-            Mon compte
+            {t.account.myAccount}
           </Link>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem onSelect={() => void handleSignOut()} className="text-bear focus:text-bear">
           <LogOut className="h-4 w-4" />
-          Se déconnecter
+          {t.account.signOut}
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
