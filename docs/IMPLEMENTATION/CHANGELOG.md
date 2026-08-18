@@ -191,3 +191,25 @@ Bloqués jusqu'à réception docs Icon Library + assets V2 + backgrounds (dépen
 
 ### Anti-régression
 - Typecheck OK. Aucun visuel, widget, leçon, question ou document supprimé. Ids V1 intacts → aucune question Partie B orpheline.
+
+## 2026-08-18 — Sprint 2 (parcours unifié) + Sprint 3/4 (chaîne visuelle)
+
+### Ajouté
+- `caseVisualFor()` dans `src/lib/academy/visual-assets.ts` : mapping cas ↔ visuel V2.
+- Entrée top bar « Progression & certification » (`CertificationEntry`) pointant vers
+  `/academy/analyse-fondamentale/certification`.
+- Auth wall sur `LessonEvaluationGate` : un invité ne peut plus instancier le
+  questionnaire ; CTA `/auth?redirect=/academy/analyse-fondamentale#<leçon>`.
+- Clés i18n FR/EN : `gate.guestTitle`, `gate.guestBody`, `gate.guestCta`,
+  `gate.certificationCta`.
+- `public/academy/ch1/visuals_legacy/` : archive non servie des 17 anciens V1.
+
+### Modifié
+- 17 visuels V1 régénérés (Brand DNA V2, zéro texte bitmap), ids stables.
+- `ChapterHero` : `<img>` brut → `VisualLayer` + `BACKGROUNDS.chapterHero` (bg1).
+- Ambiance macro : `a4` → `BACKGROUNDS.macro` (bg2).
+- `ScenarioPlayer` : visuel V2 du cas monté en tête (lightbox + légende).
+
+### Supprimé du parcours utilisateur
+- Diagnostic top bar hérité Standard / High / Premium (primitives conservées,
+  plus aucun point d'entrée utilisateur).

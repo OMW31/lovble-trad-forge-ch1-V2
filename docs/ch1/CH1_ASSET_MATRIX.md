@@ -60,3 +60,43 @@ Ids **immuables** : la banque Partie B (59 questions) y est adossée.
 ## 4. Règles
 - Aucun fichier supprimé, aucun id renommé.
 - Toute nouvelle intégration s'inscrit dans cette matrice **et** dans `docs/ch1/VISUAL_INTEGRATION_STANDARD.md`.
+
+---
+
+## 5. Audit réel & régénération — 2026-08-18 (append-only)
+
+### 5.1 V1 A1 → A17 — régénérés (Brand DNA V2, zéro texte bitmap)
+Les 17 fichiers `public/academy/ch1/visuals/a{1..17}.webp` ont été **régénérés** :
+composition institutionnelle ultra-sombre, accent forge ambre, data cyan,
+sémantique bull/bear, **aucun texte, chiffre ou label incrusté**.
+Les **ids sont inchangés** — la banque Partie B (59 questions) reste valide.
+Les rendus précédents sont archivés (non servis) dans
+`public/academy/ch1/visuals_legacy/a{1..17}.webp`.
+
+### 5.2 Backgrounds — 5/5 montés
+| Fichier | Emplacement runtime | Opacité | Statut |
+|---|---|---|---|
+| bg1 | `ChapterHero` via `VisualLayer` (masque radial) | 0.12 | INTÉGRÉ |
+| bg2 | Ambiance 1.2 `macro-widgets` | 0.12 | INTÉGRÉ |
+| bg3 | `micro-concept` | 0.10 | INTÉGRÉ |
+| bg4 | `outils-concept` | 0.10 | INTÉGRÉ |
+| bg5 | `previsions-concept` | 0.10 | INTÉGRÉ |
+
+### 5.3 V2 cas pratiques — montés dans `ScenarioPlayer`
+`caseVisualFor(caseId)` (registre `visual-assets.ts`) monte le visuel V2 du cas
+en tête du player, en `VisualLayer variant="figure"` (lightbox + légende) :
+
+| Cas (market-data) | Visuel V2 |
+|---|---|
+| ch1-energy-crisis-eu-2022 | case-european-energy-crisis |
+| ch1-covid-march-2020 | case-march-2020-liquidity |
+| ch1-try-depreciation-2021-2024 | case-turkish-lira-collapse |
+| ch1-brexit-2016 | case-brexit-shock |
+| ch1-us-election-2016 | case-election-volatility |
+
+Les 5 autres cas n'ont pas de V2 dédié : fallback propre (aucune image), le
+player conserve `CandleReplay` + couches natives.
+
+### 5.4 Chemins bruts éliminés
+`ChapterHero` n'utilise plus de `<img>` brut ; les fonds `a4`, `a8`, `a12` de la
+route chapitre passent désormais par `BACKGROUNDS` / `v1Asset()`.

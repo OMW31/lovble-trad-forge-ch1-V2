@@ -163,3 +163,13 @@ Tout incrément futur est relu contre ces trois documents, avant ET après impl�
 - [x] Fallback TS : l'évaluation fonctionne même base injoignable
 - [x] Moteur de sélection déterministe, sans IA (2/2/3, 30/70, seuil 70 %)
 - [x] Responsive validé 390 → 2560 px, aucune erreur console
+
+## Anti-régression — audit réel 2026-08-18
+
+- [x] Les ids V1 `a1` → `a17` sont inchangés ; la banque Partie B reste valide malgré la régénération.
+- [x] Les anciens rendus sont archivés dans `visuals_legacy/` — aucune suppression définitive.
+- [x] `AssessmentModal` et ses niveaux historiques restent en code (aucune régression de primitive),
+      mais ne sont plus atteignables via la top bar.
+- [x] Le cours reste librement lisible sans compte ; seule l'évaluation exige l'authentification.
+- [x] Règle de certification inchangée : 5 × 20 % à ≥ 70 %.
+- [x] `tsgo --noEmit` clean ; routes `/academy/analyse-fondamentale` et `.../certification` en 200.
