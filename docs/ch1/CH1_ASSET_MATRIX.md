@@ -100,3 +100,6 @@ player conserve `CandleReplay` + couches natives.
 ### 5.4 Chemins bruts éliminés
 `ChapterHero` n'utilise plus de `<img>` brut ; les fonds `a4`, `a8`, `a12` de la
 route chapitre passent désormais par `BACKGROUNDS` / `v1Asset()`.
+
+### 5.5 Prompts sources
+Les fiches de régénération versionnées vivent dans `docs/ch1/CH1_VISUAL_PROMPTS/` (A1 → A17 + INDEX).
