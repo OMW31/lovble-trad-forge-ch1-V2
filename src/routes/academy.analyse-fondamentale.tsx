@@ -39,6 +39,9 @@ import { ScenarioPlayer } from "@/components/academy/ScenarioPlayer";
 import { useChapterProgress } from "@/lib/academy/useChapterProgress";
 import { assembleScenario } from "@/lib/academy/scenario-engine";
 import { getSpecById } from "@/lib/academy/scenario-library";
+import { useT } from "@/lib/i18n";
+import { cn } from "@/lib/utils";
+
 
 export const Route = createFileRoute("/academy/analyse-fondamentale")({
   head: () => ({
@@ -68,6 +71,30 @@ function SubHead({ icon: Icon, children }: { icon: React.ElementType; children: 
     </Eyebrow>
   );
 }
+
+/**
+ * Top-bar entry point: single, coherent path toward the dedicated
+ * certification route (no legacy Standard / High / Premium diagnostic).
+ */
+function CertificationEntry({ ready, percent }: { ready: boolean; percent: number }) {
+  const t = useT();
+  return (
+    <Link
+      to="/academy/analyse-fondamentale/certification"
+      className={cn(
+        "inline-flex items-center gap-2 rounded-lg border px-3 py-1.5 font-mono text-[11px] uppercase tracking-wider transition-colors",
+        ready
+          ? "border-bull/50 bg-bull/10 text-bull hover:bg-bull/20"
+          : "border-forge/40 bg-forge/10 text-forge hover:bg-forge/20",
+      )}
+    >
+      <Award className="h-3.5 w-3.5" />
+      <span className="hidden sm:inline">{t.gate.certificationCta}</span>
+      <span className="font-mono tabular-nums">{percent}%</span>
+    </Link>
+  );
+}
+
 
 function Chapter1Page() {
   const {
@@ -144,7 +171,7 @@ function Chapter1Page() {
       lessonPasses={lessonPasses}
       certificationPercent={certificationPercent}
       dashboard={dashboard}
-      headerActions={<AssessmentModal chapterId={CHAPTER.id} signedIn={signedIn} progressPercent={progressPercent} />}
+      headerActions={<CertificationEntry ready={certificationReady} percent={certificationPercent} />}
     >
 
       <Reveal>
@@ -397,7 +424,7 @@ function Chapter1Page() {
         </div>
 
         <div id="macro-widgets" className="relative scroll-mt-24 space-y-6 overflow-hidden rounded-3xl">
-          <VisualLayer src="/academy/ch1/visuals/a4.webp" alt="" variant="background" opacity={0.14} position="center top" />
+          <VisualLayer src={BACKGROUNDS.macro} alt="" variant="background" opacity={0.12} position="center top" />
           <div className="relative space-y-6 p-px">
             <Reveal>
               <VisualExplainer
@@ -589,7 +616,7 @@ function Chapter1Page() {
         </div>
 
         <div id="micro-widgets" className="relative scroll-mt-24 overflow-hidden rounded-3xl">
-          <VisualLayer src="/academy/ch1/visuals/a8.webp" alt="" variant="background" opacity={0.12} position="center" />
+          <VisualLayer src={v1Asset("a8", "", "").src} alt="" variant="background" opacity={0.12} position="center" />
           <div className="relative space-y-6 p-px">
             <Reveal>
               <SubHead icon={Calculator}>Widgets — pilotez les fondamentaux</SubHead>
@@ -661,7 +688,7 @@ function Chapter1Page() {
         </div>
 
         <div id="outils-widgets" className="relative scroll-mt-24 overflow-hidden rounded-3xl">
-          <VisualLayer src="/academy/ch1/visuals/a12.webp" alt="" variant="background" opacity={0.12} position="center" />
+          <VisualLayer src={v1Asset("a12", "", "").src} alt="" variant="background" opacity={0.12} position="center" />
           <div className="relative space-y-6 p-px">
             <Reveal>
               <SubHead icon={Calculator}>Boîte à outils interactive</SubHead>

@@ -2,8 +2,11 @@ import { useMemo, useState } from "react";
 import { ArrowRight, Check, CheckCircle2, Layers3, PauseCircle, Play, Radar, RotateCcw, ShieldAlert, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { CandleReplay } from "@/components/academy/CandleReplay";
+import { VisualLayer } from "@/components/academy/primitives";
+import { caseVisualFor } from "@/lib/academy/visual-assets";
 import type { PlayableScenario } from "@/lib/academy/scenario-engine";
 import { cn } from "@/lib/utils";
+
 
 type ScenarioStage = "context" | "publication" | "decision" | "debrief";
 
@@ -27,6 +30,8 @@ export function ScenarioPlayer({
   const [selected, setSelected] = useState<string | null>(null);
   const [reported, setReported] = useState(false);
   const caseStudy = scenario.caseStudy;
+  const caseVisual = caseVisualFor(caseStudy?.id);
+
   const answered = selected !== null;
   const correctId = caseStudy?.decision.correctId ?? "a";
   const correct = selected === correctId;
@@ -95,7 +100,16 @@ export function ScenarioPlayer({
 
       <div className="grid gap-5 p-5 xl:grid-cols-[minmax(0,1fr)_320px]">
         <div className="space-y-4">
+          {caseVisual && (
+            <VisualLayer
+              src={caseVisual.src}
+              alt={caseVisual.alt}
+              label={caseVisual.label}
+              variant="figure"
+            />
+          )}
           {caseStudy && <CandleReplay caseStudy={caseStudy} autoPlayOnView={scenario.mode === "learning"} />}
+
           <div className="rounded-xl border bg-surface p-4 text-sm leading-relaxed text-muted-foreground">
             <div className="mb-2 font-mono text-[10px] uppercase tracking-[0.18em] text-data">Contexte</div>
             {scenario.layers.context}

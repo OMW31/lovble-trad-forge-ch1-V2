@@ -4,6 +4,8 @@ import { Check, ChevronRight, PanelLeftOpen, X, Award } from "lucide-react";
 import type { LessonMeta } from "@/lib/academy/chapter1";
 import type { ChapterDashboard } from "@/lib/academy/useChapterProgress";
 import { SidebarProgressHUD } from "./ProgressDashboard";
+import { LanguageSwitch } from "./LanguageSwitch";
+import { useT } from "@/lib/i18n";
 import { cn } from "@/lib/utils";
 
 /**
@@ -36,6 +38,7 @@ export function LearningNavigationEngine({
   const [open, setOpen] = useState(false);
   const [expanded, setExpanded] = useState<string>(active);
   const reduce = useReducedMotion();
+  const t = useT();
 
   // Close on Escape.
   useEffect(() => {
@@ -75,7 +78,7 @@ export function LearningNavigationEngine({
       <button
         type="button"
         onClick={() => setOpen(true)}
-        aria-label="Ouvrir la navigation du chapitre"
+        aria-label={t.shell.openNav}
         className="fixed left-3 top-16 z-40 grid h-10 w-10 place-items-center rounded-xl border border-border/70 bg-background/90 text-foreground shadow-elegant backdrop-blur-xl transition-transform hover:scale-105 active:scale-95 lg:hidden"
       >
         <PanelLeftOpen className="h-5 w-5" />
@@ -100,17 +103,20 @@ export function LearningNavigationEngine({
             >
               <div className="flex items-center justify-between gap-3 border-b border-border px-4 py-3">
                 <div>
-                  <div className="font-mono text-[10px] uppercase tracking-[0.18em] text-forge">Navigation</div>
-                  <div className="mt-0.5 font-display text-sm font-semibold text-foreground">Plan du chapitre</div>
+                  <div className="font-mono text-[10px] uppercase tracking-[0.18em] text-forge">{t.shell.navigation}</div>
+                  <div className="mt-0.5 font-display text-sm font-semibold text-foreground">{t.shell.chapterPlan}</div>
                 </div>
-                <button
-                  type="button"
-                  onClick={() => setOpen(false)}
-                  aria-label="Fermer"
-                  className="grid h-8 w-8 place-items-center rounded-lg border border-border text-muted-foreground hover:text-foreground"
-                >
-                  <X className="h-4 w-4" />
-                </button>
+                <div className="flex items-center gap-2">
+                  <LanguageSwitch />
+                  <button
+                    type="button"
+                    onClick={() => setOpen(false)}
+                    aria-label={t.shell.close}
+                    className="grid h-8 w-8 place-items-center rounded-lg border border-border text-muted-foreground hover:text-foreground"
+                  >
+                    <X className="h-4 w-4" />
+                  </button>
+                </div>
               </div>
 
               {/* Progression HUD → opens the full Cockpit dashboard */}
@@ -127,8 +133,8 @@ export function LearningNavigationEngine({
               ) : (
                 <div className="border-b border-border px-4 py-3">
                   <div className="flex items-center justify-between font-mono text-[10px] uppercase tracking-wider text-muted-foreground">
-                    <span className="inline-flex items-center gap-1.5"><Award className="h-3.5 w-3.5 text-forge" /> Certification</span>
-                    <span className="tabular-nums">{validatedCount}/5 leçons</span>
+                    <span className="inline-flex items-center gap-1.5"><Award className="h-3.5 w-3.5 text-forge" /> {t.shell.certification}</span>
+                    <span className="tabular-nums">{t.shell.lessonsCount(validatedCount)}</span>
                   </div>
                   <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-border">
                     <div className="h-full rounded-full bg-gradient-forge transition-all duration-500" style={{ width: `${certificationPercent}%` }} />

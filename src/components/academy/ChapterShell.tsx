@@ -6,6 +6,8 @@ import { cn } from "@/lib/utils";
 import { MobileLessonBreadcrumb } from "./MobileLessonBreadcrumb";
 import { LearningNavigationEngine } from "./LearningNavigationEngine";
 import { AcademyAccountButton } from "./AcademyAccountButton";
+import { LanguageSwitch } from "./LanguageSwitch";
+import { useT } from "@/lib/i18n";
 import { ProgressDashboard, SidebarProgressHUD } from "./ProgressDashboard";
 import type { ChapterDashboard, ChapterProfile } from "@/lib/academy/useChapterProgress";
 
@@ -107,6 +109,7 @@ export function ChapterShell({
   const subVisitedCount = visited.size;
   const [dashboardOpen, setDashboardOpen] = useState(false);
   const openDashboard = () => setDashboardOpen(true);
+  const t = useT();
 
   return (
     <div className="min-h-screen bg-background">
@@ -115,7 +118,7 @@ export function ChapterShell({
           <div className="flex items-center gap-3">
             <Link to="/academy" className="flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground">
               <ArrowLeft className="h-4 w-4" />
-              <span className="hidden sm:inline">Academy</span>
+              <span className="hidden sm:inline">{t.shell.academy}</span>
             </Link>
             <span className="text-border">/</span>
             <span className="flex items-center gap-2 font-display text-sm font-semibold text-foreground">
@@ -130,13 +133,16 @@ export function ChapterShell({
               </div>
               <span className="font-mono text-xs tabular-nums text-muted-foreground">{progress}%</span>
               {signedIn && (
-                <span className="hidden items-center gap-1 font-mono text-[10px] uppercase tracking-wider text-bull md:inline-flex" title="Progression synchronisée">
+                <span className="hidden items-center gap-1 font-mono text-[10px] uppercase tracking-wider text-bull md:inline-flex" title={t.shell.sync}>
                   <CloudCheck className="h-3.5 w-3.5" />
-                  Sync
+                  {t.shell.syncShort}
                 </span>
               )}
             </div>
             {headerActions}
+            <div className="hidden sm:block">
+              <LanguageSwitch />
+            </div>
             <AcademyAccountButton signedIn={signedIn} profile={profile} onOpenDashboard={dashboard ? openDashboard : undefined} />
           </div>
         </div>
@@ -151,7 +157,7 @@ export function ChapterShell({
           )}
           <div className="mb-3 flex items-center justify-between">
             <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">{CHAPTER.num}</span>
-            <span className="font-mono text-[10px] tabular-nums text-muted-foreground">{subVisitedCount}/{subIds.length} blocs</span>
+            <span className="font-mono text-[10px] tabular-nums text-muted-foreground">{subVisitedCount}/{subIds.length} {t.shell.blocks}</span>
           </div>
           <nav className="space-y-1">
             {LESSONS.map((l) => {
@@ -226,11 +232,11 @@ export function ChapterShell({
           <div className="mt-6 rounded-xl border border-border bg-surface p-4">
             <div className="flex items-center gap-2 text-xs text-muted-foreground">
               <Lock className="h-3.5 w-3.5" />
-              Chapitre suivant
+              {t.shell.nextChapter}
             </div>
-            <div className="mt-1 text-sm font-medium text-foreground">Banques Centrales</div>
+            <div className="mt-1 text-sm font-medium text-foreground">{t.shell.centralBanks}</div>
             <div className="mt-2 font-mono text-[10px] text-muted-foreground">
-              Débloqué à 100% du Chapitre 1
+              {t.shell.unlockedHint}
             </div>
           </div>
         </aside>

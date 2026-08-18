@@ -1,6 +1,8 @@
 import { ArrowDown, Activity, Layers, Target, Sparkles } from "lucide-react";
 import { CHAPTER } from "@/lib/academy/chapter1";
-import { Eyebrow } from "./primitives";
+import { Eyebrow, VisualLayer } from "./primitives";
+import { BACKGROUNDS } from "@/lib/academy/visual-assets";
+
 
 const TICKERS = [
   { sym: "EUR/USD", val: "1.0852", chg: "-0.28%", up: false },
@@ -22,13 +24,14 @@ export function ChapterHero() {
   return (
     <section className="relative overflow-hidden rounded-3xl border bg-gradient-hero">
       <div className="absolute inset-0 grid-bg opacity-60" aria-hidden />
-      <img
-        src="/academy/ch1/visuals/a10.webp"
+      <VisualLayer
+        src={BACKGROUNDS.chapterHero}
         alt=""
-        role="presentation"
-        loading="eager"
-        className="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-[0.12] [mask-image:radial-gradient(90%_90%_at_72%_35%,#000_0%,transparent_72%)]"
+        variant="background"
+        opacity={0.12}
+        className="[mask-image:radial-gradient(90%_90%_at_72%_35%,#000_0%,transparent_72%)]"
       />
+
 
       <div className="relative px-6 py-10 sm:px-10 sm:py-14">
         <div className="flex items-center justify-between gap-4">

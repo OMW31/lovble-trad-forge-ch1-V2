@@ -2,6 +2,8 @@
 // Dictionnaire FR — langue de référence.
 // Namespaces = niveaux de la cartographie i18n (docs/ch1/I18N_STRING_MAP.md) :
 //  nav (N1) · system (N4) · preflight (N4) · hub (N1) · eval (N2, amorce)
+//  shell (N3, chrome du chapitre) · account (N3) · progressHud / dashboard
+//  (N3, cockpit de progression) · gate (N3, gate d'évaluation de leçon)
 // Règle éditoriale : le FR est la source, l'EN est une ADAPTATION (registre
 // CFA / Financial Times), jamais une traduction littérale.
 // ============================================================================
@@ -92,6 +94,91 @@ export const fr = {
     passed: "Leçon validée",
     failed: "Non validée — retentez avec une nouvelle série",
   },
+  shell: {
+    academy: "Academy",
+    sync: "Progression synchronisée",
+    syncShort: "Sync",
+    blocks: "blocs",
+    nextChapter: "Chapitre suivant",
+    centralBanks: "Banques Centrales",
+    unlockedHint: "Débloqué à 100% du Chapitre 1",
+    openNav: "Ouvrir la navigation du chapitre",
+    navigation: "Navigation",
+    chapterPlan: "Plan du chapitre",
+    close: "Fermer",
+    summary: "Sommaire",
+    progress: "Progression",
+    goTo: (title: string) => `Aller à ${title}`,
+    previousUnavailable: "Section précédente indisponible",
+    nextUnavailable: "Section suivante indisponible",
+    certification: "Certification",
+    lessonsCount: (n: number) => `${n}/5 leçons`,
+  },
+  account: {
+    account: "Compte",
+    signIn: "Se connecter",
+    signOut: "Se déconnecter",
+    myAccount: "Mon compte",
+    myProgress: "Ma progression",
+    myCockpit: "Mon cockpit",
+    profile: "Profil",
+    guest: "Invité",
+    defaultLabel: "Mon compte",
+  },
+  progressHud: {
+    myProgress: "Ma progression",
+    seeCockpit: "Voir le cockpit →",
+  },
+  dashboard: {
+    cockpitTitle: "Cockpit de progression",
+    nextRank: (name: string) => `Prochain rang : ${name}`,
+    certification: "Certification",
+    lessonsValidated: "Leçons validées",
+    remaining: (n: number) => `${n} restante(s)`,
+    scenarios: "Scénarios",
+    scenariosRemaining: (n: number) => `${n} restant(s)`,
+    averageScore: "Score moyen",
+    averageScoreSub: "évaluations réussies",
+    chapter: "Chapitre",
+    chapterSub: "progression globale",
+    medalsByLesson: "Médailles par leçon",
+    toValidate: "À valider",
+    finalCertification: "Certification finale",
+    certificationReadyLead: "Toutes les leçons sont validées — la",
+    certificationReadyStrong: "certification finale",
+    certificationReadyTail: "(Partie C : scénarios scriptés) est débloquée.",
+    certificationLockedBody: "Débloquez la certification en validant les leçons restantes :",
+    signInHint: "Connectez-vous pour sauvegarder votre progression et vos médailles.",
+    ranks: {
+      recruit: "Recrue",
+      apprentice: "Apprenti Analyste",
+      confirmed: "Analyste Confirmé",
+      strategist: "Stratège",
+      elite: "Élite du Marché",
+      master: "Maître Fondamentaliste",
+    },
+    medals: {
+      gold: "Or",
+      silver: "Argent",
+      bronze: "Bronze",
+    },
+  },
+  gate: {
+    title: (num: string) => `Évaluation de leçon · ${num}`,
+    passedTitle: "Leçon validée — 20 % crédités",
+    validateLesson: (num: string) => `Validez la leçon ${num}`,
+    passedBody: "Votre progression officielle a été créditée. La certification finale se débloque à 100 %.",
+    pendingBody: "Réussissez l'évaluation (seuil 70 %) pour créditer les 20 % de cette leçon et progresser vers la certification finale.",
+    takeAssessment: "Passer l'évaluation",
+    validated: "Validée",
+    signInHint: "Connectez-vous pour sauvegarder durablement la validation.",
+    guestTitle: "Connexion requise pour évaluer",
+    guestBody:
+      "Les évaluations de leçon (Partie A théorie 30 % · Partie B interprétation 70 %, seuil 70 %) sont réservées aux comptes. Le cours reste librement consultable.",
+    guestCta: "Se connecter pour évaluer",
+    certificationCta: "Progression & certification",
+  },
+
 };
 
 export type Dictionary = typeof fr;

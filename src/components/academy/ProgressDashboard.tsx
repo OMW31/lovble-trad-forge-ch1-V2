@@ -14,18 +14,20 @@ import {
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
 import type { ChapterDashboard, ChapterProfile } from "@/lib/academy/useChapterProgress";
+import { useT } from "@/lib/i18n";
+import type { Dictionary } from "@/lib/i18n/dictionaries/fr";
 
 /* ------------------------------------------------------------------ */
 /*  Rank system — RPG flavour driven by validated lessons + avg score  */
 /* ------------------------------------------------------------------ */
-function computeRank(d: ChapterDashboard) {
+function computeRank(d: ChapterDashboard, t: Dictionary) {
   const ranks = [
-    { min: 0, name: "Recrue", icon: Flame, color: "text-muted-foreground" },
-    { min: 1, name: "Apprenti Analyste", icon: BarChart3, color: "text-data" },
-    { min: 2, name: "Analyste Confirmé", icon: Target, color: "text-data" },
-    { min: 3, name: "Stratège", icon: Award, color: "text-forge" },
-    { min: 4, name: "Élite du Marché", icon: Trophy, color: "text-forge" },
-    { min: 5, name: "Maître Fondamentaliste", icon: Crown, color: "text-forge" },
+    { min: 0, name: t.dashboard.ranks.recruit, icon: Flame, color: "text-muted-foreground" },
+    { min: 1, name: t.dashboard.ranks.apprentice, icon: BarChart3, color: "text-data" },
+    { min: 2, name: t.dashboard.ranks.confirmed, icon: Target, color: "text-data" },
+    { min: 3, name: t.dashboard.ranks.strategist, icon: Award, color: "text-forge" },
+    { min: 4, name: t.dashboard.ranks.elite, icon: Trophy, color: "text-forge" },
+    { min: 5, name: t.dashboard.ranks.master, icon: Crown, color: "text-forge" },
   ];
   const r = [...ranks].reverse().find((x) => d.lessonsValidated >= x.min) ?? ranks[0];
   const nextIndex = ranks.findIndex((x) => x.name === r.name) + 1;
@@ -79,11 +81,13 @@ function RadialRing({
   );
 }
 
-const MEDAL_STYLES: Record<string, { ring: string; text: string; label: string }> = {
-  gold: { ring: "border-forge/60 bg-forge/15", text: "text-forge", label: "Or" },
-  silver: { ring: "border-muted-foreground/40 bg-muted-foreground/10", text: "text-muted-foreground", label: "Argent" },
-  bronze: { ring: "border-data/50 bg-data/10", text: "text-data", label: "Bronze" },
-};
+function medalStyles(t: Dictionary): Record<string, { ring: string; text: string; label: string }> {
+  return {
+    gold: { ring: "border-forge/60 bg-forge/15", text: "text-forge", label: t.dashboard.medals.gold },
+    silver: { ring: "border-muted-foreground/40 bg-muted-foreground/10", text: "text-muted-foreground", label: t.dashboard.medals.silver },
+    bronze: { ring: "border-data/50 bg-data/10", text: "text-data", label: t.dashboard.medals.bronze },
+  };
+}
 
 function StatTile({
   icon: Icon,
@@ -126,10 +130,12 @@ export function ProgressDashboard({
   profile: ChapterProfile | null;
   signedIn: boolean;
 }) {
+  const t = useT();
   const d = dashboard;
-  const { current, next } = computeRank(d);
+  const { current, next } = computeRank(d, t);
   const RankIcon = current.icon;
   const name = profile?.display_name || profile?.username || profile?.email?.split("@")[0] || "Trader";
+  const MEDAL_STYLES = medalStyles(t);
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -137,7 +143,7 @@ export function ProgressDashboard({
         <DialogHeader className="border-b border-border bg-gradient-hero px-5 py-4 sm:px-6">
           <DialogTitle className="flex items-center gap-2 font-display">
             <Sparkles className="h-4 w-4 text-forge" />
-            Cockpit de progression
+            {t.dashboard.cockpitTitle}
           </DialogTitle>
         </DialogHeader>
 
@@ -160,7 +166,7 @@ export function ProgressDashboard({
                 </div>
                 {next && (
                   <div className="mt-0.5 font-mono text-[10px] uppercase tracking-wider text-muted-foreground">
-                    Prochain rang : {next.name}
+                    {t.dashboard.nextRank(next.name)}
                   </div>
                 )}
               </div>
@@ -169,24 +175,24 @@ export function ProgressDashboard({
             <RadialRing percent={d.certificationPercent}>
               <div>
                 <div className="font-display text-2xl font-bold tabular-nums text-foreground">{d.certificationPercent}%</div>
-                <div className="font-mono text-[9px] uppercase tracking-wider text-muted-foreground">Certification</div>
+                <div className="font-mono text-[9px] uppercase tracking-wider text-muted-foreground">{t.dashboard.certification}</div>
               </div>
             </RadialRing>
           </div>
 
           {/* Stat tiles */}
           <div className="mt-6 grid grid-cols-2 gap-3 lg:grid-cols-4">
-            <StatTile icon={Award} label="Leçons validées" value={`${d.lessonsValidated}/${d.lessonsTotal}`} sub={`${d.lessonsRemaining} restante(s)`} accent="text-forge" />
-            <StatTile icon={Target} label="Scénarios" value={`${d.scenariosPassed}/${d.scenariosTotal}`} sub={`${d.scenariosRemaining} restant(s)`} accent="text-data" />
-            <StatTile icon={BarChart3} label="Score moyen" value={d.averageScore ? `${d.averageScore}%` : "—"} sub="évaluations réussies" accent="text-bull" />
-            <StatTile icon={Trophy} label="Chapitre" value={`${d.chapterPercent}%`} sub="progression globale" accent="text-forge" />
+            <StatTile icon={Award} label={t.dashboard.lessonsValidated} value={`${d.lessonsValidated}/${d.lessonsTotal}`} sub={t.dashboard.remaining(d.lessonsRemaining)} accent="text-forge" />
+            <StatTile icon={Target} label={t.dashboard.scenarios} value={`${d.scenariosPassed}/${d.scenariosTotal}`} sub={t.dashboard.scenariosRemaining(d.scenariosRemaining)} accent="text-data" />
+            <StatTile icon={BarChart3} label={t.dashboard.averageScore} value={d.averageScore ? `${d.averageScore}%` : "—"} sub={t.dashboard.averageScoreSub} accent="text-bull" />
+            <StatTile icon={Trophy} label={t.dashboard.chapter} value={`${d.chapterPercent}%`} sub={t.dashboard.chapterSub} accent="text-forge" />
           </div>
 
           {/* Lesson medals */}
           <div className="mt-6">
             <div className="mb-2 flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
               <Medal className="h-3.5 w-3.5 text-forge" />
-              Médailles par leçon
+              {t.dashboard.medalsByLesson}
             </div>
             <div className="space-y-2">
               {d.lessons.map((l) => {
@@ -206,7 +212,7 @@ export function ProgressDashboard({
                     ) : (
                       <span className="inline-flex items-center gap-1 rounded-full border border-border px-2 py-0.5 font-mono text-[10px] uppercase text-muted-foreground">
                         <Lock className="h-3 w-3" />
-                        À valider
+                        {t.dashboard.toValidate}
                       </span>
                     )}
                   </div>
@@ -224,15 +230,15 @@ export function ProgressDashboard({
           >
             <div className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.18em] text-forge">
               {d.certificationReady ? <Unlock className="h-3.5 w-3.5 text-bull" /> : <Lock className="h-3.5 w-3.5" />}
-              Certification finale
+              {t.dashboard.finalCertification}
             </div>
             {d.certificationReady ? (
               <p className="mt-2 text-sm text-foreground">
-                Toutes les leçons sont validées — la <strong>certification finale</strong> (Partie C : scénarios scriptés) est débloquée.
+                {t.dashboard.certificationReadyLead} <strong>{t.dashboard.certificationReadyStrong}</strong> {t.dashboard.certificationReadyTail}
               </p>
             ) : (
               <div className="mt-2 text-sm text-muted-foreground">
-                Débloquez la certification en validant les leçons restantes :
+                {t.dashboard.certificationLockedBody}
                 <div className="mt-2 flex flex-wrap gap-1.5">
                   {d.lessons.filter((l) => !l.validated).map((l) => (
                     <span key={l.id} className="rounded-full border border-forge/30 bg-forge/10 px-2 py-0.5 font-mono text-[10px] text-forge">
@@ -246,7 +252,7 @@ export function ProgressDashboard({
 
           {!signedIn && (
             <p className="mt-4 text-center text-xs text-muted-foreground">
-              Connectez-vous pour sauvegarder votre progression et vos médailles.
+              {t.dashboard.signInHint}
             </p>
           )}
         </div>
@@ -265,6 +271,7 @@ export function SidebarProgressHUD({
   dashboard: ChapterDashboard;
   onOpen: () => void;
 }) {
+  const t = useT();
   const d = dashboard;
   return (
     <button
@@ -279,13 +286,13 @@ export function SidebarProgressHUD({
         <div className="min-w-0 flex-1">
           <div className="flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-wider text-forge">
             <BarChart3 className="h-3.5 w-3.5" />
-            Ma progression
+            {t.progressHud.myProgress}
           </div>
           <div className="mt-1 flex items-center gap-3 text-[11px] text-muted-foreground">
             <span className="inline-flex items-center gap-1"><Award className="h-3 w-3 text-forge" />{d.lessonsValidated}/{d.lessonsTotal}</span>
             <span className="inline-flex items-center gap-1"><Target className="h-3 w-3 text-data" />{d.scenariosPassed}/{d.scenariosTotal}</span>
           </div>
-          <div className="mt-1 font-mono text-[10px] text-muted-foreground/70">Voir le cockpit →</div>
+          <div className="mt-1 font-mono text-[10px] text-muted-foreground/70">{t.progressHud.seeCockpit}</div>
         </div>
       </div>
     </button>
