@@ -41,10 +41,10 @@ export function LessonEvaluationGate({
             {t.gate.title(lesson.num)}
           </div>
           <h3 className="mt-2 font-display text-lg font-bold text-foreground sm:text-xl">
-            {passed ? t.gate.passedTitle : t.gate.validateLesson(lesson.num)}
+            {passed ? t.gate.passedTitle : !signedIn ? t.gate.guestTitle : t.gate.validateLesson(lesson.num)}
           </h3>
           <p className="mt-1 max-w-xl text-sm text-muted-foreground">
-            {passed ? t.gate.passedBody : t.gate.pendingBody}
+            {passed ? t.gate.passedBody : !signedIn ? t.gate.guestBody : t.gate.pendingBody}
           </p>
         </div>
         <div className="shrink-0">
@@ -52,6 +52,15 @@ export function LessonEvaluationGate({
             <span className="inline-flex w-full items-center justify-center gap-1.5 rounded-lg border border-bull/40 bg-bull/10 px-3 py-2 font-mono text-xs uppercase tracking-wider text-bull sm:w-auto">
               <CheckCircle2 className="h-4 w-4" /> {t.gate.validated}
             </span>
+          ) : !signedIn ? (
+            <Link
+              to="/auth"
+              search={{ redirect: "/academy/analyse-fondamentale" }}
+              hash={lesson.id}
+              className="inline-flex w-full items-center justify-center gap-1.5 rounded-lg border border-forge/50 bg-forge/15 px-3 py-2 font-mono text-xs uppercase tracking-wider text-forge transition-colors hover:bg-forge/25 sm:w-auto"
+            >
+              <Lock className="h-3.5 w-3.5" /> {t.gate.guestCta}
+            </Link>
           ) : (
             <AssessmentModal
               chapterId={chapterId}
@@ -73,3 +82,4 @@ export function LessonEvaluationGate({
     </div>
   );
 }
+
