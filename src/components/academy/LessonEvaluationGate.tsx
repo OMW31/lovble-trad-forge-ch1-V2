@@ -1,8 +1,10 @@
 import { Award, CheckCircle2, Lock } from "lucide-react";
+import { Link } from "@tanstack/react-router";
 import { AssessmentModal } from "@/components/academy/AssessmentModal";
 import type { LessonMeta } from "@/lib/academy/chapter1";
 import { cn } from "@/lib/utils";
 import { useT } from "@/lib/i18n";
+
 
 /**
  * V7 progression gate shown at the end of each core lesson (1.1 → 1.5).
