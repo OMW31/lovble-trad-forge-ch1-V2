@@ -172,7 +172,13 @@ export const fr = {
     takeAssessment: "Passer l'évaluation",
     validated: "Validée",
     signInHint: "Connectez-vous pour sauvegarder durablement la validation.",
+    guestTitle: "Connexion requise pour évaluer",
+    guestBody:
+      "Les évaluations de leçon (Partie A théorie 30 % · Partie B interprétation 70 %, seuil 70 %) sont réservées aux comptes. Le cours reste librement consultable.",
+    guestCta: "Se connecter pour évaluer",
+    certificationCta: "Progression & certification",
   },
+
 };
 
 export type Dictionary = typeof fr;
