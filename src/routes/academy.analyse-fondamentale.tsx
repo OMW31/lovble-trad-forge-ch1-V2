@@ -424,7 +424,7 @@ function Chapter1Page() {
         </div>
 
         <div id="macro-widgets" className="relative scroll-mt-24 space-y-6 overflow-hidden rounded-3xl">
-          <VisualLayer src="/academy/ch1/visuals/a4.webp" alt="" variant="background" opacity={0.14} position="center top" />
+          <VisualLayer src={BACKGROUNDS.macro} alt="" variant="background" opacity={0.12} position="center top" />
           <div className="relative space-y-6 p-px">
             <Reveal>
               <VisualExplainer
@@ -616,7 +616,7 @@ function Chapter1Page() {
         </div>
 
         <div id="micro-widgets" className="relative scroll-mt-24 overflow-hidden rounded-3xl">
-          <VisualLayer src="/academy/ch1/visuals/a8.webp" alt="" variant="background" opacity={0.12} position="center" />
+          <VisualLayer src={v1Asset("a8", "", "").src} alt="" variant="background" opacity={0.12} position="center" />
           <div className="relative space-y-6 p-px">
             <Reveal>
               <SubHead icon={Calculator}>Widgets — pilotez les fondamentaux</SubHead>
@@ -688,7 +688,7 @@ function Chapter1Page() {
         </div>
 
         <div id="outils-widgets" className="relative scroll-mt-24 overflow-hidden rounded-3xl">
-          <VisualLayer src="/academy/ch1/visuals/a12.webp" alt="" variant="background" opacity={0.12} position="center" />
+          <VisualLayer src={v1Asset("a12", "", "").src} alt="" variant="background" opacity={0.12} position="center" />
           <div className="relative space-y-6 p-px">
             <Reveal>
               <SubHead icon={Calculator}>Boîte à outils interactive</SubHead>
