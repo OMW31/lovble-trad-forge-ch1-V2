@@ -30,6 +30,8 @@ export function ScenarioPlayer({
   const [selected, setSelected] = useState<string | null>(null);
   const [reported, setReported] = useState(false);
   const caseStudy = scenario.caseStudy;
+  const caseVisual = caseVisualFor(caseStudy?.id);
+
   const answered = selected !== null;
   const correctId = caseStudy?.decision.correctId ?? "a";
   const correct = selected === correctId;
