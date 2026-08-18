@@ -169,5 +169,11 @@ export const en: Dictionary = {
     takeAssessment: "Take the assessment",
     validated: "Cleared",
     signInHint: "Sign in to permanently save this validation.",
+    guestTitle: "Sign in required to sit the assessment",
+    guestBody:
+      "Lesson assessments (Part A theory 30% · Part B interpretation 70%, 70% pass mark) are account-only. The lesson itself stays open to read.",
+    guestCta: "Sign in to sit the assessment",
+    certificationCta: "Progress & certification",
   },
+
 };
