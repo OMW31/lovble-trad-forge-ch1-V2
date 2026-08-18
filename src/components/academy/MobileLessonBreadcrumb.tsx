@@ -4,6 +4,7 @@ import { Link } from "@tanstack/react-router";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 import { Button } from "@/components/ui/button";
 import type { LessonMeta } from "@/lib/academy/chapter1";
+import { useT } from "@/lib/i18n";
 
 /** Reliable, idempotent scroll to a section id (re-scrolls even if already active). */
 function scrollToSection(id: string) {
@@ -22,6 +23,7 @@ export function MobileLessonBreadcrumb({
   // Deterministic navigation target, decoupled from the async scroll-spy.
   // The scroll-spy only *syncs* the display; clicks always advance from the
   // latest target, which fixes the "works 1 time out of 2" race.
+  const t = useT();
   const [targetId, setTargetId] = useState(activeId);
 
   useEffect(() => {
@@ -49,7 +51,7 @@ export function MobileLessonBreadcrumb({
             variant="outline"
             className="shrink-0"
             disabled={!previous}
-            aria-label={previous ? `Aller à ${previous.title}` : "Section précédente indisponible"}
+            aria-label={previous ? t.shell.goTo(previous.title) : t.shell.previousUnavailable}
             onClick={() => previous && go(previous.id)}
           >
             <ChevronLeft className={previous ? "h-4 w-4" : "h-4 w-4 opacity-30"} />
@@ -60,7 +62,7 @@ export function MobileLessonBreadcrumb({
               <BreadcrumbList className="min-w-0 flex-nowrap gap-1.5 text-xs">
                 <BreadcrumbItem>
                   <Link to="/academy" className="truncate transition-colors hover:text-foreground">
-                    Academy
+                    {t.shell.academy}
                   </Link>
                 </BreadcrumbItem>
                 <BreadcrumbSeparator />
@@ -83,7 +85,7 @@ export function MobileLessonBreadcrumb({
             variant="outline"
             className="shrink-0"
             disabled={!next}
-            aria-label={next ? `Aller à ${next.title}` : "Section suivante indisponible"}
+            aria-label={next ? t.shell.goTo(next.title) : t.shell.nextUnavailable}
             onClick={() => next && go(next.id)}
           >
             <ChevronRight className={next ? "h-4 w-4" : "h-4 w-4 opacity-30"} />
