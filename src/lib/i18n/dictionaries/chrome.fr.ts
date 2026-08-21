@@ -96,6 +96,6 @@ export const chromeFr = {
     back: "Retour au chapitre",
     progress: "Progression du chapitre",
   },
-} as const;
+};
 
 export type ChromeDictionary = typeof chromeFr;
