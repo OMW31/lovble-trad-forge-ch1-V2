@@ -66,10 +66,14 @@ export const chromeFr = {
   },
   lesson: {
     objectives: "Objectifs de la leçon",
+    objectivesShort: "Objectifs",
     keyQuestion: "Question clé",
     flow: "Parcours",
     duration: "Durée",
     tier: "Niveau",
+    section: "Section",
+    missionBriefing: "Mission Briefing",
+    answerHint: "Vous saurez y répondre à la fin de cette leçon.",
     sectionOf: (num: string) => `Leçon ${num}`,
   },
   scenario: {

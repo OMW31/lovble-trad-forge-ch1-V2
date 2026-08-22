@@ -65,10 +65,14 @@ export const chromeEn: ChromeDictionary = {
   },
   lesson: {
     objectives: "Lesson objectives",
+    objectivesShort: "Objectives",
     keyQuestion: "Key question",
     flow: "Flow",
     duration: "Duration",
     tier: "Tier",
+    section: "Section",
+    missionBriefing: "Mission Briefing",
+    answerHint: "You will be able to answer it by the end of this lesson.",
     sectionOf: (num: string) => `Lesson ${num}`,
   },
   scenario: {
