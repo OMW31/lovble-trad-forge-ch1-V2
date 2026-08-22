@@ -2,8 +2,10 @@ import { useMemo, useState } from "react";
 import { Sigma } from "lucide-react";
 import { WidgetFrame } from "./primitives";
 import { cn } from "@/lib/utils";
+import { useT } from "@/lib/i18n";
 
 export function DcfSimulator() {
+  const t = useT().widgetsCorp.dcfSimulator;
   const [growth, setGrowth] = useState(8);
   const [margin, setMargin] = useState(18);
   const [wacc, setWacc] = useState(9);
@@ -21,23 +23,23 @@ export function DcfSimulator() {
   const tone = dcf.value > 320 ? "bull" : dcf.value < 220 ? "bear" : "forge";
 
   return (
-    <WidgetFrame title="DCF Simulator" subtitle="Actualisez les flux futurs et testez la sensibilité au WACC et à la croissance terminale." badge="Intrinsic value">
+    <WidgetFrame title={t.title} subtitle={t.subtitle} badge={t.badge}>
       <div className="grid gap-5 lg:grid-cols-[1fr_260px]">
         <div className="space-y-4">
-          <Slider label="Revenue growth" value={growth} set={setGrowth} min={0} max={18} step={0.5} unit="%" />
-          <Slider label="FCF margin" value={margin} set={setMargin} min={6} max={32} step={0.5} unit="%" />
-          <Slider label="WACC" value={wacc} set={setWacc} min={6} max={14} step={0.25} unit="%" />
-          <Slider label="Terminal growth" value={terminal} set={setTerminal} min={1} max={5} step={0.25} unit="%" />
+          <Slider label={t.sliders.growth} value={growth} set={setGrowth} min={0} max={18} step={0.5} unit="%" />
+          <Slider label={t.sliders.margin} value={margin} set={setMargin} min={6} max={32} step={0.5} unit="%" />
+          <Slider label={t.sliders.wacc} value={wacc} set={setWacc} min={6} max={14} step={0.25} unit="%" />
+          <Slider label={t.sliders.terminal} value={terminal} set={setTerminal} min={1} max={5} step={0.25} unit="%" />
         </div>
         <div className="rounded-2xl border bg-surface p-5">
           <Sigma className="h-5 w-5 text-forge" />
-          <div className="mt-3 font-mono text-[10px] uppercase tracking-wider text-muted-foreground">Enterprise value index</div>
+          <div className="mt-3 font-mono text-[10px] uppercase tracking-wider text-muted-foreground">{t.enterpriseValueIndex}</div>
           <div className="mt-1 font-mono text-4xl font-semibold tabular-nums text-foreground">{dcf.value.toFixed(0)}</div>
-          <div className={cn("mt-3 rounded-lg border p-3 text-sm font-semibold", tone === "bull" && "border-bull/40 bg-bull/10 text-bull", tone === "forge" && "border-forge/40 bg-forge/10 text-forge", tone === "bear" && "border-bear/40 bg-bear/10 text-bear")}>{tone === "bull" ? "Valeur robuste" : tone === "bear" ? "Compression sévère" : "Zone médiane"}</div>
+          <div className={cn("mt-3 rounded-lg border p-3 text-sm font-semibold", tone === "bull" && "border-bull/40 bg-bull/10 text-bull", tone === "forge" && "border-forge/40 bg-forge/10 text-forge", tone === "bear" && "border-bear/40 bg-bear/10 text-bear")}>{tone === "bull" ? t.verdicts.robust : tone === "bear" ? t.verdicts.severe : t.verdicts.middle}</div>
         </div>
       </div>
       <div className="mt-4 grid grid-cols-5 gap-2">
-        {dcf.flows.map((flow, i) => <div key={i} className="rounded-lg border bg-surface p-2 text-center"><div className="font-mono text-[10px] text-muted-foreground">A{i + 1}</div><div className="font-mono text-sm text-foreground">{flow.toFixed(1)}</div></div>)}
+        {dcf.flows.map((flow, i) => <div key={i} className="rounded-lg border bg-surface p-2 text-center"><div className="font-mono text-[10px] text-muted-foreground">{t.yearShort(i + 1)}</div><div className="font-mono text-sm text-foreground">{flow.toFixed(1)}</div></div>)}
       </div>
     </WidgetFrame>
   );

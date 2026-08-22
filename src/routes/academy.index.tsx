@@ -23,19 +23,12 @@ export const Route = createFileRoute("/academy/")({
 });
 
 const CHAPTERS = [
-  {
-    num: "01",
-    title: "Analyse Fondamentale",
-    desc: "Valeur intrinsèque, macro & micro, valorisation, prévisions, 10 cas historiques.",
-    to: "/academy/analyse-fondamentale" as const,
-    status: "open" as const,
-    lessons: 6,
-  },
-  { num: "02", title: "Banques Centrales", desc: "Taux, QE/QT, forward guidance, hawkish vs dovish.", status: "locked" as const, lessons: 5 },
-  { num: "03", title: "Géopolitique & Crises", desc: "Risque politique, refuges, chocs d'offre.", status: "locked" as const, lessons: 5 },
-  { num: "04", title: "Corrélations de Marché", desc: "Intermarket, diversification, régimes.", status: "locked" as const, lessons: 4 },
-  { num: "05", title: "Cycles Financiers", desc: "Expansion, pic, récession, reprise.", status: "locked" as const, lessons: 4 },
-];
+  { num: "01", to: "/academy/analyse-fondamentale" as const, status: "open" as const, lessons: 6 },
+  { num: "02", status: "locked" as const, lessons: 5 },
+  { num: "03", status: "locked" as const, lessons: 5 },
+  { num: "04", status: "locked" as const, lessons: 4 },
+  { num: "05", status: "locked" as const, lessons: 4 },
+] as const;
 
 function AcademyIndex() {
   const t = useT();
@@ -78,6 +71,7 @@ function AcademyIndex() {
         <div className="mt-12 grid gap-4">
           {CHAPTERS.map((c) => {
             const open = c.status === "open";
+            const meta = t.chrome.hub.chapters[c.num];
             const Card = (
               <div
                 className={`group flex items-center gap-5 rounded-2xl border bg-card p-5 shadow-elegant transition-all ${
@@ -89,16 +83,16 @@ function AcademyIndex() {
                 </div>
                 <div className="min-w-0 flex-1">
                   <div className="flex items-center gap-2">
-                    <h3 className="font-display text-lg font-semibold text-foreground">{c.title}</h3>
+                    <h3 className="font-display text-lg font-semibold text-foreground">{meta.title}</h3>
                     {open ? (
                       <CheckCircle2 className="h-4 w-4 text-bull" />
                     ) : (
                       <Lock className="h-3.5 w-3.5 text-muted-foreground" />
                     )}
                   </div>
-                  <p className="mt-0.5 text-sm text-muted-foreground">{c.desc}</p>
+                  <p className="mt-0.5 text-sm text-muted-foreground">{meta.desc}</p>
                   <p className="mt-1.5 font-mono text-[11px] uppercase tracking-wider text-muted-foreground/70">
-                    {c.lessons} leçons
+                    {c.lessons} {t.chrome.hub.lessonsSuffix}
                   </p>
                 </div>
                 {open && (
@@ -106,7 +100,7 @@ function AcademyIndex() {
                 )}
               </div>
             );
-            return open && c.to ? (
+            return open && "to" in c && c.to ? (
               <Link key={c.num} to={c.to}>
                 {Card}
               </Link>

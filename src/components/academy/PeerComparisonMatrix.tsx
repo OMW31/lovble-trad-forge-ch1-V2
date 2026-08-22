@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { WidgetFrame } from "./primitives";
 import { cn } from "@/lib/utils";
+import { useT } from "@/lib/i18n";
 
 interface Peer {
   name: string;
@@ -20,16 +21,17 @@ const PEERS: Peer[] = [
 
 type MetricKey = "growth" | "margin" | "roe" | "pe";
 
-const METRICS: { key: MetricKey; label: string; unit: string; betterHigh: boolean }[] = [
-  { key: "growth", label: "Croissance des ventes", unit: "%", betterHigh: true },
-  { key: "margin", label: "Marge nette", unit: "%", betterHigh: true },
-  { key: "roe", label: "ROE", unit: "%", betterHigh: true },
-  { key: "pe", label: "P/E (valorisation)", unit: "x", betterHigh: false },
+const METRIC_KEYS: { key: MetricKey; unit: string; betterHigh: boolean }[] = [
+  { key: "growth", unit: "%", betterHigh: true },
+  { key: "margin", unit: "%", betterHigh: true },
+  { key: "roe", unit: "%", betterHigh: true },
+  { key: "pe", unit: "x", betterHigh: false },
 ];
 
 export function PeerComparisonMatrix() {
+  const t = useT().widgetsCorp.peerComparisonMatrix;
   const [metric, setMetric] = useState<MetricKey>("growth");
-  const m = METRICS.find((x) => x.key === metric)!;
+  const m = METRIC_KEYS.find((x) => x.key === metric)!;
   const max = Math.max(...PEERS.map((p) => p[metric]));
   const best = m.betterHigh
     ? PEERS.reduce((a, b) => (b[metric] > a[metric] ? b : a))
@@ -37,12 +39,12 @@ export function PeerComparisonMatrix() {
 
   return (
     <WidgetFrame
-      title="Peer Comparison Matrix"
-      subtitle="Comparez les leaders sur la métrique de votre choix."
-      badge="Benchmark"
+      title={t.title}
+      subtitle={t.subtitle}
+      badge={t.badge}
     >
       <div className="mb-4 flex flex-wrap gap-2">
-        {METRICS.map((x) => (
+        {METRIC_KEYS.map((x) => (
           <button
             key={x.key}
             onClick={() => setMetric(x.key)}
@@ -51,7 +53,7 @@ export function PeerComparisonMatrix() {
               metric === x.key ? "border-forge bg-forge/15 text-forge" : "border-border text-muted-foreground hover:border-forge/40",
             )}
           >
-            {x.label}
+            {t.metrics[x.key]}
           </button>
         ))}
       </div>
@@ -68,7 +70,7 @@ export function PeerComparisonMatrix() {
                   <span className="font-mono text-[10px] text-muted-foreground">{p.ticker}</span>
                   {isBest && (
                     <span className="rounded-full bg-forge/15 px-2 py-0.5 font-mono text-[9px] uppercase tracking-wider text-forge">
-                      Leader
+                      {t.leader}
                     </span>
                   )}
                 </span>
@@ -89,9 +91,7 @@ export function PeerComparisonMatrix() {
       </div>
 
       <p className="mt-4 text-xs leading-relaxed text-muted-foreground">
-        {m.betterHigh
-          ? "Sur cette métrique, plus c'est élevé, mieux c'est."
-          : "Sur le P/E, un multiple plus bas peut traduire une valorisation plus prudente — à mettre en regard de la croissance."}
+        {m.betterHigh ? t.footnoteHigherBetter : t.footnotePeLower}
       </p>
     </WidgetFrame>
   );

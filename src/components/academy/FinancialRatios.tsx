@@ -2,23 +2,19 @@ import { useState } from "react";
 import { Calculator } from "lucide-react";
 import { WidgetFrame } from "./primitives";
 import { cn } from "@/lib/utils";
+import { useT } from "@/lib/i18n";
 
 type Mode = "quality" | "value" | "risk";
 
-const rows = [
-  { metric: "P/E", reading: "28x", quality: "Neutre", value: "Cher vs marché", risk: "Multiple sensible aux taux" },
-  { metric: "ROE", reading: "31%", quality: "Excellent", value: "Justifie prime", risk: "Durabilité à vérifier" },
-  { metric: "D/E", reading: "0.7x", quality: "Solide", value: "Bilan flexible", risk: "Risque dette faible" },
-  { metric: "FCF yield", reading: "4.8%", quality: "Cash réel", value: "Correct", risk: "Protection partielle" },
-];
-
 export function FinancialRatios() {
+  const t = useT().widgetsCorp.financialRatios;
   const [mode, setMode] = useState<Mode>("quality");
+  const rows = Object.values(t.rows);
   return (
-    <WidgetFrame title="Financial Ratios" subtitle="Lisez les ratios selon trois prismes: qualité, value et risque." badge="Ratios">
+    <WidgetFrame title={t.title} subtitle={t.subtitle} badge="Ratios">
       <div className="mb-4 flex gap-2">
         {(["quality", "value", "risk"] as Mode[]).map((item) => (
-          <button key={item} onClick={() => setMode(item)} className={cn("rounded-full border px-3 py-1 text-xs capitalize", mode === item ? "border-forge bg-forge/10 text-forge" : "border-border text-muted-foreground hover:border-forge/40")}>{item}</button>
+          <button key={item} onClick={() => setMode(item)} className={cn("rounded-full border px-3 py-1 text-xs", mode === item ? "border-forge bg-forge/10 text-forge" : "border-border text-muted-foreground hover:border-forge/40")}>{t.modes[item]}</button>
         ))}
       </div>
       <div className="overflow-hidden rounded-xl border">

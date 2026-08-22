@@ -12,6 +12,7 @@ import { saveEvaluationAttempt } from "@/lib/academy/progress.functions";
 import { assembleScenario } from "@/lib/academy/scenario-engine";
 import { SCENARIO_LIBRARY } from "@/lib/academy/scenario-library";
 import { useChapterProgress } from "@/lib/academy/useChapterProgress";
+import { useT } from "@/lib/i18n";
 
 export const Route = createFileRoute("/academy/analyse-fondamentale/certification")({
   head: () => ({
@@ -26,6 +27,7 @@ export const Route = createFileRoute("/academy/analyse-fondamentale/certificatio
 });
 
 function CertificationPage() {
+  const t = useT();
   const { signedIn, profile, completed, lessonPasses, certificationPercent, certificationReady, dashboard } = useChapterProgress(CHAPTER.id, CASE_STUDIES.length);
   const [results, setResults] = useState<Record<string, boolean>>({});
   const [saved, setSaved] = useState(false);
@@ -62,34 +64,34 @@ function CertificationPage() {
     <ChapterShell completedSections={completed} signedIn={signedIn} profile={profile} lessonPasses={lessonPasses} certificationPercent={certificationPercent} dashboard={dashboard}>
       <div className="space-y-8">
         <Link to="/academy/analyse-fondamentale" className="inline-flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground">
-          <ArrowLeft className="h-4 w-4" /> Retour au chapitre
+          <ArrowLeft className="h-4 w-4" /> {t.chrome.certification.back}
         </Link>
 
         <section className="overflow-hidden rounded-3xl border bg-gradient-hero p-6 sm:p-8">
           <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
             <div>
-              <div className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.18em] text-forge"><Award className="h-3.5 w-3.5" /> Certification finale · Partie C</div>
-              <h1 className="mt-3 max-w-3xl font-display text-3xl font-bold leading-tight text-foreground sm:text-5xl">Dix scénarios scriptés pour valider votre lecture fondamentale</h1>
-              <p className="mt-4 max-w-2xl text-sm leading-relaxed text-muted-foreground">Contexte, bougies, pause pédagogique, publication, décision, feedback et outcome réel. Seuil : 70 %.</p>
+              <div className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.18em] text-forge"><Award className="h-3.5 w-3.5" /> {t.chrome.certification.eyebrow}</div>
+              <h1 className="mt-3 max-w-3xl font-display text-3xl font-bold leading-tight text-foreground sm:text-5xl">{t.chrome.certification.title}</h1>
+              <p className="mt-4 max-w-2xl text-sm leading-relaxed text-muted-foreground">{t.chrome.certification.lead}</p>
             </div>
             <div className="rounded-2xl border bg-surface p-4 text-center">
               <div className="font-display text-3xl font-bold tabular-nums text-foreground">{answered}/{scenarios.length}</div>
-              <div className="mt-1 font-mono text-[10px] uppercase tracking-wider text-muted-foreground">scénarios notés</div>
-              <div className="mt-2 text-sm font-semibold text-forge">Score {score}%</div>
+              <div className="mt-1 font-mono text-[10px] uppercase tracking-wider text-muted-foreground">{t.chrome.certification.scoredScenarios}</div>
+              <div className="mt-2 text-sm font-semibold text-forge">{t.chrome.certification.scoreLabel(score)}</div>
             </div>
           </div>
         </section>
 
         {!certificationReady ? (
           <section className="rounded-2xl border border-forge/30 bg-card p-6 shadow-elegant">
-            <div className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.18em] text-forge"><Lock className="h-3.5 w-3.5" /> Certification verrouillée — {certificationPercent}%</div>
-            <h2 className="mt-3 font-display text-2xl font-semibold text-foreground">Validez les leçons restantes avant la Partie C</h2>
+            <div className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.18em] text-forge"><Lock className="h-3.5 w-3.5" /> {t.chrome.certification.lockedTitle(certificationPercent)}</div>
+            <h2 className="mt-3 font-display text-2xl font-semibold text-foreground">{t.chrome.certification.lockedHeading}</h2>
             <div className="mt-4 grid gap-3 md:grid-cols-2">
               {remaining.map((lesson) => (
                 <a key={lesson.id} href={`/academy/analyse-fondamentale#${lesson.id}`} className="premium-hover rounded-xl border bg-surface p-4">
                   <div className="font-mono text-[10px] uppercase tracking-wider text-muted-foreground">{lesson.num}</div>
                   <div className="mt-1 font-semibold text-foreground">{lesson.title}</div>
-                  <p className="mt-1 text-xs text-muted-foreground">Évaluation A+B à réussir à ≥70 %.</p>
+                  <p className="mt-1 text-xs text-muted-foreground">{t.chrome.certification.lockedLessonHint}</p>
                 </a>
               ))}
             </div>
@@ -103,14 +105,14 @@ function CertificationPage() {
             </div>
             <section className="rounded-3xl border bg-gradient-hero p-6 text-center shadow-elegant sm:p-8">
               {passed ? <Trophy className="mx-auto h-10 w-10 text-forge" /> : <CheckCircle2 className="mx-auto h-10 w-10 text-muted-foreground" />}
-              <h2 className="mt-4 font-display text-2xl font-bold text-foreground">{answered === scenarios.length ? (passed ? "Certification réussie" : "Certification non validée") : "Certification en cours"}</h2>
-              <p className="mx-auto mt-2 max-w-xl text-sm text-muted-foreground">{answered === scenarios.length ? `${correct}/${scenarios.length} décisions correctes · score ${score} %.` : "Terminez les dix scénarios pour calculer le score final."}</p>
+              <h2 className="mt-4 font-display text-2xl font-bold text-foreground">{answered === scenarios.length ? (passed ? t.chrome.certification.resultPassed : t.chrome.certification.resultFailed) : t.chrome.certification.resultPending}</h2>
+              <p className="mx-auto mt-2 max-w-xl text-sm text-muted-foreground">{answered === scenarios.length ? t.chrome.certification.resultSummary(correct, scenarios.length, score) : t.chrome.certification.resultPendingBody}</p>
               {signedIn ? (
                 <Button disabled={answered !== scenarios.length || mutation.isPending || saved} onClick={saveCertification} className="mt-6 bg-gradient-forge text-forge-foreground shadow-glow hover:opacity-95">
-                  <ShieldCheck className="h-4 w-4" /> {saved ? "Certification sauvegardée" : mutation.isPending ? "Sauvegarde..." : "Sauvegarder la tentative"}
+                  <ShieldCheck className="h-4 w-4" /> {saved ? t.chrome.certification.saved : mutation.isPending ? t.chrome.certification.saving : t.chrome.certification.saveAttempt}
                 </Button>
               ) : (
-                <p className="mt-6 text-xs text-muted-foreground">Connectez-vous pour sauvegarder cette tentative.</p>
+                <p className="mt-6 text-xs text-muted-foreground">{t.chrome.certification.signInToSave}</p>
               )}
             </section>
           </>
