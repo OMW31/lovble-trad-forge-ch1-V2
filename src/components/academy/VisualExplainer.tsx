@@ -2,6 +2,7 @@ import { type ReactNode } from "react";
 import { ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Reveal, VisualLayer } from "./primitives";
+import { useT } from "@/lib/i18n";
 import type { VisualAsset } from "@/lib/academy/visual-assets";
 
 export type ExplainerNode = {
@@ -66,6 +67,7 @@ export function VisualExplainer({
   reverse?: boolean;
   children?: ReactNode;
 }) {
+  const t = useT().widgetsCorp.primitives.visualExplainer;
   return (
     <figure
       className={cn(
@@ -158,7 +160,7 @@ export function VisualExplainer({
 
           {reading && (
             <div className="rounded-lg border border-data/30 bg-data/5 p-3 text-xs leading-relaxed text-muted-foreground">
-              <span className="font-mono text-[10px] uppercase tracking-wider text-data">Lecture</span>
+              <span className="font-mono text-[10px] uppercase tracking-wider text-data">{t.reading}</span>
               <p className="mt-1 text-pretty">{reading}</p>
             </div>
           )}

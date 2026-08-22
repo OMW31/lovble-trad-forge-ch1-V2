@@ -2,27 +2,28 @@ import { useState } from "react";
 import { ChevronRight } from "lucide-react";
 import { WidgetFrame } from "./primitives";
 import { cn } from "@/lib/utils";
+import { useT } from "@/lib/i18n";
 
 interface Item {
-  label: string;
+  key: string;
   value: number;
 }
 
 const ASSETS: Item[] = [
-  { label: "Trésorerie & équivalents", value: 62 },
-  { label: "Créances clients", value: 30 },
-  { label: "Stocks", value: 14 },
-  { label: "Immobilisations", value: 44 },
-  { label: "Goodwill & incorporels", value: 22 },
+  { key: "cash", value: 62 },
+  { key: "receivables", value: 30 },
+  { key: "inventory", value: 14 },
+  { key: "fixedAssets", value: 44 },
+  { key: "goodwill", value: 22 },
 ];
 const LIABILITIES: Item[] = [
-  { label: "Dettes fournisseurs", value: 28 },
-  { label: "Dette court terme", value: 18 },
-  { label: "Dette long terme", value: 58 },
+  { key: "payables", value: 28 },
+  { key: "shortTermDebt", value: 18 },
+  { key: "longTermDebt", value: 58 },
 ];
 const EQUITY: Item[] = [
-  { label: "Capital & primes", value: 24 },
-  { label: "Réserves & report", value: 44 },
+  { key: "capital", value: 24 },
+  { key: "reserves", value: 44 },
 ];
 
 const sum = (arr: Item[]) => arr.reduce((a, b) => a + b.value, 0);
@@ -30,21 +31,22 @@ const sum = (arr: Item[]) => arr.reduce((a, b) => a + b.value, 0);
 type Section = "assets" | "liabilities" | "equity";
 
 export function BalanceSheetExplorer() {
+  const t = useT().widgetsCorp.balanceSheetExplorer;
   const [open, setOpen] = useState<Section | null>("assets");
   const totalAssets = sum(ASSETS);
   const totalLiab = sum(LIABILITIES);
   const totalEquity = sum(EQUITY);
 
   const Bar = ({ items, color }: { items: Item[]; color: string }) => {
-    const t = sum(items);
+    const total = sum(items);
     return (
       <div className="flex h-9 w-full overflow-hidden rounded-md border">
         {items.map((it, i) => (
           <div
             key={i}
             className="group relative h-full"
-            style={{ width: `${(it.value / t) * 100}%`, background: color, opacity: 0.55 + (i % 3) * 0.15 }}
-            title={`${it.label} : ${it.value} Md$`}
+            style={{ width: `${(it.value / total) * 100}%`, background: color, opacity: 0.55 + (i % 3) * 0.15 }}
+            title={t.tooltip(t.items[it.key as keyof typeof t.items], it.value)}
           />
         ))}
       </div>
@@ -55,9 +57,9 @@ export function BalanceSheetExplorer() {
     <div className="mt-2 space-y-1.5">
       {items.map((it, i) => (
         <div key={i} className="flex items-center justify-between text-xs">
-          <span className="text-muted-foreground">{it.label}</span>
+          <span className="text-muted-foreground">{t.items[it.key as keyof typeof t.items]}</span>
           <span className="font-mono tabular-nums text-foreground">
-            {it.value} Md$ · {Math.round((it.value / total) * 100)}%
+            {t.detailLine(it.value, Math.round((it.value / total) * 100))}
           </span>
         </div>
       ))}
@@ -84,7 +86,7 @@ export function BalanceSheetExplorer() {
           {label}
         </span>
         <span className="font-mono text-sm font-semibold tabular-nums" style={{ color }}>
-          {total} Md$
+          {total} {t.unit}
         </span>
       </button>
       <div className="mt-3">
@@ -96,20 +98,20 @@ export function BalanceSheetExplorer() {
 
   return (
     <WidgetFrame
-      title="Balance Sheet Explorer"
-      subtitle="Actif = Passif + Capitaux propres. Cliquez pour explorer chaque poste."
+      title={t.title}
+      subtitle={t.subtitle}
       badge="Drill-down"
     >
       <div className="space-y-3">
-        <Row id="assets" label="Actif (Assets)" items={ASSETS} total={totalAssets} color="var(--data)" />
+        <Row id="assets" label={t.sections.assets} items={ASSETS} total={totalAssets} color="var(--data)" />
         <div className="flex items-center justify-center">
           <span className="font-mono text-xs text-muted-foreground">=</span>
         </div>
-        <Row id="liabilities" label="Passif / Dettes (Liabilities)" items={LIABILITIES} total={totalLiab} color="var(--bear)" />
+        <Row id="liabilities" label={t.sections.liabilities} items={LIABILITIES} total={totalLiab} color="var(--bear)" />
         <div className="flex items-center justify-center">
           <span className="font-mono text-xs text-muted-foreground">+</span>
         </div>
-        <Row id="equity" label="Capitaux propres (Equity)" items={EQUITY} total={totalEquity} color="var(--bull)" />
+        <Row id="equity" label={t.sections.equity} items={EQUITY} total={totalEquity} color="var(--bull)" />
       </div>
       <div
         className={cn(
@@ -117,7 +119,7 @@ export function BalanceSheetExplorer() {
           totalAssets === totalLiab + totalEquity ? "border-bull/40 bg-bull/5 text-bull" : "border-bear/40 text-bear",
         )}
       >
-        Équilibre du bilan : {totalAssets} = {totalLiab} + {totalEquity} ✓
+        {t.balanceCheck(totalAssets, totalLiab, totalEquity)}
       </div>
     </WidgetFrame>
   );

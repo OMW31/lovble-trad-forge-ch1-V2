@@ -4,8 +4,18 @@
 // ============================================================================
 
 import type { Dictionary } from "./fr";
+import { chromeEn } from "./chrome.en";
+import { widgetsEn } from "./widgets.en";
+import { contentEn } from "./content.en";
+import { widgetsMacroEn } from "./widgets-macro.en";
+import { widgetsCorpEn } from "./widgets-corp.en";
 
 export const en: Dictionary = {
+  chrome: chromeEn,
+  widgets: widgetsEn,
+  widgetsMacro: widgetsMacroEn,
+  widgetsCorp: widgetsCorpEn,
+  content: contentEn,
   nav: {
     academy: "Academy",
     chapters: "Chapters",

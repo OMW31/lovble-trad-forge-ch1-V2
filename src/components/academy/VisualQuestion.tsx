@@ -2,6 +2,7 @@ import { CheckCircle2, XCircle } from "lucide-react";
 import type { EvaluationQuestion } from "@/lib/academy/evaluation-bank";
 import { cn } from "@/lib/utils";
 import { VisualLightbox } from "./VisualLightbox";
+import { useT } from "@/lib/i18n";
 
 export function VisualQuestion({
   question,
@@ -14,6 +15,7 @@ export function VisualQuestion({
   reveal: boolean;
   onSelect: (choiceId: string) => void;
 }) {
+  const t = useT().widgetsCorp.visualQuestion;
   const visualSrc = question.visualId ? `/academy/ch1/visuals/${question.visualId}.webp` : null;
   return (
     <div className="rounded-xl border bg-surface p-4">
@@ -27,7 +29,7 @@ export function VisualQuestion({
       </div>
       {visualSrc && (
         <div className="mt-3">
-          <VisualLightbox src={visualSrc} alt={`Support visuel ${question.visualId} — ${question.widget ?? "évaluation"}`} label={`Support ${question.visualId}`} />
+          <VisualLightbox src={visualSrc} alt={t.supportAlt(question.visualId!, question.widget ?? t.evaluationFallback)} label={t.supportLabel(question.visualId!)} />
         </div>
       )}
       <div className="mt-3 grid gap-2">

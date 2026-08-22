@@ -2,6 +2,7 @@ import { type ReactNode } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { VisualLightbox } from "./VisualLightbox";
+import { useT } from "@/lib/i18n";
 
 /**
  * Fade/rise on scroll — bidirectional (plays on the way down AND back up).
@@ -135,6 +136,7 @@ export function Eyebrow({ children, className }: { children: ReactNode; classNam
 }
 
 export function LevelBadge({ level }: { level: number }) {
+  const t = useT().widgetsCorp.primitives;
   return (
     <span className="inline-flex items-center gap-1.5 rounded-full border border-border bg-surface-2 px-2.5 py-1 font-mono text-[10px] uppercase tracking-wider text-muted-foreground">
       <span className="flex gap-0.5">
@@ -145,7 +147,7 @@ export function LevelBadge({ level }: { level: number }) {
           />
         ))}
       </span>
-      Niveau {level}
+      {t.levelBadge(level)}
     </span>
   );
 }

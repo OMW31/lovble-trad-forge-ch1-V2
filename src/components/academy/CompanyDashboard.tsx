@@ -1,16 +1,19 @@
 import { Building2, CircleDollarSign, Percent, ShieldCheck } from "lucide-react";
 import { WidgetFrame } from "./primitives";
-
-const metrics = [
-  { label: "Revenue growth", value: "+18%", icon: Building2, tone: "text-bull" },
-  { label: "Gross margin", value: "62%", icon: Percent, tone: "text-data" },
-  { label: "FCF margin", value: "21%", icon: CircleDollarSign, tone: "text-forge" },
-  { label: "Net debt / EBITDA", value: "0.7x", icon: ShieldCheck, tone: "text-bull" },
-];
+import { useT } from "@/lib/i18n";
 
 export function CompanyDashboard() {
+  const t = useT().widgetsCorp.companyDashboard;
+
+  const metrics = [
+    { label: t.metrics.revenueGrowth, value: "+18%", icon: Building2, tone: "text-bull" },
+    { label: t.metrics.grossMargin, value: "62%", icon: Percent, tone: "text-data" },
+    { label: t.metrics.fcfMargin, value: "21%", icon: CircleDollarSign, tone: "text-forge" },
+    { label: t.metrics.netDebtEbitda, value: "0.7x", icon: ShieldCheck, tone: "text-bull" },
+  ];
+
   return (
-    <WidgetFrame title="Company Dashboard" subtitle="Vue synthèse d’une entreprise: croissance, rentabilité, cash-flow et risque financier." badge="Micro">
+    <WidgetFrame title="Company Dashboard" subtitle={t.subtitle} badge="Micro">
       <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
         {metrics.map((metric) => (
           <div key={metric.label} className="premium-hover rounded-xl border bg-surface p-4">
@@ -21,7 +24,7 @@ export function CompanyDashboard() {
         ))}
       </div>
       <div className="mt-4 rounded-xl border border-bull/30 bg-bull/5 p-4 text-sm leading-relaxed text-muted-foreground">
-        Diagnostic: croissance profitable, conversion cash forte, bilan peu levier. Profil quality compounder si la valorisation reste cohérente.
+        {t.diagnostic}
       </div>
     </WidgetFrame>
   );

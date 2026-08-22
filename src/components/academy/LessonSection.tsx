@@ -1,5 +1,6 @@
 import { type ReactNode } from "react";
 import { Reveal, LevelBadge } from "./primitives";
+import { useT } from "@/lib/i18n";
 
 export function LessonSection({
   id,
@@ -16,6 +17,7 @@ export function LessonSection({
   level: number;
   children: ReactNode;
 }) {
+  const t = useT();
   return (
     <section
       id={id}
@@ -31,7 +33,7 @@ export function LessonSection({
         </span>
         <span className="h-px flex-1 bg-gradient-to-r from-forge/50 via-border to-transparent" />
         <span className="shrink-0 font-mono text-[10px] uppercase tracking-[0.22em] text-forge/80">
-          Section {num}
+          {t.chrome.lesson.section} {num}
         </span>
       </div>
 

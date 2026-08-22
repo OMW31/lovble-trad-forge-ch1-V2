@@ -1,8 +1,10 @@
 import { ChevronRight, Clock, Sparkles, Target, Zap } from "lucide-react";
 import type { LessonMeta } from "@/lib/academy/chapter1";
 import { cn } from "@/lib/utils";
+import { useT } from "@/lib/i18n";
 
 export function LessonMiniHero({ lesson }: { lesson: LessonMeta }) {
+  const t = useT();
   const hero = lesson.miniHero;
   if (!hero) return null;
 
@@ -21,7 +23,7 @@ export function LessonMiniHero({ lesson }: { lesson: LessonMeta }) {
                   {String(order).padStart(2, "0")}
                 </span>
                 <span className="rounded-full border border-bull/40 bg-bull/10 px-2.5 py-1 font-mono text-[10px] uppercase tracking-wider text-bull">
-                  Leçon {lesson.num}
+                  {t.chrome.lesson.sectionOf(lesson.num)}
                 </span>
                 <span className="inline-flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-wider text-muted-foreground">
                   <Clock className="h-3.5 w-3.5" /> {hero.duration}
@@ -50,12 +52,12 @@ export function LessonMiniHero({ lesson }: { lesson: LessonMeta }) {
       {/* Mission briefing */}
       <div className="overflow-hidden rounded-2xl border bg-card shadow-elegant">
         <div className="flex items-center gap-2 border-b border-bull/20 bg-bull/5 px-5 py-3 font-mono text-[11px] uppercase tracking-[0.18em] text-bull">
-          <span className="h-1.5 w-1.5 rounded-full bg-bull animate-ticker-pulse" /> Mission Briefing
+          <span className="h-1.5 w-1.5 rounded-full bg-bull animate-ticker-pulse" /> {t.chrome.lesson.missionBriefing}
         </div>
         <div className="grid gap-5 p-5 lg:grid-cols-2">
           <div>
             <div className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
-              <Target className="h-3.5 w-3.5 text-forge" /> Objectifs
+              <Target className="h-3.5 w-3.5 text-forge" /> {t.chrome.lesson.objectivesShort}
             </div>
             <ul className="mt-3 space-y-2.5">
               {hero.objectives.map((obj, i) => (
@@ -68,11 +70,11 @@ export function LessonMiniHero({ lesson }: { lesson: LessonMeta }) {
           </div>
           <div className={cn("rounded-xl border border-data/30 bg-data/5 p-4")}>
             <div className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.18em] text-data">
-              <Zap className="h-3.5 w-3.5" /> Question clé
+              <Zap className="h-3.5 w-3.5" /> {t.chrome.lesson.keyQuestion}
             </div>
             <p className="mt-3 text-base font-semibold leading-relaxed text-foreground">{hero.keyQuestion}</p>
             <p className="mt-3 inline-flex items-center gap-1.5 text-xs text-muted-foreground">
-              <Sparkles className="h-3.5 w-3.5 text-forge" /> Vous saurez y répondre à la fin de cette leçon.
+              <Sparkles className="h-3.5 w-3.5 text-forge" /> {t.chrome.lesson.answerHint}
             </p>
           </div>
         </div>
