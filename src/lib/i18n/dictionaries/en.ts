@@ -4,8 +4,14 @@
 // ============================================================================
 
 import type { Dictionary } from "./fr";
+import { chromeEn } from "./chrome.en";
+import { widgetsEn } from "./widgets.en";
+import { contentEn } from "./content.en";
 
 export const en: Dictionary = {
+  chrome: chromeEn,
+  widgets: widgetsEn,
+  content: contentEn,
   nav: {
     academy: "Academy",
     chapters: "Chapters",

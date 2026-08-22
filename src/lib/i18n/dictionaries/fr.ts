@@ -8,7 +8,14 @@
 // CFA / Financial Times), jamais une traduction littérale.
 // ============================================================================
 
+import { chromeFr } from "./chrome.fr";
+import { widgetsFr } from "./widgets.fr";
+import { contentFr } from "./content.fr";
+
 export const fr = {
+  chrome: chromeFr,
+  widgets: widgetsFr,
+  content: contentFr,
   nav: {
     academy: "Academy",
     chapters: "Chapitres",
