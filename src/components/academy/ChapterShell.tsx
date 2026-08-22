@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState, type ReactNode } from "react";
 import { Link } from "@tanstack/react-router";
 import { ArrowLeft, Check, ChevronRight, CloudCheck, Flame, Lock } from "lucide-react";
-import { LESSONS, CHAPTER } from "@/lib/academy/chapter1";
+import { useChapter, useLessons } from "@/lib/academy/useChapterContent";
 import { cn } from "@/lib/utils";
 import { MobileLessonBreadcrumb } from "./MobileLessonBreadcrumb";
 import { LearningNavigationEngine } from "./LearningNavigationEngine";
@@ -101,8 +101,10 @@ export function ChapterShell({
   certificationPercent?: number;
   dashboard?: ChapterDashboard;
 }) {
+  const LESSONS = useLessons();
+  const CHAPTER = useChapter();
   const ids = LESSONS.map((l) => l.id);
-  const subIds = useMemo(() => LESSONS.flatMap((l) => l.subsections.map((s) => s.id)), []);
+  const subIds = useMemo(() => LESSONS.flatMap((l) => l.subsections.map((s) => s.id)), [LESSONS]);
   const active = useScrollSpy(ids);
   const { activeSub, visited } = useSubsectionSpy(subIds);
   const progress = Math.round((completedSections.size / LESSONS.length) * 100);
