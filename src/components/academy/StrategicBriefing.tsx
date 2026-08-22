@@ -1,78 +1,65 @@
 import { Activity, ArrowDownRight, ArrowUpRight, CheckCircle2, Layers3, Lock, Radar, Target } from "lucide-react";
-import { LESSONS } from "@/lib/academy/chapter1";
 import { cn } from "@/lib/utils";
 import { ConceptCard, Eyebrow, VisualLayer } from "./primitives";
+import { useLessons } from "@/lib/academy/useChapterContent";
+import { useT } from "@/lib/i18n";
 
-const visualAssets = [
-  { src: "/academy/ch1/visuals/a4.webp", label: "Macro engine" },
-  { src: "/academy/ch1/visuals/a8.webp", label: "Terminal density" },
-  { src: "/academy/ch1/visuals/a17.webp", label: "Institutional map" },
+const POINT_ICONS = [Radar, Layers3, Target];
+
+const VISUAL_ASSETS = [
+  { src: "/academy/ch1/visuals/a4.webp", key: "macro" as const },
+  { src: "/academy/ch1/visuals/a8.webp", key: "terminal" as const },
+  { src: "/academy/ch1/visuals/a17.webp", key: "map" as const },
 ];
 
-const missionPoints = [
-  {
-    label: "Lire",
-    title: "Identifier le driver dominant",
-    detail: "Croissance, inflation, liquidité, bilan, valorisation ou risque politique.",
-    icon: Radar,
-  },
-  {
-    label: "Pondérer",
-    title: "Hiérarchiser l’impact marché",
-    detail: "Différencier donnée brute, surprise, consensus et réaction de deuxième tour.",
-    icon: Layers3,
-  },
-  {
-    label: "Décider",
-    title: "Transformer l’analyse en scénario",
-    detail: "Construire une thèse, une invalidation et une lecture inter-marchés.",
-    icon: Target,
-  },
+const RADAR_SIGNALS = [
+  { key: "growth" as const, value: 74, tone: "bg-bull" },
+  { key: "inflation" as const, value: 61, tone: "bg-bear" },
+  { key: "rates" as const, value: 82, tone: "bg-forge" },
+  { key: "liquidity" as const, value: 48, tone: "bg-data" },
 ];
 
-const radarSignals = [
-  { label: "Growth", value: 74, tone: "bg-bull" },
-  { label: "Inflation", value: 61, tone: "bg-bear" },
-  { label: "Rates", value: 82, tone: "bg-forge" },
-  { label: "Liquidity", value: 48, tone: "bg-data" },
-];
+const SCHEMA_TONES = ["text-bear", "text-bull", "text-forge"];
 
 export function MissionBriefing() {
+  const t = useT();
+  const b = t.chrome.briefing;
+
   return (
     <section className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_360px]">
       <div className="rounded-2xl border bg-card p-6 shadow-elegant">
-        <Eyebrow className="text-data">Mission briefing</Eyebrow>
-        <h2 className="mt-3 font-display text-2xl font-bold text-foreground">Desk d’analyse fondamentale — protocole de décision</h2>
-        <p className="mt-3 max-w-3xl text-sm leading-relaxed text-muted-foreground">
-          Le chapitre est restructuré comme un workflow institutionnel: signal macro, diagnostic entreprise, valorisation,
-          scénarios et exécution d’un cas. Chaque bloc produit une décision observable, pas une simple lecture passive.
-        </p>
+        <Eyebrow className="text-data">{b.eyebrow}</Eyebrow>
+        <h2 className="mt-3 font-display text-2xl font-bold text-foreground">{b.title}</h2>
+        <p className="mt-3 max-w-3xl text-sm leading-relaxed text-muted-foreground">{b.lead}</p>
 
         <div className="mt-6 grid gap-4 md:grid-cols-3">
-          {missionPoints.map((point, index) => (
-            <ConceptCard key={point.label} className="group premium-hover" accent={index === 0}>
-              <div className="flex items-center gap-3">
-                <div className="grid h-9 w-9 place-items-center rounded-lg border border-forge/30 bg-forge/10 text-forge">
-                  <point.icon className="h-4 w-4" />
+          {b.points.map((point, index) => {
+            const Icon = POINT_ICONS[index] ?? Radar;
+            return (
+              <ConceptCard key={point.label} className="group premium-hover" accent={index === 0}>
+                <div className="flex items-center gap-3">
+                  <div className="grid h-9 w-9 place-items-center rounded-lg border border-forge/30 bg-forge/10 text-forge">
+                    <Icon className="h-4 w-4" />
+                  </div>
+                  <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">{point.label}</span>
                 </div>
-                <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">{point.label}</span>
-              </div>
-              <h3 className="mt-4 text-base font-semibold text-foreground">{point.title}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{point.detail}</p>
-            </ConceptCard>
-          ))}
+                <h3 className="mt-4 text-base font-semibold text-foreground">{point.title}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{point.detail}</p>
+              </ConceptCard>
+            );
+          })}
         </div>
       </div>
 
       <aside className="rounded-2xl border bg-gradient-surface p-5 shadow-elegant">
         <div className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
-          <Activity className="h-3.5 w-3.5 text-forge" /> Macro radar
+          <Activity className="h-3.5 w-3.5 text-forge" /> {b.radarTitle}
         </div>
         <div className="mt-5 space-y-4">
-          {radarSignals.map((signal) => (
-            <div key={signal.label}>
+          {RADAR_SIGNALS.map((signal) => (
+            <div key={signal.key}>
               <div className="mb-1 flex items-center justify-between font-mono text-xs">
-                <span className="text-muted-foreground">{signal.label}</span>
+                <span className="text-muted-foreground">{b.radarSignals[signal.key]}</span>
                 <span className="tabular-nums text-foreground">{signal.value}</span>
               </div>
               <div className="h-2 overflow-hidden rounded-full bg-border">
@@ -83,10 +70,10 @@ export function MissionBriefing() {
         </div>
         <div className="mt-5 grid grid-cols-2 gap-2 text-xs">
           <div className="rounded-lg border border-bull/30 bg-bull/10 p-3 text-bull">
-            <ArrowUpRight className="mb-1 h-4 w-4" /> Régime porteur si croissance + taux réels cohérents.
+            <ArrowUpRight className="mb-1 h-4 w-4" /> {b.radarBull}
           </div>
           <div className="rounded-lg border border-bear/30 bg-bear/10 p-3 text-bear">
-            <ArrowDownRight className="mb-1 h-4 w-4" /> Régime fragile si inflation + stress liquidité dominent.
+            <ArrowDownRight className="mb-1 h-4 w-4" /> {b.radarBear}
           </div>
         </div>
       </aside>
@@ -95,17 +82,21 @@ export function MissionBriefing() {
 }
 
 export function SkillUnlockPreview({ completed }: { completed: Set<string> }) {
+  const t = useT();
+  const b = t.chrome.briefing;
+  const lessons = useLessons();
+
   return (
     <section className="rounded-2xl border bg-card p-5 shadow-elegant">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div>
-          <Eyebrow>Skill unlock preview</Eyebrow>
-          <h2 className="mt-2 font-display text-xl font-semibold text-foreground">Compétences débloquées par section</h2>
+          <Eyebrow>{b.skillEyebrow}</Eyebrow>
+          <h2 className="mt-2 font-display text-xl font-semibold text-foreground">{b.skillTitle}</h2>
         </div>
-        <span className="font-mono text-xs text-muted-foreground">{completed.size}/{LESSONS.length} modules validés</span>
+        <span className="font-mono text-xs text-muted-foreground">{b.skillModules(completed.size, lessons.length)}</span>
       </div>
       <div className="mt-5 grid grid-cols-[repeat(auto-fit,minmax(min(11rem,100%),1fr))] gap-3">
-        {LESSONS.map((lesson) => {
+        {lessons.map((lesson) => {
           const done = completed.has(lesson.id);
           return (
             <a
@@ -132,41 +123,48 @@ export function SkillUnlockPreview({ completed }: { completed: Set<string> }) {
 }
 
 export function VisualHybridLayer() {
-  const schemas = [
-    { title: "Inflation → taux → devise", left: "IPC", mid: "Banque centrale", right: "FX / Bonds", tone: "text-bear" },
-    { title: "Croissance → earnings → multiples", left: "PIB", mid: "CA / marges", right: "P/E / DCF", tone: "text-bull" },
-    { title: "Choc énergie → balance → risque", left: "Gaz / pétrole", mid: "Terms of trade", right: "EUR / AUD", tone: "text-forge" },
-  ];
+  const t = useT();
+  const b = t.chrome.briefing;
 
   return (
     <section className="rounded-2xl border bg-card p-5 shadow-elegant">
       <div className="flex flex-wrap items-end justify-between gap-3">
         <div>
-          <Eyebrow className="text-data">Visual hybrid layer</Eyebrow>
-          <h2 className="mt-2 font-display text-xl font-semibold text-foreground">Schémas reconstruits en natif</h2>
+          <Eyebrow className="text-data">{b.hybridEyebrow}</Eyebrow>
+          <h2 className="mt-2 font-display text-xl font-semibold text-foreground">{b.hybridTitle}</h2>
         </div>
         <span className="rounded-full border border-data/30 bg-data/10 px-3 py-1 font-mono text-[10px] uppercase tracking-wider text-data">
-          4K-safe · no corrupted text
+          {b.hybridBadge}
         </span>
       </div>
       <div className="mt-5 grid gap-4 lg:grid-cols-3">
-        {visualAssets.map((asset) => (
-          <div key={asset.src}>
-            <VisualLayer src={asset.src} alt={`Référence visuelle ${asset.label} pour le chapitre Analyse Fondamentale`} variant="figure" label={`${asset.label} · WebP hybrid reference`} />
-          </div>
-        ))}
+        {VISUAL_ASSETS.map((asset) => {
+          const label = b.hybridAssets[asset.key];
+          return (
+            <div key={asset.src}>
+              <VisualLayer
+                src={asset.src}
+                alt={b.hybridAssetAlt(label)}
+                variant="figure"
+                label={b.hybridAssetLabel(label)}
+              />
+            </div>
+          );
+        })}
       </div>
       <div className="mt-5 grid gap-4 lg:grid-cols-3">
-        {schemas.map((schema) => (
+        {b.schemas.map((schema, index) => (
           <div key={schema.title} className="premium-hover min-w-0 rounded-xl border bg-surface p-4">
-            <div className={cn("text-balance font-display text-base font-semibold leading-snug", schema.tone)}>{schema.title}</div>
+            <div className={cn("text-balance font-display text-base font-semibold leading-snug", SCHEMA_TONES[index] ?? "text-foreground")}>
+              {schema.title}
+            </div>
             <ol className="mt-4 flex flex-wrap items-center gap-2 text-xs">
-              {[schema.left, schema.mid, schema.right].map((label, index) => (
+              {[schema.left, schema.mid, schema.right].map((label, i) => (
                 <li key={label} className="flex min-w-0 items-center gap-2">
                   <span className="min-w-0 break-words rounded-lg border bg-card px-3 py-2 text-center font-mono text-foreground">
                     {label}
                   </span>
-                  {index < 2 && <span aria-hidden className="shrink-0 text-muted-foreground">→</span>}
+                  {i < 2 && <span aria-hidden className="shrink-0 text-muted-foreground">→</span>}
                 </li>
               ))}
             </ol>
