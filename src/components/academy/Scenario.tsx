@@ -1,6 +1,7 @@
 import { useState, type ReactNode } from "react";
 import { Check, X, ArrowRight, Target } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useT } from "@/lib/i18n";
 import { LevelBadge } from "./primitives";
 
 export interface ScenarioChoice {
@@ -38,6 +39,8 @@ export function Scenario({
   const answered = selected !== null;
   const correct = selected === correctId;
 
+  const t = useT();
+
   const choose = (id: string) => {
     if (answered) return;
     setSelected(id);
@@ -49,7 +52,7 @@ export function Scenario({
       <div className="flex items-center justify-between gap-3 bg-forge/10 px-5 py-3">
         <div className="flex items-center gap-2 font-mono text-[11px] font-semibold uppercase tracking-[0.18em] text-forge">
           <Target className="h-3.5 w-3.5" />
-          Scénario · Décision
+          {t.chrome.scenario.header}
         </div>
         <LevelBadge level={level} />
       </div>
@@ -106,7 +109,7 @@ export function Scenario({
                 )}
               >
                 {correct ? <Check className="h-4 w-4" /> : <X className="h-4 w-4" />}
-                {correct ? "Analyse correcte" : "Pas tout à fait"}
+                {correct ? t.chrome.scenario.analysisCorrect : t.chrome.scenario.analysisWrong}
               </div>
               <p className="text-sm leading-relaxed text-muted-foreground">{explanation}</p>
             </div>
@@ -115,7 +118,7 @@ export function Scenario({
                 <ArrowRight className="mt-0.5 h-4 w-4 shrink-0 text-data" />
                 <div>
                   <div className="mb-0.5 font-mono text-[10px] uppercase tracking-wider text-data">
-                    Ce qui s'est réellement passé
+                    {t.chrome.scenario.outcome}
                   </div>
                   <p className="text-sm leading-relaxed text-muted-foreground">{outcome}</p>
                 </div>

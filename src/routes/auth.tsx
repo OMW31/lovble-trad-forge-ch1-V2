@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
 import { lovable } from "@/integrations/lovable";
+import { useT } from "@/lib/i18n";
 
 export const Route = createFileRoute("/auth")({
   validateSearch: (search: Record<string, unknown>) => ({
@@ -36,6 +37,7 @@ export const Route = createFileRoute("/auth")({
 });
 
 function AuthPage() {
+  const t = useT();
   const search = Route.useSearch();
   const navigate = useNavigate();
   const [signInEmail, setSignInEmail] = useState("");
@@ -88,7 +90,7 @@ function AuthPage() {
       setMessage(error.message);
       return;
     }
-    setMessage("Compte créé. Connectez-vous pour activer la progression synchronisée.");
+    setMessage(t.chrome.auth.accountCreated);
   };
 
   const signInWithGoogle = async () => {
@@ -122,24 +124,20 @@ function AuthPage() {
           <div className="mt-10 max-w-2xl">
             <div className="inline-flex items-center gap-2 rounded-full border border-forge/30 bg-forge/10 px-3 py-1 font-mono text-[11px] uppercase tracking-[0.18em] text-forge">
               <Sparkles className="h-3.5 w-3.5" />
-              Lovable Cloud Sync
+              {t.chrome.auth.badge}
             </div>
             <h1 className="mt-5 font-display text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
-              Reprenez exactement <span className="text-gradient-forge">où vous vous êtes arrêté</span>.
+              {t.chrome.auth.titleLead} <span className="text-gradient-forge">{t.chrome.auth.titleAccent}</span>.
             </h1>
             <p className="mt-5 max-w-xl text-base leading-relaxed text-muted-foreground">
-              La connexion active les profils, la progression persistée, les évaluations Standard / High / Premium et la synchronisation de ton état d’analyse sur le chapitre.
+              {t.chrome.auth.lead}
             </p>
 
             <div className="mt-8 grid gap-3 sm:grid-cols-3">
-              {[
-                ["Profil", "display name, username, préférences"],
-                ["Progression", "section, scénario, score, déblocages"],
-                ["Reprise exacte", "dernier ancrage, widget, niveau"],
-              ].map(([title, detail]) => (
-                <div key={title} className="rounded-xl border bg-card/80 p-4 shadow-elegant backdrop-blur">
-                  <div className="font-display text-base font-semibold text-foreground">{title}</div>
-                  <div className="mt-1 text-sm text-muted-foreground">{detail}</div>
+              {t.chrome.auth.cards.map((card) => (
+                <div key={card.title} className="rounded-xl border bg-card/80 p-4 shadow-elegant backdrop-blur">
+                  <div className="font-display text-base font-semibold text-foreground">{card.title}</div>
+                  <div className="mt-1 text-sm text-muted-foreground">{card.detail}</div>
                 </div>
               ))}
             </div>
@@ -148,67 +146,67 @@ function AuthPage() {
 
         <Card className="border-border/80 bg-card/95 shadow-glow backdrop-blur">
           <CardHeader>
-            <CardTitle className="font-display text-2xl text-foreground">Accès sécurisé</CardTitle>
+            <CardTitle className="font-display text-2xl text-foreground">{t.chrome.auth.cardTitle}</CardTitle>
             <CardDescription>
-              Email / mot de passe et connexion Google sont prêts pour le prochain prototype.
+              {t.chrome.auth.cardDescription}
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-5">
             <Button onClick={signInWithGoogle} disabled={loading !== null} className="w-full bg-gradient-forge text-forge-foreground shadow-glow hover:opacity-95">
               <ArrowRight className="h-4 w-4" />
-              {loading === "google" ? "Connexion Google..." : "Continuer avec Google"}
+              {loading === "google" ? t.chrome.auth.googleLoading : t.chrome.auth.google}
             </Button>
 
             <Tabs defaultValue="signin">
               <TabsList className="grid h-auto w-full grid-cols-2 bg-surface p-1">
-                <TabsTrigger value="signin">Connexion</TabsTrigger>
-                <TabsTrigger value="signup">Créer un compte</TabsTrigger>
+                <TabsTrigger value="signin">{t.chrome.auth.tabSignIn}</TabsTrigger>
+                <TabsTrigger value="signup">{t.chrome.auth.tabSignUp}</TabsTrigger>
               </TabsList>
 
               <TabsContent value="signin" className="space-y-4">
                 <div className="space-y-2">
-                  <label className="text-sm font-medium text-foreground">Email</label>
+                  <label className="text-sm font-medium text-foreground">{t.chrome.auth.email}</label>
                   <div className="relative">
                     <Mail className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
                     <Input className="pl-9" type="email" value={signInEmail} onChange={(e) => setSignInEmail(e.target.value)} placeholder="analyste@tradforge.com" />
                   </div>
                 </div>
                 <div className="space-y-2">
-                  <label className="text-sm font-medium text-foreground">Mot de passe</label>
+                  <label className="text-sm font-medium text-foreground">{t.chrome.auth.password}</label>
                   <div className="relative">
                     <LockKeyhole className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
                     <Input className="pl-9" type="password" value={signInPassword} onChange={(e) => setSignInPassword(e.target.value)} placeholder="••••••••" />
                   </div>
                 </div>
                 <Button onClick={signIn} disabled={loading !== null} className="w-full">
-                  {loading === "signin" ? "Connexion..." : "Se connecter"}
+                  {loading === "signin" ? t.chrome.auth.signInLoading : t.chrome.auth.signIn}
                 </Button>
               </TabsContent>
 
               <TabsContent value="signup" className="space-y-4">
                 <div className="space-y-2">
-                  <label className="text-sm font-medium text-foreground">Nom affiché</label>
+                  <label className="text-sm font-medium text-foreground">{t.chrome.auth.displayName}</label>
                   <div className="relative">
                     <UserRound className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
                     <Input className="pl-9" value={displayName} onChange={(e) => setDisplayName(e.target.value)} placeholder="Alex Mercer" />
                   </div>
                 </div>
                 <div className="space-y-2">
-                  <label className="text-sm font-medium text-foreground">Email</label>
+                  <label className="text-sm font-medium text-foreground">{t.chrome.auth.email}</label>
                   <div className="relative">
                     <Mail className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
                     <Input className="pl-9" type="email" value={signUpEmail} onChange={(e) => setSignUpEmail(e.target.value)} placeholder="analyste@tradforge.com" />
                   </div>
                 </div>
                 <div className="space-y-2">
-                  <label className="text-sm font-medium text-foreground">Mot de passe</label>
+                  <label className="text-sm font-medium text-foreground">{t.chrome.auth.password}</label>
                   <div className="relative">
                     <LockKeyhole className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-                    <Input className="pl-9" type="password" value={signUpPassword} onChange={(e) => setSignUpPassword(e.target.value)} placeholder="Minimum 8 caractères" />
+                    <Input className="pl-9" type="password" value={signUpPassword} onChange={(e) => setSignUpPassword(e.target.value)} placeholder={t.chrome.auth.passwordHint} />
                   </div>
                 </div>
                 <Button onClick={signUp} disabled={loading !== null} className="w-full">
-                  {loading === "signup" ? "Création..." : "Créer mon compte"}
+                  {loading === "signup" ? t.chrome.auth.signUpLoading : t.chrome.auth.signUp}
                 </Button>
               </TabsContent>
             </Tabs>

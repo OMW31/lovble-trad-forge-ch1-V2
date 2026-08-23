@@ -28,46 +28,19 @@ import {
 } from "@/lib/academy/evaluation-bank";
 import { saveEvaluationAttempt } from "@/lib/academy/progress.functions";
 import { cn } from "@/lib/utils";
+import { useT } from "@/lib/i18n";
+import type { Dictionary } from "@/lib/i18n/dictionaries/fr";
 
-const LEVEL_META: Record<EvaluationLevel, { label: string; icon: ElementType; summary: string; tone: string }> = {
-  standard: {
-    label: "Standard",
-    icon: Target,
-    summary: "Validation solide des concepts et des transmissions principales.",
-    tone: "text-bull border-bull/30 bg-bull/10",
-  },
-  high: {
-    label: "High",
-    icon: Gauge,
-    summary: "Lecture multifactorielle, arbitrages macro/micro et dashboards croisés.",
-    tone: "text-data border-data/30 bg-data/10",
-  },
-  premium: {
-    label: "Premium",
-    icon: Award,
-    summary: "Raisonnement institutionnel: drivers hiérarchisés, scénario, invalidation.",
-    tone: "text-forge border-forge/30 bg-forge/10",
-  },
-};
+const levelMeta = (t: Dictionary): Record<EvaluationLevel, { label: string; icon: ElementType; summary: string; tone: string }> => ({
+  standard: { label: t.chrome.assessment.levels.standard.label, icon: Target, summary: t.chrome.assessment.levels.standard.summary, tone: "text-bull border-bull/30 bg-bull/10" },
+  high: { label: t.chrome.assessment.levels.high.label, icon: Gauge, summary: t.chrome.assessment.levels.high.summary, tone: "text-data border-data/30 bg-data/10" },
+  premium: { label: t.chrome.assessment.levels.premium.label, icon: Award, summary: t.chrome.assessment.levels.premium.summary, tone: "text-forge border-forge/30 bg-forge/10" },
+});
 
-const PART_META: Record<"A" | "B", { label: string; short: string; icon: ElementType; weight: number; tone: string; hint: string }> = {
-  A: {
-    label: "Partie A · QCM enrichis",
-    short: "Partie A",
-    icon: ScrollText,
-    weight: 30,
-    tone: "text-data border-data/30 bg-data/10",
-    hint: "Concepts, mécanismes et transmissions clés de la leçon.",
-  },
-  B: {
-    label: "Partie B · Widgets & visuels",
-    short: "Partie B",
-    icon: Layers,
-    weight: 70,
-    tone: "text-forge border-forge/30 bg-forge/10",
-    hint: "Interprétation des widgets et infographies — le cœur analytique de TradForge.",
-  },
-};
+const partMeta = (t: Dictionary): Record<"A" | "B", { label: string; short: string; icon: ElementType; weight: number; tone: string; hint: string }> => ({
+  A: { label: t.chrome.assessment.parts.A.label, short: t.chrome.assessment.parts.A.short, icon: ScrollText, weight: 30, tone: "text-data border-data/30 bg-data/10", hint: t.chrome.assessment.parts.A.hint },
+  B: { label: t.chrome.assessment.parts.B.label, short: t.chrome.assessment.parts.B.short, icon: Layers, weight: 70, tone: "text-forge border-forge/30 bg-forge/10", hint: t.chrome.assessment.parts.B.hint },
+});
 
 type Result = ReturnType<typeof scoreQuestions> | null;
 
@@ -77,7 +50,7 @@ export function AssessmentModal({
   signedIn,
   progressPercent,
   onPassed,
-  triggerLabel = "Évaluation",
+  triggerLabel,
   triggerClassName,
 }: {
   chapterId: string;
@@ -88,6 +61,10 @@ export function AssessmentModal({
   triggerLabel?: string;
   triggerClassName?: string;
 }) {
+  const t = useT();
+  const LEVEL_META = useMemo(() => levelMeta(t), [t]);
+  const PART_META = useMemo(() => partMeta(t), [t]);
+  const label = triggerLabel ?? t.chrome.assessment.triggerLabel;
   const [open, setOpen] = useState(false);
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [result, setResult] = useState<Result>(null);
@@ -182,17 +159,17 @@ export function AssessmentModal({
         <DialogTrigger asChild>
           <Button className={cn("bg-gradient-forge text-forge-foreground shadow-glow hover:opacity-95", triggerClassName)}>
             <BrainCircuit className="h-4 w-4" />
-            {triggerLabel}
+            {label}
           </Button>
         </DialogTrigger>
         <DialogContent className="max-h-[92vh] max-w-6xl overflow-y-auto border-border bg-background p-0 sm:rounded-2xl">
           <div className="border-b border-border bg-gradient-hero p-6">
             <DialogHeader>
-              <DialogTitle className="font-display text-2xl text-foreground">Evaluation Command Center</DialogTitle>
+              <DialogTitle className="font-display text-2xl text-foreground">{t.chrome.assessment.title}</DialogTitle>
               <DialogDescription className="max-w-2xl text-sm text-muted-foreground">
                 {isLesson
-                  ? "Évaluation de leçon en deux volets : Partie A (QCM, 30 %) puis Partie B (widgets & visuels, 70 %). Seuil de validation : 70 % au score global pondéré."
-                  : "Diagnostic de chapitre. Seuil de validation : 70 % par partie."}
+                  ? t.chrome.assessment.lessonLead
+                  : t.chrome.assessment.diagnosticLead}
               </DialogDescription>
             </DialogHeader>
           </div>
@@ -218,7 +195,7 @@ export function AssessmentModal({
                             <span className="rounded-full border border-current/20 px-1.5 py-0.5 font-mono text-[9px] text-muted-foreground">{item.weight}%</span>
                           </span>
                           <span className="font-mono text-[10px] uppercase tracking-wider text-muted-foreground">
-                            {done}/{partQuestions.length} répondu(s)
+                            {t.chrome.assessment.answeredCount(done, partQuestions.length)}
                           </span>
                         </TabsTrigger>
                       );
@@ -254,15 +231,15 @@ export function AssessmentModal({
 
                 <aside className="sticky top-20 h-fit rounded-2xl border bg-card p-5 shadow-elegant">
                   <div className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
-                    <BarChart3 className="h-3.5 w-3.5 text-data" /> Score engine · 30 / 70
+                    <BarChart3 className="h-3.5 w-3.5 text-data" /> {t.chrome.assessment.scoreEngineWeighted}
                   </div>
                   <div className="mt-4 text-3xl font-semibold text-foreground">{result ? `${result.score}%` : `${answeredCount}/${questions.length}`}</div>
                   <p className="mt-2 text-sm text-muted-foreground">
                     {result
                       ? result.passed
-                        ? "Leçon validée. La tentative est sauvegardée si le compte est connecté."
-                        : "Leçon non validée : le score global pondéré doit atteindre 70 %."
-                      : "Répondez aux parties A et B, puis lancez le scoring pondéré."}
+                        ? t.chrome.assessment.passedNote
+                        : t.chrome.assessment.failedNote
+                      : t.chrome.assessment.pendingNote}
                   </p>
 
                   <div className="mt-5 space-y-3">
@@ -272,7 +249,7 @@ export function AssessmentModal({
                         <div key={p.part} className="rounded-lg border bg-surface p-3">
                           <div className="flex items-center justify-between font-mono text-[10px] uppercase tracking-wider text-muted-foreground">
                             <span>{meta?.short ?? p.part} · {meta?.weight ?? 0}%</span>
-                            <span>{result ? `${p.score}%` : `${p.total} item(s)`}</span>
+                            <span>{result ? `${p.score}%` : t.chrome.assessment.itemsCount(p.total)}</span>
                           </div>
                           <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-border">
                             <div className={cn("h-full rounded-full transition-all", result && p.score >= 70 ? "bg-bull" : "bg-forge")} style={{ width: `${result ? p.score : 0}%` }} />
@@ -284,14 +261,14 @@ export function AssessmentModal({
 
                   <Button disabled={!canSubmit} onClick={submit} className="mt-5 w-full bg-gradient-forge text-forge-foreground shadow-glow hover:opacity-95">
                     <BrainCircuit className="h-4 w-4" />
-                    {mutation.isPending ? "Sauvegarde..." : result ? "Recalculer" : "Calculer le score"}
+                    {mutation.isPending ? t.chrome.assessment.saving : result ? t.chrome.assessment.recompute : t.chrome.assessment.compute}
                   </Button>
                   {result && (
                     <Button variant="outline" onClick={() => resetAttempt(true)} className="mt-2 w-full">
-                      Nouvelle série de questions
+                      {t.chrome.assessment.newSeries}
                     </Button>
                   )}
-                  {!signedIn && <p className="mt-3 text-xs leading-relaxed text-muted-foreground">Connectez-vous pour sauvegarder les tentatives et débloquer la continuité premium.</p>}
+                  {!signedIn && <p className="mt-3 text-xs leading-relaxed text-muted-foreground">{t.chrome.assessment.signInNote}</p>}
                 </aside>
               </div>
             ) : (
@@ -351,12 +328,12 @@ export function AssessmentModal({
 
                     <aside className="sticky top-20 h-fit rounded-2xl border bg-card p-5 shadow-elegant">
                       <div className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
-                        <BarChart3 className="h-3.5 w-3.5 text-data" /> Score engine
+                        <BarChart3 className="h-3.5 w-3.5 text-data" /> {t.chrome.assessment.scoreEngine}
                       </div>
                       <div className="mt-4 text-3xl font-semibold text-foreground">{result ? `${result.score}%` : `${answeredCount}/${questions.length}`}</div>
                       <Button disabled={!canSubmit} onClick={submit} className="mt-5 w-full bg-gradient-forge text-forge-foreground shadow-glow hover:opacity-95">
                         <BrainCircuit className="h-4 w-4" />
-                        {mutation.isPending ? "Sauvegarde..." : "Calculer le score"}
+                        {mutation.isPending ? t.chrome.assessment.saving : t.chrome.assessment.compute}
                       </Button>
                     </aside>
                   </div>
@@ -370,15 +347,15 @@ export function AssessmentModal({
       <AlertDialog open={failureOpen} onOpenChange={setFailureOpen}>
         <AlertDialogContent className="border-border bg-background">
           <AlertDialogHeader>
-            <AlertDialogTitle className="font-display text-foreground">Validation non obtenue</AlertDialogTitle>
+            <AlertDialogTitle className="font-display text-foreground">{t.chrome.assessment.failureTitle}</AlertDialogTitle>
             <AlertDialogDescription>
               {isLesson
-                ? "Le score global pondéré (30 % Partie A + 70 % Partie B) doit atteindre 70 %. Revenez au bloc de leçon, relisez les widgets/visuels concernés, puis relancez l'évaluation."
-                : "Chaque partie doit atteindre 70 %. Revoyez les leçons concernées puis relancez le diagnostic."}
+                ? t.chrome.assessment.failureLesson
+                : t.chrome.assessment.failureDiagnostic}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>Continuer ici</AlertDialogCancel>
+            <AlertDialogCancel>{t.chrome.assessment.stayHere}</AlertDialogCancel>
             <AlertDialogAction
               onClick={() => {
                 if (lessonId) {
@@ -388,7 +365,7 @@ export function AssessmentModal({
               }}
               className="bg-gradient-forge text-forge-foreground hover:opacity-95"
             >
-              Revoir la leçon
+              {t.chrome.assessment.reviewLesson}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
