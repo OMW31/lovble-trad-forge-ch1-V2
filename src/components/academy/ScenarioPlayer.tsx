@@ -6,15 +6,17 @@ import { VisualLayer } from "@/components/academy/primitives";
 import { caseVisualFor } from "@/lib/academy/visual-assets";
 import type { PlayableScenario } from "@/lib/academy/scenario-engine";
 import { cn } from "@/lib/utils";
+import { useT } from "@/lib/i18n";
+import type { Dictionary } from "@/lib/i18n/dictionaries/fr";
 
 
 type ScenarioStage = "context" | "publication" | "decision" | "debrief";
 
-const STAGES: { id: ScenarioStage; label: string }[] = [
-  { id: "context", label: "Contexte" },
-  { id: "publication", label: "Pause" },
-  { id: "decision", label: "Décision" },
-  { id: "debrief", label: "Débrief" },
+const stagesFor = (t: Dictionary): { id: ScenarioStage; label: string }[] => [
+  { id: "context", label: t.chrome.scenario.steps.context },
+  { id: "publication", label: t.chrome.scenario.steps.pause },
+  { id: "decision", label: t.chrome.scenario.steps.decision },
+  { id: "debrief", label: t.chrome.scenario.steps.debrief },
 ];
 
 export function ScenarioPlayer({
@@ -26,6 +28,8 @@ export function ScenarioPlayer({
   onComplete?: (correct: boolean, scenario: PlayableScenario) => void;
   className?: string;
 }) {
+  const t = useT();
+  const STAGES = useMemo(() => stagesFor(t), [t]);
   const [stage, setStage] = useState<ScenarioStage>(scenario.mode === "evaluation" ? "context" : "decision");
   const [selected, setSelected] = useState<string | null>(null);
   const [reported, setReported] = useState(false);
@@ -38,19 +42,19 @@ export function ScenarioPlayer({
 
   const choices = useMemo(() => {
     const base = caseStudy?.decision.choices ?? [
-      { id: "a", label: "Le driver dominant valide la thèse principale" },
-      { id: "b", label: "Le marché doit ignorer la publication" },
-      { id: "c", label: "Le signal technique suffit sans contexte" },
+      { id: "a", label: t.chrome.scenario.fallbackChoiceA },
+      { id: "b", label: t.chrome.scenario.fallbackChoiceB },
+      { id: "c", label: t.chrome.scenario.fallbackChoiceC },
     ];
-    return base.length >= 4 ? base : [...base, { id: "d", label: "Attendre sans thèse : signal impossible à hiérarchiser" }];
-  }, [caseStudy]);
+    return base.length >= 4 ? base : [...base, { id: "d", label: t.chrome.scenario.fallbackChoiceD }];
+  }, [caseStudy, t]);
 
   const layerGroups = [
-    { label: "Macro", values: scenario.layers.macro, icon: Radar },
-    { label: "Technique", values: scenario.layers.technique, icon: Layers3 },
-    { label: "Intermarket", values: scenario.layers.intermarket, icon: ArrowRight },
-    { label: "Banques centrales", values: scenario.layers.banquesCentrales, icon: ShieldAlert },
-    { label: "Géopolitique", values: scenario.layers.geopolitique, icon: ShieldAlert },
+    { label: t.chrome.scenario.layerMacro, values: scenario.layers.macro, icon: Radar },
+    { label: t.chrome.scenario.layerTechnical, values: scenario.layers.technique, icon: Layers3 },
+    { label: t.chrome.scenario.layerIntermarket, values: scenario.layers.intermarket, icon: ArrowRight },
+    { label: t.chrome.scenario.layerCentralBanks, values: scenario.layers.banquesCentrales, icon: ShieldAlert },
+    { label: t.chrome.scenario.layerGeopolitics, values: scenario.layers.geopolitique, icon: ShieldAlert },
   ].filter((group) => group.values.length > 0);
 
   const choose = (id: string) => {
@@ -80,7 +84,7 @@ export function ScenarioPlayer({
             <h3 className="mt-2 font-display text-lg font-semibold text-foreground">{scenario.spec.title}</h3>
           </div>
           <span className="rounded-full border border-border bg-surface px-2.5 py-1 font-mono text-[10px] uppercase tracking-wider text-muted-foreground">
-            {scenario.level} · volatilité {scenario.spec.volatilite}
+            {scenario.level} · {t.chrome.scenario.volatility(scenario.spec.volatilite)}
           </span>
         </div>
         <div className="mt-4 grid grid-cols-4 gap-2">
@@ -117,21 +121,21 @@ export function ScenarioPlayer({
 
           {stage === "context" && scenario.mode === "evaluation" && (
             <Button onClick={() => setStage("publication")} className="w-full bg-gradient-forge text-forge-foreground shadow-glow hover:opacity-95 sm:w-auto">
-              <PauseCircle className="h-4 w-4" /> Ouvrir la pause pédagogique
+              <PauseCircle className="h-4 w-4" /> {t.chrome.scenario.openPause}
             </Button>
           )}
 
           {(stage === "publication" || stage === "decision" || stage === "debrief") && (
             <div className="rounded-xl border border-data/30 bg-data/5 p-4">
               <div className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.18em] text-data">
-                <PauseCircle className="h-3.5 w-3.5" /> Pause pédagogique — publication
+                <PauseCircle className="h-3.5 w-3.5" /> {t.chrome.scenario.pauseTitle}
               </div>
               <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                {caseStudy?.driver ?? scenario.spec.macro[0]} · hiérarchisez driver, transmission et invalidation avant l'outcome.
+                {t.chrome.scenario.pauseHint(caseStudy?.driver ?? scenario.spec.macro[0])}
               </p>
               {stage === "publication" && (
                 <Button onClick={() => setStage("decision")} className="mt-3 bg-gradient-forge text-forge-foreground shadow-glow hover:opacity-95">
-                  Passer à la décision <ArrowRight className="h-4 w-4" />
+                  {t.chrome.scenario.goToDecision} <ArrowRight className="h-4 w-4" />
                 </Button>
               )}
             </div>
@@ -139,7 +143,7 @@ export function ScenarioPlayer({
 
           {(stage === "decision" || stage === "debrief") && (
             <div className="space-y-3">
-              <p className="text-sm font-medium text-foreground">{caseStudy?.decision.prompt ?? "Quelle décision respecte le mieux la chaîne de causalité ?"}</p>
+              <p className="text-sm font-medium text-foreground">{caseStudy?.decision.prompt ?? t.chrome.scenario.defaultPrompt}</p>
               <div className="grid gap-2.5">
                 {choices.map((choice) => {
                   const isCorrect = choice.id === correctId;
@@ -173,25 +177,25 @@ export function ScenarioPlayer({
               <div className={cn("rounded-xl border p-4", correct ? "border-bull/40 bg-bull/5" : "border-bear/40 bg-bear/5")}>
                 <div className={cn("mb-1.5 flex items-center gap-2 text-sm font-semibold", correct ? "text-bull" : "text-bear")}>
                   {correct ? <CheckCircle2 className="h-4 w-4" /> : <X className="h-4 w-4" />}
-                  {correct ? "Décision correcte" : "Décision à recalibrer"}
+                  {correct ? t.chrome.scenario.decisionCorrect : t.chrome.scenario.decisionRecalibrate}
                 </div>
-                <p className="text-sm leading-relaxed text-muted-foreground">{caseStudy?.decision.explanation ?? "La bonne réponse respecte la hiérarchie driver → transmission → actif → invalidation."}</p>
+                <p className="text-sm leading-relaxed text-muted-foreground">{caseStudy?.decision.explanation ?? t.chrome.scenario.defaultExplanation}</p>
               </div>
               {caseStudy?.outcome && (
                 <div className="rounded-xl border border-forge/30 bg-forge/5 p-4">
-                  <div className="mb-1.5 font-mono text-[10px] uppercase tracking-[0.18em] text-forge">Outcome réel</div>
+                  <div className="mb-1.5 font-mono text-[10px] uppercase tracking-[0.18em] text-forge">{t.chrome.scenario.realOutcome}</div>
                   <p className="text-sm leading-relaxed text-muted-foreground">{caseStudy.outcome}</p>
                 </div>
               )}
               <Button type="button" variant="outline" onClick={reset}>
-                <RotateCcw className="h-4 w-4" /> Rejouer ce scénario
+                <RotateCcw className="h-4 w-4" /> {t.chrome.scenario.replayScenario}
               </Button>
             </div>
           )}
         </div>
 
         <aside className="h-fit rounded-xl border bg-surface p-4">
-          <div className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">Couches révélées</div>
+          <div className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">{t.chrome.scenario.revealedLayers}</div>
           <div className="mt-3 space-y-3">
             {layerGroups.map((group) => (
               <div key={group.label} className="rounded-lg border bg-card p-3">
