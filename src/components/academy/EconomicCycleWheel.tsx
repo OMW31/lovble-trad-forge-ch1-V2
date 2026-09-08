@@ -1,22 +1,25 @@
 import { useMemo, useState } from "react";
 import { Gauge, RotateCw } from "lucide-react";
 import { WidgetFrame } from "./primitives";
+import { useT } from "@/lib/i18n";
 import { cn } from "@/lib/utils";
 
 type Phase = "Expansion" | "Pic" | "Ralentissement" | "Récession";
 
-const phases: Record<Phase, { growth: number; inflation: number; policy: string; assets: string; tone: string }> = {
-  Expansion: { growth: 82, inflation: 48, policy: "Neutre → restrictive", assets: "Actions cycliques, crédit", tone: "text-bull" },
-  Pic: { growth: 58, inflation: 78, policy: "Restrictive", assets: "USD, énergie, duration courte", tone: "text-forge" },
-  Ralentissement: { growth: 32, inflation: 55, policy: "Pause → easing", assets: "Qualité, obligations", tone: "text-data" },
-  Récession: { growth: 18, inflation: 28, policy: "Easing agressif", assets: "Bonds, or, défensives", tone: "text-bear" },
+const PHASE_DATA: Record<Phase, { growth: number; inflation: number; tone: string }> = {
+  Expansion: { growth: 82, inflation: 48, tone: "text-bull" },
+  Pic: { growth: 58, inflation: 78, tone: "text-forge" },
+  Ralentissement: { growth: 32, inflation: 55, tone: "text-data" },
+  Récession: { growth: 18, inflation: 28, tone: "text-bear" },
 };
 
-const order = Object.keys(phases) as Phase[];
+const order = Object.keys(PHASE_DATA) as Phase[];
 
 export function EconomicCycleWheel() {
+  const t = useT().widgetsMacro.economicCycleWheel;
   const [phase, setPhase] = useState<Phase>("Expansion");
-  const current = phases[phase];
+  const current = PHASE_DATA[phase];
+  const phaseMeta = t.phases[phase];
   const index = order.indexOf(phase);
 
   const coordinates = useMemo(() => {
@@ -25,7 +28,7 @@ export function EconomicCycleWheel() {
   }, [index]);
 
   return (
-    <WidgetFrame title="Economic Cycle Wheel" subtitle="Positionnez le cycle et lisez le régime d’actifs cohérent." badge="Cycle macro">
+    <WidgetFrame title={t.title} subtitle={t.subtitle} badge={t.badge}>
       <div className="grid gap-5 lg:grid-cols-[minmax(0,200px)_1fr]">
         <div className="relative mx-auto aspect-square w-full max-w-[200px]">
           <svg viewBox="0 0 180 180" className="h-full w-full">
@@ -35,8 +38,8 @@ export function EconomicCycleWheel() {
             <path d="M90 162 A72 72 0 0 1 18 90" fill="none" stroke="var(--data)" strokeWidth="14" opacity="0.45" />
             <path d="M18 90 A72 72 0 0 1 90 18" fill="none" stroke="var(--bear)" strokeWidth="14" opacity="0.45" />
             <circle cx={coordinates.x} cy={coordinates.y} r="8" fill="var(--forge)" className="transition-all duration-500" />
-            <text x="90" y="86" textAnchor="middle" className="font-mono" fontSize="10" fill="var(--muted-foreground)">RÉGIME</text>
-            <text x="90" y="104" textAnchor="middle" className="font-mono" fontSize="13" fontWeight="700" fill="var(--foreground)">{phase}</text>
+            <text x="90" y="86" textAnchor="middle" className="font-mono" fontSize="10" fill="var(--muted-foreground)">{t.regimeGaugeLabel}</text>
+            <text x="90" y="104" textAnchor="middle" className="font-mono" fontSize="13" fontWeight="700" fill="var(--foreground)">{phaseMeta.label}</text>
           </svg>
         </div>
         <div className="min-w-0">
@@ -52,19 +55,19 @@ export function EconomicCycleWheel() {
               >
                 <div className="flex items-center gap-1.5 text-xs font-semibold text-foreground sm:gap-2 sm:text-sm">
                   <RotateCw className="h-3.5 w-3.5 shrink-0 text-forge" />
-                  <span className="truncate">{item}</span>
+                  <span className="truncate">{t.phases[item].label}</span>
                 </div>
               </button>
             ))}
           </div>
           <div className="mt-4 grid gap-3 sm:grid-cols-2">
-            <Metric label="Croissance" value={current.growth} />
-            <Metric label="Inflation" value={current.inflation} />
+            <Metric label={t.growthMetricLabel} value={current.growth} />
+            <Metric label={t.inflationMetricLabel} value={current.inflation} />
           </div>
           <div className="mt-4 rounded-xl border bg-surface p-4">
-            <div className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-wider text-muted-foreground"><Gauge className="h-3.5 w-3.5 text-data" /> Lecture desk</div>
-            <p className="mt-2 text-sm text-muted-foreground">Politique: <span className="text-foreground">{current.policy}</span></p>
-            <p className={cn("mt-1 text-sm font-semibold", current.tone)}>Allocation: {current.assets}</p>
+            <div className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-wider text-muted-foreground"><Gauge className="h-3.5 w-3.5 text-data" /> {t.deskReadLabel}</div>
+            <p className="mt-2 text-sm text-muted-foreground">{t.policyLabel} <span className="text-foreground">{phaseMeta.policy}</span></p>
+            <p className={cn("mt-1 text-sm font-semibold", current.tone)}>{t.allocationLabel} {phaseMeta.assets}</p>
           </div>
         </div>
       </div>

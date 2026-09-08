@@ -5,7 +5,9 @@
 
 export const widgetsCorpFr = {
   companyDashboard: {
+    title: "Company Dashboard",
     subtitle: "Vue synthèse d’une entreprise: croissance, rentabilité, cash-flow et risque financier.",
+    badge: "Micro",
     metrics: {
       revenueGrowth: "Croissance du chiffre d’affaires",
       grossMargin: "Marge brute",

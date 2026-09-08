@@ -13,7 +13,7 @@ export function CompanyDashboard() {
   ];
 
   return (
-    <WidgetFrame title="Company Dashboard" subtitle={t.subtitle} badge="Micro">
+    <WidgetFrame title={t.title} subtitle={t.subtitle} badge={t.badge}>
       <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
         {metrics.map((metric) => (
           <div key={metric.label} className="premium-hover rounded-xl border bg-surface p-4">

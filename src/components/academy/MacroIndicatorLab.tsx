@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { TrendingUp, TrendingDown, Minus } from "lucide-react";
 import { WidgetFrame } from "./primitives";
+import { useT } from "@/lib/i18n";
 import { cn } from "@/lib/utils";
 
 type Category = "Croissance" | "Inflation" | "Politique monétaire";
@@ -8,10 +9,8 @@ type Timing = "Avancé" | "Coïncident" | "Retardé";
 
 interface Indicator {
   id: string;
-  name: string;
   category: Category;
   timing: Timing;
-  /** does a HIGHER reading tend to strengthen the currency? */
   higherIsBullish: boolean;
   unit: string;
   expected: number;
@@ -20,14 +19,14 @@ interface Indicator {
 }
 
 const INDICATORS: Indicator[] = [
-  { id: "nfp", name: "NFP (emplois)", category: "Croissance", timing: "Coïncident", higherIsBullish: true, unit: "k", expected: 180, step: 5, range: [-200, 600] },
-  { id: "gdp", name: "PIB (annualisé)", category: "Croissance", timing: "Coïncident", higherIsBullish: true, unit: "%", expected: 2.0, step: 0.1, range: [-2, 6] },
-  { id: "cpi", name: "IPC (inflation)", category: "Inflation", timing: "Retardé", higherIsBullish: true, unit: "%", expected: 3.1, step: 0.1, range: [0, 10] },
-  { id: "retail", name: "Ventes au détail", category: "Croissance", timing: "Coïncident", higherIsBullish: true, unit: "%", expected: 0.3, step: 0.1, range: [-3, 3] },
-  { id: "pmi", name: "PMI manufacturier", category: "Croissance", timing: "Avancé", higherIsBullish: true, unit: "", expected: 50, step: 0.5, range: [35, 65] },
-  { id: "unemp", name: "Taux de chômage", category: "Croissance", timing: "Retardé", higherIsBullish: false, unit: "%", expected: 3.8, step: 0.1, range: [2, 12] },
-  { id: "rate", name: "Décision de taux", category: "Politique monétaire", timing: "Avancé", higherIsBullish: true, unit: "%", expected: 5.25, step: 0.25, range: [0, 8] },
-  { id: "confidence", name: "Confiance conso.", category: "Croissance", timing: "Avancé", higherIsBullish: true, unit: "", expected: 102, step: 1, range: [60, 140] },
+  { id: "nfp", category: "Croissance", timing: "Coïncident", higherIsBullish: true, unit: "k", expected: 180, step: 5, range: [-200, 600] },
+  { id: "gdp", category: "Croissance", timing: "Coïncident", higherIsBullish: true, unit: "%", expected: 2.0, step: 0.1, range: [-2, 6] },
+  { id: "cpi", category: "Inflation", timing: "Retardé", higherIsBullish: true, unit: "%", expected: 3.1, step: 0.1, range: [0, 10] },
+  { id: "retail", category: "Croissance", timing: "Coïncident", higherIsBullish: true, unit: "%", expected: 0.3, step: 0.1, range: [-3, 3] },
+  { id: "pmi", category: "Croissance", timing: "Avancé", higherIsBullish: true, unit: "", expected: 50, step: 0.5, range: [35, 65] },
+  { id: "unemp", category: "Croissance", timing: "Retardé", higherIsBullish: false, unit: "%", expected: 3.8, step: 0.1, range: [2, 12] },
+  { id: "rate", category: "Politique monétaire", timing: "Avancé", higherIsBullish: true, unit: "%", expected: 5.25, step: 0.25, range: [0, 8] },
+  { id: "confidence", category: "Croissance", timing: "Avancé", higherIsBullish: true, unit: "", expected: 102, step: 1, range: [60, 140] },
 ];
 
 const CATEGORIES: (Category | "Tous")[] = ["Tous", "Croissance", "Inflation", "Politique monétaire"];
@@ -40,6 +39,7 @@ const catColor: Record<Category, string> = {
 };
 
 export function MacroIndicatorLab() {
+  const t = useT().widgetsMacro.macroIndicatorLab;
   const [cat, setCat] = useState<Category | "Tous">("Tous");
   const [timing, setTiming] = useState<Timing | "Tous">("Tous");
   const [simId, setSimId] = useState("nfp");
@@ -59,19 +59,18 @@ export function MacroIndicatorLab() {
   const surprise = actual - sim.expected;
   const beats = surprise > 0.0001;
   const misses = surprise < -0.0001;
-  // direction of currency impact
   const bullish = (beats && sim.higherIsBullish) || (misses && !sim.higherIsBullish);
   const bearish = (beats && !sim.higherIsBullish) || (misses && sim.higherIsBullish);
   const magnitude = Math.min(100, (Math.abs(surprise) / Math.abs(sim.expected || 1)) * 120);
 
   return (
     <WidgetFrame
-      title="Macro Indicator Lab"
-      subtitle="Classez les indicateurs, puis simulez une surprise et lisez l'impact sur la devise."
-      badge="Interactif"
+      title={t.title}
+      subtitle={t.subtitle}
+      badge={t.badge}
     >
       <div className="mb-3 flex flex-wrap items-center gap-2">
-        <span className="font-mono text-[10px] uppercase tracking-wider text-muted-foreground">Catégorie</span>
+        <span className="font-mono text-[10px] uppercase tracking-wider text-muted-foreground">{t.categoryFilterLabel}</span>
         {CATEGORIES.map((c) => (
           <button
             key={c}
@@ -81,22 +80,22 @@ export function MacroIndicatorLab() {
               cat === c ? "border-forge bg-forge/15 text-forge" : "border-border text-muted-foreground hover:border-forge/40",
             )}
           >
-            {c}
+            {t.categories[c]}
           </button>
         ))}
       </div>
       <div className="mb-4 flex flex-wrap items-center gap-2">
-        <span className="font-mono text-[10px] uppercase tracking-wider text-muted-foreground">Temporalité</span>
-        {TIMINGS.map((t) => (
+        <span className="font-mono text-[10px] uppercase tracking-wider text-muted-foreground">{t.timingFilterLabel}</span>
+        {TIMINGS.map((tm) => (
           <button
-            key={t}
-            onClick={() => setTiming(t)}
+            key={tm}
+            onClick={() => setTiming(tm)}
             className={cn(
               "rounded-full border px-2.5 py-1 text-xs transition-all",
-              timing === t ? "border-data bg-data/15 text-data" : "border-border text-muted-foreground hover:border-data/40",
+              timing === tm ? "border-data bg-data/15 text-data" : "border-border text-muted-foreground hover:border-data/40",
             )}
           >
-            {t}
+            {t.timings[tm]}
           </button>
         ))}
       </div>
@@ -112,13 +111,13 @@ export function MacroIndicatorLab() {
             )}
           >
             <div>
-              <div className="text-sm font-medium text-foreground">{i.name}</div>
+              <div className="text-sm font-medium text-foreground">{t.indicators[i.id]}</div>
               <div className="mt-1 flex gap-1.5">
                 <span className={cn("rounded border px-1.5 py-0.5 text-[10px]", catColor[i.category])}>
-                  {i.category}
+                  {t.categories[i.category]}
                 </span>
                 <span className="rounded border border-border px-1.5 py-0.5 text-[10px] text-muted-foreground">
-                  {i.timing}
+                  {t.timings[i.timing]}
                 </span>
               </div>
             </div>
@@ -129,21 +128,21 @@ export function MacroIndicatorLab() {
       {/* Surprise simulator */}
       <div className="mt-5 rounded-xl border border-forge/30 bg-surface-2 p-4">
         <div className="mb-3 flex items-center justify-between">
-          <h5 className="font-display text-sm font-semibold text-foreground">Surprise Simulator — {sim.name}</h5>
+          <h5 className="font-display text-sm font-semibold text-foreground">{t.simulatorTitle(t.indicators[sim.id])}</h5>
           <span className="font-mono text-[10px] uppercase tracking-wider text-muted-foreground">
-            {sim.higherIsBullish ? "↑ = devise ↑" : "↑ = devise ↓"}
+            {sim.higherIsBullish ? t.higherIsBullishHint : t.higherIsBearishHint}
           </span>
         </div>
         <div className="grid grid-cols-2 gap-4 text-center">
           <div className="rounded-lg border bg-surface p-2">
-            <div className="font-mono text-[10px] uppercase tracking-wider text-muted-foreground">Consensus</div>
+            <div className="font-mono text-[10px] uppercase tracking-wider text-muted-foreground">{t.consensusLabel}</div>
             <div className="font-mono text-lg font-semibold tabular-nums text-foreground">
               {sim.expected}
               {sim.unit}
             </div>
           </div>
           <div className="rounded-lg border bg-surface p-2">
-            <div className="font-mono text-[10px] uppercase tracking-wider text-muted-foreground">Publié</div>
+            <div className="font-mono text-[10px] uppercase tracking-wider text-muted-foreground">{t.publishedLabel}</div>
             <div className="font-mono text-lg font-semibold tabular-nums text-forge">
               {actual.toFixed(sim.step < 1 ? 1 : 0)}
               {sim.unit}
@@ -161,7 +160,7 @@ export function MacroIndicatorLab() {
         />
         <div className="mt-4 flex items-center justify-between gap-3 rounded-lg border bg-surface p-3">
           <div className="text-xs text-muted-foreground">
-            Surprise :{" "}
+            {t.surpriseLabel}{" "}
             <span className={cn("font-mono font-semibold", beats ? "text-bull" : misses ? "text-bear" : "text-muted-foreground")}>
               {surprise > 0 ? "+" : ""}
               {surprise.toFixed(sim.step < 1 ? 1 : 0)}
@@ -177,7 +176,7 @@ export function MacroIndicatorLab() {
             )}
           >
             {bullish ? <TrendingUp className="h-4 w-4" /> : bearish ? <TrendingDown className="h-4 w-4" /> : <Minus className="h-4 w-4" />}
-            {bullish ? "Devise ↑" : bearish ? "Devise ↓" : "Neutre"}
+            {bullish ? t.currencyUp : bearish ? t.currencyDown : t.neutral}
           </div>
         </div>
         <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-border">

@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Play, Pause, RotateCcw } from "lucide-react";
 import { generateSeries, type CaseStudy } from "@/lib/academy/market-data";
+import { useT } from "@/lib/i18n";
 import { cn } from "@/lib/utils";
 
 const W = 920;
@@ -14,6 +15,7 @@ interface Props {
 }
 
 export function CandleReplay({ caseStudy, className, autoPlayOnView = true }: Props) {
+  const t = useT().widgetsMacro.candleReplay;
   const candles = useMemo(() => generateSeries(caseStudy.series), [caseStudy]);
   const total = candles.length;
   const [visible, setVisible] = useState(1);
@@ -23,7 +25,6 @@ export function CandleReplay({ caseStudy, className, autoPlayOnView = true }: Pr
   const rafRef = useRef<number | null>(null);
   const lastRef = useRef<number>(0);
 
-  // Auto-start when scrolled into view
   useEffect(() => {
     if (!autoPlayOnView || started) return;
     const el = containerRef.current;
@@ -48,10 +49,10 @@ export function CandleReplay({ caseStudy, className, autoPlayOnView = true }: Pr
       return;
     }
     const stepMs = 70;
-    const tick = (t: number) => {
-      if (!lastRef.current) lastRef.current = t;
-      if (t - lastRef.current >= stepMs) {
-        lastRef.current = t;
+    const tick = (time: number) => {
+      if (!lastRef.current) lastRef.current = time;
+      if (time - lastRef.current >= stepMs) {
+        lastRef.current = time;
         setVisible((v) => {
           if (v >= total) {
             setPlaying(false);
@@ -135,8 +136,7 @@ export function CandleReplay({ caseStudy, className, autoPlayOnView = true }: Pr
       </div>
 
       <div className="relative bg-gradient-surface">
-        <svg viewBox={`0 0 ${W} ${H}`} className="w-full" role="img" aria-label={`Graphique ${caseStudy.instrument}`}>
-          {/* horizontal grid + price axis */}
+        <svg viewBox={`0 0 ${W} ${H}`} className="w-full" role="img" aria-label={t.chartAriaLabel(caseStudy.instrument)}>
           {Array.from({ length: gridLines + 1 }).map((_, g) => {
             const price = min + ((max - min) * g) / gridLines;
             const yy = y(price);
@@ -156,7 +156,6 @@ export function CandleReplay({ caseStudy, className, autoPlayOnView = true }: Pr
             );
           })}
 
-          {/* reference level */}
           {caseStudy.refLevel && (
             <g>
               <line
@@ -181,7 +180,6 @@ export function CandleReplay({ caseStudy, className, autoPlayOnView = true }: Pr
             </g>
           )}
 
-          {/* event marker */}
           {markerRevealed && (
             <g>
               <line
@@ -194,7 +192,7 @@ export function CandleReplay({ caseStudy, className, autoPlayOnView = true }: Pr
                 strokeDasharray="3 4"
                 opacity={0.8}
               />
-              <circle cx={x(caseStudy.marker.at)} cy={PAD.top} r={3.5} fill="var(--forge)" />
+              <circle cx={x(caseStudy.marker.at)} cy={PAD.top} r="3.5" fill="var(--forge)" />
               <text
                 x={Math.min(x(caseStudy.marker.at) + 8, W - PAD.right - 4)}
                 y={PAD.top + 12}
@@ -209,7 +207,6 @@ export function CandleReplay({ caseStudy, className, autoPlayOnView = true }: Pr
             </g>
           )}
 
-          {/* candles */}
           {shown.map((c) => {
             const up = c.c >= c.o;
             const color = up ? "var(--bull)" : "var(--bear)";
@@ -231,10 +228,9 @@ export function CandleReplay({ caseStudy, className, autoPlayOnView = true }: Pr
             );
           })}
 
-          {/* last price dot */}
           {last && (
             <g>
-              <circle cx={x(last.i)} cy={y(last.c)} r={3} fill={last.c >= last.o ? "var(--bull)" : "var(--bear)"} />
+              <circle cx={x(last.i)} cy={y(last.c)} r="3" fill={last.c >= last.o ? "var(--bull)" : "var(--bear)"} />
               <line
                 x1={x(last.i)}
                 x2={W - PAD.right}
@@ -258,7 +254,7 @@ export function CandleReplay({ caseStudy, className, autoPlayOnView = true }: Pr
             else setPlaying((p) => !p);
           }}
           className="flex h-8 w-8 items-center justify-center rounded-md bg-forge text-forge-foreground transition-transform hover:scale-105"
-          aria-label={playing ? "Pause" : "Lire"}
+          aria-label={playing ? t.pause : t.play}
         >
           {visible >= total ? <RotateCcw className="h-4 w-4" /> : playing ? <Pause className="h-4 w-4" /> : <Play className="h-4 w-4" />}
         </button>
@@ -272,7 +268,7 @@ export function CandleReplay({ caseStudy, className, autoPlayOnView = true }: Pr
             setVisible(Number(e.target.value));
           }}
           className="h-1 flex-1 cursor-pointer appearance-none rounded-full bg-border accent-[var(--forge)]"
-          aria-label="Position de la lecture"
+          aria-label={t.playbackPositionAriaLabel}
         />
         <span className="font-mono text-xs tabular-nums text-muted-foreground">
           {visible}/{total}

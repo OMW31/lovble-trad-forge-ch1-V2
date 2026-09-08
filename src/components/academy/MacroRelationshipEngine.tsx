@@ -1,42 +1,28 @@
 import { useState } from "react";
 import { ArrowDown, ArrowRight, Network } from "lucide-react";
 import { WidgetFrame } from "./primitives";
+import { useT } from "@/lib/i18n";
 import { cn } from "@/lib/utils";
 
-const shocks = {
-  growthBeat: {
-    label: "Growth beat",
-    nodes: ["PIB ↑", "Taux attendus ↑", "USD ↑", "Equities qualité ↑", "Gold ↓"],
-    thesis: "La croissance supérieure au consensus repousse l’assouplissement et soutient la devise domestique.",
-  },
-  inflationBeat: {
-    label: "Inflation beat",
-    nodes: ["IPC ↑", "Banque centrale hawkish", "Bonds ↓", "Devise ↑", "Actions duration ↓"],
-    thesis: "La surprise inflation force un repricing des taux; le marché vend la duration et réévalue les multiples.",
-  },
-  riskOff: {
-    label: "Risk-off",
-    nodes: ["Volatilité ↑", "Liquidité USD ↑", "Carry ↓", "JPY/CHF ↑", "Commodities ↓"],
-    thesis: "En stress systémique, la liquidité prime: les flux reviennent vers les devises refuges et actifs défensifs.",
-  },
-} as const;
+type ShockKey = "growthBeat" | "inflationBeat" | "riskOff";
 
-type ShockKey = keyof typeof shocks;
+const SHOCK_KEYS: ShockKey[] = ["growthBeat", "inflationBeat", "riskOff"];
 
 export function MacroRelationshipEngine() {
+  const t = useT().widgetsMacro.macroRelationshipEngine;
   const [active, setActive] = useState<ShockKey>("inflationBeat");
-  const shock = shocks[active];
+  const shock = t.shocks[active];
 
   return (
-    <WidgetFrame title="Macro Relationship Engine" subtitle="Visualisez la chaîne de transmission entre données, taux et actifs." badge="Intermarket">
+    <WidgetFrame title={t.title} subtitle={t.subtitle} badge={t.badge}>
       <div className="mb-4 flex flex-wrap gap-2">
-        {(Object.keys(shocks) as ShockKey[]).map((key) => (
+        {SHOCK_KEYS.map((key) => (
           <button
             key={key}
             onClick={() => setActive(key)}
             className={cn("rounded-full border px-3 py-1 text-xs transition-all", active === key ? "border-data bg-data/10 text-data" : "border-border text-muted-foreground hover:border-data/40")}
           >
-            {shocks[key].label}
+            {t.shocks[key].label}
           </button>
         ))}
       </div>

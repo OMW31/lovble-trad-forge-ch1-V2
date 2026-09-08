@@ -1,84 +1,46 @@
 import { useState } from "react";
 import { ArrowRight, TrendingUp, TrendingDown } from "lucide-react";
 import { WidgetFrame } from "./primitives";
+import { useT } from "@/lib/i18n";
 import { cn } from "@/lib/utils";
 
-interface Driver {
-  id: string;
-  label: string;
-  chain: string[];
-  result: "up" | "down";
-  resultLabel: string;
-  note: string;
-}
+type DriverId = "rates" | "growth" | "inflation" | "risk" | "trade";
 
-const DRIVERS: Driver[] = [
-  {
-    id: "rates",
-    label: "Taux d'intérêt ↑",
-    chain: ["Taux directeurs ↑", "Rendements plus attractifs", "Afflux de capitaux étrangers", "Demande de devise ↑"],
-    result: "up",
-    resultLabel: "Devise ↑",
-    note: "Les anticipations de hausse comptent souvent plus que la hausse elle-même.",
-  },
-  {
-    id: "growth",
-    label: "Croissance (PIB) ↑",
-    chain: ["PIB > consensus", "Économie résiliente", "Marge pour des taux élevés", "Attrait des actifs ↑"],
-    result: "up",
-    resultLabel: "Devise ↑",
-    note: "Une croissance forte renforce la devise via l'investissement et le différentiel de taux.",
-  },
-  {
-    id: "inflation",
-    label: "Inflation hors contrôle",
-    chain: ["Prix ↑↑", "Pouvoir d'achat érodé", "Crédibilité monétaire ?", "Capitaux fuient"],
-    result: "down",
-    resultLabel: "Devise ↓",
-    note: "Inflation modérée = sain ; inflation incontrôlée sans réponse crédible = devise fragilisée.",
-  },
-  {
-    id: "risk",
-    label: "Aversion au risque",
-    chain: ["Panique de marché", "Fuite vers la qualité", "Ruée vers USD / refuges", "Devises risquées ↓"],
-    result: "down",
-    resultLabel: "Devise risquée ↓",
-    note: "En stress extrême, les investisseurs liquident le risque vers les actifs les plus liquides (USD).",
-  },
-  {
-    id: "trade",
-    label: "Excédent commercial",
-    chain: ["Exports > Imports", "Demande de devise nationale", "Balance positive", "Appréciation"],
-    result: "up",
-    resultLabel: "Devise ↑",
-    note: "Un excédent crée une demande structurelle pour la devise ; un déficit fait l'inverse.",
-  },
-];
+const DRIVER_IDS: DriverId[] = ["rates", "growth", "inflation", "risk", "trade"];
+
+const DRIVER_RESULT: Record<DriverId, "up" | "down"> = {
+  rates: "up",
+  growth: "up",
+  inflation: "down",
+  risk: "down",
+  trade: "up",
+};
 
 export function MarketDriverVisualizer() {
-  const [active, setActive] = useState(DRIVERS[0].id);
-  const driver = DRIVERS.find((d) => d.id === active)!;
-  const up = driver.result === "up";
+  const t = useT().widgetsMacro.marketDriverVisualizer;
+  const [active, setActive] = useState<DriverId>("rates");
+  const driver = t.drivers[active];
+  const up = DRIVER_RESULT[active] === "up";
 
   return (
     <WidgetFrame
-      title="Market Driver Visualizer"
-      subtitle="Choisissez un moteur fondamental et suivez sa transmission jusqu'au prix."
-      badge="Interactif"
+      title={t.title}
+      subtitle={t.subtitle}
+      badge={t.badge}
     >
       <div className="mb-5 flex flex-wrap gap-2">
-        {DRIVERS.map((d) => (
+        {DRIVER_IDS.map((id) => (
           <button
-            key={d.id}
-            onClick={() => setActive(d.id)}
+            key={id}
+            onClick={() => setActive(id)}
             className={cn(
               "rounded-full border px-3 py-1.5 text-xs font-medium transition-all",
-              active === d.id
+              active === id
                 ? "border-forge bg-forge/15 text-forge"
                 : "border-border bg-surface text-muted-foreground hover:border-forge/40",
             )}
           >
-            {d.label}
+            {t.drivers[id].label}
           </button>
         ))}
       </div>

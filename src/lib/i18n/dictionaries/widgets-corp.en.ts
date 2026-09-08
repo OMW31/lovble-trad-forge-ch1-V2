@@ -8,7 +8,9 @@ import type { WidgetsCorpDictionary } from "./widgets-corp.fr";
 
 export const widgetsCorpEn: WidgetsCorpDictionary = {
   companyDashboard: {
+    title: "Company Dashboard",
     subtitle: "A company at a glance: growth, profitability, cash generation and financial risk.",
+    badge: "Micro",
     metrics: {
       revenueGrowth: "Revenue growth",
       grossMargin: "Gross margin",

@@ -44,9 +44,10 @@ function AuthPage() {
   const [signInPassword, setSignInPassword] = useState("");
   const [signUpEmail, setSignUpEmail] = useState("");
   const [signUpPassword, setSignUpPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [displayName, setDisplayName] = useState("");
   const [message, setMessage] = useState<string | null>(null);
-  const [loading, setLoading] = useState<"signin" | "signup" | "google" | null>(null);
+  const [loading, setLoading] = useState<"signin" | "signup" | "google" | "apple" | null>(null);
 
   useEffect(() => {
     const { data } = supabase.auth.onAuthStateChange((event, session) => {
@@ -73,6 +74,11 @@ function AuthPage() {
   };
 
   const signUp = async () => {
+    setMessage(null);
+    if (signUpPassword !== confirmPassword) {
+      setMessage(t.chrome.auth.passwordMismatch);
+      return;
+    }
     setLoading("signup");
     setMessage(null);
     const { error } = await supabase.auth.signUp({
@@ -93,10 +99,10 @@ function AuthPage() {
     setMessage(t.chrome.auth.accountCreated);
   };
 
-  const signInWithGoogle = async () => {
-    setLoading("google");
+  const signInWithOAuth = async (provider: "google" | "apple") => {
+    setLoading(provider);
     setMessage(null);
-    const result = await lovable.auth.signInWithOAuth("google", {
+    const result = await lovable.auth.signInWithOAuth(provider, {
       redirect_uri: window.location.origin,
     });
     setLoading(null);
@@ -152,10 +158,16 @@ function AuthPage() {
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-5">
-            <Button onClick={signInWithGoogle} disabled={loading !== null} className="w-full bg-gradient-forge text-forge-foreground shadow-glow hover:opacity-95">
-              <ArrowRight className="h-4 w-4" />
-              {loading === "google" ? t.chrome.auth.googleLoading : t.chrome.auth.google}
-            </Button>
+            <div className="grid gap-3 sm:grid-cols-2">
+              <Button onClick={() => signInWithOAuth("google")} disabled={loading !== null} className="w-full bg-gradient-forge text-forge-foreground shadow-glow hover:opacity-95">
+                <ArrowRight className="h-4 w-4" />
+                {loading === "google" ? t.chrome.auth.googleLoading : t.chrome.auth.google}
+              </Button>
+              <Button onClick={() => signInWithOAuth("apple")} disabled={loading !== null} variant="outline" className="w-full">
+                <ArrowRight className="h-4 w-4" />
+                {loading === "apple" ? t.chrome.auth.appleLoading : t.chrome.auth.apple}
+              </Button>
+            </div>
 
             <Tabs defaultValue="signin">
               <TabsList className="grid h-auto w-full grid-cols-2 bg-surface p-1">
@@ -203,6 +215,13 @@ function AuthPage() {
                   <div className="relative">
                     <LockKeyhole className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
                     <Input className="pl-9" type="password" value={signUpPassword} onChange={(e) => setSignUpPassword(e.target.value)} placeholder={t.chrome.auth.passwordHint} />
+                  </div>
+                </div>
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-foreground">{t.chrome.auth.confirmPassword}</label>
+                  <div className="relative">
+                    <LockKeyhole className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                    <Input className="pl-9" type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} placeholder={t.chrome.auth.passwordHint} />
                   </div>
                 </div>
                 <Button onClick={signUp} disabled={loading !== null} className="w-full">

@@ -28,13 +28,17 @@ export function assembleScenario(
   spec: ScenarioSpec,
   level: ScenarioDifficulty,
   mode: ScenarioMode,
+  caseStudies?: CaseStudy[],
 ): PlayableScenario {
+  const findCase = caseStudies
+    ? caseStudies.find((c) => c.id === spec.caseId)
+    : getCaseForSpec(spec);
   return {
     spec,
     mode,
     level,
     layers: revealLayers(spec, level),
-    caseStudy: getCaseForSpec(spec),
+    caseStudy: findCase,
     barem: difficultyBarem(level),
   };
 }

@@ -1,7 +1,7 @@
 import { Link, createFileRoute } from "@tanstack/react-router";
 import { Scale, TrendingUp, BarChart3, Calculator, LineChart, History, CheckCircle2, Award, Activity, Lock } from "lucide-react";
 import { CHAPTER } from "@/lib/academy/chapter1";
-import { CASE_STUDIES } from "@/lib/academy/market-data";
+import { useCaseStudies, useGetSpecById, useLessons } from "@/lib/academy/useChapterContent";
 import { ChapterShell } from "@/components/academy/ChapterShell";
 import { ChapterHero } from "@/components/academy/ChapterHero";
 import { LessonSection } from "@/components/academy/LessonSection";
@@ -38,9 +38,7 @@ import { LessonEvaluationGate } from "@/components/academy/LessonEvaluationGate"
 import { ScenarioPlayer } from "@/components/academy/ScenarioPlayer";
 import { useChapterProgress } from "@/lib/academy/useChapterProgress";
 import { assembleScenario } from "@/lib/academy/scenario-engine";
-import { getSpecById } from "@/lib/academy/scenario-library";
 import { useT } from "@/lib/i18n";
-import { useLessons } from "@/lib/academy/useChapterContent";
 import { cn } from "@/lib/utils";
 
 
@@ -101,6 +99,8 @@ function Chapter1Page() {
   const t = useT();
   const c = t.content;
   const LESSONS = useLessons();
+  const CASE_STUDIES = useCaseStudies();
+  const getSpecById = useGetSpecById();
   const {
     signedIn,
     profile,
@@ -125,7 +125,7 @@ function Chapter1Page() {
       <div id={`case-${cs.index}`} className="scroll-mt-24">
         {spec ? (
           <ScenarioPlayer
-            scenario={assembleScenario(spec, spec.difficulte, "learning")}
+            scenario={assembleScenario(spec, spec.difficulte, "learning", CASE_STUDIES)}
             onComplete={() => {
               markCase(cs.id);
               markSection(sectionId);

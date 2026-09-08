@@ -7,10 +7,9 @@ import { Button } from "@/components/ui/button";
 import { ChapterShell } from "@/components/academy/ChapterShell";
 import { ScenarioPlayer } from "@/components/academy/ScenarioPlayer";
 import { CHAPTER } from "@/lib/academy/chapter1";
-import { CASE_STUDIES } from "@/lib/academy/market-data";
+import { useCaseStudies, useScenarioLibrary } from "@/lib/academy/useChapterContent";
 import { saveEvaluationAttempt } from "@/lib/academy/progress.functions";
 import { assembleScenario } from "@/lib/academy/scenario-engine";
-import { SCENARIO_LIBRARY } from "@/lib/academy/scenario-library";
 import { useChapterProgress } from "@/lib/academy/useChapterProgress";
 import { useT } from "@/lib/i18n";
 
@@ -28,12 +27,14 @@ export const Route = createFileRoute("/academy/analyse-fondamentale/certificatio
 
 function CertificationPage() {
   const t = useT();
-  const { signedIn, profile, completed, lessonPasses, certificationPercent, certificationReady, dashboard } = useChapterProgress(CHAPTER.id, CASE_STUDIES.length);
+  const { signedIn, profile, completed, lessonPasses, certificationPercent, certificationReady, dashboard } = useChapterProgress(CHAPTER.id, useCaseStudies().length);
   const [results, setResults] = useState<Record<string, boolean>>({});
   const [saved, setSaved] = useState(false);
   const saveAttempt = useServerFn(saveEvaluationAttempt);
   const mutation = useMutation({ mutationFn: saveAttempt });
-  const scenarios = useMemo(() => SCENARIO_LIBRARY.map((spec) => assembleScenario(spec, spec.difficulte, "evaluation")), []);
+  const scenarioLibrary = useScenarioLibrary();
+  const caseStudies = useCaseStudies();
+  const scenarios = useMemo(() => scenarioLibrary.map((spec) => assembleScenario(spec, spec.difficulte, "evaluation", caseStudies)), [scenarioLibrary, caseStudies]);
   const answered = Object.keys(results).length;
   const correct = Object.values(results).filter(Boolean).length;
   const score = Math.round((correct / Math.max(1, scenarios.length)) * 100);
