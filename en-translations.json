@@ -1,0 +1,3352 @@
+[
+  {
+    "question_key": "1.1-Q1",
+    "part": "A",
+    "locale": "en",
+    "prompt": "L'analyse fondamentale seeks to determine :",
+    "choices": [
+      {
+        "id": "a",
+        "label": "The technical trend of the market"
+      },
+      {
+        "id": "b",
+        "label": "La valeur intrinsèque d'un actif"
+      },
+      {
+        "id": "c",
+        "label": "Transaction volumes"
+      },
+      {
+        "id": "d",
+        "label": "Future volatility"
+      }
+    ],
+    "explanation": "Elle se base sur les facteurs économiques et financiers pour évaluer la « juste valeur »."
+  },
+  {
+    "question_key": "1.1-Q2",
+    "part": "A",
+    "locale": "en",
+    "prompt": "Selon l'analyse fondamentale, le prix de marché :",
+    "choices": [
+      {
+        "id": "a",
+        "label": "Always coincides with intrinsic value"
+      },
+      {
+        "id": "b",
+        "label": "Peut s'écarter temporairement de la valeur intrinsèque"
+      },
+      {
+        "id": "c",
+        "label": "Is independent of fundamentals"
+      },
+      {
+        "id": "d",
+        "label": "Determines intrinsic value"
+      }
+    ],
+    "explanation": "Les marchés ne sont pas parfaitement efficients ; des divergences apparaissent."
+  },
+  {
+    "question_key": "1.1-Q3",
+    "part": "A",
+    "locale": "en",
+    "prompt": "Un des principes clés de l'analyse fondamentale est :",
+    "choices": [
+      {
+        "id": "a",
+        "label": "L'efficience absolue des marchés"
+      },
+      {
+        "id": "b",
+        "label": "Long-term mean reversion"
+      },
+      {
+        "id": "c",
+        "label": "L'absence de risque"
+      },
+      {
+        "id": "d",
+        "label": "L'analyse des seuls graphiques"
+      }
+    ],
+    "explanation": "On s'attend à ce que le prix converge vers la valeur intrinsèque à long terme."
+  },
+  {
+    "question_key": "1.1-Q4",
+    "part": "A",
+    "locale": "en",
+    "prompt": "L'analyse fondamentale is particularly useful for :",
+    "choices": [
+      {
+        "id": "a",
+        "label": "High-frequency trading"
+      },
+      {
+        "id": "b",
+        "label": "Les stratégies d'investissement à long terme"
+      },
+      {
+        "id": "c",
+        "label": "Support/resistance detection"
+      },
+      {
+        "id": "d",
+        "label": "L'analyse des chandeliers"
+      }
+    ],
+    "explanation": "Elle se concentre sur les moteurs de valeur sur la durée."
+  },
+  {
+    "question_key": "1.1-Q5",
+    "part": "A",
+    "locale": "en",
+    "prompt": "Lequel n'est PAS un objectif de l'analyse fondamentale ?",
+    "choices": [
+      {
+        "id": "a",
+        "label": "Identify overvalued assets"
+      },
+      {
+        "id": "b",
+        "label": "Understand market drivers"
+      },
+      {
+        "id": "c",
+        "label": "Predict price in 5 minutes"
+      },
+      {
+        "id": "d",
+        "label": "Manage risks"
+      }
+    ],
+    "explanation": "L'AF n'a pas vocation à prévoir les mouvements de très court terme."
+  },
+  {
+    "question_key": "1.1-Q6",
+    "part": "A",
+    "locale": "en",
+    "prompt": "La valeur intrinsèque is based on :",
+    "choices": [
+      {
+        "id": "a",
+        "label": "Market rumors"
+      },
+      {
+        "id": "b",
+        "label": "Economic, financial, and qualitative factors"
+      },
+      {
+        "id": "c",
+        "label": "Investor sentiment"
+      },
+      {
+        "id": "d",
+        "label": "Market orders"
+      }
+    ],
+    "explanation": "Elle est basée sur une analyse approfondie des fondamentaux."
+  },
+  {
+    "question_key": "1.1-Q7",
+    "part": "A",
+    "locale": "en",
+    "prompt": "L'hypothèse d'efficience des marchés est :",
+    "choices": [
+      {
+        "id": "a",
+        "label": "Completely true in all cases"
+      },
+      {
+        "id": "b",
+        "label": "Remise en cause par l'analyse fondamentale"
+      },
+      {
+        "id": "c",
+        "label": "Sans importance pour l'investisseur"
+      },
+      {
+        "id": "d",
+        "label": "A mathematical law"
+      }
+    ],
+    "explanation": "L'analyse fondamentale postule que les marchés ne sont pas toujours efficients."
+  },
+  {
+    "question_key": "1.1-Q8",
+    "part": "A",
+    "locale": "en",
+    "prompt": "The \"mean reversion\" principle implies que :",
+    "choices": [
+      {
+        "id": "a",
+        "label": "Prices never revert to their mean"
+      },
+      {
+        "id": "b",
+        "label": "Prices tend to revert to their intrinsic value"
+      },
+      {
+        "id": "c",
+        "label": "The mean is always below the price"
+      },
+      {
+        "id": "d",
+        "label": "The average price is the only reference"
+      }
+    ],
+    "explanation": "C'est l'un des piliers de l'analyse fondamentale."
+  },
+  {
+    "question_key": "1.1-Q9",
+    "part": "A",
+    "locale": "en",
+    "prompt": "L'analyse fondamentale s'oppose à l'analyse technique car :",
+    "choices": [
+      {
+        "id": "a",
+        "label": "It uses charts"
+      },
+      {
+        "id": "b",
+        "label": "Elle s'intéresse aux causes sous-jacentes"
+      },
+      {
+        "id": "c",
+        "label": "It is less reliable"
+      },
+      {
+        "id": "d",
+        "label": "Elle ne s'applique qu'aux actions"
+      }
+    ],
+    "explanation": "L'AT se concentre sur les prix et volumes, l'AF sur les fondamentaux."
+  },
+  {
+    "question_key": "1.1-Q10",
+    "part": "A",
+    "locale": "en",
+    "prompt": "Un investisseur qui utilise l'analyse fondamentale cherche à :",
+    "choices": [
+      {
+        "id": "a",
+        "label": "Profit from very short-term fluctuations"
+      },
+      {
+        "id": "b",
+        "label": "Exploit gaps between price and intrinsic value"
+      },
+      {
+        "id": "c",
+        "label": "Follow chart trends"
+      },
+      {
+        "id": "d",
+        "label": "Ignore economic data"
+      }
+    ],
+    "explanation": "L'objectif est d'acheter sous-évalué et vendre surévalué."
+  },
+  {
+    "question_key": "1.1-Q11",
+    "part": "A",
+    "locale": "en",
+    "prompt": "La « valeur intrinsèque » d'une devise dépend notamment :",
+    "choices": [
+      {
+        "id": "a",
+        "label": "Des ordres de bourse"
+      },
+      {
+        "id": "b",
+        "label": "On the economic health of the issuing country"
+      },
+      {
+        "id": "c",
+        "label": "On the number of transactions"
+      },
+      {
+        "id": "d",
+        "label": "On the weather"
+      }
+    ],
+    "explanation": "La santé économique (PIB, inflation, etc.) détermine la valeur d'une devise."
+  },
+  {
+    "question_key": "1.1-Q12",
+    "part": "A",
+    "locale": "en",
+    "prompt": "Pourquoi l'analyse fondamentale is it important for risk management ?",
+    "choices": [
+      {
+        "id": "a",
+        "label": "Elle permet d'éviter toute perte"
+      },
+      {
+        "id": "b",
+        "label": "It identifies assets backed by solid fundamentals"
+      },
+      {
+        "id": "c",
+        "label": "It guarantees high returns"
+      },
+      {
+        "id": "d",
+        "label": "It is risk-free"
+      }
+    ],
+    "explanation": "By knowing the strength of fundamentals, on peut better assess risk."
+  },
+  {
+    "question_key": "1.1-Q13",
+    "part": "A",
+    "locale": "en",
+    "prompt": "L'analyse fondamentale is particularly suited to markets :",
+    "choices": [
+      {
+        "id": "a",
+        "label": "Illiquid"
+      },
+      {
+        "id": "b",
+        "label": "Where prices are always fair"
+      },
+      {
+        "id": "c",
+        "label": "Where inefficiencies may exist"
+      },
+      {
+        "id": "d",
+        "label": "Où l'information est parfaite"
+      }
+    ],
+    "explanation": "Inefficiencies create opportunities pour l'AF."
+  },
+  {
+    "question_key": "1.1-Q14",
+    "part": "A",
+    "locale": "en",
+    "prompt": "La valeur intrinsèque d'une entreprise is often estimated via :",
+    "choices": [
+      {
+        "id": "a",
+        "label": "Stock prices"
+      },
+      {
+        "id": "b",
+        "label": "Discounted future cash flows"
+      },
+      {
+        "id": "c",
+        "label": "Transaction volumes"
+      },
+      {
+        "id": "d",
+        "label": "Les rumeurs"
+      }
+    ],
+    "explanation": "Le modèle DCF est l'un des plus utilisés."
+  },
+  {
+    "question_key": "1.1-Q15",
+    "part": "A",
+    "locale": "en",
+    "prompt": "Dans l'analyse fondamentale, the \"convergence to intrinsic value\" :",
+    "choices": [
+      {
+        "id": "a",
+        "label": "Is instantaneous"
+      },
+      {
+        "id": "b",
+        "label": "Can take time"
+      },
+      {
+        "id": "c",
+        "label": "N'arrive jamais"
+      },
+      {
+        "id": "d",
+        "label": "Depends on algorithms"
+      }
+    ],
+    "explanation": "Markets can remain irrational for a long time."
+  },
+  {
+    "question_key": "1.2-Q1",
+    "part": "A",
+    "locale": "en",
+    "prompt": "Une hausse surprise du PIB américain est généralement :",
+    "choices": [
+      {
+        "id": "a",
+        "label": "Négative pour l'USD"
+      },
+      {
+        "id": "b",
+        "label": "Positive pour l'USD"
+      },
+      {
+        "id": "c",
+        "label": "Neutre"
+      },
+      {
+        "id": "d",
+        "label": "Impossible à anticiper"
+      }
+    ],
+    "explanation": "Une croissance robuste attire les capitaux et peut maintenir les taux élevés."
+  },
+  {
+    "question_key": "1.2-Q2",
+    "part": "A",
+    "locale": "en",
+    "prompt": "L'indicateur qui mesure l'évolution des prix à la consommation est :",
+    "choices": [
+      {
+        "id": "a",
+        "label": "Le PIB"
+      },
+      {
+        "id": "b",
+        "label": "Le NFP"
+      },
+      {
+        "id": "c",
+        "label": "L'IPC (CPI)"
+      },
+      {
+        "id": "d",
+        "label": "Le PMI"
+      }
+    ],
+    "explanation": "L'Indice des Prix à la Consommation est la mesure standard de l'inflation."
+  },
+  {
+    "question_key": "1.2-Q3",
+    "part": "A",
+    "locale": "en",
+    "prompt": "Des taux d'intérêt plus élevés tendent à :",
+    "choices": [
+      {
+        "id": "a",
+        "label": "Faire fuir les capitaux étrangers"
+      },
+      {
+        "id": "b",
+        "label": "Attirer les capitaux étrangers"
+      },
+      {
+        "id": "c",
+        "label": "Ne pas affecter la devise"
+      },
+      {
+        "id": "d",
+        "label": "Réduire l'inflation immédiatement"
+      }
+    ],
+    "explanation": "Les investisseurs recherchent de meilleurs rendements, augmentant la demande pour la devise."
+  },
+  {
+    "question_key": "1.2-Q4",
+    "part": "A",
+    "locale": "en",
+    "prompt": "Un excédent commercial (exportations > importations) signifie :",
+    "choices": [
+      {
+        "id": "a",
+        "label": "Une demande plus faible pour la devise nationale"
+      },
+      {
+        "id": "b",
+        "label": "Une demande plus forte pour la devise nationale"
+      },
+      {
+        "id": "c",
+        "label": "Une dépréciation automatique"
+      },
+      {
+        "id": "d",
+        "label": "Aucun impact sur le forex"
+      }
+    ],
+    "explanation": "Les acheteurs étrangers ont besoin de la devise pour payer les exportations."
+  },
+  {
+    "question_key": "1.2-Q5",
+    "part": "A",
+    "locale": "en",
+    "prompt": "Les NFP (Non-Farm Payrolls) mesurent :",
+    "choices": [
+      {
+        "id": "a",
+        "label": "Le nombre d'emplois dans l'agriculture"
+      },
+      {
+        "id": "b",
+        "label": "Le nombre d'emplois créés hors secteur agricole"
+      },
+      {
+        "id": "c",
+        "label": "Le taux de chômage uniquement"
+      },
+      {
+        "id": "d",
+        "label": "Les salaires horaires moyens"
+      }
+    ],
+    "explanation": "Les NFP mesurent le nombre d'emplois créés ou perdus dans le secteur non agricole."
+  },
+  {
+    "question_key": "1.2-Q6",
+    "part": "A",
+    "locale": "en",
+    "prompt": "Une inflation élevée et persistante peut conduire la banque centrale à :",
+    "choices": [
+      {
+        "id": "a",
+        "label": "Baisser ses taux directeurs"
+      },
+      {
+        "id": "b",
+        "label": "Augmenter ses taux directeurs"
+      },
+      {
+        "id": "c",
+        "label": "Ne rien changer"
+      },
+      {
+        "id": "d",
+        "label": "Acheter des obligations"
+      }
+    ],
+    "explanation": "La politique restrictive (hausse des taux) vise à réduire l'inflation."
+  },
+  {
+    "question_key": "1.2-Q7",
+    "part": "A",
+    "locale": "en",
+    "prompt": "Parmi les indicateurs suivants, lequel est un indicateur avancé (leading) ?",
+    "choices": [
+      {
+        "id": "a",
+        "label": "Taux de chômage"
+      },
+      {
+        "id": "b",
+        "label": "PIB"
+      },
+      {
+        "id": "c",
+        "label": "Permis de construire"
+      },
+      {
+        "id": "d",
+        "label": "IPC"
+      }
+    ],
+    "explanation": "Les permis de construire changent avant que l'économie ne suive une tendance."
+  },
+  {
+    "question_key": "1.2-Q8",
+    "part": "A",
+    "locale": "en",
+    "prompt": "Lequel de ces indicateurs est un indicateur coïncident ?",
+    "choices": [
+      {
+        "id": "a",
+        "label": "Spread de taux (inversion courbe)"
+      },
+      {
+        "id": "b",
+        "label": "Production industrielle"
+      },
+      {
+        "id": "c",
+        "label": "Coûts unitaires main-d'œuvre"
+      },
+      {
+        "id": "d",
+        "label": "Nouvelles commandes équipement"
+      }
+    ],
+    "explanation": "La production industrielle évolue approximativement en même temps que l'économie."
+  },
+  {
+    "question_key": "1.2-Q9",
+    "part": "A",
+    "locale": "en",
+    "prompt": "Le taux de chômage est considéré comme un indicateur :",
+    "choices": [
+      {
+        "id": "a",
+        "label": "Avancé"
+      },
+      {
+        "id": "b",
+        "label": "Coïncident"
+      },
+      {
+        "id": "c",
+        "label": "Retardé"
+      },
+      {
+        "id": "d",
+        "label": "Non fiable"
+      }
+    ],
+    "explanation": "Les entreprises attendent d'être sûres de la reprise avant d'embaucher massivement."
+  },
+  {
+    "question_key": "1.2-Q10",
+    "part": "A",
+    "locale": "en",
+    "prompt": "Une hausse des prix du pétrole bénéficie généralement au :",
+    "choices": [
+      {
+        "id": "a",
+        "label": "JPY"
+      },
+      {
+        "id": "b",
+        "label": "CAD (Canada)"
+      },
+      {
+        "id": "c",
+        "label": "EUR"
+      },
+      {
+        "id": "d",
+        "label": "CHF"
+      }
+    ],
+    "explanation": "Le Canada est exportateur net de pétrole ; une hausse améliore sa balance."
+  },
+  {
+    "question_key": "1.2-Q11",
+    "part": "A",
+    "locale": "en",
+    "prompt": "L'« Average Hourly Earnings » aux USA mesure :",
+    "choices": [
+      {
+        "id": "a",
+        "label": "Le nombre total d'emplois"
+      },
+      {
+        "id": "b",
+        "label": "L'évolution des revenus salariaux"
+      },
+      {
+        "id": "c",
+        "label": "Le taux de participation"
+      },
+      {
+        "id": "d",
+        "label": "La productivité"
+      }
+    ],
+    "explanation": "Une forte croissance des salaires peut alimenter l'inflation (spirale prix-salaires)."
+  },
+  {
+    "question_key": "1.2-Q12",
+    "part": "A",
+    "locale": "en",
+    "prompt": "Les indices PMI (Purchasing Managers' Index) sont particulièrement surveillés car :",
+    "choices": [
+      {
+        "id": "a",
+        "label": "Ils mesurent l'inflation passée"
+      },
+      {
+        "id": "b",
+        "label": "Ils donnent une indication précoce de la santé des secteurs"
+      },
+      {
+        "id": "c",
+        "label": "Ils remplacent le PIB"
+      },
+      {
+        "id": "d",
+        "label": "Ils sont publiés annuellement"
+      }
+    ],
+    "explanation": "Les PMI sont des indicateurs avancés de l'activité économique."
+  },
+  {
+    "question_key": "1.2-Q13",
+    "part": "A",
+    "locale": "en",
+    "prompt": "Quelle catégorie d'indicateurs regroupe les décisions sur les taux d'intérêt et le forward guidance ?",
+    "choices": [
+      {
+        "id": "a",
+        "label": "Indicateurs de croissance"
+      },
+      {
+        "id": "b",
+        "label": "Indicateurs d'inflation"
+      },
+      {
+        "id": "c",
+        "label": "Indicateurs liés à la politique monétaire"
+      },
+      {
+        "id": "d",
+        "label": "Indicateurs de confiance"
+      }
+    ],
+    "explanation": "Ce sont des événements et communications ayant un impact fondamental majeur."
+  },
+  {
+    "question_key": "1.2-Q14",
+    "part": "A",
+    "locale": "en",
+    "prompt": "Une inversion de la courbe des taux (2Y > 10Y) est souvent interprétée comme :",
+    "choices": [
+      {
+        "id": "a",
+        "label": "Un signal de croissance forte"
+      },
+      {
+        "id": "b",
+        "label": "Un signe avant-coureur de récession"
+      },
+      {
+        "id": "c",
+        "label": "Une politique monétaire expansionniste"
+      },
+      {
+        "id": "d",
+        "label": "Un indicateur coïncident"
+      }
+    ],
+    "explanation": "L'inversion de la courbe est un indicateur avancé classique de récession."
+  },
+  {
+    "question_key": "1.2-Q15",
+    "part": "A",
+    "locale": "en",
+    "prompt": "Pourquoi les anticipations de changement de taux sont souvent plus importantes que les changements eux-mêmes ?",
+    "choices": [
+      {
+        "id": "a",
+        "label": "Parce que les marchés anticipent et prixent à l'avance"
+      },
+      {
+        "id": "b",
+        "label": "Parce que les banques centrales ne changent jamais les taux"
+      },
+      {
+        "id": "c",
+        "label": "Parce que les taux sont fixes"
+      },
+      {
+        "id": "d",
+        "label": "Parce que les anticipations n'ont aucun impact"
+      }
+    ],
+    "explanation": "Les marchés fonctionnent par anticipation ; le « priced in » est central."
+  },
+  {
+    "question_key": "1.3-Q1",
+    "part": "A",
+    "locale": "en",
+    "prompt": "Les données microéconomiques se concentrent principalement sur :",
+    "choices": [
+      {
+        "id": "a",
+        "label": "La politique monétaire"
+      },
+      {
+        "id": "b",
+        "label": "Les performances individuelles des entreprises"
+      },
+      {
+        "id": "c",
+        "label": "Les taux de change"
+      },
+      {
+        "id": "d",
+        "label": "Les indicateurs de confiance"
+      }
+    ],
+    "explanation": "La microéconomie analyse les unités économiques individuelles (entreprises, ménages)."
+  },
+  {
+    "question_key": "1.3-Q2",
+    "part": "A",
+    "locale": "en",
+    "prompt": "Le bilan d'une entreprise respecte toujours l'équation :",
+    "choices": [
+      {
+        "id": "a",
+        "label": "Actif = Passif − Equity"
+      },
+      {
+        "id": "b",
+        "label": "Actif = Passif + Equity"
+      },
+      {
+        "id": "c",
+        "label": "Equity = Passif − Actif"
+      },
+      {
+        "id": "d",
+        "label": "Passif = Actif + Equity"
+      }
+    ],
+    "explanation": "Actif = Passif + Equity (fondamental de la comptabilité)."
+  },
+  {
+    "question_key": "1.3-Q3",
+    "part": "A",
+    "locale": "en",
+    "prompt": "Le compte de résultat mesure :",
+    "choices": [
+      {
+        "id": "a",
+        "label": "La santé financière à un instant T"
+      },
+      {
+        "id": "b",
+        "label": "La performance sur une période (revenus, coûts, bénéfices)"
+      },
+      {
+        "id": "c",
+        "label": "Les flux de trésorerie"
+      },
+      {
+        "id": "d",
+        "label": "La valeur de l'entreprise"
+      }
+    ],
+    "explanation": "Il présente les revenus et charges sur une période donnée."
+  },
+  {
+    "question_key": "1.3-Q4",
+    "part": "A",
+    "locale": "en",
+    "prompt": "Une marge nette de 25 % signifie que :",
+    "choices": [
+      {
+        "id": "a",
+        "label": "L'entreprise dégage 25 % de bénéfice net par rapport à ses revenus"
+      },
+      {
+        "id": "b",
+        "label": "L'entreprise a 25 % de dette"
+      },
+      {
+        "id": "c",
+        "label": "25 % des actifs sont liquides"
+      },
+      {
+        "id": "d",
+        "label": "Le ROE est de 25 %"
+      }
+    ],
+    "explanation": "Marge nette = Bénéfice net / Revenus."
+  },
+  {
+    "question_key": "1.3-Q5",
+    "part": "A",
+    "locale": "en",
+    "prompt": "Le ratio dette/équité (D/E) évalue :",
+    "choices": [
+      {
+        "id": "a",
+        "label": "La rentabilité"
+      },
+      {
+        "id": "b",
+        "label": "Le niveau d'endettement"
+      },
+      {
+        "id": "c",
+        "label": "La liquidité"
+      },
+      {
+        "id": "d",
+        "label": "La croissance des ventes"
+      }
+    ],
+    "explanation": "Il indique le niveau d'endettement par rapport aux fonds propres."
+  },
+  {
+    "question_key": "1.3-Q6",
+    "part": "A",
+    "locale": "en",
+    "prompt": "Le ROE (Return on Equity) mesure :",
+    "choices": [
+      {
+        "id": "a",
+        "label": "La rentabilité des capitaux propres"
+      },
+      {
+        "id": "b",
+        "label": "La liquidité de l'entreprise"
+      },
+      {
+        "id": "c",
+        "label": "L'endettement total"
+      },
+      {
+        "id": "d",
+        "label": "La croissance des revenus"
+      }
+    ],
+    "explanation": "ROE = Bénéfice net / Capitaux propres."
+  },
+  {
+    "question_key": "1.3-Q7",
+    "part": "A",
+    "locale": "en",
+    "prompt": "Un flux de trésorerie libre (Free Cash Flow) élevé indique :",
+    "choices": [
+      {
+        "id": "a",
+        "label": "Une forte capacité à générer de la liquidité disponible"
+      },
+      {
+        "id": "b",
+        "label": "Une forte dette"
+      },
+      {
+        "id": "c",
+        "label": "Une faible rentabilité"
+      },
+      {
+        "id": "d",
+        "label": "Un besoin de financement externe"
+      }
+    ],
+    "explanation": "Le FCF représente la liquidité générée après investissements."
+  },
+  {
+    "question_key": "1.3-Q8",
+    "part": "A",
+    "locale": "en",
+    "prompt": "Apple Inc. affichait en 2023 une marge nette de 25 % et un P/E de 28. Cela suggère :",
+    "choices": [
+      {
+        "id": "a",
+        "label": "Une valorisation juste proche de la valeur intrinsèque"
+      },
+      {
+        "id": "b",
+        "label": "Une entreprise en difficulté"
+      },
+      {
+        "id": "c",
+        "label": "Un ratio D/E élevé"
+      },
+      {
+        "id": "d",
+        "label": "Une faible croissance"
+      }
+    ],
+    "explanation": "Marge élevée + P/E raisonnable = valorisation alignée avec les fondamentaux."
+  },
+  {
+    "question_key": "1.3-Q9",
+    "part": "A",
+    "locale": "en",
+    "prompt": "Tesla affichait en 2022 un P/E de 50+. Cela reflète principalement :",
+    "choices": [
+      {
+        "id": "a",
+        "label": "Une valorisation discount"
+      },
+      {
+        "id": "b",
+        "label": "Des attentes de croissance futures très élevées"
+      },
+      {
+        "id": "c",
+        "label": "Une faible volatilité"
+      },
+      {
+        "id": "d",
+        "label": "Un endettement nul"
+      }
+    ],
+    "explanation": "Un P/E élevé indique que le marché anticipe une forte croissance future."
+  },
+  {
+    "question_key": "1.3-Q10",
+    "part": "A",
+    "locale": "en",
+    "prompt": "Le « Current Ratio » (actifs courants / dettes courantes) mesure :",
+    "choices": [
+      {
+        "id": "a",
+        "label": "La rentabilité à long terme"
+      },
+      {
+        "id": "b",
+        "label": "La liquidité et la capacité à payer les dettes à court terme"
+      },
+      {
+        "id": "c",
+        "label": "L'efficacité opérationnelle"
+      },
+      {
+        "id": "d",
+        "label": "La croissance des ventes"
+      }
+    ],
+    "explanation": "< 1 = risque de défaut à court terme."
+  },
+  {
+    "question_key": "1.3-Q11",
+    "part": "A",
+    "locale": "en",
+    "prompt": "Pourquoi un ROE élevé via un levier financier (dette) peut être fragile ?",
+    "choices": [
+      {
+        "id": "a",
+        "label": "Parce que la dette augmente le risque financier"
+      },
+      {
+        "id": "b",
+        "label": "Parce que la dette est toujours mauvaise"
+      },
+      {
+        "id": "c",
+        "label": "Parce que le ROE ne compte pas la dette"
+      },
+      {
+        "id": "d",
+        "label": "Parce que les actionnaires n'aiment pas la dette"
+      }
+    ],
+    "explanation": "ROE artificiellement gonflé par la dette = risque de faillite accru."
+  },
+  {
+    "question_key": "1.3-Q12",
+    "part": "A",
+    "locale": "en",
+    "prompt": "Dans l'analyse d'un bilan, « Equity » représente :",
+    "choices": [
+      {
+        "id": "a",
+        "label": "Les dettes totales"
+      },
+      {
+        "id": "b",
+        "label": "La valeur nette appartenant aux actionnaires"
+      },
+      {
+        "id": "c",
+        "label": "Les actifs immobilisés"
+      },
+      {
+        "id": "d",
+        "label": "Les stocks et créances"
+      }
+    ],
+    "explanation": "Equity = Actif − Passif (fonds propres)."
+  },
+  {
+    "question_key": "1.3-Q13",
+    "part": "A",
+    "locale": "en",
+    "prompt": "Une entreprise avec des revenus en hausse de 51 % (Tesla 2022) mais un P/E de 50 est :",
+    "choices": [
+      {
+        "id": "a",
+        "label": "Sous-évaluée"
+      },
+      {
+        "id": "b",
+        "label": "Potentiellement surévaluée si la croissance ne se matérialise pas"
+      },
+      {
+        "id": "c",
+        "label": "Toujours un bon investissement"
+      },
+      {
+        "id": "d",
+        "label": "Sans risque"
+      }
+    ],
+    "explanation": "Le P/E élevé price une croissance future qui peut ne pas se réaliser."
+  },
+  {
+    "question_key": "1.3-Q14",
+    "part": "A",
+    "locale": "en",
+    "prompt": "Le « Quick Ratio » diffère du « Current Ratio » car il exclut :",
+    "choices": [
+      {
+        "id": "a",
+        "label": "Les créances clients"
+      },
+      {
+        "id": "b",
+        "label": "Les stocks (inventaire)"
+      },
+      {
+        "id": "c",
+        "label": "Les liquidités"
+      },
+      {
+        "id": "d",
+        "label": "Les dettes à long terme"
+      }
+    ],
+    "explanation": "Quick Ratio = (Actifs courants − Stocks) / Dettes courantes (plus conservateur)."
+  },
+  {
+    "question_key": "1.3-Q15",
+    "part": "A",
+    "locale": "en",
+    "prompt": "Pourquoi les marges brutes et nettes doivent être analysées ensemble ?",
+    "choices": [
+      {
+        "id": "a",
+        "label": "Parce qu'elles mesurent la même chose"
+      },
+      {
+        "id": "b",
+        "label": "Parce que l'écart entre les deux révèle l'efficacité opérationnelle et les coûts indirects"
+      },
+      {
+        "id": "c",
+        "label": "Parce que la marge brute suffit"
+      },
+      {
+        "id": "d",
+        "label": "Parce que la marge nette n'a pas d'importance"
+      }
+    ],
+    "explanation": "Marge brute − coûts opérationnels = marge nette. Un écart anormal signale un problème."
+  },
+  {
+    "question_key": "1.4-Q1",
+    "part": "A",
+    "locale": "en",
+    "prompt": "Le ratio P/E (Price-to-Earnings) mesure :",
+    "choices": [
+      {
+        "id": "a",
+        "label": "La valorisation par rapport aux bénéfices"
+      },
+      {
+        "id": "b",
+        "label": "La rentabilité des capitaux propres"
+      },
+      {
+        "id": "c",
+        "label": "Le niveau d'endettement"
+      },
+      {
+        "id": "d",
+        "label": "La liquidité"
+      }
+    ],
+    "explanation": "P/E = Cours / BPA. Indique combien d'années de bénéfices sont payées."
+  },
+  {
+    "question_key": "1.4-Q2",
+    "part": "A",
+    "locale": "en",
+    "prompt": "Le modèle DCF (Discounted Cash Flow) estime la valeur intrinsèque via :",
+    "choices": [
+      {
+        "id": "a",
+        "label": "Discounted future cash flows"
+      },
+      {
+        "id": "b",
+        "label": "Le cours de bourse moyen"
+      },
+      {
+        "id": "c",
+        "label": "Transaction volumes"
+      },
+      {
+        "id": "d",
+        "label": "Le sentiment des analystes"
+      }
+    ],
+    "explanation": "DCF = somme des FCF futurs actualisés + valeur terminale."
+  },
+  {
+    "question_key": "1.4-Q3",
+    "part": "A",
+    "locale": "en",
+    "prompt": "L'analyse sectorielle vise à :",
+    "choices": [
+      {
+        "id": "a",
+        "label": "Identifier les tendances et défis spécifiques à un secteur"
+      },
+      {
+        "id": "b",
+        "label": "Prédire le cours du pétrole"
+      },
+      {
+        "id": "c",
+        "label": "Mesurer l'inflation"
+      },
+      {
+        "id": "d",
+        "label": "Calculer le PIB"
+      }
+    ],
+    "explanation": "Elle compare les performances au sein d'un secteur pour identifier leaders et laggards."
+  },
+  {
+    "question_key": "1.4-Q4",
+    "part": "A",
+    "locale": "en",
+    "prompt": "L'analyse SWOT examine :",
+    "choices": [
+      {
+        "id": "a",
+        "label": "Les forces, faiblesses, opportunités et menaces"
+      },
+      {
+        "id": "b",
+        "label": "Les salaires et les coûts"
+      },
+      {
+        "id": "c",
+        "label": "Les taux d'intérêt et l'inflation"
+      },
+      {
+        "id": "d",
+        "label": "Les volumes et la volatilité"
+      }
+    ],
+    "explanation": "SWOT = outil stratégique d'évaluation qualitative."
+  },
+  {
+    "question_key": "1.4-Q5",
+    "part": "A",
+    "locale": "en",
+    "prompt": "Un ratio D/E < 1 est généralement interprété comme :",
+    "choices": [
+      {
+        "id": "a",
+        "label": "Un endettement excessif"
+      },
+      {
+        "id": "b",
+        "label": "Une santé financière raisonnable"
+      },
+      {
+        "id": "c",
+        "label": "Une rentabilité faible"
+      },
+      {
+        "id": "d",
+        "label": "Une liquidité insuffisante"
+      }
+    ],
+    "explanation": "Moins de dette que de fonds propres = structure financière conservative."
+  },
+  {
+    "question_key": "1.4-Q6",
+    "part": "A",
+    "locale": "en",
+    "prompt": "Le P/B (Price-to-Book) compare :",
+    "choices": [
+      {
+        "id": "a",
+        "label": "Le cours de bourse à la valeur comptable par action"
+      },
+      {
+        "id": "b",
+        "label": "Le bénéfice net aux dividendes"
+      },
+      {
+        "id": "c",
+        "label": "La dette aux revenus"
+      },
+      {
+        "id": "d",
+        "label": "Le cours au flux de trésorerie"
+      }
+    ],
+    "explanation": "Utile pour évaluer les entreprises à fort actif tangible (banques, industrie)."
+  },
+  {
+    "question_key": "1.4-Q7",
+    "part": "A",
+    "locale": "en",
+    "prompt": "Dans un modèle DCF, le WACC représente :",
+    "choices": [
+      {
+        "id": "a",
+        "label": "Le taux de croissance des revenus"
+      },
+      {
+        "id": "b",
+        "label": "Le coût moyen pondéré du capital"
+      },
+      {
+        "id": "c",
+        "label": "Le bénéfice par action"
+      },
+      {
+        "id": "d",
+        "label": "Le taux d'actualisation du risque pays"
+      }
+    ],
+    "explanation": "WACC = coût moyen pondéré du capital, paramètre le plus sensible du DCF."
+  },
+  {
+    "question_key": "1.4-Q8",
+    "part": "A",
+    "locale": "en",
+    "prompt": "Pourquoi le P/E d'Apple (28 en 2023) peut être considéré comme supérieur à la moyenne du secteur ?",
+    "choices": [
+      {
+        "id": "a",
+        "label": "Parce qu'Apple est en faillite"
+      },
+      {
+        "id": "b",
+        "label": "Parce que la prime reflète la qualité, l'écosystème et la croissance des services"
+      },
+      {
+        "id": "c",
+        "label": "Parce que le secteur tech a un P/E moyen de 50"
+      },
+      {
+        "id": "d",
+        "label": "Parce que le P/E n'a pas d'importance"
+      }
+    ],
+    "explanation": "Une prime est justifiée par des avantages concurrentiels durables."
+  },
+  {
+    "question_key": "1.4-Q9",
+    "part": "A",
+    "locale": "en",
+    "prompt": "La comparaison Tesla vs Ford (P/E 50 vs 10) reflète :",
+    "choices": [
+      {
+        "id": "a",
+        "label": "Que Ford est toujours meilleur"
+      },
+      {
+        "id": "b",
+        "label": "Des perspectives de croissance et de risque différentes"
+      },
+      {
+        "id": "c",
+        "label": "Que Tesla est sous-évaluée"
+      },
+      {
+        "id": "d",
+        "label": "Que le P/E est inutile"
+      }
+    ],
+    "explanation": "Un P/E élevé = croissance attendue ; un P/E bas = maturité ou difficultés."
+  },
+  {
+    "question_key": "1.4-Q10",
+    "part": "A",
+    "locale": "en",
+    "prompt": "L'analyse comparative (peer comparison) permet de :",
+    "choices": [
+      {
+        "id": "a",
+        "label": "Identifier les écarts de valorisation justifiés ou non"
+      },
+      {
+        "id": "b",
+        "label": "Prédire les taux de change"
+      },
+      {
+        "id": "c",
+        "label": "Mesurer l'inflation"
+      },
+      {
+        "id": "d",
+        "label": "Calculer le PIB"
+      }
+    ],
+    "explanation": "Comparer avec des pairs aide à détecter surévaluation ou sous-évaluation."
+  },
+  {
+    "question_key": "1.4-Q11",
+    "part": "A",
+    "locale": "en",
+    "prompt": "Pourquoi le modèle DCF est-il particulièrement sensible au WACC ?",
+    "choices": [
+      {
+        "id": "a",
+        "label": "Parce que +1 % WACC = −15 à −20 % valorisation"
+      },
+      {
+        "id": "b",
+        "label": "Parce que le WACC n'a pas d'impact"
+      },
+      {
+        "id": "c",
+        "label": "Parce que le WACC est fixe"
+      },
+      {
+        "id": "d",
+        "label": "Parce que le WACC remplace la croissance"
+      }
+    ],
+    "explanation": "Le WACC est le paramètre le plus critique du DCF."
+  },
+  {
+    "question_key": "1.4-Q12",
+    "part": "A",
+    "locale": "en",
+    "prompt": "Dans l'analyse SWOT de Netflix, « Base d'abonnés mondiale » est une :",
+    "choices": [
+      {
+        "id": "a",
+        "label": "Faiblesse"
+      },
+      {
+        "id": "b",
+        "label": "Force"
+      },
+      {
+        "id": "c",
+        "label": "Menace"
+      },
+      {
+        "id": "d",
+        "label": "Opportunité"
+      }
+    ],
+    "explanation": "C'est un avantage concurrentiel structurel."
+  },
+  {
+    "question_key": "1.4-Q13",
+    "part": "A",
+    "locale": "en",
+    "prompt": "Pourquoi un multiple absolu (ex: P/E 30) peut être trompeur ?",
+    "choices": [
+      {
+        "id": "a",
+        "label": "Parce qu'il dépend du secteur et du cycle économique"
+      },
+      {
+        "id": "b",
+        "label": "Parce que 30 est toujours cher"
+      },
+      {
+        "id": "c",
+        "label": "Parce que les multiples ne servent à rien"
+      },
+      {
+        "id": "d",
+        "label": "Parce que le P/E est illégal"
+      }
+    ],
+    "explanation": "P/E 30 = cher (utility) vs normal (tech croissance). Le contexte sectoriel est essentiel."
+  },
+  {
+    "question_key": "1.4-Q14",
+    "part": "A",
+    "locale": "en",
+    "prompt": "La « valeur terminale » dans un DCF représente généralement :",
+    "choices": [
+      {
+        "id": "a",
+        "label": "10-20 % de la valorisation totale"
+      },
+      {
+        "id": "b",
+        "label": "60-80 % de la valorisation totale"
+      },
+      {
+        "id": "c",
+        "label": "0 % de la valorisation"
+      },
+      {
+        "id": "d",
+        "label": "La dette nette"
+      }
+    ],
+    "explanation": "La majeure partie de la valeur vient des flux lointains, d'où la sensibilité aux hypothèses."
+  },
+  {
+    "question_key": "1.4-Q15",
+    "part": "A",
+    "locale": "en",
+    "prompt": "Pourquoi l'analyse fondamentale d'une banque diffère-t-elle de celle d'une entreprise tech ?",
+    "choices": [
+      {
+        "id": "a",
+        "label": "Parce que les banques n'ont pas de bilan"
+      },
+      {
+        "id": "b",
+        "label": "Parce que les métriques clés sont différentes (NIM, CET1, provisions vs ARR, churn)"
+      },
+      {
+        "id": "c",
+        "label": "Parce que les banques ne sont pas cotées"
+      },
+      {
+        "id": "d",
+        "label": "Parce que l'AF ne s'applique pas aux banques"
+      }
+    ],
+    "explanation": "Chaque secteur a ses propres ratios et drivers de valeur."
+  },
+  {
+    "question_key": "1.5-Q1",
+    "part": "A",
+    "locale": "en",
+    "prompt": "Les prévisions financières combinent :",
+    "choices": [
+      {
+        "id": "a",
+        "label": "Données historiques, tendances sectorielles et projections économiques"
+      },
+      {
+        "id": "b",
+        "label": "Seulement des données historiques"
+      },
+      {
+        "id": "c",
+        "label": "Seulement des opinions d'analystes"
+      },
+      {
+        "id": "d",
+        "label": "Des graphiques techniques uniquement"
+      }
+    ],
+    "explanation": "La prévision est un processus multi-inputs."
+  },
+  {
+    "question_key": "1.5-Q2",
+    "part": "A",
+    "locale": "en",
+    "prompt": "L'analyse des tendances historiques vise à :",
+    "choices": [
+      {
+        "id": "a",
+        "label": "Identifier des patterns dans les revenus et bénéfices"
+      },
+      {
+        "id": "b",
+        "label": "Prédire la météo"
+      },
+      {
+        "id": "c",
+        "label": "Calculer le PIB"
+      },
+      {
+        "id": "d",
+        "label": "Mesurer l'inflation"
+      }
+    ],
+    "explanation": "Elle is based on la continuité des performances passées."
+  },
+  {
+    "question_key": "1.5-Q3",
+    "part": "A",
+    "locale": "en",
+    "prompt": "Une guidance « raised » (revue à la hausse) par une entreprise est généralement interprétée comme :",
+    "choices": [
+      {
+        "id": "a",
+        "label": "Un signal négatif"
+      },
+      {
+        "id": "b",
+        "label": "Un signal positif sur les perspectives"
+      },
+      {
+        "id": "c",
+        "label": "Sans impact"
+      },
+      {
+        "id": "d",
+        "label": "Une manipulation de marché"
+      }
+    ],
+    "explanation": "La direction confirme une performance meilleure que prévu."
+  },
+  {
+    "question_key": "1.5-Q4",
+    "part": "A",
+    "locale": "en",
+    "prompt": "Dans la modélisation par scénarios, on prépare généralement :",
+    "choices": [
+      {
+        "id": "a",
+        "label": "Un seul scénario optimiste"
+      },
+      {
+        "id": "b",
+        "label": "Trois scénarios (optimiste, neutre, pessimiste)"
+      },
+      {
+        "id": "c",
+        "label": "Un scénario unique sans risque"
+      },
+      {
+        "id": "d",
+        "label": "Aucun scénario"
+      }
+    ],
+    "explanation": "La préparation multi-scénarios permet d'évaluer l'asymétrie risque/rendement."
+  },
+  {
+    "question_key": "1.5-Q5",
+    "part": "A",
+    "locale": "en",
+    "prompt": "La « valeur espérée » dans un planificateur de scénarios est calculée comme :",
+    "choices": [
+      {
+        "id": "a",
+        "label": "La moyenne simple des trois scénarios"
+      },
+      {
+        "id": "b",
+        "label": "Σ(probabilité × valorisation scénario)"
+      },
+      {
+        "id": "c",
+        "label": "Le scénario le plus probable uniquement"
+      },
+      {
+        "id": "d",
+        "label": "La médiane des scénarios"
+      }
+    ],
+    "explanation": "C'est la somme pondérée des valeurs par leurs probabilités."
+  },
+  {
+    "question_key": "1.5-Q6",
+    "part": "A",
+    "locale": "en",
+    "prompt": "Pourquoi la guidance est-elle souvent plus importante que le beat/miss actuel ?",
+    "choices": [
+      {
+        "id": "a",
+        "label": "Parce qu'elle oriente les attentes futures du marché"
+      },
+      {
+        "id": "b",
+        "label": "Parce que le passé n'a pas d'importance"
+      },
+      {
+        "id": "c",
+        "label": "Parce que les résultats actuels sont faux"
+      },
+      {
+        "id": "d",
+        "label": "Parce que la guidance est obligatoire"
+      }
+    ],
+    "explanation": "Le marché anticipe ; une guidance lowered peut faire chuter le cours malgré un beat."
+  },
+  {
+    "question_key": "1.5-Q7",
+    "part": "A",
+    "locale": "en",
+    "prompt": "Un scénario de prévision « sans risque » est :",
+    "choices": [
+      {
+        "id": "a",
+        "label": "Idéal pour la prise de décision"
+      },
+      {
+        "id": "b",
+        "label": "Un biais cognitif dangereux"
+      },
+      {
+        "id": "c",
+        "label": "Recommandé par les banques centrales"
+      },
+      {
+        "id": "d",
+        "label": "Toujours exact"
+      }
+    ],
+    "explanation": "Ne pas préparer de scénario adverse = absence de plan de sortie."
+  },
+  {
+    "question_key": "1.5-Q8",
+    "part": "A",
+    "locale": "en",
+    "prompt": "Si la valeur espérée d'une action est supérieure au cours actuel, cela suggère :",
+    "choices": [
+      {
+        "id": "a",
+        "label": "Une asymétrie positive (upside)"
+      },
+      {
+        "id": "b",
+        "label": "Une asymétrie négative (downside)"
+      },
+      {
+        "id": "c",
+        "label": "Que le marché a toujours raison"
+      },
+      {
+        "id": "d",
+        "label": "Qu'il faut vendre immédiatement"
+      }
+    ],
+    "explanation": "Cela indique un potentiel de sous-évaluation selon les hypothèses du modèle."
+  },
+  {
+    "question_key": "1.5-Q9",
+    "part": "A",
+    "locale": "en",
+    "prompt": "Un beat d'EPS de 1-2 % par rapport au consensus est généralement considéré comme :",
+    "choices": [
+      {
+        "id": "a",
+        "label": "Un fort signal"
+      },
+      {
+        "id": "b",
+        "label": "Un bruit de marché faible"
+      },
+      {
+        "id": "c",
+        "label": "Une catastrophe"
+      },
+      {
+        "id": "d",
+        "label": "Un dividende"
+      }
+    ],
+    "explanation": "Un écart faible peut être dû à des facteurs comptables non récurrents."
+  },
+  {
+    "question_key": "1.5-Q10",
+    "part": "A",
+    "locale": "en",
+    "prompt": "Pourquoi faut-il toujours définir une invalidation avant une entrée en position ?",
+    "choices": [
+      {
+        "id": "a",
+        "label": "Parce que c'est une règle de l'AMF"
+      },
+      {
+        "id": "b",
+        "label": "Parce qu'un scénario sans sortie = biais de confirmation"
+      },
+      {
+        "id": "c",
+        "label": "Parce que les stops sont interdits"
+      },
+      {
+        "id": "d",
+        "label": "Parce que l'invalidation est optionnelle"
+      }
+    ],
+    "explanation": "Définir la sortie avant l'entrée évite le biais de rationalisation post-hoc."
+  },
+  {
+    "question_key": "1.5-Q11",
+    "part": "A",
+    "locale": "en",
+    "prompt": "La prévision du prix de l'or à 2000 $/once « en cas de tensions géopolitiques » est un exemple de :",
+    "choices": [
+      {
+        "id": "a",
+        "label": "Analyse technique"
+      },
+      {
+        "id": "b",
+        "label": "Scénario conditionnel macroéconomique"
+      },
+      {
+        "id": "c",
+        "label": "Manipulation de marché"
+      },
+      {
+        "id": "d",
+        "label": "Donnée historique"
+      }
+    ],
+    "explanation": "C'est une prévision dépendante d'un catalyseur externe."
+  },
+  {
+    "question_key": "1.5-Q12",
+    "part": "A",
+    "locale": "en",
+    "prompt": "Pourquoi les prévisions de taux d'intérêt par la Fed impactent-elles les obligations ?",
+    "choices": [
+      {
+        "id": "a",
+        "label": "Parce que les obligations sont sensibles aux taux (duration)"
+      },
+      {
+        "id": "b",
+        "label": "Parce que la Fed achète des obligations"
+      },
+      {
+        "id": "c",
+        "label": "Parce que les obligations ne rapportent rien"
+      },
+      {
+        "id": "d",
+        "label": "Parce que les taux sont fixes"
+      }
+    ],
+    "explanation": "La duration mesure la sensibilité du prix d'une obligation aux variations de taux."
+  },
+  {
+    "question_key": "1.5-Q13",
+    "part": "A",
+    "locale": "en",
+    "prompt": "Un scénario pessimiste pour l'industrie automobile (-10 % en cas de récession) illustre :",
+    "choices": [
+      {
+        "id": "a",
+        "label": "L'importance du stress testing"
+      },
+      {
+        "id": "b",
+        "label": "Que l'automobile est sans risque"
+      },
+      {
+        "id": "c",
+        "label": "Que la récession n'existe pas"
+      },
+      {
+        "id": "d",
+        "label": "Que les scénarios sont inutiles"
+      }
+    ],
+    "explanation": "Le stress testing évalue la résilience face aux chocs macro."
+  },
+  {
+    "question_key": "1.5-Q14",
+    "part": "A",
+    "locale": "en",
+    "prompt": "La probabilité totale des trois scénarios (optimiste, neutre, pessimiste) doit être :",
+    "choices": [
+      {
+        "id": "a",
+        "label": "Supérieure à 100 %"
+      },
+      {
+        "id": "b",
+        "label": "Égale à 100 %"
+      },
+      {
+        "id": "c",
+        "label": "Inférieure à 50 %"
+      },
+      {
+        "id": "d",
+        "label": "Variable selon le marché"
+      }
+    ],
+    "explanation": "C'est une distribution de probabilités complète."
+  },
+  {
+    "question_key": "1.5-Q15",
+    "part": "A",
+    "locale": "en",
+    "prompt": "Pourquoi les prévisions à long terme (5-10 ans) sont-elles intrinsèquement moins fiables ?",
+    "choices": [
+      {
+        "id": "a",
+        "label": "Parce que l'incertitude cumulée des hypothèses croît exponentiellement"
+      },
+      {
+        "id": "b",
+        "label": "Parce que les analystes sont incompétents"
+      },
+      {
+        "id": "c",
+        "label": "Parce que les données historiques n'existent pas"
+      },
+      {
+        "id": "d",
+        "label": "Parce que les marchés sont parfaits"
+      }
+    ],
+    "explanation": "Les petites variations d'hypothèses se compoundent sur la durée."
+  },
+  {
+    "question_key": "1.1-WQ1",
+    "part": "B",
+    "locale": "en",
+    "prompt": "Dans le MarketDriverVisualizer, la chaîne causale s'affiche comme :",
+    "choices": [
+      {
+        "id": "a",
+        "label": "Un tableau de chiffres"
+      },
+      {
+        "id": "b",
+        "label": "Driver → Canal → Actif impacté → Invalidation"
+      },
+      {
+        "id": "c",
+        "label": "Un graphique en camembert"
+      },
+      {
+        "id": "d",
+        "label": "Une liste alphabétique"
+      }
+    ],
+    "explanation": "La logique est la transmission causale avec condition de sortie explicite."
+  },
+  {
+    "question_key": "1.1-WQ2",
+    "part": "B",
+    "locale": "en",
+    "prompt": "Le MacroRegimeRadar affiche 4 régimes principaux. Lequel correspond à « croissance forte + inflation modérée » ?",
+    "choices": [
+      {
+        "id": "a",
+        "label": "Stagflation"
+      },
+      {
+        "id": "b",
+        "label": "Récession"
+      },
+      {
+        "id": "c",
+        "label": "Goldilocks"
+      },
+      {
+        "id": "d",
+        "label": "Déflation"
+      }
+    ],
+    "explanation": "Goldilocks = croissance saine + inflation contrôlée."
+  },
+  {
+    "question_key": "1.1-WQ3",
+    "part": "B",
+    "locale": "en",
+    "prompt": "Dans le MarketDriverVisualizer, l'« invalidation » représente :",
+    "choices": [
+      {
+        "id": "a",
+        "label": "Une erreur de calcul"
+      },
+      {
+        "id": "b",
+        "label": "La condition de sortie qui rend la thèse caduque"
+      },
+      {
+        "id": "c",
+        "label": "Un achat forcé"
+      },
+      {
+        "id": "d",
+        "label": "Une news positive"
+      }
+    ],
+    "explanation": "C'est le mécanisme de gestion du risque : quand la thèse est invalidée, on sort."
+  },
+  {
+    "question_key": "1.1-WQ4",
+    "part": "B",
+    "locale": "en",
+    "prompt": "Sur le MacroRegimeRadar, l'axe « Liquidité » mesure principalement :",
+    "choices": [
+      {
+        "id": "a",
+        "label": "Le volume des transactions"
+      },
+      {
+        "id": "b",
+        "label": "La politique monétaire (QE/QT, taux)"
+      },
+      {
+        "id": "c",
+        "label": "Le nombre d'employés"
+      },
+      {
+        "id": "d",
+        "label": "Le PIB"
+      }
+    ],
+    "explanation": "Liquidité = politique monétaire, spreads de crédit, conditions financières."
+  },
+  {
+    "question_key": "1.1-WQ5",
+    "part": "B",
+    "locale": "en",
+    "prompt": "Le régime « Stagflation » sur le radar implique généralement :",
+    "choices": [
+      {
+        "id": "a",
+        "label": "Actions haussières + obligations haussières"
+      },
+      {
+        "id": "b",
+        "label": "Croissance faible + inflation élevée"
+      },
+      {
+        "id": "c",
+        "label": "Croissance forte + inflation nulle"
+      },
+      {
+        "id": "d",
+        "label": "Déflation + chômage faible"
+      }
+    ],
+    "explanation": "Stagflation = stagnation économique + inflation persistante."
+  },
+  {
+    "question_key": "1.1-WQ6",
+    "part": "B",
+    "locale": "en",
+    "prompt": "Dans le MarketDriverVisualizer, si le driver sélectionné est « NFP fort », le canal de transmission vers l'USD est :",
+    "choices": [
+      {
+        "id": "a",
+        "label": "Politique fiscale"
+      },
+      {
+        "id": "b",
+        "label": "Politique monétaire (taux réels, anticipations Fed)"
+      },
+      {
+        "id": "c",
+        "label": "Balance commerciale"
+      },
+      {
+        "id": "d",
+        "label": "Rien, le NFP n'impacte pas l'USD"
+      }
+    ],
+    "explanation": "NFP fort → Fed hawkish → taux ↑ → USD ↑."
+  },
+  {
+    "question_key": "1.1-WQ7",
+    "part": "B",
+    "locale": "en",
+    "prompt": "Le MacroRegimeRadar utilise un polygone à 6 axes. Lequel de ces axes n'est PAS affiché ?",
+    "choices": [
+      {
+        "id": "a",
+        "label": "PIB"
+      },
+      {
+        "id": "b",
+        "label": "Inflation"
+      },
+      {
+        "id": "c",
+        "label": "Taux directeurs"
+      },
+      {
+        "id": "d",
+        "label": "Dividendes"
+      }
+    ],
+    "explanation": "Les 6 axes sont : PIB, IPC, Taux, Liquidité, Sentiment, Crédit."
+  },
+  {
+    "question_key": "1.1-WQ8",
+    "part": "B",
+    "locale": "en",
+    "prompt": "Si le radar indique un score élevé sur « Inflation » et « Taux », mais faible sur « PIB », le régime probable est :",
+    "choices": [
+      {
+        "id": "a",
+        "label": "Expansion"
+      },
+      {
+        "id": "b",
+        "label": "Stagflation"
+      },
+      {
+        "id": "c",
+        "label": "Goldilocks"
+      },
+      {
+        "id": "d",
+        "label": "Récession pure"
+      }
+    ],
+    "explanation": "Inflation haute + croissance faible = Stagflation."
+  },
+  {
+    "question_key": "1.1-WQ9",
+    "part": "B",
+    "locale": "en",
+    "prompt": "Dans le MarketDriverVisualizer, l'invalidation d'un driver « PIB fort » pourrait être :",
+    "choices": [
+      {
+        "id": "a",
+        "label": "Une révision à la baisse du PIB"
+      },
+      {
+        "id": "b",
+        "label": "Une hausse des salaires"
+      },
+      {
+        "id": "c",
+        "label": "Une baisse du chômage"
+      },
+      {
+        "id": "d",
+        "label": "Un excédent commercial"
+      }
+    ],
+    "explanation": "Si le PIB est révisé à la baisse, la thèse de croissance forte s'effondre."
+  },
+  {
+    "question_key": "1.1-WQ10",
+    "part": "B",
+    "locale": "en",
+    "prompt": "Pourquoi le MacroRegimeRadar est-il plus utile qu'un indicateur macro isolé ?",
+    "choices": [
+      {
+        "id": "a",
+        "label": "Parce qu'il est plus coloré"
+      },
+      {
+        "id": "b",
+        "label": "Parce qu'il force la lecture multi-dimensionnelle (croisement de plusieurs facteurs)"
+      },
+      {
+        "id": "c",
+        "label": "Parce qu'il prédit le cours exact"
+      },
+      {
+        "id": "d",
+        "label": "Parce qu'il remplace l'analyse technique"
+      }
+    ],
+    "explanation": "La macro est multi-factorielle ; le radar évite le diagnostic mono-variable."
+  },
+  {
+    "question_key": "1.2-WQ1",
+    "part": "B",
+    "locale": "en",
+    "prompt": "Le MacroDashboard affiche 11 indicateurs sous forme de :",
+    "choices": [
+      {
+        "id": "a",
+        "label": "Graphique linéaire unique"
+      },
+      {
+        "id": "b",
+        "label": "Tuiles synthèse (Réel / Consensus / Précédent)"
+      },
+      {
+        "id": "c",
+        "label": "Tableau Excel"
+      },
+      {
+        "id": "d",
+        "label": "Carte géographique"
+      }
+    ],
+    "explanation": "C'est un command center avec filtres par catégorie et modal détail."
+  },
+  {
+    "question_key": "1.2-WQ2",
+    "part": "B",
+    "locale": "en",
+    "prompt": "Dans l'EconomicCycleWheel, la phase « Récession » favorise généralement :",
+    "choices": [
+      {
+        "id": "a",
+        "label": "Les actions cycliques"
+      },
+      {
+        "id": "b",
+        "label": "L'or et les obligations souveraines"
+      },
+      {
+        "id": "c",
+        "label": "Les devises des marchés émergents"
+      },
+      {
+        "id": "d",
+        "label": "Les matières premières industrielles"
+      }
+    ],
+    "explanation": "Récession = fuite vers la qualité (safe havens)."
+  },
+  {
+    "question_key": "1.2-WQ3",
+    "part": "B",
+    "locale": "en",
+    "prompt": "Le FedSimulator utilise deux sliders principaux :",
+    "choices": [
+      {
+        "id": "a",
+        "label": "PIB et balance commerciale"
+      },
+      {
+        "id": "b",
+        "label": "CPI et NFP"
+      },
+      {
+        "id": "c",
+        "label": "Or et pétrole"
+      },
+      {
+        "id": "d",
+        "label": "Actions et obligations"
+      }
+    ],
+    "explanation": "La matrice décision Fed croise inflation et emploi."
+  },
+  {
+    "question_key": "1.2-WQ4",
+    "part": "B",
+    "locale": "en",
+    "prompt": "Dans le NfpInterpreter, une surprise de +2σ (sigma) est interprétée comme :",
+    "choices": [
+      {
+        "id": "a",
+        "label": "Un bruit statistique"
+      },
+      {
+        "id": "b",
+        "label": "Un signal fort susceptible de déclencher une réaction Fed"
+      },
+      {
+        "id": "c",
+        "label": "Sans impact sur les marchés"
+      },
+      {
+        "id": "d",
+        "label": "Un indicateur retardé"
+      }
+    ],
+    "explanation": ">2σ = magnitude exceptionnelle = réaction institutionnelle probable."
+  },
+  {
+    "question_key": "1.2-WQ5",
+    "part": "B",
+    "locale": "en",
+    "prompt": "Le YieldCurveVisualizer affiche une courbe « inversée » quand :",
+    "choices": [
+      {
+        "id": "a",
+        "label": "Les taux longs sont supérieurs aux taux courts"
+      },
+      {
+        "id": "b",
+        "label": "Les taux courts sont supérieurs aux taux longs (ex: 2Y > 10Y)"
+      },
+      {
+        "id": "c",
+        "label": "Tous les taux sont nuls"
+      },
+      {
+        "id": "d",
+        "label": "La Fed baisse les taux"
+      }
+    ],
+    "explanation": "Inversion 2Y/10Y = signal récession classique."
+  },
+  {
+    "question_key": "1.2-WQ6",
+    "part": "B",
+    "locale": "en",
+    "prompt": "Dans le GdpCpiInterpreters, la combinaison PIB fort + CPI bas correspond au régime :",
+    "choices": [
+      {
+        "id": "a",
+        "label": "Stagflation"
+      },
+      {
+        "id": "b",
+        "label": "Goldilocks"
+      },
+      {
+        "id": "c",
+        "label": "Récession"
+      },
+      {
+        "id": "d",
+        "label": "Hyperinflation"
+      }
+    ],
+    "explanation": "Croissance saine + inflation maîtrisée = environnement idéal."
+  },
+  {
+    "question_key": "1.2-WQ7",
+    "part": "B",
+    "locale": "en",
+    "prompt": "L'IntermarketCorrelationMap affiche une corrélation négative (rouge) entre DXY et EUR/USD. Cela signifie :",
+    "choices": [
+      {
+        "id": "a",
+        "label": "Quand le dollar monte, l'euro tend à baisser"
+      },
+      {
+        "id": "b",
+        "label": "Les deux montent ensemble"
+      },
+      {
+        "id": "c",
+        "label": "Aucun lien entre les deux"
+      },
+      {
+        "id": "d",
+        "label": "La corrélation est décorative"
+      }
+    ],
+    "explanation": "Corrélation négative = mouvements inverses."
+  },
+  {
+    "question_key": "1.2-WQ8",
+    "part": "B",
+    "locale": "en",
+    "prompt": "Dans le MacroIndicatorLab, la « surprise » est calculée comme :",
+    "choices": [
+      {
+        "id": "a",
+        "label": "Consensus − Réel"
+      },
+      {
+        "id": "b",
+        "label": "Réel − Consensus"
+      },
+      {
+        "id": "c",
+        "label": "Réel + Consensus"
+      },
+      {
+        "id": "d",
+        "label": "Réel / Consensus"
+      }
+    ],
+    "explanation": "Surprise = Réel − Consensus (beat si > 0, miss si < 0)."
+  },
+  {
+    "question_key": "1.2-WQ9",
+    "part": "B",
+    "locale": "en",
+    "prompt": "Le MacroRelationshipEngine affiche une chaîne : CPI ↑ → Fed hawkish → USD ↑. Le mécanisme de transmission est :",
+    "choices": [
+      {
+        "id": "a",
+        "label": "La politique monétaire restrictive renforce la devise"
+      },
+      {
+        "id": "b",
+        "label": "L'inflation affaiblit toujours la devise"
+      },
+      {
+        "id": "c",
+        "label": "La Fed achète des devises"
+      },
+      {
+        "id": "d",
+        "label": "Le USD monte sans raison"
+      }
+    ],
+    "explanation": "Hawkish = taux ↑ → attrait des capitaux → devise ↑."
+  },
+  {
+    "question_key": "1.2-WQ10",
+    "part": "B",
+    "locale": "en",
+    "prompt": "Sur le YieldCurveVisualizer, une courbe « plate » suggère :",
+    "choices": [
+      {
+        "id": "a",
+        "label": "Une croissance explosive imminente"
+      },
+      {
+        "id": "b",
+        "label": "Une transition ou incertitude économique"
+      },
+      {
+        "id": "c",
+        "label": "Une inflation galopante"
+      },
+      {
+        "id": "d",
+        "label": "Un défaut souverain"
+      }
+    ],
+    "explanation": "Courbe plate = marché incertain sur la direction future."
+  },
+  {
+    "question_key": "1.2-WQ11",
+    "part": "B",
+    "locale": "en",
+    "prompt": "Dans le MacroDashboard, un indicateur affichant « Beat » avec un consensus dépassé signifie :",
+    "choices": [
+      {
+        "id": "a",
+        "label": "Le réel est inférieur au consensus"
+      },
+      {
+        "id": "b",
+        "label": "Le réel est supérieur au consensus"
+      },
+      {
+        "id": "c",
+        "label": "Le réel égale le consensus"
+      },
+      {
+        "id": "d",
+        "label": "L'indicateur est annulé"
+      }
+    ],
+    "explanation": "Beat = réel > consensus (surprise positive)."
+  },
+  {
+    "question_key": "1.2-WQ12",
+    "part": "B",
+    "locale": "en",
+    "prompt": "L'EconomicCycleWheel permet de distinguer :",
+    "choices": [
+      {
+        "id": "a",
+        "label": "Le cycle économique (phases macro) de la tendance prix (direction)"
+      },
+      {
+        "id": "b",
+        "label": "Le cycle des lave-vaisselle"
+      },
+      {
+        "id": "c",
+        "label": "Le PIB et l'inflation uniquement"
+      },
+      {
+        "id": "d",
+        "label": "Les taux et les devises"
+      }
+    ],
+    "explanation": "Cycle ≠ tendance. La roue montre les phases macro, pas les graphiques de prix."
+  },
+  {
+    "question_key": "1.2-WQ13",
+    "part": "B",
+    "locale": "en",
+    "prompt": "Dans le FedSimulator, la combinaison CPI 5 % + NFP 300K produit probablement une décision :",
+    "choices": [
+      {
+        "id": "a",
+        "label": "Dovish (baisse des taux)"
+      },
+      {
+        "id": "b",
+        "label": "Hawkish (maintien ou hausse des taux)"
+      },
+      {
+        "id": "c",
+        "label": "Neutre sans changement"
+      },
+      {
+        "id": "d",
+        "label": "QE illimité"
+      }
+    ],
+    "explanation": "Inflation chaude + emploi fort = Fed restrictive."
+  },
+  {
+    "question_key": "1.2-WQ14",
+    "part": "B",
+    "locale": "en",
+    "prompt": "Sur l'IntermarketCorrelationMap, une cassure de corrélation historique (gris) entre l'or et le DXY peut signaler :",
+    "choices": [
+      {
+        "id": "a",
+        "label": "Un retour à la normale"
+      },
+      {
+        "id": "b",
+        "label": "Un choc systémique ou un changement de régime macro"
+      },
+      {
+        "id": "c",
+        "label": "Une erreur de données"
+      },
+      {
+        "id": "d",
+        "label": "Rien de particulier"
+      }
+    ],
+    "explanation": "Décorrélation soudaine = crise ou changement de paradigme."
+  },
+  {
+    "question_key": "1.2-WQ15",
+    "part": "B",
+    "locale": "en",
+    "prompt": "Le NfpInterpreter croise le NFP avec les salaires horaires moyens car :",
+    "choices": [
+      {
+        "id": "a",
+        "label": "Les salaires sont décoratifs"
+      },
+      {
+        "id": "b",
+        "label": "La pression salariale alimente l'inflation (spirale prix-salaires)"
+      },
+      {
+        "id": "c",
+        "label": "Les salaires n'ont aucun lien avec la Fed"
+      },
+      {
+        "id": "d",
+        "label": "Le NFP seul suffit"
+      }
+    ],
+    "explanation": "NFP + salaires = lecture complète du marché du travail pour la Fed."
+  },
+  {
+    "question_key": "1.3-WQ1",
+    "part": "B",
+    "locale": "en",
+    "prompt": "Le CompanyHealthScore agrège 4 dimensions. Laquelle n'est PAS incluse ?",
+    "choices": [
+      {
+        "id": "a",
+        "label": "Croissance"
+      },
+      {
+        "id": "b",
+        "label": "Marges"
+      },
+      {
+        "id": "c",
+        "label": "Dette"
+      },
+      {
+        "id": "d",
+        "label": "Dividende"
+      }
+    ],
+    "explanation": "Les 4 dimensions sont : Croissance, Marges, Dette, Liquidité."
+  },
+  {
+    "question_key": "1.3-WQ2",
+    "part": "B",
+    "locale": "en",
+    "prompt": "Dans le BalanceSheetExplorer, l'équation fondamentale est :",
+    "choices": [
+      {
+        "id": "a",
+        "label": "Actif = Passif + Equity"
+      },
+      {
+        "id": "b",
+        "label": "Revenus = Bénéfices + Dividendes"
+      },
+      {
+        "id": "c",
+        "label": "Dette = Actif − Cash"
+      },
+      {
+        "id": "d",
+        "label": "Equity = Dette × ROE"
+      }
+    ],
+    "explanation": "C'est la base de la comptabilité en partie double."
+  },
+  {
+    "question_key": "1.3-WQ3",
+    "part": "B",
+    "locale": "en",
+    "prompt": "Le CompanyDashboard affiche les KPI sous forme de :",
+    "choices": [
+      {
+        "id": "a",
+        "label": "Graphique en camembert"
+      },
+      {
+        "id": "b",
+        "label": "Tuiles synthèse avec lecture croisée"
+      },
+      {
+        "id": "c",
+        "label": "Tableau Excel brut"
+      },
+      {
+        "id": "d",
+        "label": "Carte géographique"
+      }
+    ],
+    "explanation": "C'est une vue synthèse rapide pour le diagnostic micro."
+  },
+  {
+    "question_key": "1.3-WQ4",
+    "part": "B",
+    "locale": "en",
+    "prompt": "Un score CompanyHealthScore > 75 est interprété comme :",
+    "choices": [
+      {
+        "id": "a",
+        "label": "Un red flag immédiat"
+      },
+      {
+        "id": "b",
+        "label": "Une qualité institutionnelle"
+      },
+      {
+        "id": "c",
+        "label": "Une valorisation excessive"
+      },
+      {
+        "id": "d",
+        "label": "Un risque de faillite"
+      }
+    ],
+    "explanation": "> 75 = entreprise solide sur les 4 dimensions."
+  },
+  {
+    "question_key": "1.3-WQ5",
+    "part": "B",
+    "locale": "en",
+    "prompt": "Dans le FinancialRatios, un ROE > 15 % est généralement considéré comme :",
+    "choices": [
+      {
+        "id": "a",
+        "label": "Faible"
+      },
+      {
+        "id": "b",
+        "label": "De qualité institutionnelle"
+      },
+      {
+        "id": "c",
+        "label": "Négatif"
+      },
+      {
+        "id": "d",
+        "label": "Sans importance"
+      }
+    ],
+    "explanation": "Seuil classique de rentabilité des fonds propres."
+  },
+  {
+    "question_key": "1.3-WQ6",
+    "part": "B",
+    "locale": "en",
+    "prompt": "Le Current Ratio dans le FinancialRatios mesure :",
+    "choices": [
+      {
+        "id": "a",
+        "label": "La rentabilité"
+      },
+      {
+        "id": "b",
+        "label": "La liquidité à court terme (actifs courants / dettes courantes)"
+      },
+      {
+        "id": "c",
+        "label": "L'endettement total"
+      },
+      {
+        "id": "d",
+        "label": "La croissance"
+      }
+    ],
+    "explanation": "< 1 = risque de défaut à court terme."
+  },
+  {
+    "question_key": "1.3-WQ7",
+    "part": "B",
+    "locale": "en",
+    "prompt": "Dans le BalanceSheetExplorer, si Actif < Passif, l'entreprise est :",
+    "choices": [
+      {
+        "id": "a",
+        "label": "Très rentable"
+      },
+      {
+        "id": "b",
+        "label": "Techniquement insolvable"
+      },
+      {
+        "id": "c",
+        "label": "En croissance"
+      },
+      {
+        "id": "d",
+        "label": "Sous-évaluée"
+      }
+    ],
+    "explanation": "L'équilibre comptable est rompu = insolvabilité technique."
+  },
+  {
+    "question_key": "1.3-WQ8",
+    "part": "B",
+    "locale": "en",
+    "prompt": "Le CompanyDashboard suggère qu'un seul KPI « ne raconte rien ». Pourquoi ?",
+    "choices": [
+      {
+        "id": "a",
+        "label": "Parce que les KPI sont faux"
+      },
+      {
+        "id": "b",
+        "label": "Parce qu'il faut croiser Croissance + Marges + Dette + Cash"
+      },
+      {
+        "id": "c",
+        "label": "Parce que le dashboard est inutile"
+      },
+      {
+        "id": "d",
+        "label": "Parce que les marchés sont efficients"
+      }
+    ],
+    "explanation": "La microéconomie exige la lecture croisée (ex: profitable + surendetté = fragile)."
+  },
+  {
+    "question_key": "1.3-WQ9",
+    "part": "B",
+    "locale": "en",
+    "prompt": "Un D/E < 1 dans le FinancialRatios indique :",
+    "choices": [
+      {
+        "id": "a",
+        "label": "Plus de fonds propres que de dette"
+      },
+      {
+        "id": "b",
+        "label": "Plus de dette que de fonds propres"
+      },
+      {
+        "id": "c",
+        "label": "Une absence totale de dette"
+      },
+      {
+        "id": "d",
+        "label": "Une faillite imminente"
+      }
+    ],
+    "explanation": "Structure financière conservative."
+  },
+  {
+    "question_key": "1.3-WQ10",
+    "part": "B",
+    "locale": "en",
+    "prompt": "Pourquoi le ROE élevé via levier (dette) est-il signalé comme « fragile » dans le FinancialRatios ?",
+    "choices": [
+      {
+        "id": "a",
+        "label": "Parce que la dette augmente le risque financier en cas de choc"
+      },
+      {
+        "id": "b",
+        "label": "Parce que la dette est interdite"
+      },
+      {
+        "id": "c",
+        "label": "Parce que le ROE est faux"
+      },
+      {
+        "id": "d",
+        "label": "Parce que les actionnaires préfèrent le cash"
+      }
+    ],
+    "explanation": "ROE artificiellement gonflé = risque de faillite si les taux montent."
+  },
+  {
+    "question_key": "1.3-WQ11",
+    "part": "B",
+    "locale": "en",
+    "prompt": "Dans le BalanceSheetExplorer, le « Current Ratio » < 1 signifie concrètement :",
+    "choices": [
+      {
+        "id": "a",
+        "label": "L'entreprise ne peut pas couvrir ses dettes à court terme avec ses actifs liquides"
+      },
+      {
+        "id": "b",
+        "label": "L'entreprise est très rentable"
+      },
+      {
+        "id": "c",
+        "label": "L'entreprise a trop de cash"
+      },
+      {
+        "id": "d",
+        "label": "Rien de particulier"
+      }
+    ],
+    "explanation": "C'est un signal d'alerte de liquidité."
+  },
+  {
+    "question_key": "1.3-WQ12",
+    "part": "B",
+    "locale": "en",
+    "prompt": "Pourquoi le CompanyHealthScore pondère-t-il la « Croissance » à 30 % et la « Liquidité » à 20 % ?",
+    "choices": [
+      {
+        "id": "a",
+        "label": "Parce que la croissance est le meilleur prédicteur de création de valeur à long terme"
+      },
+      {
+        "id": "b",
+        "label": "Parce que la liquidité n'a pas d'importance"
+      },
+      {
+        "id": "c",
+        "label": "Parce que les pondérations sont aléatoires"
+      },
+      {
+        "id": "d",
+        "label": "Parce que la dette est plus importante"
+      }
+    ],
+    "explanation": "La croissance est le moteur principal, mais la liquidité reste critique (20 %)."
+  },
+  {
+    "question_key": "1.4-WQ1",
+    "part": "B",
+    "locale": "en",
+    "prompt": "Le ValuationLab permet de tester :",
+    "choices": [
+      {
+        "id": "a",
+        "label": "Les ratios de liquidité"
+      },
+      {
+        "id": "b",
+        "label": "Les multiples P/E, P/S, P/B et leur prime/décote sectorielle"
+      },
+      {
+        "id": "c",
+        "label": "Les taux de change"
+      },
+      {
+        "id": "d",
+        "label": "L'inflation"
+      }
+    ],
+    "explanation": "C'est un laboratoire de valorisation par multiples."
+  },
+  {
+    "question_key": "1.4-WQ2",
+    "part": "B",
+    "locale": "en",
+    "prompt": "Dans le DcfSimulator, le paramètre le plus sensible est :",
+    "choices": [
+      {
+        "id": "a",
+        "label": "La croissance des revenus"
+      },
+      {
+        "id": "b",
+        "label": "Le WACC"
+      },
+      {
+        "id": "c",
+        "label": "La marge nette"
+      },
+      {
+        "id": "d",
+        "label": "Le nombre d'employés"
+      }
+    ],
+    "explanation": "+1 % WACC = −15 à −20 % valorisation."
+  },
+  {
+    "question_key": "1.4-WQ3",
+    "part": "B",
+    "locale": "en",
+    "prompt": "Le PeerComparisonMatrix compare une entreprise à :",
+    "choices": [
+      {
+        "id": "a",
+        "label": "Des concurrents du même secteur"
+      },
+      {
+        "id": "b",
+        "label": "Des entreprises aléatoires"
+      },
+      {
+        "id": "c",
+        "label": "Des indices boursiers"
+      },
+      {
+        "id": "d",
+        "label": "Des banques centrales"
+      }
+    ],
+    "explanation": "C'est la comparaison avec des pairs (peers)."
+  },
+  {
+    "question_key": "1.4-WQ4",
+    "part": "B",
+    "locale": "en",
+    "prompt": "Dans l'EarningsImpactEngine, un « Beat + Guidance Lowered » est généralement interprété comme :",
+    "choices": [
+      {
+        "id": "a",
+        "label": "Très positif"
+      },
+      {
+        "id": "b",
+        "label": "Souvent négatif (le marché privilégie les perspectives)"
+      },
+      {
+        "id": "c",
+        "label": "Neutre"
+      },
+      {
+        "id": "d",
+        "label": "Sans impact"
+      }
+    ],
+    "explanation": "La guidance > beat actuel. Lowered = dégradation attendue."
+  },
+  {
+    "question_key": "1.4-WQ5",
+    "part": "B",
+    "locale": "en",
+    "prompt": "Le DcfSimulator affiche la « valeur terminale » comme représentant :",
+    "choices": [
+      {
+        "id": "a",
+        "label": "5 % de la valorisation"
+      },
+      {
+        "id": "b",
+        "label": "60-80 % de la valorisation totale"
+      },
+      {
+        "id": "c",
+        "label": "La dette nette"
+      },
+      {
+        "id": "d",
+        "label": "Les dividendes"
+      }
+    ],
+    "explanation": "La majorité de la valeur vient des flux lointains."
+  },
+  {
+    "question_key": "1.4-WQ6",
+    "part": "B",
+    "locale": "en",
+    "prompt": "Dans le ValuationLab, un multiple supérieur à la médiane sectorielle signifie :",
+    "choices": [
+      {
+        "id": "a",
+        "label": "Une décote automatique"
+      },
+      {
+        "id": "b",
+        "label": "Une prime (croissance ou qualité supérieure)"
+      },
+      {
+        "id": "c",
+        "label": "Une erreur de calcul"
+      },
+      {
+        "id": "d",
+        "label": "Un red flag"
+      }
+    ],
+    "explanation": "Prime justifiée par des fondamentaux supérieurs."
+  },
+  {
+    "question_key": "1.4-WQ7",
+    "part": "B",
+    "locale": "en",
+    "prompt": "Le PeerComparisonMatrix identifie un « laggard » comme :",
+    "choices": [
+      {
+        "id": "a",
+        "label": "Une entreprise avec ROE élevé et marges supérieures"
+      },
+      {
+        "id": "b",
+        "label": "Une entreprise avec multiples bas et marges compressées"
+      },
+      {
+        "id": "c",
+        "label": "Une entreprise en forte croissance"
+      },
+      {
+        "id": "d",
+        "label": "Une entreprise sans dette"
+      }
+    ],
+    "explanation": "Laggard = sous-performeur structurel du secteur."
+  },
+  {
+    "question_key": "1.4-WQ8",
+    "part": "B",
+    "locale": "en",
+    "prompt": "Dans l'EarningsImpactEngine, une surprise EPS > 5 % est considérée comme :",
+    "choices": [
+      {
+        "id": "a",
+        "label": "Un bruit de marché"
+      },
+      {
+        "id": "b",
+        "label": "Un fort signal"
+      },
+      {
+        "id": "c",
+        "label": "Sans importance"
+      },
+      {
+        "id": "d",
+        "label": "Un dividende exceptionnel"
+      }
+    ],
+    "explanation": "> 5 % = magnitude significative = réaction cours probable."
+  },
+  {
+    "question_key": "1.4-WQ9",
+    "part": "B",
+    "locale": "en",
+    "prompt": "Pourquoi le ValuationLab suggère-t-il de tester la sensibilité EPS ± 10 % ?",
+    "choices": [
+      {
+        "id": "a",
+        "label": "Parce que les résultats sont toujours faux"
+      },
+      {
+        "id": "b",
+        "label": "Pour évaluer la robustesse de la valorisation face à l'incertitude"
+      },
+      {
+        "id": "c",
+        "label": "Parce que c'est obligatoire"
+      },
+      {
+        "id": "d",
+        "label": "Pour augmenter le P/E"
+      }
+    ],
+    "explanation": "Le stress testing des hypothèses est central en institutionnel."
+  },
+  {
+    "question_key": "1.4-WQ10",
+    "part": "B",
+    "locale": "en",
+    "prompt": "Dans le DcfSimulator, un taux de croissance perpétuel de 6 % est :",
+    "choices": [
+      {
+        "id": "a",
+        "label": "Conservateur"
+      },
+      {
+        "id": "b",
+        "label": "Agressif et probablement excessif"
+      },
+      {
+        "id": "c",
+        "label": "Standard"
+      },
+      {
+        "id": "d",
+        "label": "Interdit"
+      }
+    ],
+    "explanation": "La croissance perpétuelle ne peut excéder la croissance économique long terme (2-4 %)."
+  },
+  {
+    "question_key": "1.4-WQ11",
+    "part": "B",
+    "locale": "en",
+    "prompt": "Le PeerComparisonMatrix peut révéler un « value trap » quand :",
+    "choices": [
+      {
+        "id": "a",
+        "label": "Le P/E est bas mais la croissance est négative et la dette élevée"
+      },
+      {
+        "id": "b",
+        "label": "Le P/E est élevé"
+      },
+      {
+        "id": "c",
+        "label": "L'entreprise est leader"
+      },
+      {
+        "id": "d",
+        "label": "Le secteur est en expansion"
+      }
+    ],
+    "explanation": "Multiple bas justifié par la dégradation = pas d'opportunité."
+  },
+  {
+    "question_key": "1.4-WQ12",
+    "part": "B",
+    "locale": "en",
+    "prompt": "Pourquoi l'EarningsImpactEngine croise-t-il le beat/miss avec la guidance ?",
+    "choices": [
+      {
+        "id": "a",
+        "label": "Parce que la guidance oriente les attentes futures plus que le passé"
+      },
+      {
+        "id": "b",
+        "label": "Parce que le passé n'a pas d'importance"
+      },
+      {
+        "id": "c",
+        "label": "Parce que la guidance est obligatoire"
+      },
+      {
+        "id": "d",
+        "label": "Parce que le beat est toujours positif"
+      }
+    ],
+    "explanation": "Le marché est forward-looking. La guidance pilote le réajustement des modèles."
+  },
+  {
+    "question_key": "1.5-WQ1",
+    "part": "B",
+    "locale": "en",
+    "prompt": "Le ForecastScenarioPlanner utilise :",
+    "choices": [
+      {
+        "id": "a",
+        "label": "Un seul scénario"
+      },
+      {
+        "id": "b",
+        "label": "3 scénarios (optimiste, neutre, pessimiste) + probabilités"
+      },
+      {
+        "id": "c",
+        "label": "10 scénarios identiques"
+      },
+      {
+        "id": "d",
+        "label": "Aucun scénario"
+      }
+    ],
+    "explanation": "La valeur espérée = Σ(probabilité × valorisation scénario)."
+  },
+  {
+    "question_key": "1.5-WQ2",
+    "part": "B",
+    "locale": "en",
+    "prompt": "Dans le ScenarioBuilder, un scénario valide doit contenir :",
+    "choices": [
+      {
+        "id": "a",
+        "label": "Uniquement une thèse haussière"
+      },
+      {
+        "id": "b",
+        "label": "Thèse + mécanisme + catalyseur + invalidation"
+      },
+      {
+        "id": "c",
+        "label": "Un graphique technique"
+      },
+      {
+        "id": "d",
+        "label": "Un ordre d'achat"
+      }
+    ],
+    "explanation": "Scénario = pourquoi + comment + quand + sortie."
+  },
+  {
+    "question_key": "1.5-WQ3",
+    "part": "B",
+    "locale": "en",
+    "prompt": "La somme des probabilités des 3 scénarios dans le ForecastScenarioPlanner doit être :",
+    "choices": [
+      {
+        "id": "a",
+        "label": "50 %"
+      },
+      {
+        "id": "b",
+        "label": "100 %"
+      },
+      {
+        "id": "c",
+        "label": "150 %"
+      },
+      {
+        "id": "d",
+        "label": "Variable"
+      }
+    ],
+    "explanation": "C'est une distribution de probabilités complète."
+  },
+  {
+    "question_key": "1.5-WQ4",
+    "part": "B",
+    "locale": "en",
+    "prompt": "Le ScenarioBuilder force à définir une « invalidation » car :",
+    "choices": [
+      {
+        "id": "a",
+        "label": "C'est une règle de l'AMF"
+      },
+      {
+        "id": "b",
+        "label": "Sans invalidation = biais de confirmation, pas un vrai scénario"
+      },
+      {
+        "id": "c",
+        "label": "Les stops sont obligatoires"
+      },
+      {
+        "id": "d",
+        "label": "L'invalidation est optionnelle"
+      }
+    ],
+    "explanation": "Définir la sortie avant l'entrée = discipline institutionnelle."
+  },
+  {
+    "question_key": "1.5-WQ5",
+    "part": "B",
+    "locale": "en",
+    "prompt": "Si la valeur espérée > cours actuel dans le ForecastScenarioPlanner, cela suggère :",
+    "choices": [
+      {
+        "id": "a",
+        "label": "Une asymétrie positive (upside)"
+      },
+      {
+        "id": "b",
+        "label": "Une surévaluation"
+      },
+      {
+        "id": "c",
+        "label": "Un scénario sans risque"
+      },
+      {
+        "id": "d",
+        "label": "Une erreur de calcul"
+      }
+    ],
+    "explanation": "L'asymétrie risque/rendement favorise l'achat."
+  },
+  {
+    "question_key": "1.5-WQ6",
+    "part": "B",
+    "locale": "en",
+    "prompt": "Dans le ScenarioBuilder, le « catalyseur » correspond à :",
+    "choices": [
+      {
+        "id": "a",
+        "label": "Le moment précis où la thèse se déclenche"
+      },
+      {
+        "id": "b",
+        "label": "La couleur du graphique"
+      },
+      {
+        "id": "c",
+        "label": "Le dividende"
+      },
+      {
+        "id": "d",
+        "label": "Le ratio D/E"
+      }
+    ],
+    "explanation": "Quand = événement déclencheur (publication, décision politique)."
+  },
+  {
+    "question_key": "1.5-WQ7",
+    "part": "B",
+    "locale": "en",
+    "prompt": "Pourquoi le ForecastScenarioPlanner exige-t-il 3 scénarios et non 1 ?",
+    "choices": [
+      {
+        "id": "a",
+        "label": "Parce que 1 scénario = absence de gestion du risque"
+      },
+      {
+        "id": "b",
+        "label": "Parce que la loi l'exige"
+      },
+      {
+        "id": "c",
+        "label": "Parce que les marchés sont prévisibles"
+      },
+      {
+        "id": "d",
+        "label": "Parce que 3 est un chiffre magique"
+      }
+    ],
+    "explanation": "La préparation multi-scénarios = anticipation des différents états du monde."
+  },
+  {
+    "question_key": "1.5-WQ8",
+    "part": "B",
+    "locale": "en",
+    "prompt": "Dans le ScenarioBuilder, la « validation » d'un scénario correspond à :",
+    "choices": [
+      {
+        "id": "a",
+        "label": "L'acceptation par la banque centrale"
+      },
+      {
+        "id": "b",
+        "label": "Les conditions confirmant que la thèse se matérialise"
+      },
+      {
+        "id": "c",
+        "label": "Un algorithme"
+      },
+      {
+        "id": "d",
+        "label": "Un consensus d'analystes"
+      }
+    ],
+    "explanation": "C'est le miroir de l'invalidation : quand est-ce que je sais que j'ai raison ?"
+  },
+  {
+    "question_key": "1.5-WQ9",
+    "part": "B",
+    "locale": "en",
+    "prompt": "Une probabilité de 70 % au scénario neutre et 15 % aux extrêmes dans le ForecastScenarioPlanner suggère :",
+    "choices": [
+      {
+        "id": "a",
+        "label": "Une confiance élevée dans le scénario central"
+      },
+      {
+        "id": "b",
+        "label": "Une incertitude extrême"
+      },
+      {
+        "id": "c",
+        "label": "Un marché efficient"
+      },
+      {
+        "id": "d",
+        "label": "Une erreur de modélisation"
+      }
+    ],
+    "explanation": "Distribution concentrée = faible volatilité attendue, scénario central dominant."
+  },
+  {
+    "question_key": "1.5-WQ10",
+    "part": "B",
+    "locale": "en",
+    "prompt": "Pourquoi le ScenarioBuilder inclut-il une étape « export » du scénario ?",
+    "choices": [
+      {
+        "id": "a",
+        "label": "Pour le partager et le suivre dans un journal de trading"
+      },
+      {
+        "id": "b",
+        "label": "Pour l'imprimer en couleur"
+      },
+      {
+        "id": "c",
+        "label": "Parce que c'est obligatoire"
+      },
+      {
+        "id": "d",
+        "label": "Pour le vendre"
+      }
+    ],
+    "explanation": "L'export permet le suivi, la rétrospective et l'amélioration du processus décisionnel."
+  }
+]
