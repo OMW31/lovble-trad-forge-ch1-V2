@@ -3,6 +3,7 @@ import type { EvaluationQuestion } from "@/lib/academy/evaluation-bank";
 import { cn } from "@/lib/utils";
 import { VisualLightbox } from "./VisualLightbox";
 import { useT } from "@/lib/i18n";
+import { getV1Asset } from "@/lib/academy/visual-assets";
 
 export function VisualQuestion({
   question,
@@ -16,7 +17,7 @@ export function VisualQuestion({
   onSelect: (choiceId: string) => void;
 }) {
   const t = useT().widgetsCorp.visualQuestion;
-  const visualSrc = question.visualId ? `/academy/ch1/visuals/${question.visualId}.webp` : null;
+  const visualAsset = getV1Asset(question.visualId);
   return (
     <div className="rounded-xl border bg-surface p-4">
       <div className="flex flex-wrap items-start justify-between gap-2">
@@ -27,9 +28,9 @@ export function VisualQuestion({
           </span>
         )}
       </div>
-      {visualSrc && (
+      {visualAsset && (
         <div className="mt-3">
-          <VisualLightbox src={visualSrc} alt={t.supportAlt(question.visualId!, question.widget ?? t.evaluationFallback)} label={t.supportLabel(question.visualId!)} />
+          <VisualLightbox src={visualAsset.src} alt={t.supportAlt(visualAsset.id, question.widget ?? t.evaluationFallback)} label={t.supportLabel(visualAsset.id)} />
         </div>
       )}
       <div className="mt-3 grid gap-2">

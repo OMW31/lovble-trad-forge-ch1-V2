@@ -3,13 +3,14 @@ import { cn } from "@/lib/utils";
 import { ConceptCard, Eyebrow, VisualLayer } from "./primitives";
 import { useLessons } from "@/lib/academy/useChapterContent";
 import { useT } from "@/lib/i18n";
+import { getV1Asset } from "@/lib/academy/visual-assets";
 
 const POINT_ICONS = [Radar, Layers3, Target];
 
 const VISUAL_ASSETS = [
-  { src: "/academy/ch1/visuals/a4.webp", key: "macro" as const },
-  { src: "/academy/ch1/visuals/a8.webp", key: "terminal" as const },
-  { src: "/academy/ch1/visuals/a17.webp", key: "map" as const },
+  { id: "a4", key: "macro" as const },
+  { id: "a8", key: "terminal" as const },
+  { id: "a17", key: "map" as const },
 ];
 
 const RADAR_SIGNALS = [
@@ -139,11 +140,13 @@ export function VisualHybridLayer() {
       </div>
       <div className="mt-5 grid gap-4 lg:grid-cols-3">
         {VISUAL_ASSETS.map((asset) => {
+          const visual = getV1Asset(asset.id);
+          if (!visual) return null;
           const label = b.hybridAssets[asset.key];
           return (
-            <div key={asset.src}>
+            <div key={visual.id}>
               <VisualLayer
-                src={asset.src}
+                src={visual.src}
                 alt={b.hybridAssetAlt(label)}
                 variant="figure"
                 label={b.hybridAssetLabel(label)}
