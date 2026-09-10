@@ -7,7 +7,7 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { ArrowLeft, ArrowRight, Flame, X } from "lucide-react";
+import { ArrowLeft, ArrowRight, Check, Flame, X } from "lucide-react";
 import { useT } from "@/lib/i18n";
 import { cn } from "@/lib/utils";
 
@@ -63,7 +63,7 @@ export function PreflightGuide({ open, onClose }: { open: boolean; onClose: () =
     <AnimatePresence>
       {open && (
         <motion.div
-          className="fixed inset-0 z-[70] flex items-center justify-center bg-background/95 px-4 py-8 backdrop-blur-xl"
+          className="fixed inset-0 z-[70] flex items-center justify-center overflow-y-auto bg-background/95 px-4 py-5 backdrop-blur-xl sm:py-8"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -73,7 +73,28 @@ export function PreflightGuide({ open, onClose }: { open: boolean; onClose: () =
           aria-label="Preflight"
         >
           <div className="absolute inset-0 grid-bg opacity-40" aria-hidden />
-          <div className="relative w-full max-w-2xl rounded-2xl border border-border bg-card p-6 shadow-elegant sm:p-9">
+          <div className="relative grid w-full max-w-4xl overflow-hidden rounded-2xl border border-border bg-card shadow-elegant lg:grid-cols-[minmax(13rem,0.7fr)_minmax(0,1.5fr)]">
+            <div className="hidden border-r border-border bg-gradient-surface p-7 lg:flex lg:flex-col lg:justify-between">
+              <div>
+                <div className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.18em] text-forge">
+                  <Flame className="h-4 w-4" aria-hidden />
+                  TradForge Academy
+                </div>
+                <p className="mt-6 font-display text-2xl font-semibold leading-tight text-foreground">{t.preflight.title}</p>
+                <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{t.preflight.lead}</p>
+              </div>
+              <div className="space-y-2" aria-hidden>
+                {steps.map((item, i) => (
+                  <div key={item.kicker} className={cn("flex items-center gap-2 text-xs transition-colors", i <= index ? "text-foreground" : "text-muted-foreground")}>
+                    <span className={cn("grid h-5 w-5 place-items-center rounded-full border", i < index ? "border-bull/50 bg-bull/10 text-bull" : i === index ? "border-forge bg-forge/10 text-forge" : "border-border")}>
+                      {i < index ? <Check className="h-3 w-3" /> : i + 1}
+                    </span>
+                    <span className="truncate">{item.kicker}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className="min-w-0 p-5 sm:p-8">
             <div className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-4">
               <div className="flex min-w-0 items-center gap-2">
                 <Flame className="h-4 w-4 shrink-0 text-forge" aria-hidden />
@@ -140,6 +161,7 @@ export function PreflightGuide({ open, onClose }: { open: boolean; onClose: () =
                 {last ? t.preflight.start : t.preflight.next}
                 <ArrowRight className="h-4 w-4" aria-hidden />
               </button>
+            </div>
             </div>
           </div>
         </motion.div>

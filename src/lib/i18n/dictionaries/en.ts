@@ -51,6 +51,8 @@ export const en: Dictionary = {
     notFoundHint: "This content does not exist or has been moved.",
   },
   preflight: {
+    title: "Step into the desk",
+    lead: "A practical track for reading, handling, and making decisions in markets.",
     skip: "Skip",
     next: "Continue",
     back: "Back",

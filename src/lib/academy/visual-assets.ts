@@ -257,6 +257,26 @@ export const BACKGROUNDS = {
 export const V1_SRC = (id: string) => `${V1}/${id}.webp`;
 export const V1_IDS = Array.from({ length: 17 }, (_, i) => `a${i + 1}`);
 
+const V1_LABELS: Record<string, string> = {
+  a1: "Market context",
+  a2: "Fundamental signal",
+  a3: "Macro transmission",
+  a4: "Institutional dashboard",
+  a5: "Growth impulse",
+  a6: "Inflation signal",
+  a7: "Rates and yields",
+  a8: "Market structure",
+  a9: "Currency regime",
+  a10: "Capital flows",
+  a11: "Risk regime",
+  a12: "Macro relationships",
+  a13: "Scenario map",
+  a14: "Valuation context",
+  a15: "Forward view",
+  a16: "Decision framework",
+  a17: "Strategic synthesis",
+};
+
 /**
  * Fabrique un VisualAsset à partir d'un identifiant V1 (a1 → a17).
  * Les V1 restent la référence des questions Partie B : l'id n'est jamais renommé.
@@ -277,4 +297,11 @@ export function v1Asset(
     label,
     alt,
   };
+}
+
+/** Resolve a stable Part B id through the registry; callers never build paths. */
+export function getV1Asset(id?: string): VisualAsset | undefined {
+  if (!id || !V1_IDS.includes(id)) return undefined;
+  const label = V1_LABELS[id] ?? `Visual ${id.toUpperCase()}`;
+  return v1Asset(id, label, `Part B visual ${id.toUpperCase()}`);
 }
