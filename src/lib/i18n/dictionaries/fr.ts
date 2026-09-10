@@ -55,6 +55,8 @@ export const fr = {
     notFoundHint: "Ce contenu n'existe pas ou a été déplacé.",
   },
   preflight: {
+    title: "Entrez dans le desk",
+    lead: "Un parcours pratique pour lire, manipuler et décider sur les marchés.",
     skip: "Passer",
     next: "Continuer",
     back: "Précédent",
