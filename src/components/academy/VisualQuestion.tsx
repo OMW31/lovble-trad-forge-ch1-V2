@@ -3,7 +3,7 @@ import type { EvaluationQuestion } from "@/lib/academy/evaluation-bank";
 import { cn } from "@/lib/utils";
 import { VisualLightbox } from "./VisualLightbox";
 import { useT } from "@/lib/i18n";
-import { getV1Asset } from "@/lib/academy/visual-assets";
+import { getPartBAsset } from "@/lib/academy/visual-assets";
 
 export function VisualQuestion({
   question,
@@ -17,7 +17,7 @@ export function VisualQuestion({
   onSelect: (choiceId: string) => void;
 }) {
   const t = useT().widgetsCorp.visualQuestion;
-  const visualAsset = getV1Asset(question.visualId);
+  const visualAsset = getPartBAsset(question.visualId);
   return (
     <div className="rounded-xl border bg-surface p-4">
       <div className="flex flex-wrap items-start justify-between gap-2">

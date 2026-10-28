@@ -31,6 +31,7 @@ export type VisualAsset = {
 
 const V2 = "/academy/ch1/v2";
 const V1 = "/academy/ch1/visuals";
+const PART_B = "/academy/ch1/v1-part-b";
 const BG = "/academy/ch1/backgrounds";
 
 /** ---------- V2 : cours & immersion ---------- */
@@ -304,4 +305,15 @@ export function getV1Asset(id?: string): VisualAsset | undefined {
   if (!id || !V1_IDS.includes(id)) return undefined;
   const label = V1_LABELS[id] ?? `Visual ${id.toUpperCase()}`;
   return v1Asset(id, label, `Part B visual ${id.toUpperCase()}`);
+}
+
+/**
+ * Part B presentation asset. Supplied branded plates exist for a1–a12;
+ * remaining stable ids intentionally fall back to the canonical V1 artwork.
+ */
+export function getPartBAsset(id?: string): VisualAsset | undefined {
+  const asset = getV1Asset(id);
+  if (!asset) return undefined;
+  const hasSuppliedPlate = /^a(?:[1-9]|1[0-2])$/.test(asset.id);
+  return hasSuppliedPlate ? { ...asset, src: `${PART_B}/${asset.id}.webp` } : asset;
 }
