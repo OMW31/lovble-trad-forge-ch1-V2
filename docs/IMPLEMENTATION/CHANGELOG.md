@@ -1,5 +1,25 @@
 # CHANGELOG
 
+## 2026-10-29 — Verified reprise: S5 responsive, S3 Part B registry, S2 audit
+
+- **S5 completed:** the direct Chapter 1 and certification routes load at 390,
+  1280, and 2560 px with no horizontal overflow or browser errors. Preflight now
+  uses a two-pane desktop layout, compact mobile flow, keyboard navigation, and
+  reduced-motion support. The route issue was reproduced as a Preflight overlay
+  intercepting the hub click; the chapter itself loaded cleanly when opened
+  directly.
+- **S3 completed:** the supplied branded Part B plates `a1` → `a12` were
+  converted to WebP and are selected through `getPartBAsset()`. Stable question
+  IDs `a1` → `a17` remain unchanged; `a13` → `a17` retain canonical V1 fallback.
+  The malformed `a6'.jpg` remains excluded from runtime.
+- **S2 audited:** the supplied 134-row English batch has the correct shape
+  (75 Part A / 59 Part B) but contains mixed French/English text. It was not
+  inserted into the database. Translation completion remains explicitly open
+  until a clean static batch is validated.
+- **Dependency maintenance:** TanStack Start/Router packages were updated to
+  the approved security floor; the root error boundary was aligned with the new
+  router error prop type.
+
 ## 2026-07-10 — Sprints F2-F7 complétés (Final run-up achevé)
 ### F2 · Guides d'utilisation par widget
 - `WidgetGuide.tsx` ajouté : carrousel modal Bo1/Bo2/Bo3 (titres numérotés, corps, encart Astuce/Institutionnel, dots, Suivant/Compris)
