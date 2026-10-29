@@ -39,4 +39,9 @@ Règle cardinale : **le texte pédagogique ne vit jamais dans l'image**. Il vit 
 - `BACKGROUNDS` — ambiances,
 - `v1Asset(id, label, alt, opts)` — fabrique un `VisualAsset` V1 sans jamais renommer l'id.
 
+Pour les questions Partie B, utiliser `getPartBAsset(id)` : il sélectionne les
+planches fournies `v1-part-b` lorsqu'elles existent et conserve le fallback V1
+canonique pour les IDs sans planche. Aucun composant ne construit directement
+un chemin à partir de `visualId`.
+
 Aucun chemin d'image en dur dans une route à partir de ce standard, hors backgrounds hérités déjà documentés.

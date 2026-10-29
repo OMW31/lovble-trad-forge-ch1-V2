@@ -65,6 +65,19 @@ Ids **immuables** : la banque Partie B (59 questions) y est adossée.
 
 ## 5. Audit réel & régénération — 2026-08-18 (append-only)
 
+## 6. Intégration Partie B fournie — 2026-10-28 (append-only)
+
+Les planches fournies `v1-part-b/a1.jpg` à `a12.jpg` ont été contrôlées,
+converties sans suppression des sources, puis servies en WebP par le registre
+via `getPartBAsset()`. Les questions Partie B conservent leurs IDs `a1` → `a17`.
+Les IDs `a13` → `a17` utilisent le fallback V1 canonique jusqu'à réception de
+planches correspondantes. Le fichier malformé `a6'.jpg` est exclu du runtime.
+
+| Groupe | Source | Runtime | Statut |
+|---|---|---|---|
+| a1 → a12 | `v1-part-b/*.jpg` | `v1-part-b/*.webp` via registre | INTÉGRÉ — Partie B |
+| a13 → a17 | `visuals/*.webp` | `visuals/*.webp` via fallback registre | INTÉGRÉ — fallback |
+
 ### 5.1 V1 A1 → A17 — régénérés (Brand DNA V2, zéro texte bitmap)
 Les 17 fichiers `public/academy/ch1/visuals/a{1..17}.webp` ont été **régénérés** :
 composition institutionnelle ultra-sombre, accent forge ambre, data cyan,
