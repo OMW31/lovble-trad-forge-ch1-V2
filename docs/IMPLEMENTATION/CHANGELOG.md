@@ -16,6 +16,8 @@
   (75 Part A / 59 Part B) but contains mixed French/English text. It was not
   inserted into the database. Translation completion remains explicitly open
   until a clean static batch is validated.
+- A second static generation attempt was also rejected by the same mixed-language
+  gate. No runtime translation service or page-load seed was introduced.
 - **Dependency maintenance:** TanStack Start/Router packages were updated to
   the approved security floor; the root error boundary was aligned with the new
   router error prop type.
