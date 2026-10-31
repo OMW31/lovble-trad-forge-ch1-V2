@@ -638,10 +638,10 @@ export function getLessonEvaluationQuestions(lessonId: string | undefined, level
   return questions.map((q, index) => (index < 3 ? { ...q, prompt: `${q.prompt} (niveau comité d'investissement)` } : q));
 }
 
-export function getChapterDiagnosticQuestions(level: EvaluationLevel) {
+export function getChapterDiagnosticQuestions(level: EvaluationLevel, locale?: string) {
   // Diagnostic chapitre en logique Partie A / Partie B (plus de niveaux dans le modal).
-  const allA = CORE_LESSON_EVALUATION_IDS.flatMap((id) => getPartABank(id));
-  const allB = CORE_LESSON_EVALUATION_IDS.flatMap((id) => getPartBBank(id));
+  const allA = CORE_LESSON_EVALUATION_IDS.flatMap((id) => getPartABank(id, locale));
+  const allB = CORE_LESSON_EVALUATION_IDS.flatMap((id) => getPartBBank(id, locale));
 
   const partA = pickBankItems(allA, "diagnostic-A").map((item) => toEvaluationQuestion(item, "A", `diag-${level}`));
   const partB = pickBankItems(allB, "diagnostic-B").map((item) => toEvaluationQuestion(item, "B", `diag-${level}`));
@@ -657,16 +657,16 @@ export function getChapterDiagnosticQuestions(level: EvaluationLevel) {
  */
 export function getLessonAssessmentQuestions(
   lessonId: string | undefined,
-  options: { rotate?: boolean } = {},
+  options: { rotate?: boolean; locale?: string } = {},
 ): EvaluationQuestion[] {
   const key = CORE_LESSON_EVALUATION_IDS.includes(lessonId as CoreLessonId)
     ? (lessonId as CoreLessonId)
     : "intro";
   const rotate = options.rotate !== false;
-  const partA = pickBankItems(getPartABank(key), `${key}-A`, { rotate }).map((item) =>
+  const partA = pickBankItems(getPartABank(key, options.locale), `${key}-A`, { rotate }).map((item) =>
     toEvaluationQuestion(item, "A", `${key}-a`),
   );
-  const partB = pickBankItems(getPartBBank(key), `${key}-B`, { rotate }).map((item) =>
+  const partB = pickBankItems(getPartBBank(key, options.locale), `${key}-B`, { rotate }).map((item) =>
     toEvaluationQuestion(item, "B", `${key}-b`),
   );
 

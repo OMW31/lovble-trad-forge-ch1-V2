@@ -26,3 +26,7 @@ Ces règles sont contraignantes pour tout agent travaillant sur ce projet.
    on ajoute et on met à jour avec les nouvelles données pour le tracking futur ;
    on ne supprime pas l'historique.
 5. **SENTINEL relu avant/après chaque incrément** pour garantir l'anti-régression.
+
+## Question-bank localization
+- Pass the UI locale explicitly into assessment selection and resolve English copy by stable part/question keys from the versioned static catalogue; this prevents network failures or stale hydration from leaking French into English assessments.
+- Keep question-bank hydration latest-request-wins; a slower previous-language request must never overwrite the active language.
