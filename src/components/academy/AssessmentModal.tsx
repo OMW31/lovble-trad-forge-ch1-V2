@@ -28,7 +28,7 @@ import {
 } from "@/lib/academy/evaluation-bank";
 import { saveEvaluationAttempt } from "@/lib/academy/progress.functions";
 import { cn } from "@/lib/utils";
-import { useT } from "@/lib/i18n";
+import { useI18n } from "@/lib/i18n";
 import type { Dictionary } from "@/lib/i18n/dictionaries/fr";
 
 const levelMeta = (t: Dictionary): Record<EvaluationLevel, { label: string; icon: ElementType; summary: string; tone: string }> => ({
@@ -61,7 +61,7 @@ export function AssessmentModal({
   triggerLabel?: string;
   triggerClassName?: string;
 }) {
-  const t = useT();
+  const { t, locale } = useI18n();
   const LEVEL_META = useMemo(() => levelMeta(t), [t]);
   const PART_META = useMemo(() => partMeta(t), [t]);
   const label = triggerLabel ?? t.chrome.assessment.triggerLabel;
@@ -87,10 +87,10 @@ export function AssessmentModal({
   const [activePart, setActivePart] = useState<"A" | "B">("A");
 
   const questions: EvaluationQuestion[] = useMemo(() => {
-    if (isLesson) return getLessonAssessmentQuestions(lessonId, { rotate: true });
-    return getChapterDiagnosticQuestions(level);
+    if (isLesson) return getLessonAssessmentQuestions(lessonId, { rotate: true, locale });
+    return getChapterDiagnosticQuestions(level, locale);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isLesson, lessonId, level, rollKey]);
+  }, [isLesson, lessonId, level, rollKey, locale]);
 
   const parts = ["A", "B"] as EvaluationPart[];
   const partAQuestions = questions.filter((q) => q.part === "A");

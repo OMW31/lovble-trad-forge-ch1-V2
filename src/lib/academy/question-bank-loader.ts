@@ -13,6 +13,7 @@ import type { BankItem, Difficulty } from "./assessment-picker";
 import { PART_A_BANK } from "./part-a-bank";
 import { PART_B_BANK } from "./part-b-bank";
 import type { CoreLessonId } from "./evaluation-bank";
+import { QUESTION_TRANSLATIONS_EN } from "./question-translations.en";
 
 type Bank = Record<CoreLessonId, BankItem[]>;
 
@@ -26,14 +27,23 @@ const remote: { a: Bank; b: Bank; locale: string; loaded: boolean } = {
   loaded: false,
 };
 
-export function getPartABank(lesson: CoreLessonId): BankItem[] {
-  const rows = remote.loaded ? remote.a[lesson] : [];
-  return rows.length > 0 ? rows : PART_A_BANK[lesson];
+function localize(items: BankItem[], part: "A" | "B", locale: string): BankItem[] {
+  if (locale !== "en") return items;
+  return items.map((item) => {
+    const translation = QUESTION_TRANSLATIONS_EN[`${part}:${item.id}`];
+    if (!translation) throw new Error(`Missing English question translation: ${part}:${item.id}`);
+    return { ...item, ...translation };
+  });
 }
 
-export function getPartBBank(lesson: CoreLessonId): BankItem[] {
-  const rows = remote.loaded ? remote.b[lesson] : [];
-  return rows.length > 0 ? rows : PART_B_BANK[lesson];
+export function getPartABank(lesson: CoreLessonId, locale = remote.locale): BankItem[] {
+  const rows = remote.loaded && remote.locale === locale ? remote.a[lesson] : [];
+  return localize(rows.length > 0 ? rows : PART_A_BANK[lesson], "A", locale);
+}
+
+export function getPartBBank(lesson: CoreLessonId, locale = remote.locale): BankItem[] {
+  const rows = remote.loaded && remote.locale === locale ? remote.b[lesson] : [];
+  return localize(rows.length > 0 ? rows : PART_B_BANK[lesson], "B", locale);
 }
 
 export function isRemoteBankLoaded() {
@@ -84,6 +94,8 @@ function group(rows: Row[], translations: Map<string, TranslationRow>, part: "A"
 }
 
 let inflight: Promise<void> | null = null;
+let inflightLocale: string | null = null;
+let requestVersion = 0;
 
 /**
  * Hydrate la banque depuis la base pour une locale donnée.
@@ -91,8 +103,11 @@ let inflight: Promise<void> | null = null;
  */
 export function hydrateQuestionBanks(locale = "fr"): Promise<void> {
   if (remote.loaded && remote.locale === locale) return Promise.resolve();
-  if (inflight && remote.locale === locale) return inflight;
+  if (inflight && inflightLocale === locale) return inflight;
+  const version = ++requestVersion;
   remote.locale = locale;
+  remote.loaded = false;
+  inflightLocale = locale;
 
   inflight = (async () => {
     try {
@@ -104,7 +119,7 @@ export function hydrateQuestionBanks(locale = "fr"): Promise<void> {
           : supabase.from("question_translations").select("*").eq("locale", locale),
       ]);
 
-      if (a.error || b.error) return;
+      if (a.error || b.error || version !== requestVersion) return;
 
       const translations = new Map<string, TranslationRow>();
       for (const row of ((tr as { data: TranslationRow[] | null }).data ?? [])) {
@@ -117,7 +132,10 @@ export function hydrateQuestionBanks(locale = "fr"): Promise<void> {
     } catch {
       /* fallback TS */
     } finally {
-      inflight = null;
+      if (version === requestVersion) {
+        inflight = null;
+        inflightLocale = null;
+      }
     }
   })();
 
