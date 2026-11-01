@@ -1,5 +1,17 @@
 # CHANGELOG
 
+## 2026-11-01 — S2 : clôture vérifiée des 134 questions anglaises
+
+- Catalogue EN existant audité intégralement : 75 questions A, 59 B, 536 choix, 134 explications ; aucun ID ou corrigé modifié. Corrections éditoriales ciblées (trading orders, could trigger, company-level analysis).
+- 134 traductions insérées en Lovable Cloud ; lecture vérifiée : 75 A + 59 B, zéro question manquante et zéro divergence d'ordre des choix. Archive SQL idempotente synchronisée dans `docs/ch1/i18n/question_translations_en.sql`.
+- Fallback EN réellement branché : l'évaluation anglaise ne revient plus au français lorsque la banque distante ou ses traductions sont absentes. Le catalogue versionné est la référence éditoriale EN.
+- Hydratation protégée contre les réponses d'une ancienne langue. Changer la langue du questionnaire remplace uniquement son texte : les questions sélectionnées, réponses, identifiants et curseurs de rotation sont conservés.
+- Quatre tests permanents : complétude et identifiants, panne réseau, concurrence FR/EN, 7 questions par partie et score 30/70 (B seul = 70 %, A seul = 30 %).
+- Playwright authentifié : cinq évaluations × deux parties en FR puis EN ; 134 contenus livrés au navigateur identiques au catalogue ; images Partie B présentes ; tentative complète corrigée à 0 % sauvegardée (7 réponses A, 7 B), explications EN vérifiées.
+- Questionnaire contrôlé à 390/768/1116/1440/2560 px. Débordement du bandeau connecté à 768 px identifié et corrigé par compression du titre et affichage de la jauge dès desktop, sans retirer d'action.
+- Authentification S4 conservée, aucun fournisseur reconfiguré ; assets et certification non reconstruits. Complément des métadonnées requises sur les pages existantes.
+- Limite de ce lot : les titres FR de certains médias/cas historiques hors questionnaire restent hors du périmètre des 134 traductions ; aucune prétention de clôture de leur audit linguistique global.
+
 ## 2026-10-29 — Verified reprise: S5 responsive, S3 Part B registry, S2 audit
 
 - **S5 completed:** the direct Chapter 1 and certification routes load at 390,

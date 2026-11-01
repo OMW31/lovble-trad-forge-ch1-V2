@@ -116,20 +116,20 @@ export function ChapterShell({
   return (
     <div className="min-h-screen bg-background">
       <header className="sticky top-0 z-40 border-b border-border/70 bg-background/80 backdrop-blur-xl">
-        <div className="mx-auto flex h-14 max-w-[1400px] items-center justify-between gap-4 px-4 sm:px-6">
-          <div className="flex items-center gap-3">
+        <div className="mx-auto flex h-14 max-w-[1400px] items-center justify-between gap-2 px-4 sm:px-6 lg:gap-4">
+          <div className="flex min-w-0 items-center gap-2 lg:gap-3">
             <Link to="/academy" className="flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground">
               <ArrowLeft className="h-4 w-4" />
               <span className="hidden sm:inline">{t.shell.academy}</span>
             </Link>
             <span className="text-border">/</span>
-            <span className="flex items-center gap-2 font-display text-sm font-semibold text-foreground">
-              <Flame className="h-4 w-4 text-forge" />
-              {CHAPTER.title}
+            <span className="flex min-w-0 items-center gap-2 font-display text-sm font-semibold text-foreground">
+              <Flame className="h-4 w-4 shrink-0 text-forge" />
+              <span className="truncate">{CHAPTER.title}</span>
             </span>
           </div>
-          <div className="flex items-center gap-3">
-            <div className="hidden items-center gap-2 sm:flex">
+          <div className="flex shrink-0 items-center gap-2 lg:gap-3">
+            <div className="hidden items-center gap-2 lg:flex">
               <div className="h-1.5 w-24 overflow-hidden rounded-full bg-border">
                 <div className="h-full rounded-full bg-gradient-forge transition-all duration-500" style={{ width: `${progress}%` }} />
               </div>

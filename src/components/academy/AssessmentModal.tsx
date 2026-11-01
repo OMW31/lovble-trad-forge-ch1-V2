@@ -97,7 +97,7 @@ export function AssessmentModal({
   // Language changes replace copy only: keep selected IDs, answers and rotation.
   const questions = useMemo(() => {
     const lessons: CoreLessonId[] = ["intro", "macro", "micro", "outils", "previsions"];
-    const copy = new Map(lessons.flatMap((lesson) => [
+    const copy = new Map<string, ReturnType<typeof getPartABank>[number]>(lessons.flatMap((lesson) => [
       ...getPartABank(lesson, locale).map((item) => [`A:${item.id}`, item] as const),
       ...getPartBBank(lesson, locale).map((item) => [`B:${item.id}`, item] as const),
     ]));
