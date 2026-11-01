@@ -26,6 +26,8 @@ import {
   type EvaluationPart,
   type EvaluationQuestion,
 } from "@/lib/academy/evaluation-bank";
+import { getPartABank, getPartBBank } from "@/lib/academy/question-bank-loader";
+import type { CoreLessonId } from "@/lib/academy/evaluation-bank";
 import { saveEvaluationAttempt } from "@/lib/academy/progress.functions";
 import { cn } from "@/lib/utils";
 import { useI18n } from "@/lib/i18n";
@@ -86,11 +88,25 @@ export function AssessmentModal({
   const [rollKey, setRollKey] = useState(0);
   const [activePart, setActivePart] = useState<"A" | "B">("A");
 
-  const questions: EvaluationQuestion[] = useMemo(() => {
-    if (isLesson) return getLessonAssessmentQuestions(lessonId, { rotate: true, locale });
-    return getChapterDiagnosticQuestions(level, locale);
+  const selectedQuestions: EvaluationQuestion[] = useMemo(() => {
+    if (isLesson) return getLessonAssessmentQuestions(lessonId, { rotate: true, locale: "fr" });
+    return getChapterDiagnosticQuestions(level, "fr");
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isLesson, lessonId, level, rollKey, locale]);
+  }, [isLesson, lessonId, level, rollKey]);
+
+  // Language changes replace copy only: keep selected IDs, answers and rotation.
+  const questions = useMemo(() => {
+    const lessons: CoreLessonId[] = ["intro", "macro", "micro", "outils", "previsions"];
+    const copy = new Map<string, ReturnType<typeof getPartABank>[number]>(lessons.flatMap((lesson) => [
+      ...getPartABank(lesson, locale).map((item) => [`A:${item.id}`, item] as const),
+      ...getPartBBank(lesson, locale).map((item) => [`B:${item.id}`, item] as const),
+    ]));
+    return selectedQuestions.map((question) => {
+      const key = question.id.match(/(1\.[1-5]-(?:WQ|Q)\d+)$/)?.[1];
+      const item = key ? copy.get(`${question.part}:${key}`) : undefined;
+      return item ? { ...question, prompt: item.prompt, choices: item.choices, explanation: item.explanation } : question;
+    });
+  }, [selectedQuestions, locale]);
 
   const parts = ["A", "B"] as EvaluationPart[];
   const partAQuestions = questions.filter((q) => q.part === "A");

@@ -3,6 +3,20 @@
 ## Statut
 Document opératoire de build séquentiel.
 
+## Clôture ciblée — 2026-11-01 (remplace le statut historique S2 ouvert)
+- [x] Audit bilingue intégral des 134 questions, 536 choix et 134 explications.
+- [x] 75 traductions A + 59 B enregistrées et relues en Lovable Cloud.
+- [x] Archive SQL idempotente synchronisée avec le catalogue EN versionné.
+- [x] Fallback EN actif même en panne réseau ; aucune traduction IA au chargement.
+- [x] Changement de langue sans perte des réponses ni rotation supplémentaire.
+- [x] Tests permanents : identifiants, complétude, panne, concurrence de langues, sélection 7+7, pondération 30/70.
+- [x] QA authentifiée des cinq évaluations en FR/EN, visuels B et explications après correction.
+- [x] Tentative de test à 0 % enregistrée sans déverrouiller une leçon.
+- [x] Questionnaire vérifié à 390/768/1116/1440/2560 ; correctif bandeau connecté tablette.
+- [x] CHANGELOG, SENTINEL, roadmap et méthode de maintenance mis à jour sans supprimer l'historique.
+- S4 : confirmé livré par l'utilisateur ; non réimplémenté dans ce lot.
+- Le présent lot clôture la banque des 134 questions, pas un nouvel audit intégral des médias du cours ou de la certification externe.
+
 ## Sprint 1 — Foundations
 - [x] Lovable Cloud activé
 - [x] Schéma profils / rôles / progression / reprise / évaluations créé

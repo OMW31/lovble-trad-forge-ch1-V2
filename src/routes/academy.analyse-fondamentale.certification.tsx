@@ -20,6 +20,8 @@ export const Route = createFileRoute("/academy/analyse-fondamentale/certificatio
       { name: "description", content: "Certification finale du Chapitre 1 : Partie C, dix scénarios scriptés avec pause pédagogique." },
       { property: "og:title", content: "Certification Analyse Fondamentale — TradForge" },
       { property: "og:description", content: "Partie C : dix scénarios de marché scriptés pour valider le raisonnement fondamental." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: CertificationPage,

@@ -17,6 +17,8 @@ export const Route = createFileRoute("/academy/")({
       },
       { property: "og:title", content: "Academy — TradForge" },
       { property: "og:description", content: "Apprendre les marchés en manipulant, pas en lisant." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: AcademyIndex,

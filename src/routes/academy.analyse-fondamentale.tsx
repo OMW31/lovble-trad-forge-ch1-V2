@@ -57,6 +57,8 @@ export const Route = createFileRoute("/academy/analyse-fondamentale")({
         content:
           "Voir, manipuler, décider, comprendre les moteurs des marchés. Niveau institutionnel.",
       },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: Chapter1Page,

@@ -173,3 +173,14 @@ Tout incrément futur est relu contre ces trois documents, avant ET après impl�
 - [x] Le cours reste librement lisible sans compte ; seule l'évaluation exige l'authentification.
 - [x] Règle de certification inchangée : 5 × 20 % à ≥ 70 %.
 - [x] `tsgo --noEmit` clean ; routes `/academy/analyse-fondamentale` et `.../certification` en 200.
+
+## Check-out S2 — 2026-11-01
+- [x] 134 traductions EN en base : 75 A / 59 B ; mêmes IDs et ordre des choix ; zéro ligne manquante.
+- [x] Le catalogue EN statique est effectivement utilisé en secours et comme référence éditoriale ; réseau indisponible ≠ questions françaises en EN.
+- [x] Une réponse réseau FR obsolète ne peut pas remplacer une demande EN plus récente.
+- [x] Changer de langue ne change ni les questions tirées, ni leurs réponses, ni le score.
+- [x] 7 questions A + 7 B pour chacune des cinq leçons ; pondération 30/70 et seuil 70 % conservés et testés.
+- [x] Évaluations des cinq leçons ouvertes avec session réelle en FR/EN ; visuels B et explications EN conservés.
+- [x] Tentative complète sauvegardée avec 7 réponses par partie, score 0 %, statut graded et A30_B70 ; aucune leçon validée artificiellement.
+- [x] Aucun widget, leçon, source visuelle, ID ou historique documentaire supprimé. Authentification et certification existantes conservées.
+- QA globale hors banque : des libellés médias FR ont été observés dans le cours EN et restent explicitement distincts de la clôture S2.
