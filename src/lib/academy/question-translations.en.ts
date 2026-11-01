@@ -66,7 +66,7 @@ export const QUESTION_TRANSLATIONS_EN: Record<string, QuestionTranslation> = {
     "choices": [
       {
         "id": "a",
-        "label": "Market orders"
+        "label": "Trading orders"
       },
       {
         "id": "b",
@@ -276,7 +276,7 @@ export const QUESTION_TRANSLATIONS_EN: Record<string, QuestionTranslation> = {
       },
       {
         "id": "d",
-        "label": "Market orders"
+        "label": "Trading orders"
       }
     ],
     "explanation": "It is grounded in an in-depth analysis of fundamentals."
@@ -1526,7 +1526,7 @@ export const QUESTION_TRANSLATIONS_EN: Record<string, QuestionTranslation> = {
       },
       {
         "id": "c",
-        "label": "Of no impact"
+        "label": "No impact"
       },
       {
         "id": "d",
@@ -2094,7 +2094,7 @@ export const QUESTION_TRANSLATIONS_EN: Record<string, QuestionTranslation> = {
       },
       {
         "id": "b",
-        "label": "A strong signal likely to trigger a Fed reaction"
+        "label": "A strong signal that could trigger a Fed reaction"
       },
       {
         "id": "c",
@@ -2347,7 +2347,7 @@ export const QUESTION_TRANSLATIONS_EN: Record<string, QuestionTranslation> = {
         "label": "Geographic map"
       }
     ],
-    "explanation": "This provides a rapid executive summary for micro diagnosis."
+    "explanation": "This provides a quick overview for company-level analysis."
   },
   "B:1.3-WQ4": {
     "prompt": "A CompanyHealthScore > 75 is interpreted as:",

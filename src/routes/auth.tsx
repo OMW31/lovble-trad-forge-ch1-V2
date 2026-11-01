@@ -31,6 +31,8 @@ export const Route = createFileRoute("/auth")({
         property: "og:description",
         content: "Connexion sécurisée pour activer progression, reprise exacte et évaluations persistées.",
       },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: AuthPage,
